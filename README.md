@@ -163,7 +163,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       -    23                            Thraustochytrium mitochondrial code
 
   - __[--suffix_len (INT)]__             [Required by "--All", "--Assemble" and
-                                         "--VAR"] The suffix length of the reads,
+                                         "--VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
                                          example the --suffix_len of
