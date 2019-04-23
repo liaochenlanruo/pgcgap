@@ -36,7 +36,7 @@ PCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take t
 
 ## Installation
 
-The software was only tested on Linux64 platform, The MacOS may also be good in theory. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the pan2nal should be installed separately!__
+The software was only tested on Linux64 platform, The MacOS may also be good in theory. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the "pan2nal" should be installed separately!__
 
 - Bioconda - OSX/Linux
     ```
@@ -104,12 +104,12 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
   - __[--Assemble]__                     Assemble reads ( paired-end only ) into contigs,
                                          predict genes and annotate them
 
-  - __[--CoreTree]__                     Construct single core proteins tree and SNPs tree of single core genes
+  - __[--CoreTree]__                     Construct single-core proteins tree and SNPs tree of single core genes
 
   - __[--Pan]__                          Run "roary" pan genome pipeline with gff3 files
 
   - __[--OrthoF]__                       Identify orthologous protein sequence
-                                         families with OrthoFinder
+                                         families with "OrthoFinder"
 
   - __[--ANI]__                          Compute whole-genome Average Nucleotide Identity ( ANI )
 
@@ -118,7 +118,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 				                                 abundance of each flag for all strains
 
   - **[--VAR]**                          Rapid haploid variant calling and core
-                                         genome alignment with Snippy
+                                         genome alignment with "Snippy"
 </br>
 
 - __Global Options:__
@@ -163,7 +163,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       -    23                            Thraustochytrium mitochondrial code
 
   - __[--suffix_len (INT)]__             [Required by "--All", "--Assemble" and
-                                         "--VAR"] The suffix length of the reads,
+                                         "--VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
                                          example the --suffix_len of
@@ -246,6 +246,12 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       - __[--ANIO (FILE)]__              The name of output file ( Default "Results/ANI/ANIs" )
   </br>
 
+  - __[--COG]__
+
+      - __[--AAsPath (PATH)]__           [Required] Amino acids of all strains as fasta file
+                                         paths, ( Default "./Results/Annotations/AAs" )
+  </br>
+
   - **--VAR**
 
       - __[--refgbk (FILE)]__            [Required] The full path and name of
@@ -320,7 +326,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 </br>
 
 - __EXAMPLES:__
-  - __Example 1:__ Perform all functions, take the *bacteria thuringiensis* as an example, total 4 strains for analysis.</br>
+  - __Example 1:__ Perform all functions, take the *bacillus thuringiensis* as an example, total 4 strains for analysis.</br>
 
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.</br>
 
