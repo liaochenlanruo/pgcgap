@@ -15,7 +15,7 @@ my %options;
 
 =head1 NAME
 
-PCGP
+PCGAP
 
 =head1 DESCRIPTION
 
@@ -31,41 +31,41 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 =head1 USAGE
 
-  $ coreTree.pl [Fuctions] [options]
+  $ pcgap.pl [Fuctions] [options]
 
-  example 1: Perform all functions, take the thuringiensis as an example, total 4 strains for analysis
+  example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
 
              For the sake of flexibility, The "VAR" function needs to be added additionally
 
-             coreTree.pl --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
+             pcgap.pl --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
 
   example 2: Conduct reads assembly, gene prediction and annotation
 
-             coreTree.pl --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+             pcgap.pl --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
 
   example 3: Constructing the phylogenetic trees of single-core proteins and core SNPs
 
-             coreTree.pl --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
+             pcgap.pl --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
 
   example 4: Conduct pan-genome analysis
 
-             coreTree.pl --Pan --codon 11 --threads 4 --GffPath <PATH>
+             pcgap.pl --Pan --codon 11 --threads 4 --GffPath <PATH>
 
   example 5: Inference of orthologous gene groups
 
-             coreTree.pl --orthoF --threads 4 --AAsPath <PATH>
+             pcgap.pl --orthoF --threads 4 --AAsPath <PATH>
 
   example 6: Compute whole-genome Average Nucleotide Identity (ANI)
 
-             coreTree.pl --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
+             pcgap.pl --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
 
   example 7: Run COG annotation for each strain
 
-              coreTree.pl --COG --threads 4 --AAsPath <PATH>
+              pcgap.pl --COG --threads 4 --AAsPath <PATH>
 
   example 8: Varients calling and phylogenetic tree construction based on reference genome
 
-             coreTree.pl --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
+             pcgap.pl --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
 
 
 
@@ -87,7 +87,7 @@ $options{'help|h|?'} = \( my $opt_help );
 
 =item B<[--version]>
 
-show version number of coreTree and exit
+Show version number of PCGAP and exit
 
 =back
 
@@ -141,7 +141,7 @@ $options{'Assemble'} = \(my $opt_Assemble);
 
 =item B<[--CoreTree]>
 
-Construct single core protein tree and ...
+Construct single-core proteins tree and SNPs tree of single core genes
 
 =back
 
@@ -165,7 +165,7 @@ $options{'Pan'} = \(my $opt_Pan);
 
 =item B<[--OrthoF]>
 
-Identify orthologous protein sequence families with OrthoFinder
+Identify orthologous protein sequence families with "OrthoFinder"
 
 =back
 
@@ -201,7 +201,7 @@ $options{'COG'} = \(my $opt_COG);
 
 =item B<[--VAR]>
 
-Rapid haploid variant calling and core genome alignment with Snippy
+Rapid haploid variant calling and core genome alignment with "Snippy"
 
 =back
 
@@ -303,7 +303,7 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
 
 =item B<[--suffix_len (INT)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> The suffix length of the reads, that is the length of your reads name minus the length of your strain name.
+I<[Required by "--All", "--Assemble" and "--VAR"]> B<(Strongly recommended)> The suffix length of the reads, that is the length of your reads name minus the length of your strain name.
 For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
 
 =back
@@ -665,6 +665,21 @@ The name of output file ( Default "Results/ANI/ANIs" )
 
 $options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
 
+=head3 ===================================== Options for "--COG" analysis ============================================================
+
+=for text
+
+=over 30
+
+=item B<[--AAsPath (PATH)]>
+
+I<[Required]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
+
+=back
+
+=cut
+
+$options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
 =head3 ===================================== Options for "--VAR" analysis ============================================================
 
