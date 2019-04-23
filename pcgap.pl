@@ -39,11 +39,11 @@ liaochenlanruo@webmail.hzau.edu.cn
 
              coreTree.pl --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
 
-  example 2: Conduct reads assembly, gene predition and annotation
+  example 2: Conduct reads assembly, gene prediction and annotation
 
              coreTree.pl --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
 
-  example 3: Constructing single core protein tree and core SNPs tree
+  example 3: Constructing the phylogenetic trees of single-core proteins and core SNPs
 
              coreTree.pl --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
 
