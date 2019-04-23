@@ -1,3 +1,5 @@
 *.phr filter=lfs diff=lfs merge=lfs -text
 cog2003-2014.csv filter=lfs diff=lfs merge=lfs -text
 COG_2014.psq filter=lfs diff=lfs merge=lfs -text
+*.psq filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
