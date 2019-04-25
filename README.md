@@ -130,6 +130,9 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads )
 
+  - __[--AAsPath (PATH)]__               Amino acids of all strains as fasta file paths,
+                                         ( Default "./Results/Annotations/AAs" )
+
   - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
                                          "--VAR"] The suffix name of reads 1 ( for
                                          example: if the name of reads 1 is
@@ -190,9 +193,6 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       - __[--CDsPath (PATH)]__           [Required] CDs of all strains as fasta file
                                          paths, ( Default "./Results/Annotations/CDs" )
 
-      - __[--AAsPath (PATH)]__           [Required] Amino acids of all strains as fasta file
-                                         paths, ( Default "./Results/Annotations/AAs" )
-
       - __[-c (FLOAT)]__                 Sequence identity threshold, ( Default 0.5)
 
       - __[-n (INT)]__                   Word_length, see user's guide of CD-HIT
@@ -244,12 +244,6 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
                                          one per line. ( Default scaf.list )
 
       - __[--ANIO (FILE)]__              The name of output file ( Default "Results/ANI/ANIs" )
-  </br>
-
-  - __[--COG]__
-
-      - __[--AAsPath (PATH)]__           [Required] Amino acids of all strains as fasta file
-                                         paths, ( Default "./Results/Annotations/AAs" )
   </br>
 
   - **--VAR**
@@ -312,7 +306,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
   - __[--fastANI-bin (PATH)]__           Path to the fastANI binary file. Default tries if fastANI is in PATH;
 
-  - __[--gubbins-bin (PATH)]__           Path to the run_gubbins binary file. Default tries if run_gubbins is in PATH;
+  - __[--gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
 
   - __[--snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
 
