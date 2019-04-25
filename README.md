@@ -130,7 +130,8 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads )
 
-  - __[--AAsPath (PATH)]__               Amino acids of all strains as fasta file paths,
+  - __[--AAsPath (PATH)]__               [Required by "--CoreTree" and "--COG"]
+                                         Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
   - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
