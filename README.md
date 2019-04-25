@@ -95,7 +95,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
     ```
     $pcgap [Fuctions] [options]
     ```
-</br>
+<br/>
 
 - __FUCTIONS:__
 
@@ -119,7 +119,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
   - **[--VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
-</br>
+<br/>
 
 - __Global Options:__
 
@@ -177,7 +177,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
   - __[--logs (STRING)]__                Name of the log file ( Default Logs.txt )
 
   - __[--threads (INT)]__                Number of threads to be used ( Default 4 )
-</br>
+<br/>
 
 - __Local Options:__
 
@@ -187,7 +187,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       - __[--genus (STRING)]__           Genus name of your strain ( Default "NA" )
 
       - __[--species (STRING)]__         Species name of your strain ( Default "NA")
-  </br>
+  <br/>
 
   - **--CoreTree**
 
@@ -222,19 +222,19 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
       - __[-d (INT)]__                   length of description in .clstr file. if
                                          set to 0, it takes the fasta defline and
                                          stops at first space ( Default 0 )
-  </br>
+  <br/>
 
   - __--Pan__
 
       - __[--GffPath (PATH)]__           [Required] Gff files of all strains as paths
                                          ( Default "./Results/Annotations/GFF" )
-  </br>
+  <br/>
 
   - __--orthoF__
 
       - __[--Sprogram (STRING)]__        Sequence search program, Options: blast,
                                          mmseqs, blast_gz, diamond ( Default blast)
-  </br>
+  <br/>
 
   - __--ANI__
 
@@ -245,7 +245,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
                                          one per line. ( Default scaf.list )
 
       - __[--ANIO (FILE)]__              The name of output file ( Default "Results/ANI/ANIs" )
-  </br>
+  <br/>
 
   - **--VAR**
 
@@ -278,12 +278,12 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
                                          [raxml|fasttree|hybrid] ( Default fasttree)
 
       - __[--iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
-</br>
+<br/>
 
 - __Paths of external programs__
 
   Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs.
-  </br>
+  <br/>
 
   - __[--abyss-bin (PATH)]__             Path to abyss binary file. Default tries if abyss is in PATH;
 
@@ -312,18 +312,18 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
   - __[--snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
 
   - __[--sickle-bin (PATH)]__            Path to the sickle-trim binary file. Default tries if sickle is in PATH.
-</br>
+<br/>
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
     ```
     $pcgap --check-external-programs
     ```
-</br>
+<br/>
 
 - __EXAMPLES:__
-  - __Example 1:__ Perform all functions, take the *bacillus thuringiensis* as an example, total 4 strains for analysis.</br>
+  - __Example 1:__ Perform all functions, take the *bacillus thuringiensis* as an example, total 4 strains for analysis.<br/>
 
-    __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.</br>
+    __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
     ```
     $pcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
@@ -396,7 +396,7 @@ Amino acids file (With ".faa" as the suffix) of each strain placed into a direct
 
 ### --VAR
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
-</br>
+<br/>
 
 - The full path of reference genome in fasta format or genebank format (__must be provided__).
 
@@ -404,124 +404,124 @@ Amino acids file (With ".faa" as the suffix) of each strain placed into a direct
 
 ### --Assemble
 
-- **Results/Assembles/*_assembly**</br>
+- **Results/Assembles/*_assembly**<br/>
 Directorys contain assembly files and information of each strain.
-</br>
+<br/>
 
-- __Results/Assembles/Scaf__</br>
+- __Results/Assembles/Scaf__<br/>
 Directory contain contig/scaffold of all strains.
-</br>
+<br/>
 
-- **Results/Annotations/*_annotation**</br>
+- **Results/Annotations/*_annotation**<br/>
 Directorys contain [annotation files](https://github.com/tseemann/prokka) of each strain.
-</br>
+<br/>
 
-- __Results/Annotations/AAs__</br>
+- __Results/Annotations/AAs__<br/>
 Directory contain amino acids sequences of all strains.
-</br>
+<br/>
 
-- __Results/Annotations/CDs__</br>
+- __Results/Annotations/CDs__<br/>
 Directory contain nucleotide sequences of all strains.
-</br>
+<br/>
 
-- __Results/Annotations/GFF__</br>
+- __Results/Annotations/GFF__<br/>
 Directory contain the master annotation of all strains in GFF3 format.
 
 
 ### --ANI
 
-- __Results/ANI/ANIs__</br>
+- __Results/ANI/ANIs__<br/>
 query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments
-</br>
+<br/>
 
-- __Results/ANI/ANIs.matrix__</br>
+- __Results/ANI/ANIs.matrix__<br/>
 file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix)
-</br>
+<br/>
 
-- __Results/ANI/ANIs.heatmap__</br>
+- __Results/ANI/ANIs.heatmap__<br/>
 An ANI matrix of all strains
-</br>
+<br/>
 
-- __Results/ANI/ANI_matrix.pdf__</br>
+- __Results/ANI/ANI_matrix.pdf__<br/>
 The heatmap plot of "ANIs.heatmap"
 
 
 ### --CoreTree
 
-- __Results/CoreTrees/faa/ALL.core.protein.fast__</br>
+- __Results/CoreTrees/faa/ALL.core.protein.fast__<br/>
 Concatenated and aligned sequences file of single-core proteins.
-</br>
+<br/>
 
-- __Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta__</br>
+- __Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta__<br/>
 Concatenated and aligned sequences file of single-core genes.
-</br>
+<br/>
 
-- __Results/CoreTrees/faa2ffn/ALL.core.snp.fasta__</br>
+- __Results/CoreTrees/faa2ffn/ALL.core.snp.fasta__<br/>
 Core SNPs of single-core genes in fasta format.
-</br>
+<br/>
 
-- __Results/CoreTrees/ALL.core.protein.nwk__</br>
+- __Results/CoreTrees/ALL.core.protein.nwk__<br/>
 The phylogenetic tree file of single-copy proteins for all strains.
-</br>
+<br/>
 
-- __Results/CoreTrees/faa2ffn/ALL.core.snp.nwk__ (or gubbins.core.snp.final_tree.tre)</br>
+- __Results/CoreTrees/faa2ffn/ALL.core.snp.nwk__ (or gubbins.core.snp.final_tree.tre)<br/>
 The phylogenetic tree file of SNPs of single-copy genes for all strains.
-</br>
+<br/>
 
-- __Results/CoreTrees/faa2ffn/gubbins.*__</br>
+- __Results/CoreTrees/faa2ffn/gubbins.*__<br/>
 See [gubbins](https://github.com/sanger-pathogens/gubbins#output-files) outputs
-</br>
+<br/>
 
-- __Results/CoreTrees/"Other_files"__</br>
+- __Results/CoreTrees/"Other_files"__<br/>
 Intermediate directorys and files.
-</br>
+<br/>
 
 ### --OrthoF
 
-- __Results/OrthoF/Results_orthoF__</br>
+- __Results/OrthoF/Results_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder) outputs
-</br>
+<br/>
 
 ### --Pan
 
-- __Results/PanGenome/Pangenome_Pie.pdf__</br>
+- __Results/PanGenome/Pangenome_Pie.pdf__<br/>
 An 3D pie chart of the breakdown of genes and the number of isolate they are present in
-</br>
+<br/>
 
-- __Results/PanGenome/pangenome_frequency.pdf__</br>
+- __Results/PanGenome/pangenome_frequency.pdf__<br/>
 A graph with the frequency of genes versus the number of genomes
-</br>
+<br/>
 
-- __Results/PanGenome/Pangenome_matrix.pdf__</br>
+- __Results/PanGenome/Pangenome_matrix.pdf__<br/>
 A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes
-</br>
+<br/>
 
-- __Results/PanGenome/Other_files__</br>
+- __Results/PanGenome/Other_files__<br/>
 see [roary](https://sanger-pathogens.github.io/Roary/) outputs
-</br>
+<br/>
 
 ### -- COG
 
-- __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__</br>
+- __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
 Intermediate files
-</br>
+<br/>
 
-- __*.2Scog.table__</br>
+- __*.2Scog.table__<br/>
 The super COG table of each strain
-</br>
+<br/>
 
-- __*.2Scog.table.pdf__</br>
+- __*.2Scog.table.pdf__<br/>
 A plot of super COG table in pdf format
-</br>
+<br/>
 
 - __All_flags_relative_abundances.table__
 A table containing the relative abundance of each flag for all strains
 
 ### --VAR
-- __Results/Varients/directory-named-in-strains__</br>
+- __Results/Varients/directory-named-in-strains__<br/>
 Directorys containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy) outputs for detail.
 
-- __Results/Varients/Core__</br>
+- __Results/Varients/Core__<br/>
   The directory containing Core SNP phylogeny files
 
   - __.aln__ : A core SNP alignment in the --aformat format (default FASTA)
