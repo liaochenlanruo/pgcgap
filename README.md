@@ -53,7 +53,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
 - [FastTree](http://www.microbesonline.org/fasttree/)
-- [Gubbins](https://github.com/sanger-pathogens/gubbins)
+- [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
