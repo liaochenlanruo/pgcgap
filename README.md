@@ -89,7 +89,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
     ```
     $pcgap --help
     ```
-
+<br/>
 
 - __General usage:__
     ```
