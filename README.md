@@ -535,7 +535,7 @@ PCGAP is free software, licensed under GPLv3.
 
 ## Feedback/Issues
 
-Please report any issues to the [issues page](https://github.com/liaochenlanruo/pcgap/issues) or email us at liaochenlanruo@webmail.hzau.edu.cn.
+Please report any issues to the [issues page](https://github.com/liaochenlanruo/pcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
 ## Citation
 
