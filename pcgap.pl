@@ -4,9 +4,7 @@ use warnings;
 use Getopt::Long;
 use Pod::Usage;
 use Getopt::Std;
-#use Bio::AlignIO;
 use Bio::SeqIO;
-#use Bio::Align::Utilities qw(aa_to_dna_aln);
 use Data::Dumper;
 use File::Tee qw(tee);
 use Cwd;
@@ -241,6 +239,18 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads" );
 
 =over 30
 
+=item B<[--AAsPath (PATH)]>
+
+I<[Required by "--CoreTree" and "--COG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
+
+=back
+
+=cut
+
+$options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
+
+=over 30
+
 =item B<[--reads1 (STRING)]>
 
 I<[Required by "--All", "--Assemble" and "--VAR"]> The suffix name of reads 1 ( for example: if the name of reads 1 is "YBT-1520_L1_I050.R1.clean.fastq.gz", "YBT-1520" is the strain same, so the suffix name should be ".R1.clean.fastq.gz" )
@@ -451,18 +461,6 @@ $options{'CDsPath=s'} = \( my $opt_CDsPath = "./Results/Annotations/CDs" );
 
 =over 30
 
-=item B<[--AAsPath (PATH)]>
-
-I<[Required]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
-
-=back
-
-=cut
-
-$options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
-
-=over 30
-
 =item B<[-c (FLOAT)]>
 
 Sequence identity threshold, ( Default 0.5)
@@ -664,22 +662,6 @@ The name of output file ( Default "Results/ANI/ANIs" )
 =cut
 
 $options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
-
-=head3 ===================================== Options for "--COG" analysis ============================================================
-
-=for text
-
-=over 30
-
-=item B<[--AAsPath (PATH)]>
-
-I<[Required]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
-
-=back
-
-=cut
-
-$options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
 =head3 ===================================== Options for "--VAR" analysis ============================================================
 
@@ -974,13 +956,13 @@ $options{'fastANI-bin=s'} = \( my $opt_fastANI_bin = `which fastANI 2>/dev/null`
 
 =item B<[--gubbins-bin (PATH)]>
 
-Path to the run_gubbins binary file. Default tries if run_gubbins is in PATH;
+Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
 
 =back
 
 =cut
 
-$options{'gubbins-bin=s'} = \( my $opt_gubbins_bin = `which run_gubbins 2>/dev/null` );
+$options{'gubbins-bin=s'} = \( my $opt_gubbins_bin = `which run_gubbins.py 2>/dev/null` );
 
 =over 30
 
@@ -1125,8 +1107,6 @@ if ($opt_All or $opt_Assemble) {
 		system("mv $str* ../Results/Assembles/$assem/");
 	}
 	chdir "../";
-	#system('ls Results/Assembles/Scaf | sed "s:^:`pwd`/: " > scaf.list');
-	#system('ls Results/Assembles/Scaf | sed "s:^:Results/Assembles/Scaf/: " > scaf.list');
 	system("realpath Results/Assembles/Scaf/* > scaf.list");
 	my $time_assemble = time();
 	my $time_assemblex = ($time_assemble - $time_start)/3600;
@@ -1145,7 +1125,6 @@ if ($opt_All or $opt_CoreTree) {
 	system("cd-hit -i All.pep -o All.pep.nr -c $opt_c -n $opt_n -G $opt_G -T $opt_threads -t $opt_t -aS $opt_aS -aL $opt_aL -g $opt_g -M 0 -d $opt_d");
 
 	print "Starting to extract the list of single copied core proteins...\n\n";
-	#system("perl ortholog_core.pl -i All.pep.nr.clstr -t $strain_num -o core.pep.list");
 	open CLSTR, "All.pep.nr.clstr" || die;
 	open LIST, ">core.pep.list" || die;
 
@@ -1192,8 +1171,6 @@ if ($opt_All or $opt_CoreTree) {
 	}
 	close LIST;
 	print "Starting to extract sequences of single copied core proteins and genes...\n";
-	#system("perl extract_ortholog_cluster_seq.pl -i I.pep -l core.pep.list -o faa");
-	#system("perl extract_ortholog_cluster_seq.pl -i I.nuc -l core.pep.list -o ffn");
 	#============================extract ortholog cluster of protein=============================
 	open SEQP, "All.pep" || die;
 
@@ -1245,7 +1222,6 @@ if ($opt_All or $opt_CoreTree) {
 	#============================extract ortholog cluster of genes=============================
 	open SEQN, "All.nuc" || die;
 
-	#local $/ = '>';
 	my %hashN = ();
 	<SEQN>;
 	while(<SEQN>){
@@ -1300,7 +1276,6 @@ if ($opt_All or $opt_CoreTree) {
 		my $in=$name.".fa";
 		my $out=$name.".aln";
 		system("mafft --quiet --auto --thread $opt_threads $in > $out");
-    #system("(mafft --maxiterate 1000 --localpair $in > $out &)");
 	}
 
 	##==============CONSTRUCT SINGLE CORE PROTEIN TREE========================================================
@@ -1459,11 +1434,9 @@ if ($opt_All or $opt_CoreTree) {
 	#===============================================================================
 	chdir "../";
 
-	#system("perl run_pal2nal.pl -p faa -d ffn -c faa2ffn");
 
 	system("mkdir faa2ffn");
 
-	#my %count = ();
 	opendir(DIR, "faa") || die "Can't open directory\n";
 	my @store_array = ();
 	@store_array = readdir(DIR);
@@ -1500,7 +1473,6 @@ if ($opt_All or $opt_CoreTree) {
 	close ALNIN;
 	close ALNOUT;
 
-	#system("perl catfasta2phyml.pl -f *.fas > ALL.core.nucl.fasta");
 	open CON, ">ALL.core.nucl.fasta" || die "open ALL.core.nucl.fasta failed\n";
 	my $nfiles = 0; # count number of files
 	my %nseq_hash = (); # key:infile, val:nseq
@@ -1653,16 +1625,13 @@ if ($opt_All or $opt_CoreTree) {
 	} # end of parse_fasta
 
 
-	#print "Constructing ML tree of the single copied core genes...\n\n";
-	#system("fasttreeMP -nt -gtr ALL.core.nucl.fasta > ALL.core.nucl.nwk");
-
 	print "Calling core SNPs...\n";
 	system("snp-sites -o ALL.core.snp.fasta ALL.core.nucl.fasta");
 
 	print "Constructing ML tree of core SNPS...\n\n";
 
 	if ($opt_strain_num > 3) {
-		my @csnp = ("run_gubbins --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.snp ALL.core.snp.fasta");
+		my @csnp = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.snp ALL.core.snp.fasta");
 		my $snp_return = system(@csnp);
 		if (!($snp_return == 0)) {
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
@@ -1679,8 +1648,8 @@ if ($opt_All or $opt_CoreTree) {
 	
 	chdir "../";
 	system("mv faa ./Results/CoreTrees/");
-	system("mv -f faa2ffn ./Results/CoreTrees/");
-	system("mv -f ffn ./Results/CoreTrees/");
+	system("mv faa2ffn ./Results/CoreTrees/");
+	system("mv ffn ./Results/CoreTrees/");
 	system("mv All.* ./Results/CoreTrees/");
 	system("mv core.pep.list ./Results/CoreTrees/");
 	my $time_coretreed = time();
@@ -1719,7 +1688,6 @@ if ($opt_All or $opt_OrthoF) {
 if ($opt_All or $opt_ANI) {
 	my $time_ANIs = time();
 	system("mkdir Results/ANI");
-	#my $ANIout = "Results/ANI/ANIs";
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
 	system("get_ANImatrix.pl");##
@@ -1733,7 +1701,6 @@ if ($opt_All or $opt_ANI) {
 if ($opt_All or $opt_COG) {
 	my $time_COGs = time();
 	system("mkdir Results/COG");
-#	chdir $opt_AAsPath;
 	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
 	system("mv *.table *.pdf *.xml ../../COG");
 	chdir $working_dir;
@@ -1769,13 +1736,11 @@ if ($opt_VAR) {
 	}
 	chdir $working_dir;
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Varients/*");
-	#system("snippy-core --ref $opt_refgbk $(ls $working_dir/Results/Varients)");
-	#system('snippy-core --ref $opt_refgbk $(ls Results/Varients | sed "s:^:`pwd`/Results/Varients/:")');#
 	system("mkdir Results/Varients/Core");
 
 	if ($opt_strain_num > 3) {
-		my @core = ("run_gubbins --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core core.aln");
-		my @corefull = ("run_gubbins --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
+		my @core = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core core.aln");
+		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
 		my $core = system(@core);
 		system("mv gubbins.* Results/Varients/Core/");
 		my $corefull = system(@corefull);
