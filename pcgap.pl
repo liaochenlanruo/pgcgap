@@ -1758,7 +1758,7 @@ if ($opt_VAR) {
 			system("fasttree -nt -gtr core.full.aln > core.full.nwk");
 			system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf core.nwk core.full.nwk Results/Varients/Core/");
 		}else {
-			system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.aln.iteration* core.aln.iteration* *.joint.txt Results/Varients/Core/");
+			system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.aln.iteration* core.full.aln.iteration* *.joint.txt Results/Varients/Core/");
 			print "running gubbins successfully!\n";
 		}
 	} else {
