@@ -1671,7 +1671,7 @@ if ($opt_All or $opt_Pan) {
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("plot_3Dpie.R");#plot pangenome 3D-pie
 	system("fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
-	#system("fasttree ¨Cnt ¨Cgtr core_gene_alignment.aln > core_gene_tree.nwk");
+	#system("fasttree -nt -gtr core_gene_alignment.aln > core_gene_tree.nwk");
 	my $time_pand = time();
 	my $time_pan = ($time_pand - $time_pans)/3600;
 	print "The 'Pan' program runs for $time_pan hours.\n\n";
