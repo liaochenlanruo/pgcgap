@@ -1062,6 +1062,7 @@ my $working_dir = getcwd;
 system("mkdir Results");
 # Assemble, gene prediction and annotation with "Abyss" and "Prokka"
 if ($opt_All or $opt_Assemble) {
+	print "Performing --Assemble function...\n\n";
 	system("mkdir Results/Assembles");
 	system("mkdir Results/Assembles/Scaf");
 	system("mkdir Results/Annotations");
@@ -1118,6 +1119,7 @@ if ($opt_All or $opt_Assemble) {
 ## Wrapper to produce phylogenetic tree from the single core proteins and SNPs tree from the single core genes
 if ($opt_All or $opt_CoreTree) {
 	my $time_coretrees = time();
+	print "Performing --CoreTree function...\n\n";
 	system("mkdir Results/CoreTrees");
 	system("cat $opt_AAsPath/*.faa > All.pep");
 	system("cat $opt_CDsPath/*.ffn > All.nuc");
@@ -1660,14 +1662,16 @@ if ($opt_All or $opt_CoreTree) {
 
 if ($opt_All or $opt_Pan) {
 	my $time_pans = time();
+	print "Performing --Pan function...\n\n";
 	#Roary takes GFF3 files as input. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid with Roary
 	my $pangenome = "Results/PanGenome";
-	system("roary -p $opt_threads -e --mafft -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
-	chdir "Results/PanGenome*";
+	#system("roary -p $opt_threads -e --mafft -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
+	system("roary -p $opt_threads -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
+	chdir "Results/PanGenome";
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("plot_3Dpie.R");#plot pangenome 3D-pie
 	system("fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
-	system("fasttree 每nt 每gtr core_gene_alignment.aln > core_gene_tree.nwk");
+	#system("fasttree 每nt 每gtr core_gene_alignment.aln > core_gene_tree.nwk");
 	my $time_pand = time();
 	my $time_pan = ($time_pand - $time_pans)/3600;
 	print "The 'Pan' program runs for $time_pan hours.\n\n";
@@ -1676,6 +1680,7 @@ if ($opt_All or $opt_Pan) {
 
 if ($opt_All or $opt_OrthoF) {
 	my $time_OrthoFs = time();
+	print "Performing --OrthoF function...\n\n";
 	system("mkdir Results/OrthoF");
 	my $orthoFprefix = "orthoF";
 	system("orthofinder -a $opt_threads -S $opt_Sprogram -n $orthoFprefix -f $opt_AAsPath");
@@ -1687,6 +1692,7 @@ if ($opt_All or $opt_OrthoF) {
 
 if ($opt_All or $opt_ANI) {
 	my $time_ANIs = time();
+	print "Performing --ANI function...\n\n";
 	system("mkdir Results/ANI");
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
@@ -1700,6 +1706,7 @@ if ($opt_All or $opt_ANI) {
 
 if ($opt_All or $opt_COG) {
 	my $time_COGs = time();
+	print "Performing --COG function...\n\n";
 	system("mkdir Results/COG");
 	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
 	system("mv *.table *.pdf *.xml ../../COG");
@@ -1710,6 +1717,7 @@ if ($opt_All or $opt_COG) {
 
 if ($opt_VAR) {
 	my $time_VARs = time();
+	print "Performing --VAR function...\n\n";
 	system("mkdir Results/Varients");
 	chdir "$opt_ReadsPath/Over";
 	system("mkdir Trimmed");

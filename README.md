@@ -770,8 +770,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
   - __--Pan__
 
-      - __[--GffPath (PATH)]__           [Required] Gff files of all strains as paths
-                                         ( Default "./Results/Annotations/GFF" )
+      - __[--GffPath (PATH)]__           [Required] Gff files of all strains as paths ( Default "./Results/Annotations/GFF" )
   <br/>
 
   - __--orthoF__
