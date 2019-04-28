@@ -11,6 +11,7 @@
     - [License](#License)
     - [Feedback/Issues](#Feedback/Issues)
     - [Citation](#Citation)
+    - [Usages](#Usages)
 
 ## Introduction
 
@@ -75,3 +76,6 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 ## Citation
 
 If you use this software please cite:
+
+## Usages
+For more detial informations, please visit the webpage of [PCGAP](https://liaochenlanruo.github.io/pcgap?_blank).

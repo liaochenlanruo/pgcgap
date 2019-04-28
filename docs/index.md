@@ -1083,4 +1083,3 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 If you use this software please cite:
 
-in docs
