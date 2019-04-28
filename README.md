@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
 
 [English Readme](https://github.com/liaochenlanruo/pcgap/blob/master/README.md) | [Chinese Readme](https://github.com/liaochenlanruo/pcgap/blob/master/README_Chinese.md)
