@@ -1774,5 +1774,3 @@ if ($opt_VAR) {
 my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
 print "All programs finished in $time_total hours.\n\n";
-
-#pod2html --infile=coreTree8.pl --outfile coreTree8.html
