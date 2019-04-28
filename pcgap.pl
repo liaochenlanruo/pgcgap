@@ -1709,7 +1709,7 @@ if ($opt_All or $opt_COG) {
 	print "Performing --COG function...\n\n";
 	system("mkdir Results/COG");
 	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
-	system("mv *.table *.pdf *.xml ../../COG");
+	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
 	my $time_COG = ($time_COGd - $time_COGs)/3600;
