@@ -1,10 +1,10 @@
-# PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
+# PGCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
 
-[English Readme](https://liaochenlanruo.github.io/pcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
+[English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
 ## Contents
 
-- [PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline](#PCGAP---the-Prokaryotic-Comparative-Genomics-Analysis-Pipeline)
+- [PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline](#PGCGAP---the-Prokaryotic-Genomics-and-Comparative-Genomics-Analysis-Pipeline)
     - [Introduction](#Introduction)
     - [Installation](#Installation)
     - [Required dependencies](#Required-dependencies)
@@ -15,7 +15,7 @@
 
 ## Introduction
 
-PCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
 
 ## Installation
 
@@ -23,7 +23,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - Bioconda - OSX/Linux
     ```
-    $conda install pcgap
+    $conda install pgcgap
     ```
 
 
@@ -78,4 +78,4 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 If you use this software please cite:
 
 ## Usages
-For more detial informations, please visit the webpage of [PCGAP](https://liaochenlanruo.github.io/pcgap?_blank).
+For more detial informations, please visit the webpage of [PGCGAP](https://liaochenlanruo.github.io/pgcgap?_blank).

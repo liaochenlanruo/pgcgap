@@ -39,11 +39,11 @@
 
 <h1 id="NAME">NAME</h1>
 
-<p>PCGAP</p>
+<p>PGCGAP</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The prokaryotic comparative genomics analysis pipeline</p>
+<p>The prokaryotic genomics and comparative genomics analysis pipeline</p>
 
 <h1 id="AUTHOR">AUTHOR</h1>
 
@@ -55,41 +55,41 @@
 
 <h1 id="USAGE">USAGE</h1>
 
-<pre><code>  $ pcgap.pl [Fuctions] [options]
+<pre><code>  $ pgcgap [Fuctions] [options]
 
   example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
 
              For the sake of flexibility, The &quot;VAR&quot; function needs to be added additionally
 
-             pcgap.pl --All --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk &lt;FILE&gt; --qualtype &lt;STRING&gt;
+             pgcgap --All --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk &lt;FILE&gt; --qualtype &lt;STRING&gt;
 
   example 2: Conduct reads assembly, gene prediction and annotation
 
-             pcgap.pl --Assemble --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+             pgcgap --Assemble --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
 
   example 3: Constructing the phylogenetic trees of single-core proteins and core SNPs
 
-             pcgap.pl --CoreTree --CDsPath &lt;PATH&gt; --AAsPath &lt;PATH&gt; --codon 11 --strain_num 4 --threads 4
+             pgcgap --CoreTree --CDsPath &lt;PATH&gt; --AAsPath &lt;PATH&gt; --codon 11 --strain_num 4 --threads 4
 
   example 4: Conduct pan-genome analysis
 
-             pcgap.pl --Pan --codon 11 --threads 4 --GffPath &lt;PATH&gt;
+             pgcgap --Pan --codon 11 --threads 4 --GffPath &lt;PATH&gt;
 
   example 5: Inference of orthologous gene groups
 
-             pcgap.pl --orthoF --threads 4 --AAsPath &lt;PATH&gt;
+             pgcgap --orthoF --threads 4 --AAsPath &lt;PATH&gt;
 
   example 6: Compute whole-genome Average Nucleotide Identity (ANI)
 
-             pcgap.pl --ANI --threads 4 --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;FILE&gt;
+             pgcgap --ANI --threads 4 --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;FILE&gt;
 
   example 7: Run COG annotation for each strain
 
-              pcgap.pl --COG --threads 4 --AAsPath &lt;PATH&gt;
+              pgcgap --COG --threads 4 --AAsPath &lt;PATH&gt;
 
   example 8: Varients calling and phylogenetic tree construction based on reference genome
 
-             pcgap.pl --VAR --threads 4 --refgbk &lt;FILE&gt; --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --strain_num &lt;INT&gt; --qualtype &lt;STRING&gt; </code></pre>
+             pgcgap --VAR --threads 4 --refgbk &lt;FILE&gt; --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --strain_num &lt;INT&gt; --qualtype &lt;STRING&gt; </code></pre>
 
 <h1 id="OPTIONS">OPTIONS</h1>
 
@@ -108,7 +108,7 @@
 <dt id="version"><b>[--version]</b></dt>
 <dd>
 
-<p>Show version number of PCGAP and exit</p>
+<p>Show version number of PGCGAP and exit</p>
 
 </dd>
 </dl>

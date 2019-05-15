@@ -1,10 +1,10 @@
-# PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
+# PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 
-[English Readme](https://liaochenlanruo.github.io/pcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
+[English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
 ## Contents
 
-- [PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline](#PCGAP---the-Prokaryotic-Comparative-Genomics-Analysis-Pipeline)
+- [PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline](#PGCGAP---the-Prokaryotic-Genomics-and-Comparative-Genomics-Analysis-Pipeline)
     - [Introduction](#Introduction)
     - [Installation](#Installation)
     - [Required dependencies](#Required-dependencies)
@@ -32,7 +32,7 @@
 
 ## Introduction
 
-PCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
 
 ## Installation
 
@@ -40,7 +40,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - Bioconda - OSX/Linux
     ```
-    $conda install pcgap
+    $conda install pgcgap
     ```
 
 
@@ -87,13 +87,13 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - __Print the help messages:__
     ```
-    $pcgap --help
+    $pgcgap --help
     ```
 <br/>
 
 - __General usage:__
     ```
-    $pcgap [Fuctions] [options]
+    $pgcgap [Fuctions] [options]
     ```
 <br/>
 
@@ -316,7 +316,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
     ```
-    $pcgap --check-external-programs
+    $pgcgap --check-external-programs
     ```
 <br/>
 
@@ -326,54 +326,54 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
     ```
-    $pcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
+    $pgcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
     ```
 
   - __Example 2:__ Conduct reads assembly, gene predition and annotation.
 
     ```
-    $pcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+    $pgcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
     ```
 
   - __Example 3:__ Constructing single core protein tree and core SNPs tree.
 
     ```
-    $pcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
+    $pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
     ```
 
   - __Example 4:__ Conduct pan-genome analysis.
 
     ```
-    $pcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
+    $pgcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
     ```
 
   - __Example 5:__ Inference of orthologous gene groups.
 
     ```
-    $pcgap --orthoF --threads 4 --AAsPath <PATH>
+    $pgcgap --orthoF --threads 4 --AAsPath <PATH>
     ```
 
   - __Example 6:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
     ```
-    $pcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
+    $pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
     ```
 
   - __Example 7:__ Run COG annotation for each strain.
 
     ```
-    $pcgap --COG --threads 4 --AAsPath <PATH>
+    $pgcgap --COG --threads 4 --AAsPath <PATH>
     ```
 
   - __Example 8:__ Varients calling and phylogenetic tree construction based on reference genome.
 
     ```
-    $pcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
+    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
     ```
 ## Generating Input files
 
 ### Working directory
-The directory where the PCGAP software runs.
+The directory where the PGCGAP software runs.
 
 ### --Assemble
 Pair-end reads of all strains in a directory (default: ./Reads/ under the working directory).
@@ -531,23 +531,23 @@ Directorys containing substitutions (snps) and insertions/deletions (indels) of 
 
 ## License
 
-PCGAP is free software, licensed under GPLv3.
+PGCGAP is free software, licensed under GPLv3.
 
 ## Feedback/Issues
 
-Please report any issues to the [issues page](https://github.com/liaochenlanruo/pcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
+Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
 ## Citation
 
 If you use this software please cite:
 =======
-# PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
+# PGCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
 
-[English Readme](https://github.com/liaochenlanruo/pcgap/blob/master/README.md) | [中文说明](https://github.com/liaochenlanruo/pcgap/blob/master/README_Chinese.md)
+[English Readme](https://github.com/liaochenlanruo/pgcgap/blob/master/README.md) | [中文说明](https://github.com/liaochenlanruo/pgcgap/blob/master/README_Chinese.md)
 
 ## Contents
 
-- [PCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline](#PCGAP---the-Prokaryotic-Comparative-Genomics-Analysis-Pipeline)
+- [PGCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline](#PGCGAP---the-Prokaryotic-Comparative-Genomics-Analysis-Pipeline)
     - [Introduction](#Introduction)
     - [Installation](#Installation)
     - [Required dependencies](#Required-dependencies)
@@ -575,7 +575,7 @@ If you use this software please cite:
 
 ## Introduction
 
-PCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
 
 ## Installation
 
@@ -583,7 +583,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - Bioconda - OSX/Linux
     ```
-    $conda install pcgap
+    $conda install pgcgap
     ```
 
 
@@ -630,13 +630,13 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - __Print the help messages:__
     ```
-    $pcgap --help
+    $pgcgap --help
     ```
 <br/>
 
 - __General usage:__
     ```
-    $pcgap [Fuctions] [options]
+    $pgcgap [Fuctions] [options]
     ```
 <br/>
 
@@ -858,7 +858,7 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
     ```
-    $pcgap --check-external-programs
+    $pgcgap --check-external-programs
     ```
 <br/>
 
@@ -868,54 +868,54 @@ The software was only tested on Linux64 platform, The MacOS may also be good in 
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
     ```
-    $pcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
+    $pgcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
     ```
 
   - __Example 2:__ Conduct reads assembly, gene predition and annotation.
 
     ```
-    $pcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+    $pgcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
     ```
 
   - __Example 3:__ Constructing single core protein tree and core SNPs tree.
 
     ```
-    $pcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
+    $pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
     ```
 
   - __Example 4:__ Conduct pan-genome analysis.
 
     ```
-    $pcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
+    $pgcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
     ```
 
   - __Example 5:__ Inference of orthologous gene groups.
 
     ```
-    $pcgap --orthoF --threads 4 --AAsPath <PATH>
+    $pgcgap --orthoF --threads 4 --AAsPath <PATH>
     ```
 
   - __Example 6:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
     ```
-    $pcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
+    $pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
     ```
 
   - __Example 7:__ Run COG annotation for each strain.
 
     ```
-    $pcgap --COG --threads 4 --AAsPath <PATH>
+    $pgcgap --COG --threads 4 --AAsPath <PATH>
     ```
 
   - __Example 8:__ Varients calling and phylogenetic tree construction based on reference genome.
 
     ```
-    $pcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
+    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
     ```
 ## Generating Input files
 
 ### Working directory
-The directory where the PCGAP software runs.
+The directory where the PGCGAP software runs.
 
 ### --Assemble
 Pair-end reads of all strains in a directory (default: ./Reads/ under the working directory).
@@ -1073,11 +1073,11 @@ Directorys containing substitutions (snps) and insertions/deletions (indels) of 
 
 ## License
 
-PCGAP is free software, licensed under GPLv3.
+PGCGAP is free software, licensed under GPLv3.
 
 ## Feedback/Issues
 
-Please report any issues to the [issues page](https://github.com/liaochenlanruo/pcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
+Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
 ## Citation
 
