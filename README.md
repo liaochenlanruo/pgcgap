@@ -1,4 +1,4 @@
-# PGCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
+# PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
