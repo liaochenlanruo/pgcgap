@@ -105,6 +105,17 @@ Check if all of the required external programs can be found and are executable, 
 
 $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
 
+=over 30
+
+=item B<[--setup-COGdb]>
+
+Setup COG database. Users should execute "pgcgap --setup-COGdb" after first installation of pgcgap
+
+=back
+
+=cut
+
+$options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
 =head2 *********************************************************** Fuctions ***********************************************************
 
@@ -995,7 +1006,7 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 =for text
 
 
-    Software: PCGP - The prokaryotic comparative genomics pipeline
+    Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
 
     Author: Hualin Liu
@@ -1007,8 +1018,8 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
     Citation: 
 
 
-
 =end text
+
 
 =head1 CODES
 
@@ -1016,11 +1027,14 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 
 tee STDOUT, ">$opt_logs";
 
-GetOptions(%options) or pod2usage(1);
+GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
+
 if($opt_version){
     print "coreTree version: 1.0\n";
     exit 0;
 }
+
+#pod2usage( -verbose => 1 ) if $opt_help;
 pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
 chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttreeMP_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
@@ -1056,6 +1070,14 @@ sub check_external_programs{
 	exit($fail);
 }
 
+#=============================== setup COG database ================================================
+if ($opt_setup_COGdb) {
+	system("mkdir -p ~/COGdb");
+	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
+	system("gunzip prot2003-2014.fa.gz");
+	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
+	system("mv COG_2014.phr COG_2014.pin COG_2014.psq cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab ~/COGdb/");
+}
 #===================================================================================================
 my $time_start = $^T;
 my $working_dir = getcwd;
