@@ -108,6 +108,12 @@ $conda install pgcgap
     ```
 <br/>
 
+- __Setup COG database:__ (Users should execute this after first installation of pgcgap)
+    ```
+    $pgcgap --setup-COGdb
+    ```
+<br/>
+
 - __FUCTIONS:__
 
   - __[--All]__                          Perform all functions with one command
@@ -323,6 +329,11 @@ $conda install pgcgap
   - __[--snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
 
   - __[--sickle-bin (PATH)]__            Path to the sickle-trim binary file. Default tries if sickle is in PATH.
+<br/>
+
+- __Setup COG database__
+
+  - __[--setup-COGdb]__                  Users should execute this after first installation of pgcgap.
 <br/>
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
