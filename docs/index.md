@@ -38,10 +38,21 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 The software was only tested on Linux64 platform, The MacOS may also be good in theory. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the "pan2nal" and "OrthoFinder" should be installed separately!__
 
-- Bioconda - OSX/Linux
-    ```
-    $conda install pgcgap
-    ```
+__Step1: Install PAL2NAL__
+
+Download [PAL2NAL](http://www.bork.embl.de/pal2nal/distribution/pal2nal.v14.tar.gz) and uncompress, then copy the "pal2nal.pl" to a path in the environment variable.
+
+__Step2: Install OrthoFinder__
+
+```
+$conda install orthofinder
+```
+
+__Step3: Install pgcgap__
+
+```
+$conda install pgcgap
+```
 
 
 ## Required dependencies
