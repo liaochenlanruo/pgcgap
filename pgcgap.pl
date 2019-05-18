@@ -1076,7 +1076,7 @@ if ($opt_setup_COGdb) {
 	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 	system("gunzip prot2003-2014.fa.gz");
 	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
-	system("mv COG_2014.phr COG_2014.pin COG_2014.psq cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab ~/COGdb/");
+	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab ~/COGdb/");
 }
 #===================================================================================================
 my $time_start = $^T;
