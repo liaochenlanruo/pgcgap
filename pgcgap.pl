@@ -1072,12 +1072,22 @@ sub check_external_programs{
 
 #=============================== setup COG database ================================================
 if ($opt_setup_COGdb) {
-	system("mkdir -p ~/COGdb");
+	my $pgcgap_dir;
+	my $path = `whereis pgcgap`;
+	if ($path=~/(.+)\/pgcgap/) {
+		$pgcgap_dir = $1;
+	}
+	#system("mkdir -p ~/COGdb");
 	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 	system("gunzip prot2003-2014.fa.gz");
 	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
-	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab ~/COGdb/");
+	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COG*");
+	system("chmod a+x $pgcgap_dir/cog2003-2014.csv");
+	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
+	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
 }
+
 #===================================================================================================
 my $time_start = $^T;
 my $working_dir = getcwd;
