@@ -1086,6 +1086,7 @@ if ($opt_setup_COGdb) {
 	system("chmod a+x $pgcgap_dir/cog2003-2014.csv");
 	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
 	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
+	system("rm prot2003-2014.fa prot2003-2014.gi2gbk.tab prot2003-2014.tab Readme.201610.txt");
 }
 
 #===================================================================================================
