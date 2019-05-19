@@ -1070,13 +1070,15 @@ sub check_external_programs{
 	exit($fail);
 }
 
+#=============================== Get bin PATH ======================================================
+my $pgcgap_dir;
+my $bin = `which pgcgap`;
+if ($bin=~/(.+)\/pgcgap/) {
+	$pgcgap_dir = $1;
+}
+
 #=============================== setup COG database ================================================
 if ($opt_setup_COGdb) {
-	my $pgcgap_dir;
-	my $path = `whereis pgcgap`;
-	if ($path=~/(.+)\/pgcgap/) {
-		$pgcgap_dir = $1;
-	}
 	#system("mkdir -p ~/COGdb");
 	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 	system("gunzip prot2003-2014.fa.gz");
@@ -1702,8 +1704,8 @@ if ($opt_All or $opt_Pan) {
 	system("roary -p $opt_threads -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
 	chdir "Results/PanGenome";
 	system("create_pan_genome_plots.R");#create pan genome plots
-	system("plot_3Dpie.R");#plot pangenome 3D-pie
-	system("fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
+	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
+	system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
 	#system("fasttree -nt -gtr core_gene_alignment.aln > core_gene_tree.nwk");
 	my $time_pand = time();
 	my $time_pan = ($time_pand - $time_pans)/3600;
@@ -1729,8 +1731,8 @@ if ($opt_All or $opt_ANI) {
 	system("mkdir Results/ANI");
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
-	system("get_ANImatrix.pl");##
-	system("Plot_ANIheatmap.R");##
+	system("perl $pgcgap_dir/get_ANImatrix.pl");##
+	system("Rscript $pgcgap_dir/Plot_ANIheatmap.R");##
 	chdir $working_dir;
 	my $time_ANId = time();
 	my $time_ANI = ($time_ANId - $time_ANIs)/3600;

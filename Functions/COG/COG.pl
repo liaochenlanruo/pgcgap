@@ -61,6 +61,13 @@ if ($path=~/(.+)\/COG_2014.*/) {
 	$cogdb_dir = $1;
 }
 
+#=============================== Get bin PATH ======================================================
+my $COG_dir;
+my $bin = `which COG.pl`;
+if ($bin=~/(.+)\/COG.pl/) {
+	$COG_dir = $1;
+}
+
 #============================Run blastp===============================================
 chdir $opt_AAsPath;
 my @faa = glob("*.faa");
@@ -247,7 +254,7 @@ foreach (@faa){
 
 
 #=================================Plot=================================================
-	system("Plot_COG.R $super_cog");
+	system("Rscript $COG_dir/Plot_COG.R $super_cog");
 }
 
 
@@ -262,4 +269,4 @@ sub rm_duplicate {
 
 #============================Get the relative abundance table==========================
 
-system("get_flag_relative_abundances_table.pl");
+system("perl $COG_dir/get_flag_relative_abundances_table.pl");
