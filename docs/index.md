@@ -4,31 +4,33 @@
 
 ## Contents
 
-- [PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline](#PGCGAP---the-Prokaryotic-Genomics-and-Comparative-Genomics-Analysis-Pipeline)
-    - [Introduction](#Introduction)
-    - [Installation](#Installation)
-    - [Required dependencies](#Required-dependencies)
-    - [Usage](#Usage)
-    - [Generating Input files](#Generating-Input-files)
-        - [Working directory](#Working-directory)
-        - [--Assemble](#--Assemble)
-        - [--ANI](#--ANI)
-        - [--CoreTree](#--CoreTree)
-        - [--OrthoF](#--OrthoF)
-        - [--Pan](#--Pan)
-        - [--COG](#--COG)
-        - [--VAR](#--VAR)
-    - [Output Files](#Output-Files)
-        - [--Assemble](#--Assemble)
-        - [--ANI](#--ANI)
-        - [--CoreTree](#--CoreTree)
-        - [--OrthoF](#--OrthoF)
-        - [--Pan](#--Pan)
-        - [-- COG](#---COG)
-        - [--VAR](#--VAR)
-    - [License](#License)
-    - [Feedback/Issues](#Feedback/Issues)
-    - [Citation](#Citation)
+<span id="Introduction">跳转内容目标</span>
+- [Introduction](#Introduction)
+- [Installation](#Installation)
+- [Required dependencies](#Required-dependencies)
+- [Usage](#Usage)
+- [Generating Input files](#Generating-Input-files)
+    - [Working directory](#Working-directory)
+    - [--Assemble](#--Assemble)
+    - [--ANI](#--ANI)
+    - [--CoreTree](#--CoreTree)
+    - [--OrthoF](#--OrthoF)
+    - [--Pan](#--Pan)
+    - [--COG](#--COG)
+    - [--VAR](#--VAR)
+- [Output Files](#Output-Files)
+    - [--Assemble](#--Assemble)
+    - [--ANI](#--ANI)
+    - [--CoreTree](#--CoreTree)
+    - [--OrthoF](#--OrthoF)
+    - [--Pan](#--Pan)
+    - [-- COG](#--COG)
+    - [--VAR](#--VAR)
+- [License](#License)
+- [Feedback/Issues](#Feedback/Issues)
+- [Citation](#Citation)
+- [FAQ](#FAQ)
+
 
 ## Introduction
 
@@ -1113,7 +1115,7 @@ If you use this software please cite:
 
 ## FAQ
 
-#### 1. --VAR ran failed to get annotated VCFs and Core results
+### 1. --VAR ran failed to get annotated VCFs and Core results
 
 Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEFF error. Users can install JDK8 to solve this problem. 
 
