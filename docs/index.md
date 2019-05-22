@@ -1110,3 +1110,15 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 If you use this software please cite:
 
+
+## FAQ
+
+#### 1. --VAR ran failed to get annotated VCFs and Core results
+
+Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEFF error. Users can install JDK8 to solve this problem. 
+
+```
+$conda install java-jdk=8.0.112
+```
+
+Click [here](https://github.com/tseemann/snippy/issues/259) for more solutions.
