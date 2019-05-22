@@ -29,7 +29,7 @@
 - [Feedback and Issues](#feedback-and-issues)
 - [Citation](#citation)
 - [FAQ](#faq)
-  * [1. "VAR" ran failed to get annotated VCFs and Core results](#1--var-ran-failed-to-get-annotated-vcfs-and-core-results)
+  * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#Q1--var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/?_blank'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -575,7 +575,7 @@ If you use this software please cite:
 
 ## FAQ
 
-### 1. "VAR" ran failed to get annotated VCFs and Core results
+### Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results
 
 Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEFF error. Users can install JDK8 to solve this problem. 
 
