@@ -4,7 +4,36 @@
 
 ## Contents
 
-<span id="Introduction">跳转内容目标</span>
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Required dependencies](#required-dependencies)
+- [Usage](#usage)
+- [Generating Input files](#generating-input-files)
+  * [Working directory](#working-directory)
+  * [--Assemble](#--assemble)
+  * [--ANI](#--ani)
+  * [--CoreTree](#--coretree)
+  * [--OrthoF](#--orthof)
+  * [--Pan](#--pan)
+  * [--COG](#--cog)
+  * [--VAR](#--var)
+- [Output Files](#output-files)
+  * [--Assemble](#--assemble-1)
+  * [--ANI](#--ani-1)
+  * [--CoreTree](#--coretree-1)
+  * [--OrthoF](#--orthof-1)
+  * [--Pan](#--pan-1)
+  * [-- COG](#---cog)
+  * [--VAR](#--var-1)
+- [License](#license)
+- [Feedback/Issues](#feedback-issues)
+- [Citation](#citation)
+- [FAQ](#faq)
+  * [1. --VAR ran failed to get annotated VCFs and Core results](#1---var-ran-failed-to-get-annotated-vcfs-and-core-results)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 - [Introduction](#Introduction)
 - [Installation](#Installation)
 - [Required dependencies](#Required-dependencies)
