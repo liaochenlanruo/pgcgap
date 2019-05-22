@@ -10,7 +10,7 @@
 - [Usage](#usage)
 - [Generating Input files](#generating-input-files)
   * [Working directory](#working-directory)
-  * [--Assemble](#--assemble)
+  * [--Assemble](#\-\-assemble)
   * [--ANI](#--ani)
   * [--CoreTree](#--coretree)
   * [--OrthoF](#--orthof)
@@ -26,7 +26,7 @@
   * [-- COG](#---cog)
   * [--VAR](#--var-1)
 - [License](#license)
-- [Feedback/Issues](#feedback-issues)
+- [Feedback and Issues](#feedback-and-issues)
 - [Citation](#citation)
 - [FAQ](#faq)
   * [1. --VAR ran failed to get annotated VCFs and Core results](#1---var-ran-failed-to-get-annotated-vcfs-and-core-results)
@@ -564,7 +564,7 @@ Directorys containing substitutions (snps) and insertions/deletions (indels) of 
 
 PGCGAP is free software, licensed under GPLv3.
 
-## Feedback/Issues
+## Feedback and Issues
 
 Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
