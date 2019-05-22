@@ -29,9 +29,9 @@
 - [Feedback and Issues](#feedback-and-issues)
 - [Citation](#citation)
 - [FAQ](#faq)
-  * [1. "VAR" ran failed to get annotated VCFs and Core results](#1---var-ran-failed-to-get-annotated-vcfs-and-core-results)
+  * [1. "VAR" ran failed to get annotated VCFs and Core results](#1--var-ran-failed-to-get-annotated-vcfs-and-core-results)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/?_blank'>Table of contents generated with markdown-toc</a></i></small>
 
 
 ## Introduction
@@ -445,7 +445,7 @@ Directory contain contig/scaffold of all strains.
 <br/>
 
 - **Results/Annotations/*_annotation**<br/>
-Directorys contain [annotation files](https://github.com/tseemann/prokka) of each strain.
+Directorys contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.
 <br/>
 
 - __Results/Annotations/AAs__<br/>
@@ -467,7 +467,7 @@ query genome, reference genome, ANI value, count of bidirectional fragment mappi
 <br/>
 
 - __Results/ANI/ANIs.matrix__<br/>
-file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix)
+file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank)
 <br/>
 
 - __Results/ANI/ANIs.heatmap__<br/>
@@ -501,7 +501,7 @@ The phylogenetic tree file of SNPs of single-copy genes for all strains.
 <br/>
 
 - __Results/CoreTrees/faa2ffn/gubbins.*__<br/>
-See [gubbins](https://github.com/sanger-pathogens/gubbins#output-files) outputs
+See [gubbins](https://github.com/sanger-pathogens/gubbins#output-files?_blank) outputs
 <br/>
 
 - __Results/CoreTrees/"Other_files"__<br/>
@@ -511,7 +511,7 @@ Intermediate directorys and files.
 ### OrthoF
 
 - __Results/OrthoF/Results_orthoF__<br/>
-Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder) outputs
+Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs
 <br/>
 
 ### Pan
@@ -529,7 +529,7 @@ A figure showing the tree compared to a matrix with the presence and absence of 
 <br/>
 
 - __Results/PanGenome/Other_files__<br/>
-see [roary](https://sanger-pathogens.github.io/Roary/) outputs
+see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs
 <br/>
 
 ### COG
@@ -551,7 +551,7 @@ A table containing the relative abundance of each flag for all strains
 
 ### VAR
 - __Results/Varients/directory-named-in-strains__<br/>
-Directorys containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy) outputs for detail.
+Directorys containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy?_blank) outputs for detail.
 
 - __Results/Varients/Core__<br/>
   The directory containing Core SNP phylogeny files
@@ -567,7 +567,7 @@ PGCGAP is free software, licensed under GPLv3.
 
 ## Feedback and Issues
 
-Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
+Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues?_blank) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
 ## Citation
 
@@ -575,7 +575,7 @@ If you use this software please cite:
 
 ## FAQ
 
-### 1. --VAR ran failed to get annotated VCFs and Core results
+### 1. "VAR" ran failed to get annotated VCFs and Core results
 
 Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEFF error. Users can install JDK8 to solve this problem. 
 
@@ -583,4 +583,4 @@ Check the log file named in "strain_name.log" under Results/Varients/<strain_nam
 $conda install java-jdk=8.0.112
 ```
 
-Click [here](https://github.com/tseemann/snippy/issues/259) for more solutions.
+Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
