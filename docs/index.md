@@ -10,26 +10,26 @@
 - [Usage](#usage)
 - [Generating Input files](#generating-input-files)
   * [Working directory](#working-directory)
-  * [--Assemble](#\-\-assemble)
-  * [--ANI](#--ani)
-  * [--CoreTree](#--coretree)
-  * [--OrthoF](#--orthof)
-  * [--Pan](#--pan)
-  * [--COG](#--cog)
-  * [--VAR](#--var)
+  * [Assemble](#assemble)
+  * [ANI](#ani)
+  * [CoreTree](#coretree)
+  * [OrthoF](#orthof)
+  * [Pan](#pan)
+  * [COG](#cog)
+  * [VAR](#var)
 - [Output Files](#output-files)
-  * [--Assemble](#--assemble-1)
-  * [--ANI](#--ani-1)
-  * [--CoreTree](#--coretree-1)
-  * [--OrthoF](#--orthof-1)
-  * [--Pan](#--pan-1)
-  * [-- COG](#---cog)
-  * [--VAR](#--var-1)
+  * [Assemble](#assemble-1)
+  * [ANI](#ani-1)
+  * [CoreTree](#coretree-1)
+  * [OrthoF](#orthof-1)
+  * [Pan](#pan-1)
+  * [COG](#cog)
+  * [VAR](#var-1)
 - [License](#license)
 - [Feedback and Issues](#feedback-and-issues)
 - [Citation](#citation)
 - [FAQ](#faq)
-  * [1. --VAR ran failed to get annotated VCFs and Core results](#1---var-ran-failed-to-get-annotated-vcfs-and-core-results)
+  * [1. "VAR" ran failed to get annotated VCFs and Core results](#1---var-ran-failed-to-get-annotated-vcfs-and-core-results)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -401,31 +401,32 @@ $pgcgap --setup-COGdb
     ```
     $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
     ```
+
 ## Generating Input files
 
 ### Working directory
 The directory where the PGCGAP software runs.
 
-### --Assemble
+### Assemble
 Pair-end reads of all strains in a directory (default: ./Reads/ under the working directory).
 
-### --ANI
+### ANI
 
 QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the "--Assemble" fuction was run first, the list file will be generated automatically.
 
-### --CoreTree
+### CoreTree
 Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directorys (default: ./Results/Annotations/AAs/ and ./Results/Annotations/CDs/). If the "--Assemble" fuction was run first, the files will be generated automatically.
 
-### --OrthoF
+### OrthoF
 A set of protein sequence files (one per species) in FASTA format under a directory (default: ./Results/Annotations/AAs/). If the "--Assemble" fuction was run first, the files will be generated automatically.
 
-### --Pan
+### Pan
 GFF3 files (With ".gff" as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the "--Assemble" fuction was run first, the files will be generated automatically.
 
-### --COG
+### COG
 Amino acids file (With ".faa" as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the "--Assemble" fuction was run first, the files will be generated automatically.
 
-### --VAR
+### VAR
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
 <br/>
 
@@ -433,7 +434,7 @@ Amino acids file (With ".faa" as the suffix) of each strain placed into a direct
 
 ## Output Files
 
-### --Assemble
+### Assemble
 
 - **Results/Assembles/*_assembly**<br/>
 Directorys contain assembly files and information of each strain.
@@ -459,7 +460,7 @@ Directory contain nucleotide sequences of all strains.
 Directory contain the master annotation of all strains in GFF3 format.
 
 
-### --ANI
+### ANI
 
 - __Results/ANI/ANIs__<br/>
 query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments
@@ -477,7 +478,7 @@ An ANI matrix of all strains
 The heatmap plot of "ANIs.heatmap"
 
 
-### --CoreTree
+### CoreTree
 
 - __Results/CoreTrees/faa/ALL.core.protein.fast__<br/>
 Concatenated and aligned sequences file of single-core proteins.
@@ -507,13 +508,13 @@ See [gubbins](https://github.com/sanger-pathogens/gubbins#output-files) outputs
 Intermediate directorys and files.
 <br/>
 
-### --OrthoF
+### OrthoF
 
 - __Results/OrthoF/Results_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder) outputs
 <br/>
 
-### --Pan
+### Pan
 
 - __Results/PanGenome/Pangenome_Pie.pdf__<br/>
 An 3D pie chart of the breakdown of genes and the number of isolate they are present in
@@ -531,7 +532,7 @@ A figure showing the tree compared to a matrix with the presence and absence of 
 see [roary](https://sanger-pathogens.github.io/Roary/) outputs
 <br/>
 
-### -- COG
+### COG
 
 - __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
 Intermediate files
@@ -548,7 +549,7 @@ A plot of super COG table in pdf format
 - __All_flags_relative_abundances.table__
 A table containing the relative abundance of each flag for all strains
 
-### --VAR
+### VAR
 - __Results/Varients/directory-named-in-strains__<br/>
 Directorys containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy) outputs for detail.
 
