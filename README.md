@@ -4,14 +4,14 @@
 
 ## Contents
 
-- [PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline](#PGCGAP---the-Prokaryotic-Genomics-and-Comparative-Genomics-Analysis-Pipeline)
-    - [Introduction](#Introduction)
-    - [Installation](#Installation)
-    - [Required dependencies](#Required-dependencies)
-    - [License](#License)
-    - [Feedback/Issues](#Feedback/Issues)
-    - [Citation](#Citation)
-    - [Usages](#Usages)
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Required dependencies](#required-dependencies)
+- [License](#license)
+- [Feedback and Issues](#feedback-and-issues)
+- [Citation](#citation)
+
+- [Usages](#usages)
 
 ## Introduction
 
@@ -41,10 +41,10 @@ __Step3: Setup COG database__ (Users should execute this after first installatio
 
 ```
 $pgcgap --setup-COGdb
-``
+```
+
 
 ## Required dependencies
-
 
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
@@ -85,13 +85,14 @@ $pgcgap --setup-COGdb
 
 PCGAP is free software, licensed under GPLv3.
 
-## Feedback/Issues
+## Feedback and Issues
 
 Please report any issues to the [issues page](https://github.com/liaochenlanruo/pcgap/issues) or email us at [liaochenlanruo@webmail.hzau.edu.cn](mailto:liaochenlanruo@webmail.hzau.edu.cn).
 
 ## Citation
 
 If you use this software please cite:
+
 
 ## Usages
 For more detial informations, please visit the webpage of [PGCGAP](https://liaochenlanruo.github.io/pgcgap?_blank).
