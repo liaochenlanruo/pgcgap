@@ -79,6 +79,7 @@ $pgcgap --setup-COGdb
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
+- [OpenJDK8](https://openjdk.java.net/)
 - [PAL2NAL v14](http://www.bork.embl.de/pal2nal/)
 - [Perl](http://www.perl.org/get.html) & the modules
   - [perl-bioperl](http://metacpan.org/pod/BioPerl)
