@@ -31,7 +31,7 @@
 - [FAQ](#faq)
   * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/?_blank'>Table of contents generated with markdown-toc</a></i></small>
+
 
 
 ## Introduction
