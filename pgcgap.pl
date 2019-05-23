@@ -893,15 +893,15 @@ $options{'mafft-bin=s'} = \( my $opt_mafft_bin = `which mafft 2>/dev/null` );
 
 =over 30
 
-=item B<[--fasttreeMP-bin (PATH)]>
+=item B<[--fasttree-bin (PATH)]>
 
-Path to the fasttreeMP binary file. Default tries if fasttreeMP is in PATH;
+Path to the fasttree binary file. Default tries if fasttree is in PATH;
 
 =back
 
 =cut
 
-$options{'fasttreeMP-bin=s'} = \( my $opt_fasttreeMP_bin = `which fasttreeMP 2>/dev/null` );
+$options{'fasttree-bin=s'} = \( my $opt_fasttree_bin = `which fasttree 2>/dev/null` );
 
 =over 30
 
@@ -1037,11 +1037,11 @@ if($opt_version){
 #pod2usage( -verbose => 1 ) if $opt_help;
 pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttreeMP_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
-pod2usage( -msg => 'fasttreeMP not in $PATH and binary not specified use --fasttreeMP-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fasttreeMP_bin);
+pod2usage( -msg => 'fasttree not in $PATH and binary not specified use --fasttree-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fasttree_bin);
 pod2usage( -msg => 'snp-sites not in $PATH and binary not specified use --snp-sites-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snpsites_bin);
 pod2usage( -msg => 'abyss not in $PATH and binary not specified use --abyss-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abyss_bin);
 pod2usage( -msg => 'prodigal not in $PATH and binary not specified use --prodigal-bin', -verbose => 0, -exitval => 1 ) unless ($opt_prodigal_bin);
@@ -1056,7 +1056,7 @@ pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bi
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttreeMP" => $opt_fasttreeMP_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1465,7 +1465,7 @@ if ($opt_All or $opt_CoreTree) {
 
 
 	print "Constructing ML tree of the single copy core proteins...\n\n";
-	system("fasttreeMP ALL.core.protein.fasta > ALL.core.protein.nwk");
+	system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
 	print "Constructing single copy core protein tree completed\n\n";
 	system("mv ALL.core.protein.nwk ../Results/CoreTrees/");
 	#===============================================================================
@@ -1672,14 +1672,14 @@ if ($opt_All or $opt_CoreTree) {
 		my $snp_return = system(@csnp);
 		if (!($snp_return == 0)) {
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
-			system("fasttreeMP -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
+			system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
 			system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
 		}else {
 			system("mv ALL.core.snp.fasta gubbins.* ../Results/CoreTrees/");
 			print "running gubbins successfully!\n";
 		}
 	}else {
-		system("fasttreeMP -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
+		system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
 		system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
 	}
 	

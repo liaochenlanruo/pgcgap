@@ -322,7 +322,7 @@ $pgcgap --setup-COGdb
 
   - __[--mafft-bin (PATH)]__             Path to mafft binary file. Default tries if mafft is in PATH;
 
-  - __[--fasttreeMP-bin (PATH)]__        Path to the fasttreeMP binary file. Default tries if fasttreeMP is in PATH;
+  - __[--fasttree-bin (PATH)]__        Path to the fasttree binary file. Default tries if fasttree is in PATH;
 
   - __[--pal2nal-bin (PATH)]__           Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
 
