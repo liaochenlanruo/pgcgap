@@ -416,7 +416,7 @@ Pair-end reads of all strains in a directory (default: ./Reads/ under the workin
 QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the "--Assemble" fuction was run first, the list file will be generated automatically.
 
 ### CoreTree
-Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directorys (default: ./Results/Annotations/AAs/ and ./Results/Annotations/CDs/). The ". Faa "and". FFN "files of same strain should have the same prefix name. The name of protein IDs and gene IDs shoud be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "--Assemble" fuction was run first, the files will be generated automatically.
+Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directorys (default: ./Results/Annotations/AAs/ and ./Results/Annotations/CDs/). The ".faa" and ".ffn" files of same strain should have the same prefix name. The name of protein IDs and gene IDs shoud be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "--Assemble" fuction was run first, the files will be generated automatically.
 
 ### OrthoF
 A set of protein sequence files (one per species) in FASTA format under a directory (default: ./Results/Annotations/AAs/). If the "--Assemble" fuction was run first, the files will be generated automatically.
