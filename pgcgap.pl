@@ -126,7 +126,7 @@ $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
 =item B<[--All]>
 
-Perform all functions with one command
+Perform Assemble, CoreTree, Pan, OrthoF, ANI and COG functions with one command
 
 =back
 
