@@ -54,7 +54,7 @@
 - [FAQ](#faq)
 
   * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
-  * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2.0-or-higher)
+  * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2-or-higher)
 
 
 
@@ -620,7 +620,7 @@ $conda install java-jdk=8.0.112
 
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
 
-### Q2 Could not determine version of minced please install version 2.0 or higher
+### Q2 Could not determine version of minced please install version 2 or higher
 When running prokka of Assemble founction, this error could happened, the error message shows as following:
 
 ```
