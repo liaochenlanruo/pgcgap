@@ -5,31 +5,57 @@
 ## Contents
 
 - [Introduction](#introduction)
+
 - [Installation](#installation)
+
 - [Required dependencies](#required-dependencies)
+
 - [Usage](#usage)
+
 - [Generating Input files](#generating-input-files)
+
   * [Working directory](#working-directory)
+
   * [Assemble](#assemble)
+
   * [ANI](#ani)
+
   * [CoreTree](#coretree)
+
   * [OrthoF](#orthof)
+  
   * [Pan](#pan)
   * [COG](#cog)
+
   * [VAR](#var)
+
 - [Output Files](#output-files)
+
   * [Assemble](#assemble-1)
+
   * [ANI](#ani-1)
+
   * [CoreTree](#coretree-1)
+
   * [OrthoF](#orthof-1)
+
   * [Pan](#pan-1)
+
   * [COG](#cog)
+
   * [VAR](#var-1)
+
 - [License](#license)
+
 - [Feedback and Issues](#feedback-and-issues)
+
 - [Citation](#citation)
+
 - [FAQ](#faq)
+
   * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
+  * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2.0-or-higher)
+
 
 
 
@@ -576,12 +602,50 @@ If you use this software please cite:
 
 ## FAQ
 
-### Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results
 
-Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEFF error. Users can install JDK8 to solve this problem. 
+### Q1 VAR founction ran failed to get annotated VCFs and Core results
+
+
+Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEff error. Users can install JDK8 to solve this problem.
+
+
 
 ```
+
 $conda install java-jdk=8.0.112
+
 ```
+
+
 
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
+
+### Q2 Could not determine version of minced please install version 2.0 or higher
+When running prokka of Assemble founction, this error could happened, the error message shows as following:
+
+```
+Error: A JNI error has occurred, please check your installation and try again
+Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:468)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:74)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:369)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:363)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:362)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
+[01:09:40] Could not determine version of minced - please install version 2.0 or higher
+```
+Users can downgrade the minced to version 0.3 to solve this problem.
+
+```
+$conda install minced=0.3
+```
+
+Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
+
