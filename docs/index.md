@@ -55,6 +55,7 @@
 
   * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
   * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2-or-higher)
+  * [Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib](#q3-dyld:-Library-not-loaded:-@rpath/libcrypto.1.0.0.dylib)
 
 
 
@@ -648,4 +649,23 @@ $conda install minced=0.3
 ```
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
+
+### Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib
+
+This error may happen when running VAR function on macOS. It is an error of openssl. Users can solve this problem as following:
+
+```
+#Firstly, install brew if have not installed before
+$ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+#Install openssl with brew
+brew install openssl
+
+#Create the soft link for libraries
+ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+
+ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+```
+
+Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations
 
