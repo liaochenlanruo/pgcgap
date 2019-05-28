@@ -19,7 +19,7 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 ## Installation
 
-The software was only tested on Linux64 platform, The MacOS may also be good in theory. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the "Gubbins" should be installed separately__ because of it relys on python3, while PGCGAP relys on python2.
+The software was tested successfully on Linux x64 platform and macOS. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the "Gubbins" should be installed separately__ because of it relys on python3, while PGCGAP relys on python2.
 
 
 __Step1: Install Gubbins__
@@ -48,6 +48,7 @@ $pgcgap --setup-COGdb
 
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
+- [Coreutils](https://www.gnu.org/software/coreutils/)
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
@@ -76,11 +77,14 @@ $pgcgap --setup-COGdb
 - [R](https://www.r-project.org/) & the packages
   - [corrplot](https://cran.r-project.org/web/packages/corrplot/index.html)
   - [ggplot2](https://cran.r-project.org/web/packages/ggplot2/)
+  - [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html)
   - [plotrix](https://cran.r-project.org/web/packages/plotrix/)
 - [Roary](https://sanger-pathogens.github.io/Roary/)
 - [Sickle-trim](https://github.com/najoshi/sickle)
 - [Snippy](https://github.com/tseemann/snippy)
 - [Snp-sites](https://github.com/sanger-pathogens/snp-sites)
+- [wget](https://www.gnu.org/software/wget/)
+
 
 ## License
 

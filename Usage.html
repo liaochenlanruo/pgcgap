@@ -55,7 +55,7 @@
 
 <h1 id="USAGE">USAGE</h1>
 
-<pre><code>  $ pgcgap [Fuctions] [options]
+<pre><code>  $ pgcgap [Fuctions] [Options]
 
   example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
 
@@ -81,7 +81,7 @@
 
   example 6: Compute whole-genome Average Nucleotide Identity (ANI)
 
-             pgcgap --ANI --threads 4 --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;FILE&gt;
+             pgcgap --ANI --threads 4 --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;FILE&gt; --Scaf_suffix &lt;STRING&gt;
 
   example 7: Run COG annotation for each strain
 
@@ -565,6 +565,16 @@ If you use the results of "--ANI" function in your work, please also cite:
 <dd>
 
 <p>The name of output file ( Default &quot;Results/ANI/ANIs&quot; )</p>
+
+</dd>
+</dl>
+
+<dl>
+
+<dt id="Scaf_suffix-STRING"><b>[--Scaf_suffix (STRING)]</b></dt>
+<dd>
+
+<p>The suffix of scaffolds or genomes ( Default &quot;-8.fa&quot; )</p>
 
 </dd>
 </dl>

@@ -1,6 +1,47 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
+use Getopt::Long;
+use Pod::Usage;
+use Getopt::Std;
+
+my %options;
+
+=head1 USAGE
+
+  $ perl get_ANImatrix.pl
+
+=head1 OPTIONS
+
+=over 30
+
+=item B<[--help]>
+
+Print the help message and exit
+
+=back
+
+=cut
+
+$options{'help|h|?'} = \( my $opt_help );
+
+=over 30
+
+=item B<[--Scaf_suffix (STRING)]>
+
+The suffix of scaffolds or genomes ( Default "-8.fa" )
+
+=back
+
+=cut
+
+$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
+
+
+GetOptions(%options) or pod2usage(1);
+
+pod2usage(1) if ($opt_help);
+
 
 
 my %hash;
@@ -15,7 +56,7 @@ while (<IN>) {
 	my $l;
 	my $r;
 	my @lines = split /\t/;
-	if ($lines[0]=~/.+\/(\S+)-8.fa/) {
+	if ($lines[0]=~/.+\/(\S+)$opt_Scaf_suffix/) {
 		$scafl{$1} = 1;
 		$l = $1;
 	}elsif ($lines[0]=~/.+\/(\S+)/) {
@@ -23,7 +64,7 @@ while (<IN>) {
 		$l = $1;
 	}
 
-	if ($lines[1]=~/.+\/(\S+)-8.fa/) {
+	if ($lines[1]=~/.+\/(\S+)$opt_Scaf_suffix/) {
 		$scafr{$1} = 1;
 		$r = $1;
 	}elsif ($lines[0]=~/.+\/(\S+)/) {

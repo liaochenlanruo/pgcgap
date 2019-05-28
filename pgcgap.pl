@@ -29,7 +29,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 =head1 USAGE
 
-  $ pgcgap [Fuctions] [options]
+  $ pgcgap [Fuctions] [Options]
 
   example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
 
@@ -55,7 +55,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   example 6: Compute whole-genome Average Nucleotide Identity (ANI)
 
-             pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE>
+             pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE> --Scaf_suffix <STRING>
 
   example 7: Run COG annotation for each strain
 
@@ -673,6 +673,18 @@ The name of output file ( Default "Results/ANI/ANIs" )
 =cut
 
 $options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
+
+=over 30
+
+=item B<[--Scaf_suffix (STRING)]>
+
+The suffix of scaffolds or genomes ( Default "-8.fa" )
+
+=back
+
+=cut
+
+$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
 
 =head3 ===================================== Options for "--VAR" analysis ============================================================
 
@@ -1731,23 +1743,12 @@ if ($opt_All or $opt_ANI) {
 	system("mkdir Results/ANI");
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
-	system("perl $pgcgap_dir/get_ANImatrix.pl");##
-	system("Rscript $pgcgap_dir/Plot_ANIheatmap.R");##
+	system("perl $pgcgap_dir/get_ANImatrix.pl --Scaf_suffix $opt_Scaf_suffix");
+	system("Rscript $pgcgap_dir/Plot_ANIheatmap.R");
 	chdir $working_dir;
 	my $time_ANId = time();
 	my $time_ANI = ($time_ANId - $time_ANIs)/3600;
 	print "The 'ANI' program runs for $time_ANI hours.\n\n";
-}
-
-if ($opt_All or $opt_COG) {
-	my $time_COGs = time();
-	print "Performing --COG function...\n\n";
-	system("mkdir Results/COG");
-	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
-	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
-	chdir $working_dir;
-	my $time_COGd = time();
-	my $time_COG = ($time_COGd - $time_COGs)/3600;
 }
 
 if ($opt_VAR) {
@@ -1806,6 +1807,19 @@ if ($opt_VAR) {
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
 	print "The 'ANI' program runs for $time_VAR hours.\n\n";
 }
+
+if ($opt_All or $opt_COG) {
+	my $time_COGs = time();
+	print "Performing --COG function...\n\n";
+	system("mkdir Results/COG");
+	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
+	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
+	chdir $working_dir;
+	my $time_COGd = time();
+	my $time_COG = ($time_COGd - $time_COGs)/3600;
+	print "The 'COG' program runs for $time_COG hours.\n\n";
+}
+
 my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
 print "All programs finished in $time_total hours.\n\n";
