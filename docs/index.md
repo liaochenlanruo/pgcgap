@@ -56,6 +56,7 @@
   * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
   * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2-or-higher)
   * [Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib](#q3-dyld:-Library-not-loaded:-@rpath/libcrypto.1.0.0.dylib)
+  * [Q4 Use of uninitialized value in require at Encode.pm line 61](#q4-use-of-uninitialized-value-in-require-at-encode.pm-line-61)
 
 
 
@@ -657,7 +658,7 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 ### Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib
 
-This error may happen when running VAR function on macOS. It is an error of openssl. Users can solve this problem as following:
+This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as following:
 
 ```
 #Firstly, install brew if have not installed before
@@ -674,3 +675,8 @@ ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations
 
+### Q4 Use of uninitialized value in require at Encode.pm line 61
+
+This warning may happen when running function "Pan". It is an warning of Roary software. 
+The content of line 61 is "require Encode::ConfigLocal;". Users can ignore the warning.
+Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details:
