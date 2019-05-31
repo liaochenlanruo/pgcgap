@@ -1042,7 +1042,7 @@ tee STDOUT, ">$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "coreTree version: 1.0\n";
+    print "coreTree version: 1.0.3\n";
     exit 0;
 }
 
@@ -1730,7 +1730,7 @@ if ($opt_All or $opt_OrthoF) {
 	print "Performing --OrthoF function...\n\n";
 	system("mkdir Results/OrthoF");
 	my $orthoFprefix = "orthoF";
-	system("orthofinder -a $opt_threads -S $opt_Sprogram -n $orthoFprefix -f $opt_AAsPath");
+	system("orthofinder -a $opt_threads -t $opt_threads -S $opt_Sprogram -n $orthoFprefix -f $opt_AAsPath");
 	my $time_OrthoFd = time();
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
