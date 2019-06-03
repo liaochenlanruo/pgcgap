@@ -1042,7 +1042,7 @@ tee STDOUT, ">$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "coreTree version: 1.0.4\n";
+    print "PGCGAP version: 1.0.4\n";
     exit 0;
 }
 
