@@ -1728,13 +1728,15 @@ if ($opt_All or $opt_Pan) {
 if ($opt_All or $opt_OrthoF) {
 	my $time_OrthoFs = time();
 	print "Performing --OrthoF function...\n\n";
-	system("mkdir Results/OrthoF");
+	#system("mkdir Results/OrthoF");
 	my $orthoFprefix = "orthoF";
 	system("orthofinder -a $opt_threads -t $opt_threads -S $opt_Sprogram -n $orthoFprefix -f $opt_AAsPath");
 	my $time_OrthoFd = time();
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
-	system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
+	#system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
+	system("mv $opt_AAsPath/OrthoFinder/ Results/");
+	#system("mv $opt_AAsPath/Results_orthoF/ Results/");
 }
 
 if ($opt_All or $opt_ANI) {

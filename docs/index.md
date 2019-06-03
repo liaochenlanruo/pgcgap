@@ -544,7 +544,7 @@ Intermediate directorys and files.
 
 ### OrthoF
 
-- __Results/OrthoF/Results_orthoF__<br/>
+- __Results/OrthoFinder/Results_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs
 <br/>
 
