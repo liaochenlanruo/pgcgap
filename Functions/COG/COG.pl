@@ -4,6 +4,7 @@ use warnings;
 use Getopt::Long;
 use Pod::Usage;
 use Getopt::Std;
+use Parallel::ForkManager;
 
 my %options;
 
@@ -68,17 +69,43 @@ if ($bin=~/(.+)\/COG.pl/) {
 	$COG_dir = $1;
 }
 
-#============================Run blastp===============================================
 chdir $opt_AAsPath;
 my @faa = glob("*.faa");
-foreach (@faa){
-	$_ =~ /(\S+).faa/;
+my $pm = new Parallel::ForkManager($opt_threads);
+foreach (@faa) {
+	$pm->start and next;
+	&run_COG;
+	$pm->finish;
+}
+$pm->wait_all_children;
+
+
+#============================Get the relative abundance table==========================
+
+system("perl $COG_dir/get_flag_relative_abundances_table.pl");
+system("Rscript $COG_dir/Plot_COG_Abundance.R");
+
+sub rm_duplicate {
+	my $array_ref = shift;
+	my %hash;
+	foreach  ( @{$array_ref}) {
+		$hash{$_}++;
+	}
+	return keys %hash;
+}
+
+
+sub run_COG {
+	#my $faa = shift;
+	$_ =~ /(.+).faa/;
 	my $name = $1;
 	my $blastout = $name . ".COG.xml"; 
 	my $cog_gi = $name . ".2gi.table";
 	my $cog_ids = $name . ".2id.table";
 	my $super_id = $name . ".2Sid.table";
 	my $super_cog = $name . ".2Scog.table";
+
+#============================Run blastp===============================================
 
 	system("blastp -db $cogdb_dir/COG_2014 -query $_ -out $blastout -evalue 1e-5 -outfmt 5 -show_gis -max_target_seqs 1 -num_threads $opt_threads");
 
@@ -256,17 +283,3 @@ foreach (@faa){
 #=================================Plot=================================================
 	system("Rscript $COG_dir/Plot_COG.R $super_cog");
 }
-
-
-sub rm_duplicate {
-	my $array_ref = shift;
-	my %hash;
-	foreach  ( @{$array_ref}) {
-		$hash{$_}++;
-	}
-	return keys %hash;
-}
-
-#============================Get the relative abundance table==========================
-
-system("perl $COG_dir/get_flag_relative_abundances_table.pl");
