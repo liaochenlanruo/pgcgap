@@ -113,12 +113,12 @@ if __name__ == "__main__":
 
         fig.subplots_adjust(wspace=0, hspace=0)
 
-        ax1.set_title('Roary matrix\n(%d gene clusters)'%roary.shape[0])
+        ax1.set_title('Gene matrix\n(%d gene clusters)'%roary.shape[0])
 
         if options.labels:
             fsize = 12 - 0.1*roary.shape[1]
-            if fsize < 7:
-                fsize = 7
+            if fsize < 5:
+                fsize = 5
             with plt.rc_context({'font.size': fsize}):
                 Phylo.draw(t, axes=ax, 
                            show_confidence=False,
