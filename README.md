@@ -67,6 +67,7 @@ $pgcgap --setup-COGdb
   - [perl-file-tee](http://metacpan.org/pod/File::Tee)
   - [perl-getopt-long](http://metacpan.org/pod/Getopt::Long)
   - [perl-pod-usage](http://search.cpan.org/~marekr/Pod-Usage-1.69/)
+  - [perl-parallel-forkmanager](https://metacpan.org/pod/release/DLUX/Parallel-ForkManager-0.7.5/ForkManager.pm)
 - [Prokka](https://github.com/tseemann/prokka)
 - [Python](https://www.python.org/) & the modules
   - [biopython](https://biopython.org/)
@@ -77,6 +78,7 @@ $pgcgap --setup-COGdb
 - [R](https://www.r-project.org/) & the packages
   - [corrplot](https://cran.r-project.org/web/packages/corrplot/index.html)
   - [ggplot2](https://cran.r-project.org/web/packages/ggplot2/)
+  - [gplots](https://cran.r-project.org/web/packages/gplots/)
   - [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html)
   - [plotrix](https://cran.r-project.org/web/packages/plotrix/)
 - [Roary](https://sanger-pathogens.github.io/Roary/)
