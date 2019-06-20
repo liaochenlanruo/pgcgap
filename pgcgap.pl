@@ -1480,6 +1480,9 @@ if ($opt_All or $opt_CoreTree) {
 	system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
 	print "Constructing single copy core protein tree completed\n\n";
 	system("mv ALL.core.protein.nwk ../Results/CoreTrees/");
+	my $time_coretreem = time();
+	my $time_coretreep = ($time_coretreem - $time_coretrees)/3600;
+	print "The 'CoreTree' program runs for $time_coretreep hours to build single-copy core proteins tree.\n\n";
 	#===============================================================================
 	chdir "../";
 
