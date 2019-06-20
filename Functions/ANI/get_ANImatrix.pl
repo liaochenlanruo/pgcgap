@@ -91,6 +91,8 @@ for (my $i=0; $i<@scafr; $i++) {
 	for (my $j=0; $j<@scafl; $j++) {
 		if (exists $hash{$scafr[$i]}{$scafl[$j]}) {
 			print OUT "\t" . $hash{$scafr[$i]}{$scafl[$j]};
+		}else{
+			print OUT "\t" . "0";
 		}
 	}
 	print OUT "\n";
