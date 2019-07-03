@@ -98,7 +98,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-If you use this software please cite:
+If you use this software please cite: (__Please keep an eye on it as it will be noted soon!__)
 
 
 ## Usages

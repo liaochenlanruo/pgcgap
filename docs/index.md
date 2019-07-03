@@ -23,7 +23,7 @@
   * [CoreTree](#coretree)
 
   * [OrthoF](#orthof)
-  
+
   * [Pan](#pan)
   * [COG](#cog)
 
@@ -532,13 +532,10 @@ Core SNPs of single-core genes in fasta format.
 The phylogenetic tree file of single-copy proteins for all strains.
 <br/>
 
-- __Results/CoreTrees/faa2ffn/ALL.core.snp.nwk__ (or gubbins.core.snp.final_tree.tre)<br/>
-The phylogenetic tree file of SNPs of single-copy genes for all strains.
+- __Results/CoreTrees/faa2ffn/ALL.core.snp.nwk__<br/>
+The phylogenetic tree file of SNPs of single-copy core genes for all strains.
 <br/>
 
-- __Results/CoreTrees/faa2ffn/gubbins.*__<br/>
-See [gubbins](https://github.com/sanger-pathogens/gubbins#output-files?_blank) outputs
-<br/>
 
 - __Results/CoreTrees/"Other_files"__<br/>
 Intermediate directorys and files.
@@ -592,7 +589,7 @@ Directorys containing substitutions (snps) and insertions/deletions (indels) of 
 - __Results/Varients/Core__<br/>
   The directory containing Core SNP phylogeny files
 
-  - __.aln__ : A core SNP alignment in the --aformat format (default FASTA)
+  - __.aln__ : A core SNP alignment includes only SNP sites
   - __.full.aln__ : A whole genome SNP alignment (includes invariant sites)
   - __.nwk__ : Phylogenetic tree constructed with __FastTree__ (ignoring possible recombination)
   - **_tree.tre** : Phylogenetic tree constructed with __gubbins__ (get rid of recombination)
@@ -607,7 +604,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-If you use this software please cite:
+If you use this software please cite: (__Please keep an eye on it as it will be noted soon!__)
 
 ## FAQ
 
@@ -679,6 +676,6 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
 ### Q4 Use of uninitialized value in require at Encode.pm line 61
 
-This warning may happen when running function "Pan". It is an warning of Roary software. 
+This warning may happen when running function "Pan". It is an warning of Roary software.
 The content of line 61 is "require Encode::ConfigLocal;". Users can ignore the warning.
 Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details:

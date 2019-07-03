@@ -1682,21 +1682,8 @@ if ($opt_All or $opt_CoreTree) {
 
 	print "Constructing ML tree of core SNPS...\n\n";
 
-	if ($opt_strain_num > 3) {
-		my @csnp = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.snp ALL.core.snp.fasta");
-		my $snp_return = system(@csnp);
-		if (!($snp_return == 0)) {
-			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
-			system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
-			system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
-		}else {
-			system("mv ALL.core.snp.fasta gubbins.* ../Results/CoreTrees/");
-			print "running gubbins successfully!\n";
-		}
-	}else {
-		system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
-		system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
-	}
+	system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
+	system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
 	
 	chdir "../";
 	system("mv faa ./Results/CoreTrees/");
@@ -1788,26 +1775,23 @@ if ($opt_VAR) {
 	system("mkdir Results/Varients/Core");
 
 	if ($opt_strain_num > 3) {
-		my @core = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core core.aln");
 		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
-		my $core = system(@core);
 		system("mv gubbins.* Results/Varients/Core/");
 		my $corefull = system(@corefull);
-		if (!($core == 0 && $corefull == 0)) {
+		if (!($corefull == 0)) {
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
-			system("fasttree -nt -gtr core.aln > core.nwk");
 			system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-			system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf core.nwk core.full.nwk Results/Varients/Core/");
+			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Varients/Core/");
 		}else {
-			system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.aln.iteration* core.full.aln.iteration* *.joint.txt Results/Varients/Core/");
+			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Varients/Core/");
 			print "running gubbins successfully!\n";
 		}
 	} else {
-		system("fasttree -nt -gtr core.aln > core.nwk");
 		system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-		system("mv core.aln core.full.aln core.ref.fa core.tab core.txt core.vcf core.nwk core.full.nwk Results/Varients/Core/");
+		system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Varients/Core/");
 	}
-
+	system("fasttree -nt -gtr core.aln > core.nwk");
+	system("mv core.aln core.nwk Results/Varients/Core/");
 	my $time_VARd = time();
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
 	print "The 'ANI' program runs for $time_VAR hours.\n\n";
