@@ -3,6 +3,7 @@
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 ![Watchers](https://badgen.net/github/watchers/liaochenlanruo/pgcgap)
 ![Downloads](https://badgen.net/github/assets-dl/liaochenlanruo/pgcgap)
+![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
 ![Latest tag](https://badgen.net/github/tag/liaochenlanruo/pgcgap)
 ![Lastcommit](https://badgen.net/github/last-commit/liaochenlanruo/pgcgap)
 ![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
