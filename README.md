@@ -2,7 +2,6 @@
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 ![Watchers](https://badgen.net/github/watchers/liaochenlanruo/pgcgap)
-![Stars](https://badgen.net/github/stars/liaochenlanruo/pgcgap)
 ![Downloads](https://badgen.net/github/assets-dl/liaochenlanruo/pgcgap)
 ![Latest tag](https://badgen.net/github/tag/liaochenlanruo/pgcgap)
 ![Lastcommit](https://badgen.net/github/last-commit/liaochenlanruo/pgcgap)
