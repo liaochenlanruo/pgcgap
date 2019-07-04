@@ -522,25 +522,25 @@ $options{'t=i'} = \( my $opt_t = 0 );
 
 =item B<[-aL (FLOAT)]>
 
-Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.9 )
+Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )
 
 =back
 
 =cut
 
-$options{'aL=i'} = \( my $opt_aL = 0.9 );
+$options{'aL=i'} = \( my $opt_aL = 0.8 );
 
 =over 30
 
 =item B<[-aS (FLOAT)]>
 
-Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.9 )
+Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )
 
 =back
 
 =cut
 
-$options{'aS=i'} = \( my $opt_aS = 0.9 );
+$options{'aS=i'} = \( my $opt_aS = 0.8 );
 
 =over 30
 
