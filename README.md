@@ -2,11 +2,10 @@
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 ![Watchers](https://badgen.net/github/watchers/liaochenlanruo/pgcgap)
-![Downloads](https://badgen.net/github/assets-dl/liaochenlanruo/pgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
-![Latest tag](https://badgen.net/github/tag/liaochenlanruo/pgcgap)
-![Lastcommit](https://badgen.net/github/last-commit/liaochenlanruo/pgcgap)
 ![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
+
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
