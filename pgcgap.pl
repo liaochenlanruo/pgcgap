@@ -59,7 +59,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   example 7: Run COG annotation for each strain
 
-              pgcgap --COG --threads 4 --AAsPath <PATH>
+              pgcgap --COG --strain_num 4 --threads 4 --AAsPath <PATH>
 
   example 8: Varients calling and phylogenetic tree construction based on reference genome
 
@@ -228,7 +228,7 @@ $options{'VAR'} = \(my $opt_VAR);
 
 =item B<[--strain_num (INT)]>
 
-I<[Required by "--All", "--CoreTree" and "--VAR"]> The total number of strains used for analysis, including reference genomes
+I<[Required by "--All", "--CoreTree" "--VAR" and "--COG"]> The total number of strains used for analysis, not including the reference genome
 
 =back
 
@@ -1774,7 +1774,7 @@ if ($opt_VAR) {
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Varients/*");
 	system("mkdir Results/Varients/Core");
 
-	if ($opt_strain_num > 3) {
+	if ($opt_strain_num > 2) {
 		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
 		system("mv gubbins.* Results/Varients/Core/");
 		my $corefull = system(@corefull);
