@@ -688,3 +688,5 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 This warning may happen when running function "Pan". It is an warning of Roary software.
 The content of line 61 is "require Encode::ConfigLocal;". Users can ignore the warning.
 Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details:
+
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=588j0qzaeyb&amp;m=6&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;s=170" async="async"></script>
