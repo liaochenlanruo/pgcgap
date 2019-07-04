@@ -11,7 +11,7 @@
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 <center>
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
-<script type="text/javascript" src="//rf.revolvermaps.com/0/0/1.js?i=0ett3z77b0x&amp;s=200&amp;m=7&amp;v=true&amp;r=false&amp;b=000000&amp;n=false&amp;c=ff0000" async="async"></script>
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/1.js?i=0ett3z77b0x&amp;s=180&amp;m=7&amp;v=true&amp;r=false&amp;b=000000&amp;n=false&amp;c=ff0000" async="async"></script>
 </center>
 
 ## Contents
