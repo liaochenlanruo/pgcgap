@@ -50,6 +50,18 @@ I<[Required]> Amino acids of all strains as fasta file paths, ( Default "./Resul
 
 $options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
+=over 30
+
+=item B<[--strain_num (INT)]>
+
+I<[Required by "--All", "--CoreTree" and "--VAR"]> The total number of strains used for analysis
+
+=back
+
+=cut
+
+$options{'strain_num=i'} = \( my $opt_strain_num );
+
 GetOptions(%options) or pod2usage(1);
 
 pod2usage(1) if ($opt_help);
@@ -107,7 +119,13 @@ sub run_COG {
 
 #============================Run blastp===============================================
 
-	system("blastp -db $cogdb_dir/COG_2014 -query $_ -out $blastout -evalue 1e-5 -outfmt 5 -show_gis -max_target_seqs 1 -num_threads $opt_threads");
+	my $threads;
+	if ($opt_strain_num < $opt_threads) {
+		$threads = int($opt_threads/$opt_strain_num);
+	}else {
+		$threads = 1;
+	}
+	system("blastp -db $cogdb_dir/COG_2014 -query $_ -out $blastout -evalue 1e-5 -outfmt 5 -show_gis -max_target_seqs 1 -num_threads $threads");
 
 #======================================blast2gi========================================
 
