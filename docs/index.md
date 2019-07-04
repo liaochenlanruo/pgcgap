@@ -10,8 +10,7 @@
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
-<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5r6yr3vsmt5&amp;m=6&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33" async="async"></script>
-
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/6.js?i=588j0qzaeyb&amp;m=6&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;s=170" async="async"></script>
 ## Contents
 
 - [Introduction](#introduction)
