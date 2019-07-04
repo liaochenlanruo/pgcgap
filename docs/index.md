@@ -197,8 +197,9 @@ $pgcgap --setup-COGdb
 
 - __Global Options:__
 
-  - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree" and "--VAR"]
-                                         The total number of strains used for analysis,
+  - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree" "--VAR" and "--COG"]
+                                         The total number of strains used for analysis, not including the reference genome
+
                                          including reference genomes
 
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
@@ -280,11 +281,11 @@ $pgcgap --setup-COGdb
 
       - __[-aL (FLOAT)]__                Alignment coverage for the longer
                                          sequence. If set to 0.9, the alignment
-                                         must covers 90% of the sequence ( Default 0.9 )
+                                         must covers 90% of the sequence ( Default 0.8 )
 
       - __[-aS (FLOAT)]__                Alignment coverage for the shorter sequence.
                                          If set to 0.9, the alignment must covers
-                                         90% of the sequence ( Default 0.9 )
+                                         90% of the sequence ( Default 0.8 )
 
       - __[-g (INT)]__                   If set to 0, a sequence is clustered to
                                          the first cluster that meet the threshold
@@ -419,7 +420,7 @@ $pgcgap --setup-COGdb
   - __Example 3:__ Constructing single core protein tree and core SNPs tree.
 
     ```
-    $pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 3 --threads 4
+    $pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
     ```
 
   - __Example 4:__ Conduct pan-genome analysis.
@@ -443,13 +444,13 @@ $pgcgap --setup-COGdb
   - __Example 7:__ Run COG annotation for each strain.
 
     ```
-    $pgcgap --COG --threads 4 --AAsPath <PATH>
+    $pgcgap --COG --threads 4 --strain_num 4 --AAsPath <PATH>
     ```
 
   - __Example 8:__ Varients calling and phylogenetic tree construction based on reference genome.
 
     ```
-    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
+    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 4 --qualtype <STRING>
     ```
 
 ## Generating Input files
