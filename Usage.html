@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title></title>
+<title>PGCGAP</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:conda@f47048a8fffe.(none)" />
+<link rev="made" href="mailto:" />
 </head>
 
 <body>
@@ -85,7 +85,7 @@
 
   example 7: Run COG annotation for each strain
 
-              pgcgap --COG --threads 4 --AAsPath &lt;PATH&gt;
+              pgcgap --COG --strain_num 4 --threads 4 --AAsPath &lt;PATH&gt;
 
   example 8: Varients calling and phylogenetic tree construction based on reference genome
 
@@ -222,7 +222,7 @@
 <dt id="strain_num-INT"><b>[--strain_num (INT)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--All&quot;, &quot;--CoreTree&quot; and &quot;--VAR&quot;]</i> The total number of strains used for analysis, including reference genomes</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--CoreTree&quot; &quot;--VAR&quot; and &quot;--COG&quot;]</i> The total number of strains used for analysis, not including the reference genome</p>
 
 </dd>
 </dl>
@@ -460,7 +460,7 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 <dt id="aL-FLOAT"><b>[-aL (FLOAT)]</b></dt>
 <dd>
 
-<p>Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.9 )</p>
+<p>Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )</p>
 
 </dd>
 </dl>
@@ -470,7 +470,7 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 <dt id="aS-FLOAT"><b>[-aS (FLOAT)]</b></dt>
 <dd>
 
-<p>Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.9 )</p>
+<p>Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )</p>
 
 </dd>
 </dl>
