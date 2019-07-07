@@ -1042,7 +1042,7 @@ tee STDOUT, ">$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.5\n";
+    print "PGCGAP version: 1.0.6\n";
     exit 0;
 }
 
@@ -1169,7 +1169,6 @@ if ($opt_All or $opt_CoreTree) {
 	print "Performing --CoreTree function...\n\n";
 	system("mkdir Results/CoreTrees");
 	system("cat $opt_AAsPath/*.faa > All.pep");
-	system("cat $opt_CDsPath/*.ffn > All.nuc");
 	print "Running CD-hit...\n";
 	system("cd-hit -i All.pep -o All.pep.nr -c $opt_c -n $opt_n -G $opt_G -T $opt_threads -t $opt_t -aS $opt_aS -aL $opt_aL -g $opt_g -M 0 -d $opt_d");
 
@@ -1236,6 +1235,7 @@ if ($opt_All or $opt_CoreTree) {
 	}
 	close(SEQP);
 
+	$/ = "\n";
 	open LISTP, "core.pep.list" || die;
 
 	my $dirP = "faa";
@@ -1267,55 +1267,7 @@ if ($opt_All or $opt_CoreTree) {
 	}
 	close(LISTP);
 
-
-	#============================extract ortholog cluster of genes=============================
-	open SEQN, "All.nuc" || die;
-
-	my %hashN = ();
-	<SEQN>;
-	while(<SEQN>){
-		local $/ = '>';
-		chomp;
-		my ($name, $sequence) = split (/\n/, $_, 2);
-		next unless ($name && $sequence);
-		my ($n) = $name =~ /^(\S+)/;
-		$sequence =~ s/\s+|\n|\-//g;
-		$hashN{$n} = $sequence;
-	}
-	close(SEQN);
-
-	open LISTN, "core.pep.list" || die;
-
-	my $dirN = "ffn";
-
-	system("mkdir ffn");
-
-	my $dn = 0;
-	my $new_dn = 0;
-
-	while(<LISTN>){
-		chomp;
-
-		my @array = split (/\n/, $_);
-		for my $ele (@array){
-			$dn++;
-			$new_dn = sprintf("%04d",$dn);
-			my @cluster = split (/\s+/, $ele);
-			my $fna_file = "OG$new_dn".".fa";
-
-			open (OUT, ">$dirN/$fna_file") || die "cannot open $fna_file\n";
-			for my $ele (@cluster){
-				if(exists $hashN{$ele}){
-					print OUT ">$ele\n$hashN{$ele}\n";
-				}else{
-					warn "error! The gene id is missing in the sequence file.\n";
-				}
-			}
-		}
-	}
-	close(LISTN);
-
-	$/ = "\n";
+	
 	print "Running mafft...\n\n";
 	chdir "faa";
 #	system("unset MAFFT_BINARIES");
@@ -1327,8 +1279,9 @@ if ($opt_All or $opt_CoreTree) {
 		system("mafft --quiet --auto --thread $opt_threads $in > $out");
 	}
 
+
 	##==============CONSTRUCT SINGLE CORE PROTEIN TREE========================================================
-	print "Starting to construct single core protein tree...\n\n";
+	#print "Starting to construct single core protein tree...\n\n";
 	open CON, ">ALL.core.protein.fasta" || die "open ALL.core.protein.fasta failed\n";
 	my $nfilesp = 0; # count number of files
 	my %nseqp_hashp = (); # key:infile, val:nseqp
@@ -1483,212 +1436,263 @@ if ($opt_All or $opt_CoreTree) {
 	my $time_coretreem = time();
 	my $time_coretreep = ($time_coretreem - $time_coretrees)/3600;
 	print "The 'CoreTree' program runs for $time_coretreep hours to build single-copy core proteins tree.\n\n";
+
 	#===============================================================================
+
 	chdir "../";
 
-
-	system("mkdir faa2ffn");
-
-	opendir(DIR, "faa") || die "Can't open directory\n";
-	my @store_array = ();
-	@store_array = readdir(DIR);
-	my $name = '';
-
-	foreach my $file (@store_array) {
-		next unless ($file =~ /^\S+\.aln$/);
-		if ($file =~ /^(\S+)\.aln$/){
-			$name = $1;
-		}
-
-		system("pal2nal.pl faa/$file ffn/$name.fa -nogap -output fasta -codontable $opt_codon > faa2ffn/$name.codon.aln");
-	}
-
-
-	chdir "faa2ffn";
-
-	my @aln=glob("*.aln");
-	foreach (@aln){
-		my $name=substr($_,0,(length($_)-4));
-		my $in=$name.".aln";
-		my $out=$name.".fas";
-		open ALNIN,"$in" or die;
-		open ALNOUT, ">$out" or die;
-		while(<ALNIN>){
+	if ($opt_CDsPath ne "NO") {
+		system("cat $opt_CDsPath/*.ffn > All.nuc");
+		system("mkdir faa2ffn");
+		#============================extract ortholog cluster of genes=============================
+		open SEQN, "All.nuc" || die;
+		local $/ = '>';
+		my %hashN = ();
+		<SEQN>;
+		while(<SEQN>){
+			#local $/ = '>';
 			chomp;
-			if (/(\>\S+)_\S+/){
-				print ALNOUT $1."\n";
-			}else{
-				print ALNOUT $_."\n";
+			my ($name, $sequence) = split (/\n/, $_, 2);
+			next unless ($name && $sequence);
+			my ($n) = $name =~ /^(\S+)/;
+			$sequence =~ s/\s+|\n|\-//g;
+			$hashN{$n} = $sequence;
+		}
+		close(SEQN);
+		$/ = "\n";
+		open LISTN, "core.pep.list" || die;
+
+		my $dirN = "ffn";
+
+		system("mkdir ffn");
+
+		my $dn = 0;
+		my $new_dn = 0;
+
+		while(<LISTN>){
+			chomp;
+
+			my @array = split (/\n/, $_);
+			for my $ele (@array){
+				$dn++;
+				$new_dn = sprintf("%04d",$dn);
+				my @cluster = split (/\s+/, $ele);
+				my $fna_file = "OG$new_dn".".fa";
+
+				open (OUT, ">$dirN/$fna_file") || die "cannot open $fna_file\n";
+				for my $ele (@cluster){
+					if(exists $hashN{$ele}){
+						print OUT ">$ele\n$hashN{$ele}\n";
+					}else{
+						warn "error! The gene id is missing in the sequence file.\n";
+					}
+				}
 			}
 		}
-	}
-	close ALNIN;
-	close ALNOUT;
-
-	open CON, ">ALL.core.nucl.fasta" || die "open ALL.core.nucl.fasta failed\n";
-	my $nfiles = 0; # count number of files
-	my %nseq_hash = (); # key:infile, val:nseq
-	my %seqid_count_hash = (); # key:seqid, val:count
-	my %HoH              = ();   #
-	my %seqid_HoH        = ();   #
-	my $first_name       = q{};  # First name in matrix.
-	my $lwidth           = 60;   # default line width for fasta
-	my $space            = "\t"; # spacer for aligned print
-	my $nchar            = 0;    # nchar for phyml header.
-	my $nseq;                    # nseq for phyml header. Do not initiate!
-	my $term             = $/;   # input record separator
-	my @hash_ref_array   = ();   # array with hash references
+		close(LISTN);
 
 
-	my @fas = glob("*.fas");
-	foreach my $arg (@fas) {
-		my $infile  = $arg;
-		my %seq_hash = parse_fasta($infile); # key: seqid, value:sequence
-		$nfiles++;
+		opendir(DIR, "faa") || die "Can't open directory\n";
+		my @store_array = ();
+		@store_array = readdir(DIR);
+		my $name = '';
 
-		## Save sequences in array with hash references. Does this work for really large number of fasta files?
-		my $hash_ref     = \%seq_hash;
-		push(@hash_ref_array, $hash_ref);
+		foreach my $file (@store_array) {
+			next unless ($file =~ /^\S+\.aln$/);
+			if ($file =~ /^(\S+)\.aln$/){
+				$name = $1;
+			}
 
-		## Add nseqs to global nseq_hash:
-		$nseq_hash{$infile} = scalar(keys(%seq_hash));
-
-		## Get length of sequence for all tax labels. Put in hashes.
-		foreach my $tax_key (keys %seq_hash) {
-			$seqid_count_hash{$tax_key}++;
-			$HoH{$infile}{$tax_key} = length($seq_hash{$tax_key});
-			$seqid_HoH{$infile}{$tax_key}++;
+			system("pal2nal.pl faa/$file ffn/$name.fa -nogap -output fasta -codontable $opt_codon > faa2ffn/$name.codon.aln");
 		}
 
-		## Check all seqs are same length
-		my $length;
+
+		chdir "faa2ffn";
+
+		my @aln=glob("*.aln");
+		foreach (@aln){
+			my $name=substr($_,0,(length($_)-4));
+			my $in=$name.".aln";
+			my $out=$name.".fas";
+			open ALNIN,"$in" or die;
+			open ALNOUT, ">$out" or die;
+			while(<ALNIN>){
+				chomp;
+				if (/(\>\S+)_\S+/){
+					print ALNOUT $1."\n";
+				}else{
+					print ALNOUT $_."\n";
+				}
+			}
+		}
+		close ALNIN;
+		close ALNOUT;
+
+		open CON, ">ALL.core.nucl.fasta" || die "open ALL.core.nucl.fasta failed\n";
+		my $nfiles = 0; # count number of files
+		my %nseq_hash = (); # key:infile, val:nseq
+		my %seqid_count_hash = (); # key:seqid, val:count
+		my %HoH              = ();   #
+		my %seqid_HoH        = ();   #
+		my $first_name       = q{};  # First name in matrix.
+		my $lwidth           = 60;   # default line width for fasta
+		my $space            = "\t"; # spacer for aligned print
+		my $nchar            = 0;    # nchar for phyml header.
+		my $nseq;                    # nseq for phyml header. Do not initiate!
+		my $term             = $/;   # input record separator
+		my @hash_ref_array   = ();   # array with hash references
+
+
+		my @fas = glob("*.fas");
+		foreach my $arg (@fas) {
+			my $infile  = $arg;
+			my %seq_hash = parse_fasta($infile); # key: seqid, value:sequence
+			$nfiles++;
+
+			## Save sequences in array with hash references. Does this work for really large number of fasta files?
+			my $hash_ref     = \%seq_hash;
+			push(@hash_ref_array, $hash_ref);
+
+			## Add nseqs to global nseq_hash:
+			$nseq_hash{$infile} = scalar(keys(%seq_hash));
+
+			## Get length of sequence for all tax labels. Put in hashes.
+			foreach my $tax_key (keys %seq_hash) {
+				$seqid_count_hash{$tax_key}++;
+				$HoH{$infile}{$tax_key} = length($seq_hash{$tax_key});
+				$seqid_HoH{$infile}{$tax_key}++;
+			}
+
+			## Check all seqs are same length
+			my $length;
+			my $lname;
+			foreach my $name (keys %seq_hash) {
+				my $l = length $seq_hash{$name};
+				if (defined $length) {
+					if ($length != $l) {
+						print STDERR "Error!\nSequences in $infile not all same length ($lname is $length, $name is $l)\n";
+						exit(1);
+					}
+				}
+				else {
+					$length = length $seq_hash{$name};
+					$lname  = $name;
+				}
+			}
+		} # Done with file
+
+
+		#---------------------------------------------------------------------------
+		#  Check if the same number of sequences
+		#---------------------------------------------------------------------------
 		my $lname;
-		foreach my $name (keys %seq_hash) {
-			my $l = length $seq_hash{$name};
-			if (defined $length) {
-				if ($length != $l) {
-					print STDERR "Error!\nSequences in $infile not all same length ($lname is $length, $name is $l)\n";
+		foreach my $file (keys %nseq_hash) {
+			my $l = $nseq_hash{$file}; # val is a length
+			if (defined $nseq) {
+				if ($nseq != $l) {
+					print STDERR "Error!\nNumber of sequences in files differ ($lname has $nseq, $file has $l)\n";
 					exit(1);
 				}
 			}
 			else {
-				$length = length $seq_hash{$name};
-				$lname  = $name;
+				$nseq = $nseq_hash{$file};
+				$lname  = $file;
 			}
 		}
-	} # Done with file
 
 
-	#---------------------------------------------------------------------------
-	#  Check if the same number of sequences
-	#---------------------------------------------------------------------------
-	my $lname;
-	foreach my $file (keys %nseq_hash) {
-		my $l = $nseq_hash{$file}; # val is a length
-		if (defined $nseq) {
-			if ($nseq != $l) {
-				print STDERR "Error!\nNumber of sequences in files differ ($lname has $nseq, $file has $l)\n";
-				exit(1);
+		#---------------------------------------------------------------------------
+		#  Check sequence id's
+		#---------------------------------------------------------------------------
+		if (scalar((keys %seqid_count_hash)) != $nseq) { # number of unique seqid's not eq to nseqs
+			foreach my $key (sort { $seqid_count_hash{$b} <=> $seqid_count_hash{$a} } (keys %seqid_count_hash)) {
+				print STDERR "$key --> $seqid_count_hash{$key}\n";
 			}
+			print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
+			print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
+			exit(1);
 		}
 		else {
-			$nseq = $nseq_hash{$file};
-			$lname  = $file;
+			## Find the longest taxon name for aligned printing
+			my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hash;
+			$space = length( shift(@sorted_names) ) + 2;
+			$first_name = $sorted_names[0];
 		}
-	}
 
 
-	#---------------------------------------------------------------------------
-	#  Check sequence id's
-	#---------------------------------------------------------------------------
-	if (scalar((keys %seqid_count_hash)) != $nseq) { # number of unique seqid's not eq to nseqs
-		foreach my $key (sort { $seqid_count_hash{$b} <=> $seqid_count_hash{$a} } (keys %seqid_count_hash)) {
-			print STDERR "$key --> $seqid_count_hash{$key}\n";
+		#---------------------------------------------------------------------------
+		#Get nchar
+		#---------------------------------------------------------------------------
+		foreach my $h_ref (@hash_ref_array) {
+			$nchar = $nchar + length($h_ref->{$first_name});
 		}
-		print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
-		print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
-		exit(1);
-	}
-	else {
-		## Find the longest taxon name for aligned printing
-		my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hash;
-		$space = length( shift(@sorted_names) ) + 2;
-		$first_name = $sorted_names[0];
-	}
 
 
-	#---------------------------------------------------------------------------
-	#Get nchar
-	#---------------------------------------------------------------------------
-	foreach my $h_ref (@hash_ref_array) {
-		$nchar = $nchar + length($h_ref->{$first_name});
-	}
+		#---------------------------------------------------------------------------
+		#Print everything to STDOUT
+		#---------------------------------------------------------------------------
+		print STDERR "\nChecked $nfiles files -- sequence labels and lengths seems OK.\n";
+		print STDERR "Concatenated $nseq sequences, length $nchar.\n";
+		print STDERR "Printing concatenation to 'ALL.core.nucl.fasta'.\n\n";
 
-
-	#---------------------------------------------------------------------------
-	#Print everything to STDOUT
-	#---------------------------------------------------------------------------
-	print STDERR "\nChecked $nfiles files -- sequence labels and lengths seems OK.\n";
-	print STDERR "Concatenated $nseq sequences, length $nchar.\n";
-	print STDERR "Printing concatenation to 'ALL.core.nucl.fasta'.\n\n";
-
-	## Print the array with hash references (does this work with really large number of files (hashes))?
-	## First, concatenate all sequences from hashes
-	my %print_hash = (); # key:label, value:sequence
-	foreach my $h_ref (@hash_ref_array) {
-		foreach my $seqid (sort keys %$h_ref) {
-			$print_hash{$seqid} .= $h_ref->{$seqid};
-		}
-	}
-	## Then print, and add line breaks in sequences
-	foreach my $label (sort keys  %print_hash) {
-		print CON ">$label\n";
-
-		## Print sequence
-		## TODO: phylip strict printing of sequence in blocks of 10
-		$print_hash{$label} =~ s/\S{$lwidth}/$&\n/gs; ## replace word of size $lwidth with itself and "\n"
-		print CON $print_hash{$label}, "\n";
-	}
-
-	print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
-
-
-	sub parse_fasta {
-
-		my ($infile) = @_;
-
-		my $term     = $/; # input record separator;
-		my %seq_hash = (); # key:seqid, val:seq
-
-		open my $INFILE, "<", $infile or die "could not open infile '$infile' : $! \n";
-		$/ = ">";
-		while(<$INFILE>) {
-			chomp;
-			next if($_ eq '');
-			my ($id, @sequencelines) = split /\n/;
-			foreach my $line (@sequencelines) {
-				$seq_hash{$id} .= $line;
+		## Print the array with hash references (does this work with really large number of files (hashes))?
+		## First, concatenate all sequences from hashes
+		my %print_hash = (); # key:label, value:sequence
+		foreach my $h_ref (@hash_ref_array) {
+			foreach my $seqid (sort keys %$h_ref) {
+				$print_hash{$seqid} .= $h_ref->{$seqid};
 			}
 		}
-		$/ = $term;
+		## Then print, and add line breaks in sequences
+		foreach my $label (sort keys  %print_hash) {
+			print CON ">$label\n";
 
-		return(%seq_hash);
+			## Print sequence
+			## TODO: phylip strict printing of sequence in blocks of 10
+			$print_hash{$label} =~ s/\S{$lwidth}/$&\n/gs; ## replace word of size $lwidth with itself and "\n"
+			print CON $print_hash{$label}, "\n";
+		}
 
-	} # end of parse_fasta
+		print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
 
 
-	print "Calling core SNPs...\n";
-	system("snp-sites -o ALL.core.snp.fasta ALL.core.nucl.fasta");
+		sub parse_fasta {
 
-	print "Constructing ML tree of core SNPS...\n\n";
+			my ($infile) = @_;
 
-	system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
-	system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
-	
-	chdir "../";
+			my $term     = $/; # input record separator;
+			my %seq_hash = (); # key:seqid, val:seq
+
+			open my $INFILE, "<", $infile or die "could not open infile '$infile' : $! \n";
+			$/ = ">";
+			while(<$INFILE>) {
+				chomp;
+				next if($_ eq '');
+				my ($id, @sequencelines) = split /\n/;
+				foreach my $line (@sequencelines) {
+					$seq_hash{$id} .= $line;
+				}
+			}
+			$/ = $term;
+
+			return(%seq_hash);
+
+		} # end of parse_fasta
+
+
+		print "Calling core SNPs...\n";
+		system("snp-sites -o ALL.core.snp.fasta ALL.core.nucl.fasta");
+
+		print "Constructing ML tree of core SNPS...\n\n";
+
+		system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
+		system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
+		
+		chdir "../";
+		system("mv faa2ffn ./Results/CoreTrees/");
+		system("mv ffn ./Results/CoreTrees/");
+	}
 	system("mv faa ./Results/CoreTrees/");
-	system("mv faa2ffn ./Results/CoreTrees/");
-	system("mv ffn ./Results/CoreTrees/");
 	system("mv All.* ./Results/CoreTrees/");
 	system("mv core.pep.list ./Results/CoreTrees/");
 	my $time_coretreed = time();
@@ -1801,7 +1805,7 @@ if ($opt_All or $opt_COG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir Results/COG");
-	system("COG.pl --threads $opt_threads --AAsPath $opt_AAsPath");
+	system("COG.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
