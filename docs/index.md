@@ -456,7 +456,7 @@ $pgcgap --setup-COGdb
   - __Example 9:__ Varients calling and phylogenetic tree construction based on reference genome.
 
     ```
-    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 4 --qualtype <STRING>
+    $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 5 --qualtype <STRING>
     ```
 
 ## Generating Input files
