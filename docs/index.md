@@ -200,8 +200,6 @@ $pgcgap --setup-COGdb
   - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree" "--VAR" and "--COG"]
                                          The total number of strains used for analysis, not including the reference genome
 
-                                         including reference genomes
-
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads )
 
@@ -267,7 +265,9 @@ $pgcgap --setup-COGdb
   - **--CoreTree**
 
       - __[--CDsPath (PATH)]__           [Required] CDs of all strains as fasta file
-                                         paths, ( Default "./Results/Annotations/CDs" )
+                                         paths ( Default "./Results/Annotations/CDs" ), 
+					 if set to "NO", the SNPs of single-copy core 
+					 genes will not be called
 
       - __[-c (FLOAT)]__                 Sequence identity threshold, ( Default 0.5)
 
@@ -417,37 +417,43 @@ $pgcgap --setup-COGdb
     $pgcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
     ```
 
-  - __Example 3:__ Constructing single core protein tree and core SNPs tree.
+  - __Example 3:__ Constructing single-copy core protein tree and core SNPs tree.
 
     ```
     $pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
     ```
 
-  - __Example 4:__ Conduct pan-genome analysis.
+  - __Example 4:__ Constructing single-copy core protein tree only.
+
+    ```
+    $pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
+    ```
+
+  - __Example 5:__ Conduct pan-genome analysis.
 
     ```
     $pgcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
     ```
 
-  - __Example 5:__ Inference of orthologous gene groups.
+  - __Example 6:__ Inference of orthologous gene groups.
 
     ```
     $pgcgap --orthoF --threads 4 --AAsPath <PATH>
     ```
 
-  - __Example 6:__ Compute whole-genome Average Nucleotide Identity (ANI).
+  - __Example 7:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
     ```
     $pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE> --Scaf_suffix <STRING>
     ```
 
-  - __Example 7:__ Run COG annotation for each strain.
+  - __Example 8:__ Run COG annotation for each strain.
 
     ```
     $pgcgap --COG --threads 4 --strain_num 4 --AAsPath <PATH>
     ```
 
-  - __Example 8:__ Varients calling and phylogenetic tree construction based on reference genome.
+  - __Example 9:__ Varients calling and phylogenetic tree construction based on reference genome.
 
     ```
     $pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 4 --qualtype <STRING>
@@ -466,7 +472,7 @@ Pair-end reads of all strains in a directory (default: ./Reads/ under the workin
 QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the "--Assemble" fuction was run first, the list file will be generated automatically.
 
 ### CoreTree
-Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directorys (default: ./Results/Annotations/AAs/ and ./Results/Annotations/CDs/). The ".faa" and ".ffn" files of same strain should have the same prefix name. The name of protein IDs and gene IDs shoud be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "--Assemble" fuction was run first, the files will be generated automatically.
+Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directorys (default: ./Results/Annotations/AAs/ and ./Results/Annotations/CDs/). The ".faa" and ".ffn" files of same strain should have the same prefix name. The name of protein IDs and gene IDs shoud be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "--Assemble" fuction was run first, the files will be generated automatically. If the "--CDsPath" was set to "NO", the nucleotide files will not be needed.
 
 ### OrthoF
 A set of protein sequence files (one per species) in FASTA format under a directory (default: ./Results/Annotations/AAs/). If the "--Assemble" fuction was run first, the files will be generated automatically.
