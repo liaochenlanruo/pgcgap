@@ -45,25 +45,29 @@ liaochenlanruo@webmail.hzau.edu.cn
 
              pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
 
-  example 4: Conduct pan-genome analysis
+  example 4: Constructing single-copy core protein tree only.
+
+             pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
+
+  example 5: Conduct pan-genome analysis
 
              pgcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
 
-  example 5: Inference of orthologous gene groups
+  example 6: Inference of orthologous gene groups
 
              pgcgap --orthoF --threads 4 --AAsPath <PATH>
 
-  example 6: Compute whole-genome Average Nucleotide Identity (ANI)
+  example 7: Compute whole-genome Average Nucleotide Identity (ANI)
 
              pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE> --Scaf_suffix <STRING>
 
-  example 7: Run COG annotation for each strain
+  example 8: Run COG annotation for each strain
 
               pgcgap --COG --strain_num 4 --threads 4 --AAsPath <PATH>
 
-  example 8: Varients calling and phylogenetic tree construction based on reference genome
+  example 9: Varients calling and phylogenetic tree construction based on reference genome
 
-             pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
+             pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 5 --qualtype <STRING> 
 
 
 
