@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>PGCGAP</title>
+<title></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:" />
+<link rev="made" href="mailto:conda@f47048a8fffe.(none)" />
 </head>
 
 <body>
@@ -23,7 +23,8 @@
       <li><a href="#Global-Options">******************************************************** Global Options ********************************************************</a></li>
       <li><a href="#Local-Options">******************************************************** Local Options *********************************************************</a>
         <ul>
-          <li><a href="#Options-of---Assemble-for-reads-assembly-gene-prediction-and-annotation">======================= Options of &quot;--Assemble&quot; for reads assembly, gene prediction and annotation ============================</a></li>
+          <li><a href="#Options-of---Assemble-for-reads-assembly">======================= Options of &quot;--Assemble&quot; for reads assembly ============================</a></li>
+          <li><a href="#Options-of---Annotate-for-genome-annotation">======================= Options of &quot;--Annotate&quot; for genome annotation ============================</a></li>
           <li><a href="#Options-for---CoreTree-constructing">======================================== Options for &quot;--CoreTree&quot; constructing ================================================</a></li>
           <li><a href="#Options-for---Pan-analysis">===================================== Options for &quot;--Pan&quot; analysis ============================================================</a></li>
           <li><a href="#Options-for---orthoF-analysis">===================================== Options for &quot;--orthoF&quot; analysis =========================================================</a></li>
@@ -34,7 +35,7 @@
       <li><a href="#Paths-of-external-programs">************************************* Paths of external programs ***************************************************************</a></li>
     </ul>
   </li>
-  <li><a href="#CODES">CODES</a></li>
+  <li><a href="#POD-ERRORS">POD ERRORS</a></li>
 </ul>
 
 <h1 id="NAME">NAME</h1>
@@ -57,39 +58,51 @@
 
 <pre><code>  $ pgcgap [Fuctions] [Options]
 
-  example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
+  The main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/
 
-             For the sake of flexibility, The &quot;VAR&quot; function needs to be added additionally
+  Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the &quot;VAR&quot; function needs to be added separately
 
-             pgcgap --All --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk &lt;FILE&gt; --qualtype &lt;STRING&gt;
+             pgcgap --All --platform illumina --ReadsPath &lt;PATH&gt; --reads1 &lt;reads1 suffix&gt; --reads2 &lt;reads2 suffix&gt; --suffix_len &lt;INT&gt; --kmmer &lt;INT&gt; --genus &lt;STRING&gt; --species &lt;STRING&gt; --codon &lt;INT&gt; --strain_num &lt;INT&gt; --threads &lt;INT&gt; --VAR --refgbk &lt;full path&gt; --qualtype &lt;STRING&gt;
 
-  example 2: Conduct reads assembly, gene prediction and annotation
+  Example 2: Conduct pair-end reads assembly
 
-             pgcgap --Assemble --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+             pgcgap --Assemble --platform illumina --ReadsPath &lt;PATH&gt; --reads1 &lt;reads1 suffix&gt; --reads2 &lt;reads2 suffix&gt; --suffix_len &lt;INT&gt; --kmmer &lt;INT&gt; --threads &lt;INT&gt;
 
-  example 3: Constructing the phylogenetic trees of single-core proteins and core SNPs
+  Example 3: Conduct PacBio/Oxford reads assembly
 
-             pgcgap --CoreTree --CDsPath &lt;PATH&gt; --AAsPath &lt;PATH&gt; --codon 11 --strain_num 4 --threads 4
+             pgcgap --Assemble --platform [pacbio|oxford] --ReadsPath &lt;PATH&gt; --reads1 &lt;reads suffix&gt; --suffix_len &lt;INT&gt; --genomeSize &lt;Float&gt; --threads &lt;INT&gt;
 
-  example 4: Conduct pan-genome analysis
+  Example 4: Conduct gene prediction and annotation
 
-             pgcgap --Pan --codon 11 --threads 4 --GffPath &lt;PATH&gt;
+             pgcgap --Annotate --scafPath &lt;PATH&gt; --Scaf_suffix &lt;STRING&gt; --genus &lt;STRING&gt; --species &lt;STRING&gt; --codon &lt;INT&gt; --threads &lt;INT&gt;
 
-  example 5: Inference of orthologous gene groups
+  Example 5: Constructing the phylogenetic trees of single-copy core proteins and core SNPs
 
-             pgcgap --orthoF --threads 4 --AAsPath &lt;PATH&gt;
+             pgcgap --CoreTree --CDsPath &lt;PATH&gt; --AAsPath &lt;PATH&gt; --codon &lt;INT&gt; --strain_num &lt;INT&gt; --threads &lt;INT&gt;
 
-  example 6: Compute whole-genome Average Nucleotide Identity (ANI)
+  Example 6: Constructing single-copy core protein tree only.
 
-             pgcgap --ANI --threads 4 --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;FILE&gt; --Scaf_suffix &lt;STRING&gt;
+             pgcgap --CoreTree --CDsPath NO --AAsPath &lt;PATH&gt; --codon &lt;INT&gt; --strain_num &lt;INT&gt; --threads &lt;INT&gt;
 
-  example 7: Run COG annotation for each strain
+  Example 7: Conduct pan-genome analysis
 
-              pgcgap --COG --strain_num 4 --threads 4 --AAsPath &lt;PATH&gt;
+             pgcgap --Pan --codon &lt;INT&gt; --threads &lt;INT&gt; --GffPath &lt;PATH&gt;
 
-  example 8: Varients calling and phylogenetic tree construction based on reference genome
+  Example 8: Inference of orthologous gene groups
 
-             pgcgap --VAR --threads 4 --refgbk &lt;FILE&gt; --ReadsPath &lt;PATH&gt; --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len &lt;INT&gt; --strain_num &lt;INT&gt; --qualtype &lt;STRING&gt; </code></pre>
+             pgcgap --orthoF --threads &lt;INT&gt; --AAsPath &lt;PATH&gt;
+
+  Example 9: Compute whole-genome Average Nucleotide Identity (ANI)
+
+             pgcgap --ANI --threads &lt;INT&gt; --queryL &lt;FILE&gt; --refL &lt;FILE&gt; --ANIO &lt;STRING&gt; --Scaf_suffix &lt;STRING&gt;
+
+  Example 10: Run COG annotation for each strain
+
+              pgcgap --pCOG --strain_num &lt;INT&gt; --threads &lt;INT&gt; --AAsPath &lt;PATH&gt;
+
+  Example 11: Varients calling and phylogenetic tree construction based on reference genome
+
+             pgcgap --VAR --threads &lt;INT&gt; --refgbk &lt;FILE with full path&gt; --ReadsPath &lt;PATH&gt; --reads1 &lt;STRING&gt; --reads2 &lt;STRING&gt; --suffix_len &lt;INT&gt; --strain_num &lt;INT&gt; --qualtype &lt;STRING&gt; </code></pre>
 
 <h1 id="OPTIONS">OPTIONS</h1>
 
@@ -140,7 +153,7 @@
 <dt id="All"><b>[--All]</b></dt>
 <dd>
 
-<p>Perform Assemble, CoreTree, Pan, OrthoF, ANI and COG functions with one command</p>
+<p>Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI and pCOG functions with one command</p>
 
 </dd>
 </dl>
@@ -150,7 +163,17 @@
 <dt id="Assemble"><b>[--Assemble]</b></dt>
 <dd>
 
-<p>Assemble reads ( paired-end only ) into contigs, predict genes and annotate them</p>
+<p>Assemble reads into contigs</p>
+
+</dd>
+</dl>
+
+<dl>
+
+<dt id="Annotate"><b>[--Annotate]</b></dt>
+<dd>
+
+<p>Genome annotation</p>
 
 </dd>
 </dl>
@@ -160,7 +183,7 @@
 <dt id="CoreTree"><b>[--CoreTree]</b></dt>
 <dd>
 
-<p>Construct single-core proteins tree and SNPs tree of single core genes</p>
+<p>Construct single-copy core proteins tree and core SNPs tree</p>
 
 </dd>
 </dl>
@@ -180,7 +203,7 @@
 <dt id="OrthoF"><b>[--OrthoF]</b></dt>
 <dd>
 
-<p>Identify orthologous protein sequence families with &quot;OrthoFinder&quot;</p>
+<p>Identify orthologous protein sequence families</p>
 
 </dd>
 </dl>
@@ -197,7 +220,7 @@
 
 <dl>
 
-<dt id="COG"><b>[--COG]</b></dt>
+<dt id="pCOG"><b>[--pCOG]</b></dt>
 <dd>
 
 <p>Run COG annotation for each strain (*.faa), and generate a table containing the relative abundance of each flag for all strains</p>
@@ -210,7 +233,7 @@
 <dt id="VAR"><b>[--VAR]</b></dt>
 <dd>
 
-<p>Rapid haploid variant calling and core genome alignment with &quot;Snippy&quot;</p>
+<p>Rapid haploid variant calling and core genome alignment</p>
 
 </dd>
 </dl>
@@ -222,7 +245,7 @@
 <dt id="strain_num-INT"><b>[--strain_num (INT)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--All&quot;, &quot;--CoreTree&quot; &quot;--VAR&quot; and &quot;--COG&quot;]</i> The total number of strains used for analysis, not including the reference genome</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--CoreTree&quot; &quot;--VAR&quot; and &quot;--pCOG&quot;]</i> The total number of strains used for analysis, not including the reference genome</p>
 
 </dd>
 </dl>
@@ -232,7 +255,7 @@
 <dt id="ReadsPath-PATH"><b>[--ReadsPath (PATH)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--All&quot;, &quot;--Assemble&quot; and &quot;--VAR&quot;]</i> Reads of all strains as file paths ( Default ./Reads )</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--Assemble&quot; and &quot;--VAR&quot;]</i> Reads of all strains as file paths ( Default ./Reads/Illumina )</p>
 
 </dd>
 </dl>
@@ -242,7 +265,7 @@
 <dt id="AAsPath-PATH"><b>[--AAsPath (PATH)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--CoreTree&quot; and &quot;--COG&quot;]</i> Amino acids of all strains as fasta file paths, ( Default &quot;./Results/Annotations/AAs&quot; )</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--CoreTree&quot;, &quot;--orthoF&quot; and &quot;--pCOG&quot;]</i> Amino acids of all strains as fasta file paths, ( Default &quot;./Results/Annotations/AAs&quot; )</p>
 
 </dd>
 </dl>
@@ -269,10 +292,20 @@
 
 <dl>
 
+<dt id="Scaf_suffix-STRING"><b>[--Scaf_suffix (STRING)]</b></dt>
+<dd>
+
+<p>The suffix of scaffolds or genomes [Required by &iexcl;&deg;--All&iexcl;&plusmn;, &iexcl;&deg;--Annotate&iexcl;&plusmn; and &iexcl;&deg;--ANI&iexcl;&plusmn;] Here, &quot;-8.fa&quot; for Illumina data, &quot;.contigs.fasta&quot; for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )</p>
+
+</dd>
+</dl>
+
+<dl>
+
 <dt id="codon-INT"><b>[--codon (INT)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--All&quot;, &quot;--Assemble&quot;, &quot;--CoreTree&quot; and &quot;--Pan&quot;]</i> Translation table ( Default 11 )</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--Annotate&quot;, &quot;--CoreTree&quot; and &quot;--Pan&quot;]</i> Translation table ( Default 11 )</p>
 
 </dd>
 </dl>
@@ -304,7 +337,7 @@
 <dt id="suffix_len-INT"><b>[--suffix_len (INT)]</b></dt>
 <dd>
 
-<p><i>[Required by &quot;--All&quot;, &quot;--Assemble&quot; and &quot;--VAR&quot;]</i> <b>(Strongly recommended)</b> The suffix length of the reads, that is the length of your reads name minus the length of your strain name. For example the --suffix_len of &quot;YBT-1520_L1_I050.R1.clean.fastq.gz&quot; is 26 ( &quot;YBT-1520&quot; is the strain name ) ( Default 0 )</p>
+<p><i>[Required by &quot;--All&quot;, &quot;--Assemble&quot; and &quot;--VAR&quot;]</i> <b>(Strongly recommended)</b> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of &quot;YBT-1520_L1_I050.R1.clean.fastq.gz&quot; is 26 ( &quot;YBT-1520&quot; is the strain name ) ( Default 0 )</p>
 
 </dd>
 </dl>
@@ -331,9 +364,9 @@
 
 <h2 id="Local-Options">******************************************************** Local Options *********************************************************</h2>
 
-<h3 id="Options-of---Assemble-for-reads-assembly-gene-prediction-and-annotation">======================= Options of &quot;--Assemble&quot; for reads assembly, gene prediction and annotation ============================</h3>
+<h3 id="Options-of---Assemble-for-reads-assembly">======================= Options of &quot;--Assemble&quot; for reads assembly ============================</h3>
 
-If you use the results of "--Assemble" function in your work, please also cite:
+If you use the results of "--Assemble" function in your work, please also cite one of the following:
 
 </br>
 
@@ -341,14 +374,52 @@ If you use the results of "--Assemble" function in your work, please also cite:
 
 </br>
 
-</br>Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 2014 Jul 15;30(14):2068-9. PMID:24642063
+</br>Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM. Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation. Genome Research. (2017).
+
+<dl>
+
+<dt id="platform-STRING"><b>[--platform (STRING)]</b></dt>
+<dd>
+
+<p><i>[Required]</i> Sequencing Platform, &quot;illumina&quot;, &quot;pacbio&quot; and &quot;oxford&quot; available ( Default illumina )</p>
+
+</dd>
+</dl>
 
 <dl>
 
 <dt id="kmmer-INT"><b>[--kmmer (INT)]</b></dt>
 <dd>
 
-<p><i>[Required]</i> k-mer size for genome assembly ( Default 81 )</p>
+<p><i>[Required]</i> k-mer size for genome assembly of Illumina data ( Default 81 )</p>
+
+</dd>
+</dl>
+
+<dl>
+
+<dt id="genomeSize-FLOAT"><b>[--genomeSize (FLOAT)]</b></dt>
+<dd>
+
+<p><i>[Required]</i> An estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )</p>
+
+</dd>
+</dl>
+
+<h3 id="Options-of---Annotate-for-genome-annotation">======================= Options of &quot;--Annotate&quot; for genome annotation ============================</h3>
+
+If you use the results of "--Assemble" function in your work, please also cite:
+
+</br>
+
+</br>Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 2014 Jul 15;30(14):2068-9. PMID:24642063
+
+<dl>
+
+<dt id="scafPath-PATH"><b>[--scafPath (PATH)]</b></dt>
+<dd>
+
+<p>Path for contigs/scaffolds ( Default &quot;Results/Assembles/Scaf/Illumina&quot; )</p>
 
 </dd>
 </dl>
@@ -358,7 +429,7 @@ If you use the results of "--Assemble" function in your work, please also cite:
 <dt id="genus-STRING"><b>[--genus (STRING)]</b></dt>
 <dd>
 
-<p>Genus name of your strain ( Default &quot;NA&quot; )</p>
+<p>Genus name of the strain ( Default &quot;NA&quot; )</p>
 
 </dd>
 </dl>
@@ -368,7 +439,7 @@ If you use the results of "--Assemble" function in your work, please also cite:
 <dt id="species-STRING"><b>[--species (STRING)]</b></dt>
 <dd>
 
-<p>Species name of your strain ( Default &quot;NA&quot; )</p>
+<p>Species name of the strain ( Default &quot;NA&quot; )</p>
 
 </dd>
 </dl>
@@ -460,7 +531,7 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 <dt id="aL-FLOAT"><b>[-aL (FLOAT)]</b></dt>
 <dd>
 
-<p>Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )</p>
+<p>Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.5 )</p>
 
 </dd>
 </dl>
@@ -470,7 +541,7 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 <dt id="aS-FLOAT"><b>[-aS (FLOAT)]</b></dt>
 <dd>
 
-<p>Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )</p>
+<p>Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )</p>
 
 </dd>
 </dl>
@@ -544,7 +615,7 @@ If you use the results of "--ANI" function in your work, please also cite:
 <dt id="queryL-FILE"><b>[--queryL (FILE)]</b></dt>
 <dd>
 
-<p><i>[Required]</i> The file containing paths to query genomes, one per line ( Default scaf.list )</p>
+<p><i>[Required]</i> The file containing full paths to query genomes, one per line ( Default scaf.list )</p>
 
 </dd>
 </dl>
@@ -554,7 +625,7 @@ If you use the results of "--ANI" function in your work, please also cite:
 <dt id="refL-FILE"><b>[--refL (FILE)]</b></dt>
 <dd>
 
-<p><i>[Required]</i> The file containing paths to reference genomes, one per line. ( Default scaf.list )</p>
+<p><i>[Required]</i> The file containing full paths to reference genomes, one per line. ( Default scaf.list )</p>
 
 </dd>
 </dl>
@@ -565,16 +636,6 @@ If you use the results of "--ANI" function in your work, please also cite:
 <dd>
 
 <p>The name of output file ( Default &quot;Results/ANI/ANIs&quot; )</p>
-
-</dd>
-</dl>
-
-<dl>
-
-<dt id="Scaf_suffix-STRING"><b>[--Scaf_suffix (STRING)]</b></dt>
-<dd>
-
-<p>The suffix of scaffolds or genomes ( Default &quot;-8.fa&quot; )</p>
 
 </dd>
 </dl>
@@ -717,6 +778,16 @@ If you use the results of "--VAR" function in your work, please also cite:
 
 <dl>
 
+<dt id="canu-bin-PATH"><b>[--canu-bin (PATH)]</b></dt>
+<dd>
+
+<p>Path to canu binary file. Default tries if canu is in PATH;</p>
+
+</dd>
+</dl>
+
+<dl>
+
 <dt id="prodigal-bin-PATH"><b>[--prodigal-bin (PATH)]</b></dt>
 <dd>
 
@@ -845,7 +916,9 @@ If you use the results of "--VAR" function in your work, please also cite:
 </dd>
 </dl>
 
-<h1 id="CODES">CODES</h1>
+<h1 id="POD-ERRORS">POD ERRORS</h1>
+
+<p>Hey! <b>The above document had some coding errors, which are explained below:</b></p>
 
 
 </body>

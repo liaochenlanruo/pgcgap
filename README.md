@@ -1,9 +1,8 @@
 # PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
-![Platform](https://badgen.net/badge/platform/Linux,macOS?list=|)
+![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS?list=|)
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
-![Watchers](https://badgen.net/github/watchers/liaochenlanruo/pgcgap)
 ![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
 
@@ -28,34 +27,69 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 ## Installation
 
-The software was tested successfully on Linux x64 platform and macOS. However, Windows could not be supported. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. The main program and most of other dependencies can be installed with one command as shown below, __but the "Gubbins" should be installed separately__ because of it relys on python3, while PGCGAP relys on python2.
+The software was tested successfully on Windows WSL, Linux x64 platform and macOS. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. Because PGCGAP relies on both __Gubbins__ and __Orthofinder__, which are developed in different versions of python, Gubbins must be installed separately. Once Orthofinder was upgraded to python 3, PGCGAP can be installed with only one command.
 
 
 __Step1: Install Gubbins__
 
+If the system is installed with python 3 version of miniconda, Gubbins can be installed directly via conda.
+
+
 ```
 $conda install gubbins
 ```
+
+If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory need to be added to the environment variable.
+
+```
+#Create a python 3 environment called gubbins
+
+$conda create -n gubbins python=3.7 anaconda
+
+#Activate the gubbins environment
+
+$conda activate gubbins
+
+#Installation of Gubbins
+
+$conda install gubbins
+```
+
+View the installation path of gubbins and then add this path to the environment variable.
+
+```
+$whereis gubbins
+```
+
+Exit the gubbins environment
+
+```
+$conda deactivate
+```
+
 
 __Step2: Install PGCGAP__
 
 ```
 $conda create -n pgcgap python=2.7 anaconda
 $conda activate pgcgap
-$conda install pgcgap # By command "whereis pgcgap", users can find the installation path of pgcgap, and then you should add it into your environment variable.
+$conda install pgcgap
 $conda deactivate
 ```
 
 __Step3: Setup COG database__ (Users should execute this after first installation of pgcgap)
 
 ```
+$conda activate pgcgap
 $pgcgap --setup-COGdb
+$conda deactivate
 ```
 
 
 ## Required dependencies
 
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
+- [Canu](http://canu.readthedocs.org/)
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
 - [Coreutils](https://www.gnu.org/software/coreutils/)
 - [Diamond](https://github.com/bbuchfink/diamond)

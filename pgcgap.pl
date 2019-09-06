@@ -31,45 +31,51 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   $ pgcgap [Fuctions] [Options]
 
-  example 1: Perform all functions, take the bacillus thuringiensis as an example, total 4 strains for analysis
+  The main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/
 
-             For the sake of flexibility, The "VAR" function needs to be added additionally
+  Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the "VAR" function needs to be added separately
 
-             pgcgap --All --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --strain_num 4 --threads 4 --VAR --refgbk <FILE> --qualtype <STRING>
+             pgcgap --All --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --genus <STRING> --species <STRING> --codon <INT> --strain_num <INT> --threads <INT> --VAR --refgbk <full path> --qualtype <STRING>
 
-  example 2: Conduct reads assembly, gene prediction and annotation
+  Example 2: Conduct pair-end reads assembly
 
-             pgcgap --Assemble --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --kmmer 81 --genus bacillus --species thuringiensis --codon 11 --threads 4
+             pgcgap --Assemble --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>
 
-  example 3: Constructing the phylogenetic trees of single-core proteins and core SNPs
+  Example 3: Conduct PacBio/Oxford reads assembly
 
-             pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
+             pgcgap --Assemble --platform [pacbio|oxford] --ReadsPath <PATH> --reads1 <reads suffix> --suffix_len <INT> --genomeSize <Float> --threads <INT>
 
-  example 4: Constructing single-copy core protein tree only.
+  Example 4: Conduct gene prediction and annotation
 
-             pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon 11 --strain_num 4 --threads 4
+             pgcgap --Annotate --scafPath <PATH> --Scaf_suffix <STRING> --genus <STRING> --species <STRING> --codon <INT> --threads <INT>
 
-  example 5: Conduct pan-genome analysis
+  Example 5: Constructing the phylogenetic trees of single-copy core proteins and core SNPs
 
-             pgcgap --Pan --codon 11 --threads 4 --GffPath <PATH>
+             pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
 
-  example 6: Inference of orthologous gene groups
+  Example 6: Constructing single-copy core protein tree only.
 
-             pgcgap --orthoF --threads 4 --AAsPath <PATH>
+             pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
 
-  example 7: Compute whole-genome Average Nucleotide Identity (ANI)
+  Example 7: Conduct pan-genome analysis
 
-             pgcgap --ANI --threads 4 --queryL <FILE> --refL <FILE> --ANIO <FILE> --Scaf_suffix <STRING>
+             pgcgap --Pan --codon <INT> --threads <INT> --GffPath <PATH>
 
-  example 8: Run COG annotation for each strain
+  Example 8: Inference of orthologous gene groups
 
-              pgcgap --COG --strain_num 4 --threads 4 --AAsPath <PATH>
+             pgcgap --orthoF --threads <INT> --AAsPath <PATH>
 
-  example 9: Varients calling and phylogenetic tree construction based on reference genome
+  Example 9: Compute whole-genome Average Nucleotide Identity (ANI)
 
-             pgcgap --VAR --threads 4 --refgbk <FILE> --ReadsPath <PATH> --reads1 .R1.clean.fastq.gz --reads2 .R2.clean.fastq.gz --suffix_len <INT> --strain_num 5 --qualtype <STRING> 
+             pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --ANIO <STRING> --Scaf_suffix <STRING>
 
+  Example 10: Run COG annotation for each strain
 
+              pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>
+
+  Example 11: Varients calling and phylogenetic tree construction based on reference genome
+
+             pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
 
 =head1 OPTIONS
 
@@ -126,11 +132,12 @@ $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 =for text
 
 
+
 =over 30
 
 =item B<[--All]>
 
-Perform Assemble, CoreTree, Pan, OrthoF, ANI and COG functions with one command
+Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI and pCOG functions with one command
 
 =back
 
@@ -142,7 +149,7 @@ $options{'All'} = \(my $opt_All);
 
 =item B<[--Assemble]>
 
-Assemble reads ( paired-end only ) into contigs, predict genes and annotate them
+Assemble reads into contigs
 
 =back
 
@@ -152,9 +159,21 @@ $options{'Assemble'} = \(my $opt_Assemble);
 
 =over 30
 
+=item B<[--Annotate]>
+
+Genome annotation
+
+=back
+
+=cut
+
+$options{'Annotate'} = \(my $opt_Annotate);
+
+=over 30
+
 =item B<[--CoreTree]>
 
-Construct single-core proteins tree and SNPs tree of single core genes
+Construct single-copy core proteins tree and core SNPs tree
 
 =back
 
@@ -178,7 +197,7 @@ $options{'Pan'} = \(my $opt_Pan);
 
 =item B<[--OrthoF]>
 
-Identify orthologous protein sequence families with "OrthoFinder"
+Identify orthologous protein sequence families
 
 =back
 
@@ -200,7 +219,7 @@ $options{'ANI'} = \(my $opt_ANI);
 
 =over 30
 
-=item B<[--COG]>
+=item B<[--pCOG]>
 
 Run COG annotation for each strain (*.faa), and generate a table containing the relative abundance of each flag for all strains
 
@@ -208,13 +227,13 @@ Run COG annotation for each strain (*.faa), and generate a table containing the 
 
 =cut
 
-$options{'COG'} = \(my $opt_COG);
+$options{'pCOG'} = \(my $opt_pCOG);
 
 =over 30
 
 =item B<[--VAR]>
 
-Rapid haploid variant calling and core genome alignment with "Snippy"
+Rapid haploid variant calling and core genome alignment
 
 =back
 
@@ -222,17 +241,17 @@ Rapid haploid variant calling and core genome alignment with "Snippy"
 
 $options{'VAR'} = \(my $opt_VAR);
 
-
 =head2 ******************************************************** Global Options ********************************************************
 
 =for text
+
 
 
 =over 30
 
 =item B<[--strain_num (INT)]>
 
-I<[Required by "--All", "--CoreTree" "--VAR" and "--COG"]> The total number of strains used for analysis, not including the reference genome
+I<[Required by "--All", "--CoreTree" "--VAR" and "--pCOG"]> The total number of strains used for analysis, not including the reference genome
 
 =back
 
@@ -244,19 +263,19 @@ $options{'strain_num=i'} = \( my $opt_strain_num );
 
 =item B<[--ReadsPath (PATH)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> Reads of all strains as file paths ( Default ./Reads )
+I<[Required by "--All", "--Assemble" and "--VAR"]> Reads of all strains as file paths ( Default ./Reads/Illumina )
 
 =back
 
 =cut
 
-$options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads" );
+$options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 =over 30
 
 =item B<[--AAsPath (PATH)]>
 
-I<[Required by "--CoreTree" and "--COG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
+I<[Required by "--All", "--CoreTree", "--orthoF" and "--pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
 
 =back
 
@@ -290,9 +309,21 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =over 30
 
+=item B<[--Scaf_suffix (STRING)]>
+
+The suffix of scaffolds or genomes [Required by ¡°--All¡±, ¡°--Annotate¡± and ¡°--ANI¡±] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+
+=back
+
+=cut
+
+$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
+
+=over 30
+
 =item B<[--codon (INT)]>
 
-I<[Required by "--All", "--Assemble", "--CoreTree" and "--Pan"]> Translation table ( Default 11 )
+I<[Required by "--All", "--Annotate", "--CoreTree" and "--Pan"]> Translation table ( Default 11 )
 
 =back
 
@@ -328,8 +359,7 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
 
 =item B<[--suffix_len (INT)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> B<(Strongly recommended)> The suffix length of the reads, that is the length of your reads name minus the length of your strain name.
-For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
+I<[Required by "--All", "--Assemble" and "--VAR"]> B<(Strongly recommended)> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
 
 =back
 
@@ -361,20 +391,21 @@ Number of threads to be used ( Default 4 )
 
 $options{'threads=i'} = \( my $opt_threads = 4 );
 
-
 =head2 ******************************************************** Local Options *********************************************************
 
 =for text
 
 
-=head3 ======================= Options of "--Assemble" for reads assembly, gene prediction and annotation ============================
+
+=head3 ======================= Options of "--Assemble" for reads assembly ============================
 
 =for text
 
 
+
 =begin html
 
-If you use the results of "--Assemble" function in your work, please also cite:
+If you use the results of "--Assemble" function in your work, please also cite one of the following:
 
 </br>
 
@@ -382,15 +413,27 @@ If you use the results of "--Assemble" function in your work, please also cite:
 
 </br>
 
-</br>Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 2014 Jul 15;30(14):2068-9. PMID:24642063
+</br>Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM. Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation. Genome Research. (2017).
 
 =end html
 
 =over 30
 
+=item B<[--platform (STRING)]>
+
+I<[Required]> Sequencing Platform, "illumina", "pacbio" and "oxford" available ( Default illumina )
+
+=back
+
+=cut
+
+$options{'platform=s'} = \(my $opt_platform = "illumina");
+
+=over 30
+
 =item B<[--kmmer (INT)]>
 
-I<[Required]> k-mer size for genome assembly ( Default 81 )
+I<[Required]> k-mer size for genome assembly of Illumina data ( Default 81 )
 
 =back
 
@@ -400,9 +443,49 @@ $options{'kmmer=i'} = \(my $opt_kmmer = 81);
 
 =over 30
 
+=item B<[--genomeSize (FLOAT)]>
+
+I<[Required]> An estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
+
+=back
+
+=cut
+
+$options{'genomeSize=s'} = \(my $opt_genomeSize);
+
+=head3 ======================= Options of "--Annotate" for genome annotation ============================
+
+=for text
+
+
+
+=begin html
+
+If you use the results of "--Assemble" function in your work, please also cite:
+
+</br>
+
+</br>Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 2014 Jul 15;30(14):2068-9. PMID:24642063
+
+=end html
+
+=over 30
+
+=item B<[--scafPath (PATH)]>
+
+Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
+
+=back
+
+=cut
+
+$options{'scafPath=s'} = \(my $opt_scafPath = "Results/Assembles/Scaf/Illumina");
+
+=over 30
+
 =item B<[--genus (STRING)]>
 
-Genus name of your strain ( Default "NA" )
+Genus name of the strain ( Default "NA" )
 
 =back
 
@@ -414,7 +497,7 @@ $options{'genus=s'} = \(my $opt_genus = "NA");
 
 =item B<[--species (STRING)]>
 
-Species name of your strain ( Default "NA" )
+Species name of the strain ( Default "NA" )
 
 =back
 
@@ -422,10 +505,10 @@ Species name of your strain ( Default "NA" )
 
 $options{'species=s'} = \(my $opt_species = "NA");
 
-
 =head3 ======================================== Options for "--CoreTree" constructing ================================================
 
 =for text
+
 
 
 =begin html
@@ -484,7 +567,7 @@ Sequence identity threshold, ( Default 0.5)
 
 =cut
 
-$options{'c=i'} = \( my $opt_c = 0.5 );
+$options{'c=f'} = \( my $opt_c = 0.5 );
 
 =over 30
 
@@ -526,25 +609,25 @@ $options{'t=i'} = \( my $opt_t = 0 );
 
 =item B<[-aL (FLOAT)]>
 
-Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )
+Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.5 )
 
 =back
 
 =cut
 
-$options{'aL=i'} = \( my $opt_aL = 0.8 );
+$options{'aL=f'} = \( my $opt_aL = 0.5 );
 
 =over 30
 
 =item B<[-aS (FLOAT)]>
 
-Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.8 )
+Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )
 
 =back
 
 =cut
 
-$options{'aS=i'} = \( my $opt_aS = 0.8 );
+$options{'aS=f'} = \( my $opt_aS = 0.7 );
 
 =over 30
 
@@ -570,10 +653,10 @@ length of description in .clstr file. if set to 0, it takes the fasta defline an
 
 $options{'d=i'} = \( my $opt_d = 0 );
 
-
 =head3 ===================================== Options for "--Pan" analysis ============================================================
 
 =for text
+
 
 
 =begin html
@@ -598,10 +681,10 @@ I<[Required]> Gff files of all strains as paths ( Default "./Results/Annotations
 
 $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
 
-
 =head3 ===================================== Options for "--orthoF" analysis =========================================================
 
 =for text
+
 
 
 =begin html
@@ -626,10 +709,10 @@ Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default bla
 
 $options{'Sprogram=s'} = \( my $opt_Sprogram = "blast" );
 
-
 =head3 ===================================== Options for "--ANI" analysis ============================================================
 
 =for text
+
 
 
 =begin html
@@ -646,7 +729,7 @@ If you use the results of "--ANI" function in your work, please also cite:
 
 =item B<[--queryL (FILE)]>
 
-I<[Required]> The file containing paths to query genomes, one per line ( Default scaf.list )
+I<[Required]> The file containing full paths to query genomes, one per line ( Default scaf.list )
 
 =back
 
@@ -658,7 +741,7 @@ $options{'queryL=s'} = \( my $opt_queryL = "scaf.list" );
 
 =item B<[--refL (FILE)]>
 
-I<[Required]> The file containing paths to reference genomes, one per line. ( Default scaf.list )
+I<[Required]> The file containing full paths to reference genomes, one per line. ( Default scaf.list )
 
 =back
 
@@ -678,21 +761,11 @@ The name of output file ( Default "Results/ANI/ANIs" )
 
 $options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
 
-=over 30
-
-=item B<[--Scaf_suffix (STRING)]>
-
-The suffix of scaffolds or genomes ( Default "-8.fa" )
-
-=back
-
-=cut
-
-$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
-
 =head3 ===================================== Options for "--VAR" analysis ============================================================
 
 =for text
+
+
 
 =begin html
 
@@ -784,7 +857,7 @@ The minimum proportion of those reads which must differ from the reference ( Def
 
 =cut
 
-$options{'minfrac=i'} = \(my $opt_minfrac = "0.9");
+$options{'minfrac=f'} = \(my $opt_minfrac = "0.9");
 
 =over 30
 
@@ -839,6 +912,7 @@ $options{'iterations=i'} = \(my $opt_iterations = "5");
 =for text
 
 
+
 =over 1
 
 Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs
@@ -858,6 +932,18 @@ Path to abyss binary file. Default tries if abyss is in PATH;
 =cut
 
 $options{'abyss-bin=s'} = \( my $opt_abyss_bin = `which abyss-pe 2>/dev/null` );
+
+=over 30
+
+=item B<[--canu-bin (PATH)]>
+
+Path to canu binary file. Default tries if canu is in PATH;
+
+=back
+
+=cut
+
+$options{'canu-bin=s'} = \( my $opt_canu_bin = `which canu 2>/dev/null` );
 
 =over 30
 
@@ -1022,6 +1108,7 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 =for text
 
 
+
     Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
 
@@ -1036,9 +1123,6 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 
 =end text
 
-
-=head1 CODES
-
 =cut
 
 tee STDOUT, ">$opt_logs";
@@ -1046,20 +1130,21 @@ tee STDOUT, ">$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.6\n";
+    print "PGCGAP version: 1.0.7\n";
     exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
 pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
 pod2usage( -msg => 'fasttree not in $PATH and binary not specified use --fasttree-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fasttree_bin);
 pod2usage( -msg => 'snp-sites not in $PATH and binary not specified use --snp-sites-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snpsites_bin);
 pod2usage( -msg => 'abyss not in $PATH and binary not specified use --abyss-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abyss_bin);
+pod2usage( -msg => 'canu not in $PATH and binary not specified use --canu-bin', -verbose => 0, -exitval => 1 ) unless ($opt_canu_bin);
 pod2usage( -msg => 'prodigal not in $PATH and binary not specified use --prodigal-bin', -verbose => 0, -exitval => 1 ) unless ($opt_prodigal_bin);
 pod2usage( -msg => 'prokka not in $PATH and binary not specified use --prokka-bin', -verbose => 0, -exitval => 1 ) unless ($opt_prokka_bin);
 pod2usage( -msg => 'pal2nal.pl not in $PATH and binary not specified use --pal2nal-bin', -verbose => 0, -exitval => 1 ) unless ($opt_pal2nal_bin);
@@ -1072,7 +1157,7 @@ pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bi
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1110,59 +1195,112 @@ if ($opt_setup_COGdb) {
 #===================================================================================================
 my $time_start = $^T;
 my $working_dir = getcwd;
-system("mkdir Results");
-# Assemble, gene prediction and annotation with "Abyss" and "Prokka"
+system("mkdir -p Results");
+# Genome Assemble with"Abyss" or "Canu"
 if ($opt_All or $opt_Assemble) {
-	print "Performing --Assemble function...\n\n";
-	system("mkdir Results/Assembles");
-	system("mkdir Results/Assembles/Scaf");
-	system("mkdir Results/Annotations");
-	system("mkdir Results/Annotations/CDs");
-	system("mkdir Results/Annotations/AAs");
-	system("mkdir Results/Annotations/GFF");
-	
-	chdir $opt_ReadsPath;
-	my @files = glob("*$opt_reads1");
-	my %lists;
-	foreach (@files) {
-		if (/(\S+)$opt_reads1/) {
-			$lists{$1} = "1";
+	system("mkdir -p Results/Assembles/Scaf");
+	if ($opt_platform eq "illumina") {
+		print "Performing --Assemble function for Illunina data...\n\n";
+		system("mkdir -p Results/Assembles/Illumina");
+		system("mkdir -p Results/Assembles/Scaf/Illumina");
+		
+		chdir $opt_ReadsPath;
+		my @files = glob("*$opt_reads1");
+		my %lists;
+		foreach (@files) {
+			if (/(\S+)$opt_reads1/) {
+				$lists{$1} = "1";
+			}
 		}
+
+		my @lists = keys %lists;
+
+		foreach my $name(@lists) {
+			my $read1 = $name . $opt_reads1;
+			my $read2 = $name . $opt_reads2;
+			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
+			print "Assembling...\n";
+			system("abyss-pe name=$str k=$opt_kmmer in='$read1 $read2' np=$opt_threads");
+			print "Assemble complete !\n";
+			my $assem = $str . "_assembly";
+			system("mkdir -p $working_dir/Results/Assembles/Illumina/$assem");
+			my $scaf = $str . "-8.fa";
+#			system("mkdir Over");
+			system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+#			system("mv $read1 $read2 Over/");
+			system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
+		}
+		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		my $time_assemble = time();
+		my $time_assemblex = ($time_assemble - $time_start)/3600;
+		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+	}elsif ($opt_platform eq "pacbio") {
+		print "Performing --Assemble function for PacBio data...\n\n";
+		#system("mkdir Results/Assembles/PacBio");
+		system("mkdir Results/Assembles/Scaf/PacBio");
+		chdir $opt_ReadsPath;
+		my @files = glob("*$opt_reads1");
+		foreach (@files) {
+			my $name = substr($_,0,(length($_)-$opt_suffix_len));
+#			if (/(\S+)$opt_reads1/) {
+#				my $name = $1;
+			my $outdir = "$working_dir/Results/Assembles/PacBio/" . $name;
+			my $scaf = $name . ".contigs.fasta";
+			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
+			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/PacBio/");
+#			}
+		}
+		chdir $working_dir;
+		system("realpath Results/Assembles/Scaf/PacBio/* >> scaf.list");
+	}elsif ($opt_platform eq "oxford") {
+		print "Performing --Assemble function for Oxford Nanopore data...\n\n";
+		#system("mkdir Results/Assembles/Oxford");
+		system("mkdir Results/Assembles/Scaf/Oxford");
+		chdir $opt_ReadsPath;
+		my @files = glob("*$opt_reads1");
+		foreach (@files) {
+			my $name = substr($_,0,(length($_)-$opt_suffix_len));
+#			if (/(\S+)$opt_reads1/) {
+#				my $name = $1;
+			my $outdir = "$working_dir/Results/Assembles/Oxford/" . $name;
+			my $scaf = $name . ".contigs.fasta";
+			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $_");
+			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/Oxford/");
+#			}
+		}
+		chdir $working_dir;
+		system("realpath Results/Assembles/Scaf/Oxford/* >> scaf.list");
 	}
+}
 
-	my @lists = keys %lists;
+#=========================================================================================================================================
 
-	foreach my $name(@lists) {
-		my $read1 = $name . $opt_reads1;
-		my $read2 = $name . $opt_reads2;
-		my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
-		print "Assembling...\n";
-		system("abyss-pe name=$str k=$opt_kmmer in='$read1 $read2' np=$opt_threads");
-		print "Assemble complete !\n";
-		my $assem = $str . "_assembly";
-		system("mkdir ../Results/Assembles/$assem");
-		my $scaf = $str . "-8.fa";
+##Annotate
+if ($opt_All or $opt_Annotate) {
+	system("mkdir -p Results/Annotations");
+	system("mkdir -p Results/Annotations/CDs");
+	system("mkdir -p Results/Annotations/AAs");
+	system("mkdir -p Results/Annotations/GFF");
+	chdir $opt_scafPath;
+	my $path = `pwd`;
+	print $path . "\n";
+	my @scaf = glob("*$opt_Scaf_suffix");
+	foreach my $scaf (@scaf) {
+		$scaf=~/(.+)$opt_Scaf_suffix/;
+		my $str = $1;
 		my $faa = $str . ".faa";
 		my $fna = $str . ".ffn";
 		my $gff = $str . ".gff";
 		my $outdir = $str . "_annotation";
 		print "Running ORFs finding and annotating...\n";
 		system("prokka --outdir $outdir --prefix $str --locustag $str --genus $opt_genus --species $opt_species --strain $str --gcode $opt_codon --cpus $opt_threads $scaf");
-		print "Annotation complete !\n";
-		system("mkdir Over");
-		system("cp $scaf ../Results/Assembles/Scaf/");
-		system("cp $outdir/$faa ../Results/Annotations/AAs");
-		system("cp $outdir/$fna ../Results/Annotations/CDs");
-		system("cp $outdir/$gff ../Results/Annotations/GFF");
-		system("mv *_annotation ../Results/Annotations/");
-		system("mv $read1 $read2 Over/");
-		system("mv $str* ../Results/Assembles/$assem/");
+		system("cp $outdir/$faa $working_dir/Results/Annotations/AAs");
+		system("cp $outdir/$fna $working_dir/Results/Annotations/CDs");
+		system("cp $outdir/$gff $working_dir/Results/Annotations/GFF");
+		system("mv $outdir $working_dir/Results/Annotations/");
 	}
-	chdir "../";
-	system("realpath Results/Assembles/Scaf/* > scaf.list");
-	my $time_assemble = time();
-	my $time_assemblex = ($time_assemble - $time_start)/3600;
-	print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+	
 }
 
 #=========================================================================================================================================
@@ -1171,7 +1309,7 @@ if ($opt_All or $opt_Assemble) {
 if ($opt_All or $opt_CoreTree) {
 	my $time_coretrees = time();
 	print "Performing --CoreTree function...\n\n";
-	system("mkdir Results/CoreTrees");
+	system("mkdir -p Results/CoreTrees");
 	system("cat $opt_AAsPath/*.faa > All.pep");
 	print "Running CD-hit...\n";
 	system("cd-hit -i All.pep -o All.pep.nr -c $opt_c -n $opt_n -G $opt_G -T $opt_threads -t $opt_t -aS $opt_aS -aL $opt_aL -g $opt_g -M 0 -d $opt_d");
@@ -1733,8 +1871,8 @@ if ($opt_All or $opt_OrthoF) {
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
 	#system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
-	system("mv $opt_AAsPath/OrthoFinder/ Results/");
-	#system("mv $opt_AAsPath/Results_orthoF/ Results/");
+#	system("mv $opt_AAsPath/OrthoFinder/ Results/");
+	system("mv $opt_AAsPath/*rtho*/ Results/");
 }
 
 if ($opt_All or $opt_ANI) {
@@ -1755,7 +1893,7 @@ if ($opt_VAR) {
 	my $time_VARs = time();
 	print "Performing --VAR function...\n\n";
 	system("mkdir Results/Varients");
-	chdir "$opt_ReadsPath/Over";
+	chdir "$opt_ReadsPath";
 	system("mkdir Trimmed");
 	system("cp $opt_refgbk ./");
 	my @files = glob("*$opt_reads1");
@@ -1805,7 +1943,7 @@ if ($opt_VAR) {
 	print "The 'ANI' program runs for $time_VAR hours.\n\n";
 }
 
-if ($opt_All or $opt_COG) {
+if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir Results/COG");
@@ -1814,9 +1952,9 @@ if ($opt_All or $opt_COG) {
 	chdir $working_dir;
 	my $time_COGd = time();
 	my $time_COG = ($time_COGd - $time_COGs)/3600;
-	print "The 'COG' program runs for $time_COG hours.\n\n";
+	print "The 'pCOG' program runs for $time_COG hours.\n\n";
 }
 
 my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
-print "All programs finished in $time_total hours.\n\n";
+print "Total $time_total hours used.\n\n";
