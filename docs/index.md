@@ -30,6 +30,7 @@
   * [Working directory](#working-directory)
 
   * [Assemble](#assemble)
+
   * [Annotate](#annotate)
 
   * [ANI](#ani)
@@ -39,6 +40,7 @@
   * [OrthoF](#orthof)
 
   * [Pan](#pan)
+
   * [COG](#cog)
 
   * [VAR](#var)
@@ -46,6 +48,7 @@
 - [Output Files](#output-files)
 
   * [Assemble](#assemble-1)
+
   * [Annotate](#annotate-1)
 
   * [ANI](#ani-1)
@@ -207,7 +210,7 @@ $conda deactivate
     ```
 <br/>
 
-- __functionS:__
+- __Functions:__
 
   - __[--All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI and pCOG functions with one command
 
@@ -369,7 +372,6 @@ $conda deactivate
       - __[--ANIO (FILE)]__              The name of output file ( Default "Results/ANI/ANIs" )
 
   <br/>
-
   - **--VAR**
 
       - __[--refgbk (FILE)]__            [Required] The full path and name of
@@ -790,3 +792,30 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 This warning may happen when running function "Pan". It is a warning of Roary software.
 The content of line 61 is "require Encode::ConfigLocal;". Users can ignore the warning.
 Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
+
+## Updates
+
+- V1.0.3
+
+  - Updated ANI fuction
+
+- V1.0.4
+
+  - Add parallel for function "COG"
+  - Optimized drawing of ANI heat map
+
+- V1.0.5
+
+  - Bug repair for input of gubbins
+
+- V1.0.6
+
+  - Modified CoreTree to split protein and SNPs tree constructing
+
+- V1.0.7
+
+  - Split Assemble and Annotate into two functions
+  - Added third generation genome assembly function
+  - Changed the default parameters of the CoreTree function （aS 0.8 to 0.7 and aL 0.8 to 0.5）
+  - Changed the name of function "COG" to "pCOG"
+  - Fixed the sorting bug for ANI heat map
