@@ -32,5 +32,5 @@ while(i<=4){
 
 
 par(oma=c(2,2,2,2))
-pie3D(num, radius=0.75, height=0.15, labels=labels, explode=0.25, border="black", shade=0.6, cex.main=2, labelcex=1, main="Pangenome Pie")
+pie3D(num, radius=0.75, height=0.15, labels=labels, explode=0.25, border="black", shade=0.6, cex.main=2, labelcex=1")
 dev.off()
