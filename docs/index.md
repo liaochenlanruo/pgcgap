@@ -101,9 +101,9 @@ $conda install gubbins
 If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory need to be added to the environment variable.
 
 ```
-#Create a python 3 environment called gubbins
+#Create an environment called gubbins
 
-$conda create -n gubbins python=3.7 anaconda
+$conda create -n gubbins
 
 #Activate the gubbins environment
 
@@ -130,7 +130,7 @@ $conda deactivate
 __Step2: Install PGCGAP__
 
 ```
-$conda create -n pgcgap python=2.7 anaconda
+$conda create -n pgcgap
 $conda activate pgcgap
 $conda install pgcgap
 $conda deactivate
