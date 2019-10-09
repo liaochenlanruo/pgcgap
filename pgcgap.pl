@@ -63,7 +63,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   Example 8: Inference of orthologous gene groups
 
-             pgcgap --orthoF --threads <INT> --AAsPath <PATH>
+             pgcgap --OrthoF --threads <INT> --AAsPath <PATH>
 
   Example 9: Compute whole-genome Average Nucleotide Identity (ANI)
 
@@ -73,7 +73,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
               pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>
 
-  Example 11: Varients calling and phylogenetic tree construction based on reference genome
+  Example 11: Variants calling and phylogenetic tree construction based on reference genome
 
              pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
 
@@ -275,7 +275,7 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 =item B<[--AAsPath (PATH)]>
 
-I<[Required by "--All", "--CoreTree", "--orthoF" and "--pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
+I<[Required by "--All", "--CoreTree", "--OrthoF" and "--pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
 
 =back
 
@@ -573,7 +573,7 @@ $options{'c=f'} = \( my $opt_c = 0.5 );
 
 =item B<[-n (INT)]>
 
-Word_length, see user's guide of CD-HIT for choosing it ( Default 2 )
+Word_length, -n 2 for thresholds 0.4-0.5, -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n 5 for thresholds 0.7-1.0 ( Default 2 )
 
 =back
 
@@ -681,7 +681,7 @@ I<[Required]> Gff files of all strains as paths ( Default "./Results/Annotations
 
 $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
 
-=head3 ===================================== Options for "--orthoF" analysis =========================================================
+=head3 ===================================== Options for "--OrthoF" analysis =========================================================
 
 =for text
 
@@ -689,7 +689,7 @@ $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
 
 =begin html
 
-If you use the results of "--orthoF" function in your work, please also cite:
+If you use the results of "--OrthoF" function in your work, please also cite:
 
 </br>
 
@@ -1892,7 +1892,7 @@ if ($opt_All or $opt_ANI) {
 if ($opt_VAR) {
 	my $time_VARs = time();
 	print "Performing --VAR function...\n\n";
-	system("mkdir Results/Varients");
+	system("mkdir Results/Variants");
 	chdir "$opt_ReadsPath";
 	system("mkdir Trimmed");
 	system("cp $opt_refgbk ./");
@@ -1914,30 +1914,30 @@ if ($opt_VAR) {
 		my $trir = $str . "_trimmed_2.fastq";
 		my $tris = $str . "_trimmed_s.fastq";
 		system("sickle pe -f $read1 -r $read2 -t $opt_qualtype -o Trimmed/$trif -p Trimmed/$trir -s Trimmed/$tris -q $opt_qual -l $opt_length");#Quality trimming
-		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir ../../Results/Varients/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
+		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir ../../Results/Variants/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
 	}
 	chdir $working_dir;
-	system("snippy-core --ref $opt_refgbk $working_dir/Results/Varients/*");
-	system("mkdir Results/Varients/Core");
+	system("snippy-core --ref $opt_refgbk $working_dir/Results/Variants/*");
+	system("mkdir Results/Variants/Core");
 
 	if ($opt_strain_num > 2) {
 		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
-		system("mv gubbins.* Results/Varients/Core/");
+		system("mv gubbins.* Results/Variants/Core/");
 		my $corefull = system(@corefull);
 		if (!($corefull == 0)) {
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
 			system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Varients/Core/");
+			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 		}else {
-			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Varients/Core/");
+			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Variants/Core/");
 			print "running gubbins successfully!\n";
 		}
 	} else {
 		system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-		system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Varients/Core/");
+		system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
 	system("fasttree -nt -gtr core.aln > core.nwk");
-	system("mv core.aln core.nwk Results/Varients/Core/");
+	system("mv core.aln core.nwk Results/Variants/Core/");
 	my $time_VARd = time();
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
 	print "The 'ANI' program runs for $time_VAR hours.\n\n";
