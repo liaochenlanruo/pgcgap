@@ -243,7 +243,7 @@ $conda deactivate
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[--AAsPath (PATH)]__               [Required by “--All”, “--CoreTree”, “--orthoF” and “--pCOG”] Amino acids of all strains as fasta file paths,
+  - __[--AAsPath (PATH)]__               [Required by “--All”, “--CoreTree”, “--OrthoF” and “--pCOG”] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
   - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
@@ -321,8 +321,9 @@ $conda deactivate
 
       - __[-c (FLOAT)]__                 Sequence identity threshold, ( Default 0.5)
 
-      - __[-n (INT)]__                   Word_length, see user's guide of CD-HIT
-                                         for choosing it ( Default 2 )
+      - __[-n (INT)]__                   Word_length,  -n 2 for thresholds 0.4-0.5,
+                                         -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7,
+                                         -n 5 for thresholds 0.7-1.0 ( Default 2 )
 
       - __[-G (INT)]__                   Use global (set to 1) or local (set to 0)
                                          sequence identity, ( Default 0 )
@@ -355,7 +356,7 @@ $conda deactivate
                                          ( Default "./Results/Annotations/GFF" )
   <br/>
 
-  - __--orthoF__
+  - __--OrthoF__
 
       - __[--Sprogram (STRING)]__        Sequence search program, Options: blast,
                                          mmseqs, blast_gz, diamond ( Default blast)
@@ -509,7 +510,7 @@ $conda deactivate
   - __Example 6:__ Inference of orthologous gene groups.
 
     ```
-    $pgcgap --orthoF --threads 4 --AAsPath Results/Annotations/AAs
+    $pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs
     ```
 
   - __Example 7:__ Compute whole-genome Average Nucleotide Identity (ANI).
@@ -612,7 +613,7 @@ Directory contain the master annotation of all strains in GFF3 format.
 ### ANI
 
 - __Results/ANI/ANIs__<br/>
-query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments
+The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments
 <br/>
 
 - __Results/ANI/ANIs.matrix__<br/>
@@ -630,15 +631,15 @@ The heatmap plot of "ANIs.heatmap"
 ### CoreTree
 
 - __Results/CoreTrees/faa/ALL.core.protein.fasta__<br/>
-Concatenated and aligned sequences file of single-core proteins.
+Concatenated and aligned sequences file of single-copy core proteins.
 <br/>
 
 - __Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta__<br/>
-Concatenated and aligned sequences file of single-core genes.
+Concatenated and aligned sequences file of single-copy core genes.
 <br/>
 
 - __Results/CoreTrees/faa2ffn/ALL.core.snp.fasta__<br/>
-Core SNPs of single-core genes in fasta format.
+Core SNPs of single-copy core genes in fasta format.
 <br/>
 
 - __Results/CoreTrees/ALL.core.protein.nwk__<br/>
@@ -663,7 +664,7 @@ Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs
 ### Pan
 
 - __Results/PanGenome/Pangenome_Pie.pdf__<br/>
-An 3D pie chart of the breakdown of genes and the number of isolate they are present in
+A 3D pie chart of the breakdown of genes and the number of isolate they are present in
 <br/>
 
 - __Results/PanGenome/pangenome_frequency.pdf__<br/>
@@ -696,10 +697,10 @@ A plot of super COG table in pdf format
 A table containing the relative abundance of each flag for all strains
 
 ### VAR
-- __Results/Varients/directory-named-in-strains__<br/>
+- __Results/Variants/directory-named-in-strains__<br/>
 directories containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy?_blank) outputs for detail.
 
-- __Results/Varients/Core__<br/>
+- __Results/Variants/Core__<br/>
   The directory containing Core SNP phylogeny files
 
   - __.aln__ : A core SNP alignment includes only SNP sites
@@ -725,7 +726,7 @@ If you use this software please cite: (__Please keep an eye on it as it will be 
 ### Q1 VAR founction ran failed to get annotated VCFs and Core results
 
 
-Check the log file named in "strain_name.log" under Results/Varients/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEff error. Users can install JDK8 to solve this problem.
+Check the log file named in "strain_name.log" under Results/Variants/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEff error. Users can install JDK8 to solve this problem.
 
 
 
