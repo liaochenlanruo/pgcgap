@@ -562,7 +562,7 @@ Amino acids file (With “.faa” as the suffix) of each strain placed into a di
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
 <br/>
 
-- The full path of reference genome in fasta format or genebank format (__must be provided__).
+- The full path of reference genome in fasta format or GenBank format (__must be provided__).
 
 ## Output Files
 
