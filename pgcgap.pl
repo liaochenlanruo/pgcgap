@@ -1125,7 +1125,7 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 
 =cut
 
-tee STDOUT, ">$opt_logs";
+tee STDOUT, ">>$opt_logs";
 
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
