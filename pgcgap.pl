@@ -1181,15 +1181,20 @@ if ($bin=~/(.+)\/pgcgap/) {
 #=============================== setup COG database ================================================
 if ($opt_setup_COGdb) {
 	#system("mkdir -p ~/COGdb");
-	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
-	system("gunzip prot2003-2014.fa.gz");
+#	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
+#	system("gunzip prot2003-2014.fa.gz");
+	system("wget -P ./ http://bcam.hzau.edu.cn/COGdb/cognames2003-2014.tab");
+	system("wget -P ./ http://bcam.hzau.edu.cn/COGdb/fun2003-2014.tab");
+	system("wget -P ./ http://bcam.hzau.edu.cn/COGdb/cog2003-2014.csv");
+	system("wget -P ./ http://bcam.hzau.edu.cn/COGdb/prot2003-2014.fa");
 	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
 	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab $pgcgap_dir/");
 	system("chmod a+x $pgcgap_dir/COG*");
 	system("chmod a+x $pgcgap_dir/cog2003-2014.csv");
 	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
 	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
-	system("rm prot2003-2014.fa prot2003-2014.gi2gbk.tab prot2003-2014.tab Readme.201610.txt");
+	system("rm prot2003-2014.fa");
+#	system("rm prot2003-2014.fa prot2003-2014.gi2gbk.tab prot2003-2014.tab Readme.201610.txt");
 }
 
 #===================================================================================================
