@@ -846,3 +846,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Changed the default parameters of the CoreTree function （aS 0.8 to 0.7 and aL 0.8 to 0.5）
   - Changed the name of function "COG" to "pCOG"
   - Fixed the sorting bug for ANI heat map
+
+- V1.0.8
+
+  - Add the "MASH" function to compute genome distance and similarity using MinHash
