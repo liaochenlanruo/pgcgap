@@ -99,6 +99,7 @@ $conda deactivate
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
+- [Mash](https://mash.readthedocs.io/en/latest/index.html)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)

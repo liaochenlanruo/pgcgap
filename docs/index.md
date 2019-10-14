@@ -227,6 +227,8 @@ $conda deactivate
 
   - __[--ANI]__                          Compute whole-genome Average Nucleotide Identity ( ANI )
 
+  - __[--MASH]__                         Genome and metagenome similarity estimation using MinHash
+
   - __[--pCOG]__                          Run COG annotation for each strain (*.faa),
 				                                 and generate a table containing the relative
 				                                 abundance of each flag for all strains
@@ -243,7 +245,9 @@ $conda deactivate
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[--AAsPath (PATH)]__               [Required by “--All”, “--CoreTree”, “--OrthoF” and “--pCOG”] Amino acids of all strains as fasta file paths,
+  - __[--scafPath (PATH)]__              [Required by "--All", "--Annotate" and "--MASH"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
+
+  - __[--AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
   - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
@@ -258,7 +262,7 @@ $conda deactivate
                                          example: if the name of reads 2 is
                                          "YBT-1520_2.fq", the suffix name should be "_2.fq" )
 
-  - **[--Scaf_suffix (STRING)]**         [Required by “--All”, “--Annotate” and “--ANI”] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[--Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "MASH" and "--ANI"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
   - __[--codon (INT)]__                  [Required by "--All", "--Annotate", "--CoreTree" and "--Pan"] Translation table ( Default 11 )
 
@@ -304,8 +308,6 @@ $conda deactivate
       - __[--genomeSize (FLOAT)]__       [Required] An estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
 
   - __--Annotate__
-
-      - __[--scafPath (PATH)]__          Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
       - __[--genus (STRING)]__           Genus name of your strain ( Default "NA" )
 
@@ -440,6 +442,8 @@ $conda deactivate
   - __[--snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
 
   - __[--sickle-bin (PATH)]__            Path to the sickle-trim binary file. Default tries if sickle is in PATH.
+
+  - __[--mash-bin (PATH)]__            Path to the mash binary file. Default tries if mash is in PATH.
 <br/>
 
 - __Setup COG database__
@@ -473,7 +477,7 @@ $conda deactivate
      pgcgap --Assemble --platform illumina --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      ```
 
-   - Oxford reads assembly
+    - Oxford reads assembly
 
       Oxford nanopore only produces one reads file, so only the parameter of "--reads1" needs to be set, where the value is ".fasta". “--genomeSize” is the estimated genome size, and users can check the genome size of similar strains in NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "--suffix_len" is set to 6.
 
@@ -481,7 +485,7 @@ $conda deactivate
      $pgcgap --Assemble --platform oxford --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
      ```
 
-   - PacBio reads assembly
+    - PacBio reads assembly
 
      PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "--suffix_len" is set to 6.
 
@@ -519,13 +523,19 @@ $conda deactivate
     $pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa
     ```
 
-  - __Example 8:__ Run COG annotation for each strain.
+  - __Example 8:__ Genome and metagenome similarity estimation using MinHash
+
+    ```
+    $pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
+    ```
+
+  - __Example 9:__ Run COG annotation for each strain.
 
     ```
     $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
     ```
 
-  - __Example 9:__ Variants calling and phylogenetic tree construction based on reference genome.
+  - __Example 10:__ Variants calling and phylogenetic tree construction based on reference genome.
 
     ```
     $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger
