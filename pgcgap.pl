@@ -69,11 +69,15 @@ liaochenlanruo@webmail.hzau.edu.cn
 
              pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --ANIO <STRING> --Scaf_suffix <STRING>
 
-  Example 10: Run COG annotation for each strain
+  Example 10: Genome and metagenome similarity estimation using MinHash
+
+             pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
+
+  Example 11: Run COG annotation for each strain
 
               pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>
 
-  Example 11: Variants calling and phylogenetic tree construction based on reference genome
+  Example 12: Variants calling and phylogenetic tree construction based on reference genome
 
              pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
 
@@ -219,6 +223,18 @@ $options{'ANI'} = \(my $opt_ANI);
 
 =over 30
 
+=item B<[--MASH]>
+
+Genome and metagenome similarity estimation using MinHash
+
+=back
+
+=cut
+
+$options{'MASH'} = \(my $opt_MASH);
+
+=over 30
+
 =item B<[--pCOG]>
 
 Run COG annotation for each strain (*.faa), and generate a table containing the relative abundance of each flag for all strains
@@ -273,6 +289,18 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 =over 30
 
+=item B<[--scafPath (PATH)]>
+
+I<[Required by "--All", "--Annotate" and "--MASH"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
+
+=back
+
+=cut
+
+$options{'scafPath=s'} = \(my $opt_scafPath = "Results/Assembles/Scaf/Illumina");
+
+=over 30
+
 =item B<[--AAsPath (PATH)]>
 
 I<[Required by "--All", "--CoreTree", "--OrthoF" and "--pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
@@ -311,7 +339,7 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genomes [Required by ¡°--All¡±, ¡°--Annotate¡± and ¡°--ANI¡±] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+The suffix of scaffolds or genomes [Required by "--All", "--Annotate" "MASH" and "--ANI"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
 
 =back
 
@@ -468,18 +496,6 @@ If you use the results of "--Assemble" function in your work, please also cite:
 </br>Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 2014 Jul 15;30(14):2068-9. PMID:24642063
 
 =end html
-
-=over 30
-
-=item B<[--scafPath (PATH)]>
-
-Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
-
-=back
-
-=cut
-
-$options{'scafPath=s'} = \(my $opt_scafPath = "Results/Assembles/Scaf/Illumina");
 
 =over 30
 
@@ -1101,6 +1117,18 @@ Path to the sickle-trim binary file. Default tries if sickle is in PATH;
 
 $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 
+=over 30
+
+=item B<[--mash-bin (PATH)]>
+
+Path to mash binary file. Default tries if mash is in PATH;
+
+=back
+
+=cut
+
+$options{'mash-bin=s'} = \( my $opt_mash_bin = `which mash 2>/dev/null` );
+
 =begin text
 
   ############################################ About The Software ##############################################################################
@@ -1130,14 +1158,14 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.7\n";
+    print "PGCGAP version: 1.0.8\n";
     exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
 pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
@@ -1154,10 +1182,12 @@ pod2usage( -msg => 'fastANI not in $PATH and binary not specified use --fastANI-
 pod2usage( -msg => 'gubbins not in $PATH and binary not specified use --gubbins-bin', -verbose => 0, -exitval => 1 ) unless ($opt_gubbins_bin);
 pod2usage( -msg => 'snippy not in $PATH and binary not specified use --snippy-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snippy_bin);
 pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_sickle_bin);
+pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mash_bin);
+
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1878,6 +1908,40 @@ if ($opt_All or $opt_OrthoF) {
 	#system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
 #	system("mv $opt_AAsPath/OrthoFinder/ Results/");
 	system("mv $opt_AAsPath/*rtho*/ Results/");
+}
+
+if ($opt_All or $opt_MASH) {
+	my $time_MASHs = time();
+	print "Performing --MASH function...\n\n";
+	system("mkdir Results/MASH");
+	chdir $opt_scafPath;
+	my @genome = glob("*$opt_Scaf_suffix");
+	foreach  (@genome) {
+		system("mash sketch $_");
+	}
+
+	my @msh = glob("*.msh");
+	for (my $i=0; $i<@msh; $i++) {
+		for (my $j=0; $j<@msh; $j++) {
+			system("mash dist $msh[$i] $msh[$j] >> MASH");
+		}
+	}
+	open IN, "MASH" || die;
+	open OUT, ">MASH2" || die;
+	while (<IN>) {
+		chomp;
+		my @lines = split /\t/;
+		my $dis = (1-$lines[2])*100;
+		print OUT "$lines[0]\t$lines[1]\t$dis\t$lines[3]\t$lines[4]\n";
+	}
+	system("perl $pgcgap_dir/get_Mash_Matrix.pl --Scaf_suffix $opt_Scaf_suffix");
+	system("Rscript $pgcgap_dir/Plot_MashHeatmap.R");
+	system("rm -f *.msh");
+	system("mv MASH MASH2 MASH.heatmap MASH_matrix.pdf $working_dir/Results/MASH");
+	chdir $working_dir;
+	my $time_MASHd = time();
+	my $time_MASH = ($time_MASHd - $time_MASHs)/3600;
+	print "The 'MASH' program runs for $time_MASH hours.\n\n";
 }
 
 if ($opt_All or $opt_ANI) {
