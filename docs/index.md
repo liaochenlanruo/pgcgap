@@ -559,6 +559,9 @@ QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per li
 ### CoreTree
 Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Assemble” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
 
+### MASH
+Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
+
 ### OrthoF
 A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Assemble” function was run first, the files will be generated automatically.
 
@@ -637,7 +640,6 @@ An ANI matrix of all strains
 - __Results/ANI/ANI_matrix.pdf__<br/>
 The heatmap plot of "ANIs.heatmap"
 
-
 ### CoreTree
 
 - __Results/CoreTrees/faa/ALL.core.protein.fasta__<br/>
@@ -664,6 +666,20 @@ The phylogenetic tree file of SNPs of single-copy core genes for all strains.
 - __Results/CoreTrees/"Other_files"__<br/>
 Intermediate directories and files.
 <br/>
+
+### MASH
+
+- __Results/MASH/MASH__<br/>
+Pairwise distance between pair genomes, each column represents Reference-ID, Query-ID, Mash-distance, P-value, and Matching-hashes, respectively.
+
+- __Results/MASH/MASH2__<br/>
+Pairwise similarity between pair genomes, each column represents Reference-ID, Query-ID, similarity, P-value, and Matching-hashes, respectively.
+
+- __Results/MASH/MASH.heatmap__<br/>
+A similarity matrix of all genomes.
+
+- __Results/MASH/MASH.heatmap__<br/>
+A heat map plot of “MASH_matrix.pdf”.
 
 ### OrthoF
 
