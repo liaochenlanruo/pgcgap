@@ -449,6 +449,8 @@ $conda deactivate
 
 - __Setup COG database__
 
+
+
   - __[--setup-COGdb]__                  Users should execute this after first installation of pgcgap.
 <br/>
 
