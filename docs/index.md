@@ -456,6 +456,7 @@ $conda deactivate
 
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
+
     ```
     $pgcgap --check-external-programs
     ```
