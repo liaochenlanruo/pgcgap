@@ -158,6 +158,7 @@ $conda deactivate
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
+- [Mash](https://github.com/marbl/Mash)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
@@ -220,7 +221,7 @@ $conda deactivate
 
   - __[--CoreTree]__                     Construct single-core proteins tree and SNPs tree of single core genes
 
-  - __[--Pan]__                          Run "roary" pan genome pipeline with gff3 files
+  - __[--Pan]__                          Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
   - __[--OrthoF]__                       Identify orthologous protein sequence
                                          families with "OrthoFinder"
@@ -230,8 +231,8 @@ $conda deactivate
   - __[--MASH]__                         Genome and metagenome similarity estimation using MinHash
 
   - __[--pCOG]__                          Run COG annotation for each strain (*.faa),
-				                                 and generate a table containing the relative
-				                                 abundance of each flag for all strains
+				          and generate a table containing the relative
+				          abundance of each flag for all strains
 
   - **[--VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
@@ -239,7 +240,7 @@ $conda deactivate
 
 - __Global Options:__
 
-  - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree" "--VAR" and "--COG"]
+  - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--COG"]
                                          The total number of strains used for analysis, not including the reference genome
 
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
@@ -247,7 +248,7 @@ $conda deactivate
 
   - __[--scafPath (PATH)]__              [Required by "--All", "--Annotate" and "--MASH"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
-  - __[--AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
+  - __[--AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--Pan", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
   - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
@@ -508,7 +509,7 @@ $conda deactivate
   - __Example 5:__ Conduct pan-genome analysis.
 
     ```
-    $pgcgap --Pan --codon 11 --threads 4 --GffPath Results/Annotations/GFF
+    $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --AAsPath Results/Annotations/AAs
     ```
 
   - __Example 6:__ Inference of orthologous gene groups.
@@ -557,19 +558,19 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.
 
 ### CoreTree
-Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Assemble” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
+Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Annotate” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
 
 ### MASH
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
 ### OrthoF
-A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Assemble” function was run first, the files will be generated automatically.
+A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.
 
 ### Pan
-GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the “--Assemble” function was run first, the files will be generated automatically.
+GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.
 
 ### pCOG
-Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “--Assemble” function was run first, the files will be generated automatically.
+Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “--Annotate” function was run first, the files will be generated automatically.
 
 ### VAR
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
@@ -626,19 +627,19 @@ Directory contain the master annotation of all strains in GFF3 format.
 ### ANI
 
 - __Results/ANI/ANIs__<br/>
-The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments
+The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments.
 <br/>
 
 - __Results/ANI/ANIs.matrix__<br/>
-file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank)
+file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank).
 <br/>
 
 - __Results/ANI/ANIs.heatmap__<br/>
-An ANI matrix of all strains
+An ANI matrix of all strains.
 <br/>
 
 - __Results/ANI/ANI_matrix.pdf__<br/>
-The heatmap plot of "ANIs.heatmap"
+The heatmap plot of "ANIs.heatmap".
 
 ### CoreTree
 
@@ -684,55 +685,59 @@ A heat map plot of “MASH_matrix.pdf”.
 ### OrthoF
 
 - __Results/OrthoFinder/Results_orthoF__<br/>
-Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs
+Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 <br/>
 
 ### Pan
 
 - __Results/PanGenome/Pangenome_Pie.pdf__<br/>
-A 3D pie chart of the breakdown of genes and the number of isolate they are present in
+A 3D pie chart and a fan chart of the breakdown of genes and the number of isolate they are present in.
 <br/>
 
 - __Results/PanGenome/pangenome_frequency.pdf__<br/>
-A graph with the frequency of genes versus the number of genomes
+A graph with the frequency of genes versus the number of genomes.
 <br/>
 
 - __Results/PanGenome/Pangenome_matrix.pdf__<br/>
-A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes
+A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
+<br/>
+
+- __Results/PanGenome/Core/Roary.core.protein.nwk__<br/>
+A phylogenetic tree based on single-copy core proteins called by roary software.
 <br/>
 
 - __Results/PanGenome/Other_files__<br/>
-see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs
+see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 <br/>
 
 ### pCOG
 
 - __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
-Intermediate files
+Intermediate files.
 <br/>
 
 - __*.2Scog.table__<br/>
-The super COG table of each strain
+The super COG table of each strain.
 <br/>
 
 - __*.2Scog.table.pdf__<br/>
-A plot of super COG table in pdf format
+A plot of super COG table in pdf format.
 <br/>
 
 - __All_flags_relative_abundances.table__
-A table containing the relative abundance of each flag for all strains
+A table containing the relative abundance of each flag for all strains.
 
 ### VAR
 - __Results/Variants/directory-named-in-strains__<br/>
 directories containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy?_blank) outputs for detail.
 
 - __Results/Variants/Core__<br/>
-  The directory containing Core SNP phylogeny files
+  The directory containing Core SNP phylogeny files.
 
-  - __.aln__ : A core SNP alignment includes only SNP sites
-  - __.full.aln__ : A whole genome SNP alignment (includes invariant sites)
-  - __.nwk__ : Phylogenetic tree constructed with __FastTree__ (ignoring possible recombination)
-  - **_tree.tre** : Phylogenetic tree constructed with __gubbins__ (get rid of recombination)
+  - __.aln__ : A core SNP alignment includes only SNP sites.
+  - __.full.aln__ : A whole genome SNP alignment (includes invariant sites).
+  - __.nwk__ : Phylogenetic tree constructed with __FastTree__ (ignoring possible recombination).
+  - **_tree.tre** : Phylogenetic tree constructed with __gubbins__ (get rid of recombination).
 
 ## License
 
@@ -824,29 +829,34 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.3
 
-  - Updated ANI fuction
+  - Updated ANI fuction.
 
 - V1.0.4
 
-  - Add parallel for function "COG"
-  - Optimized drawing of ANI heat map
+  - Add parallel for function "COG".
+  - Optimized drawing of ANI heat map.
 
 - V1.0.5
 
-  - Bug repair for input of gubbins
+  - Bug repair for input of gubbins.
 
 - V1.0.6
 
-  - Modified CoreTree to split protein and SNPs tree constructing
+  - Modified CoreTree to split protein and SNPs tree constructing.
 
 - V1.0.7
 
-  - Split Assemble and Annotate into two functions
-  - Added third generation genome assembly function
-  - Changed the default parameters of the CoreTree function （aS 0.8 to 0.7 and aL 0.8 to 0.5）
-  - Changed the name of function "COG" to "pCOG"
-  - Fixed the sorting bug for ANI heat map
+  - Split Assemble and Annotate into two functions.
+  - Added third generation genome assembly function.
+  - Changed the default parameters of the CoreTree function (aS 0.8 to 0.7 and aL 0.8 to 0.5).
+  - Changed the name of function "COG" to "pCOG".
+  - Fixed the sorting bug for ANI heat map.
 
 - V1.0.8
 
-  - Add the "MASH" function to compute genome distance and similarity using MinHash
+  - Add the "MASH" function to compute genome distance and similarity using MinHash.
+
+- V1.0.9
+
+  - The function of constructing a single-copy core protein phylogenetic tree was added to "Pan".
+  - Fixed a bug of plot_3Dpie.R, Optimized image display, and a fan chart has been added.

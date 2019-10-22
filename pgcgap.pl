@@ -59,7 +59,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   Example 7: Conduct pan-genome analysis
 
-             pgcgap --Pan --codon <INT> --threads <INT> --GffPath <PATH>
+             pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --GffPath <PATH>
 
   Example 8: Inference of orthologous gene groups
 
@@ -189,7 +189,7 @@ $options{'CoreTree'} = \(my $opt_CoreTree);
 
 =item B<[--Pan]>
 
-Run "roary" pan genome pipeline with gff3 files
+Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
 =back
 
@@ -267,7 +267,7 @@ $options{'VAR'} = \(my $opt_VAR);
 
 =item B<[--strain_num (INT)]>
 
-I<[Required by "--All", "--CoreTree" "--VAR" and "--pCOG"]> The total number of strains used for analysis, not including the reference genome
+I<[Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--pCOG"]> The total number of strains used for analysis, not including the reference genome
 
 =back
 
@@ -1158,7 +1158,7 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.8\n";
+    print "PGCGAP version: 1.0.9\n";
     exit 0;
 }
 
@@ -1889,7 +1889,245 @@ if ($opt_All or $opt_Pan) {
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
 	system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
-	#system("fasttree -nt -gtr core_gene_alignment.aln > core_gene_tree.nwk");
+	#Constructing Roary single-copy core proteins tree
+	system("mkdir Core");
+	chdir $working_dir;
+	
+	my %hash;
+	system("cat $opt_AAsPath/*.faa > Results/PanGenome/Core/All_aa.fa");
+	chdir "Results/PanGenome/Core";
+	local $/ = ">";
+	open AA, "All_aa.fa" || die;
+	<AA>;
+	while (<AA>) {
+		chomp;
+		my ($head, $seq) = split "\n", $_, 2;
+		$head=~/^(\S+)/;
+		$hash{$1} = $seq;
+	}
+
+	close AA;
+
+	$/ = "\n";
+	open IN, "../gene_presence_absence.csv" || die;
+	open TBL, ">gene_presence_absence.tbl" || die;
+	while (<IN>) {
+		chomp;
+		$_=~s/,"/\t/g;
+		$_=~s/"//g;
+		print TBL $_ . "\n";
+	}
+	close IN;
+	close TBL;
+
+
+	open INF, "gene_presence_absence.tbl" || die;
+	open OUT, ">IDs.txt" || die;
+	my $count;
+	<INF>;
+	while(<INF>){
+		chomp;
+		my @lines = split /\t/;
+		if ($lines[3] == $opt_strain_num && $lines[5] == 1) {
+			$count++;
+			my $group = "Group_" . $count;
+			print OUT $group;
+			for (my $i=14; $i<@lines; $i++) {
+				$lines[$i]=~/(\S+)/;
+				print OUT "\t$1";
+			}
+			print OUT "\n";
+		}
+	}
+	close INF;
+	close OUT;
+
+	open ID, "IDs.txt" || die;
+	while (<ID>) {
+		chomp;
+		my @line = split /\t/;
+		my $gene = $line[0] . ".aa";
+		open OUTF, ">$gene" || die;
+		for (my $j=1; $j<@line; $j++) {
+			if (exists $hash{$line[$j]}) {
+				print OUTF ">$line[$j]\n$hash{$line[$j]}\n";
+			}
+		}
+		close OUTF;
+	}
+	close ID;
+
+
+	print "Running mafft...\n\n";
+	my @fa = glob("*.aa");
+	foreach (@fa){
+		my $name=substr($_,0,(length($_)-3));
+		my $in=$name.".aa";
+		my $out=$name.".aln";
+		system("mafft --quiet --auto --thread $opt_threads $in > $out");
+	}
+
+	my @aln = glob("*.aln");
+	foreach  (@aln) {
+		$_=~/(\S+).aln/;
+		my $aa = $1 . ".aa";
+		my $file_size = -s $_;
+		if ($file_size == 0) {
+			system("rm -f $_");
+			system("rm -f $aa");
+		}
+	}
+	##==============CONSTRUCT SINGLE CORE PROTEIN TREE========================================================
+	#print "Starting to construct single core protein tree...\n\n";
+	open CON, ">Roary.core.protein.fasta" || die "open Roary.core.protein.fasta failed\n";
+	my $nfilesr = 0; # count number of files
+	my %nseqr_hashr = (); # key:infile, val:nseqp
+	my %seqid_count_hashr = (); # key:seqid, val:count
+	my %HoHr              = ();   #
+	my %seqid_HoHr        = ();   #
+	my $first_namer       = q{};  # First name in matrix.
+	my $lwidthr           = 60;   # default line width for fasta
+	my $spacer            = "\t"; # spacepr for aligned print
+	my $ncharr            = 0;    # ncharp for phyml header.
+	my $nseqr;                    # nseqp for phyml header. Do not initiate!
+	my $termr             = $/;   # input record separator
+	my @hash_refr_arrayr   = ();   # array with hash references
+
+
+	my @fasr = glob("*.aln");
+	foreach my $argr (@fasr) {
+		my $infiler  = $argr;
+		my %seq_hashr = parse_fastar($infiler); # key: seqid, value:sequence
+		$nfilesr++;
+
+		## Save sequences in array with hash references. Does this work for really large number of fasta files?
+		my $hash_refr     = \%seq_hashr;
+		push(@hash_refr_arrayr, $hash_refr);
+
+		## Add nseqps to global nseqp_hashp:
+		$nseqr_hashr{$infiler} = scalar(keys(%seq_hashr));
+
+		## Get length of sequence for all tax labels. Put in hashes.
+		foreach my $tax_keyr (keys %seq_hashr) {
+			$seqid_count_hashr{$tax_keyr}++;
+			$HoHr{$infiler}{$tax_keyr} = length($seq_hashr{$tax_keyr});
+			$seqid_HoHr{$infiler}{$tax_keyr}++;
+		}
+
+		## Check all seqs are same length
+		my $length;
+		my $lnamer;
+		foreach my $name (keys %seq_hashr) {
+			my $l = length $seq_hashr{$name};
+			if (defined $length) {
+				if ($length != $l) {
+					print STDERR "Error!\nseqpuences in $infiler not all same length ($lnamer is $length, $name is $l)\n";
+					exit(1);
+				}
+			}else {
+				$length = length $seq_hashr{$name};
+				$lnamer  = $name;
+			}
+		}
+	} # Done with file
+
+
+	#---------------------------------------------------------------------------
+	#  Check if the same number of sequences
+	#---------------------------------------------------------------------------
+	my $lnamer;
+	foreach my $file (keys %nseqr_hashr) {
+		my $l = $nseqr_hashr{$file}; # val is a length
+		if (defined $nseqr) {
+			if ($nseqr != $l) {
+				print STDERR "Error!\nNumber of sequences in files differ ($lnamer has $nseqr, $file has $l)\n";
+				exit(1);
+			}
+		}else {
+			$nseqr = $nseqr_hashr{$file};
+			$lnamer  = $file;
+		}
+	}
+
+
+	#---------------------------------------------------------------------------
+	#  Check sequence id's
+	#---------------------------------------------------------------------------
+	if (scalar((keys %seqid_count_hashr)) != $nseqr) { # number of unique seqid's not eq to nseqrs
+		foreach my $key (sort { $seqid_count_hashr{$b} <=> $seqid_count_hashr{$a} } (keys %seqid_count_hashr)) {
+			print STDERR "$key --> $seqid_count_hashr{$key}\n";
+		}
+		print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
+		print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
+		exit(1);
+	}else {
+		## Find the longest taxon name for aligned printing
+		my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hashr;
+		$spacer = length( shift(@sorted_names) ) + 2;
+		$first_namer = $sorted_names[0];
+	}
+
+
+	#---------------------------------------------------------------------------
+	#Get ncharp
+	#---------------------------------------------------------------------------
+	foreach my $h_ref (@hash_refr_arrayr) {
+		$ncharr = $ncharr + length($h_ref->{$first_namer});
+	}
+
+
+	#---------------------------------------------------------------------------
+	#Print everything to STDOUT
+	#---------------------------------------------------------------------------
+	print STDERR "\nChecked $nfilesr files -- sequence labels and lengths seems OK.\n";
+	print STDERR "Concatenated $nseqr sequences, length $ncharr.\n";
+	print STDERR "Printing concatenation to 'Roary.core.protein.fasta'.\n\n";
+
+	##Print the array with hash references (does this work with really large number of files (hashes))?
+	##First, concatenate all sequences from hashes
+	my %print_hashr = (); # key:label, value:sequence
+	foreach my $h_ref (@hash_refr_arrayr) {
+		foreach my $seqid (sort keys %$h_ref) {
+			$print_hashr{$seqid} .= $h_ref->{$seqid};
+		}
+	}
+	##Then print, and add line breaks in sequences
+	foreach my $label (sort keys  %print_hashr) {
+		print CON ">$label\n";
+
+		##Print sequence
+		##TODO: phylip strict printing of sequence in blocks of 10
+		$print_hashr{$label} =~ s/\S{$lwidthr}/$&\n/gs; ## replace word of size $lwidthr with itself and "\n"
+		print CON $print_hashr{$label}, "\n";
+	}
+
+	print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
+
+
+	sub parse_fastar {
+		my ($infiler) = @_;
+		my $termp     = $/; # input record separator;
+		my %seq_hashr = (); # key:seqid, val:seq
+		open my $INFILER, "<", $infiler or die "could not open infile '$infiler' : $! \n";
+		$/ = ">";
+		while(<$INFILER>) {
+		    chomp;
+		    next if($_ eq '');
+		    my ($id, @sequencelines) = split /\n/;
+		    if ($id=~/(^\S+)_\S+$/) {
+				$id = $1;
+				foreach my $line (@sequencelines) {
+					$seq_hashr{$id} .= $line;
+				}
+		    }
+		}
+		$/ = $termr;
+		return(%seq_hashr);
+	} # end of parse_fastar
+
+	print "Constructing ML tree of the single-copy core proteins...\n\n";
+	system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
+	print "Constructing single-copy core protein tree completed\n\n";
 	my $time_pand = time();
 	my $time_pan = ($time_pand - $time_pans)/3600;
 	print "The 'Pan' program runs for $time_pan hours.\n\n";
