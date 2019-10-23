@@ -509,10 +509,10 @@ $conda deactivate
     $pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
     ```
 
-  - __Example 5:__ Conduct pan-genome analysis.
+  - __Example 5:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
     ```
-    $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --AAsPath Results/Annotations/AAs
+    $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs
     ```
 
   - __Example 6:__ Inference of orthologous gene groups.
@@ -542,7 +542,7 @@ $conda deactivate
   - __Example 10:__ Variants calling and phylogenetic tree construction based on reference genome.
 
     ```
-    $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger
+    $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
     ```
 
 ## Generating Input files
