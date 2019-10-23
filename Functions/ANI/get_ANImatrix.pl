@@ -48,7 +48,7 @@ my %hash;
 my %scafl;
 my %scafr;
 
-open IN, "ANIs" || die;
+open IN, "ANI.list" || die;
 open OUT,">ANIs.heatmap" || die;
 
 while (<IN>) {
