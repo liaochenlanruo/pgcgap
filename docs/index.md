@@ -863,3 +863,4 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
   - The function of constructing a single-copy core protein phylogenetic tree was added to "Pan".
   - Fixed a bug of plot_3Dpie.R, Optimized image display, and a fan chart has been added.
+  - Fixed a bug for ploting the ANI matrix.
