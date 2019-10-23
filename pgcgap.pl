@@ -2188,6 +2188,7 @@ if ($opt_All or $opt_ANI) {
 	system("mkdir Results/ANI");
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
+	system("perl $pgcgap_dir/triangle2list.pl");
 	system("perl $pgcgap_dir/get_ANImatrix.pl --Scaf_suffix $opt_Scaf_suffix");
 	system("Rscript $pgcgap_dir/Plot_ANIheatmap.R");
 	chdir $working_dir;
