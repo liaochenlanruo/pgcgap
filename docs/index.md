@@ -5,7 +5,6 @@
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
 ![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
-<div itemscope itemtype="https://schema.org/Person"><a itemprop="sameAs" content="https://orcid.org/0000-0002-3630-5522" href="https://orcid.org/0000-0002-3630-5522" target="orcid.widget" rel="noopener noreferrer" style="vertical-align:top;"></div>
 
 <center>
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
