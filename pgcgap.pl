@@ -57,9 +57,9 @@ liaochenlanruo@webmail.hzau.edu.cn
 
              pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
 
-  Example 7: Conduct pan-genome analysis
+  Example 7: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
-             pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --GffPath <PATH>
+             pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --GffPath <PATH> --PanTree --AAsPath <PATH>
 
   Example 8: Inference of orthologous gene groups
 
