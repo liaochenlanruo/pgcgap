@@ -3,7 +3,6 @@
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
-![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
 
 <center>
@@ -91,57 +90,95 @@ The software was tested successfully on Windows WSL, Linux x64 platform and macO
 
 __Step1: Install Gubbins__
 
+
 If the system is installed with python 3 version of miniconda, Gubbins can be installed directly via conda.
 
 
+
+
 ```
+
 $conda install gubbins
+
 ```
+
+
 
 If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory need to be added to the environment variable.
 
+
+
 ```
+
 #Create an environment called gubbins
 
-$conda create -n gubbins
+
+$conda create -n gubbins python=3
+
 
 #Activate the gubbins environment
-
 $conda activate gubbins
 
+
 #Installation of Gubbins
+
 
 $conda install gubbins
 ```
 
+
+
 View the installation path of gubbins and then add this path to the environment variable.
 
+
+
 ```
+
 $whereis gubbins
+
 ```
+
+
 
 Exit the gubbins environment
 
+
+
 ```
+
 $conda deactivate
+
 ```
+
 
 
 __Step2: Install PGCGAP__
 
+
+
 ```
-$conda create -n pgcgap
+
+$conda create -n pgcgap python=2
+
 $conda activate pgcgap
+
 $conda install pgcgap
 $conda deactivate
+
 ```
 
 __Step3: Setup COG database__ (Users should execute this after first installation of pgcgap)
 
+
+
 ```
+
 $conda activate pgcgap
+
 $pgcgap --setup-COGdb
+
 $conda deactivate
+
 ```
 
 ## Required dependencies

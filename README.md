@@ -3,7 +3,6 @@
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
-![Contributors](https://badgen.net/github/contributors/liaochenlanruo/pgcgap)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
 
 
@@ -44,7 +43,7 @@ If the python 2 version of miniconda is installed on the system, users need to c
 ```
 #Create a python 3 environment called gubbins
 
-$conda create -n gubbins python=3.7 anaconda
+$conda create -n gubbins python=3
 
 #Activate the gubbins environment
 
@@ -71,7 +70,7 @@ $conda deactivate
 __Step2: Install PGCGAP__
 
 ```
-$conda create -n pgcgap python=2.7 anaconda
+$conda create -n pgcgap python=2
 $conda activate pgcgap
 $conda install pgcgap
 $conda deactivate
