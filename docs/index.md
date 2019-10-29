@@ -23,7 +23,7 @@
 - [Required dependencies](#required-dependencies)
 
 - [Usage](#usage)
-- [EXAMPLES](#examples)
+- [Examples](#examples)
 
 - [Generating Input files](#generating-input-files)
 
@@ -500,7 +500,8 @@ $conda deactivate
     ```
 <br/>
 
-- __EXAMPLES:__
+## Examples
+
   - __Example 1:__ Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.<br/>
 
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
