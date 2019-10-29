@@ -23,6 +23,7 @@
 - [Required dependencies](#required-dependencies)
 
 - [Usage](#usage)
+- [EXAMPLES](#examples)
 
 - [Generating Input files](#generating-input-files)
 
@@ -534,49 +535,55 @@ $conda deactivate
      $pgcgap --Assemble --platform pacbio --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
      ```
 
-  - __Example 3__: Constructing single-copy core protein tree and core SNPs tree
+  - __Example 3__: Gene prediction and annotation
+
+     ```
+     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+     ```
+
+  - __Example 4__: Constructing single-copy core protein tree and core SNPs tree
 
      ```
      $pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
      ```
 
-  - __Example 4:__ Constructing single-copy core protein tree only.
+  - __Example 5:__ Constructing single-copy core protein tree only.
 
     ```
     $pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
     ```
 
-  - __Example 5:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
+  - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
     ```
     $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs
     ```
 
-  - __Example 6:__ Inference of orthologous gene groups.
+  - __Example 7:__ Inference of orthologous gene groups.
 
     ```
     $pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs
     ```
 
-  - __Example 7:__ Compute whole-genome Average Nucleotide Identity (ANI).
+  - __Example 8:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
     ```
     $pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa
     ```
 
-  - __Example 8:__ Genome and metagenome similarity estimation using MinHash
+  - __Example 9:__ Genome and metagenome similarity estimation using MinHash
 
     ```
     $pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
     ```
 
-  - __Example 9:__ Run COG annotation for each strain.
+  - __Example 10:__ Run COG annotation for each strain.
 
     ```
     $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
     ```
 
-  - __Example 10:__ Variants calling and phylogenetic tree construction based on reference genome.
+  - __Example 11:__ Variants calling and phylogenetic tree construction based on reference genome.
 
     ```
     $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
