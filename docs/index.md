@@ -727,8 +727,8 @@ Pairwise similarity between pair genomes, each column represents Reference-ID, Q
 - __Results/MASH/MASH.heatmap__<br/>
 A similarity matrix of all genomes.
 
-- __Results/MASH/MASH.heatmap__<br/>
-A heat map plot of “MASH_matrix.pdf”.
+- __Results/MASH/MASH_matrix.pdf__<br/>
+A heat map plot of "MASH.heatmap".
 
 ### OrthoF
 
