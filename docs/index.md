@@ -23,6 +23,7 @@
 - [Required dependencies](#required-dependencies)
 
 - [Usage](#usage)
+
 - [Examples](#examples)
 
 - [Generating Input files](#generating-input-files)
@@ -251,7 +252,7 @@ $conda deactivate
 
 - __Functions:__
 
-  - __[--All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI and pCOG functions with one command
+  - __[--All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH and pCOG functions with one command
 
   - __[--Assemble]__                     Assemble reads into contigs
 
@@ -340,7 +341,7 @@ $conda deactivate
 
   - __--Assemble__
 
-      - __[--platform (STRING)]__            Sequencing Platform, “illumina”, “pacbio” and “oxford” available (Default illumina)
+      - __[--platform (STRING)]__        [Required] Sequencing Platform, “illumina”, “pacbio” and “oxford” available (Default illumina)
 
       - __[--kmmer (INT)]__              [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
 
@@ -493,7 +494,7 @@ $conda deactivate
 <br/>
 
 
-- Check the required external programs (__It is strongly recommended that this step be performed after the installation of pcgp__):
+- Check the required external programs (__It is strongly recommended that this step be performed after the installation of PGCGAP__):
 
     ```
     $pgcgap --check-external-programs
