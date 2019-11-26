@@ -53,7 +53,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
              pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
 
-  Example 6: Constructing single-copy core protein tree only.
+  Example 6: Constructing a single-copy core protein tree only.
 
              pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
 
@@ -77,7 +77,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
               pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>
 
-  Example 12: Variants calling and phylogenetic tree construction based on reference genome
+  Example 12: Variants calling and phylogenetic tree construction based on a reference genome
 
              pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
 
@@ -123,7 +123,7 @@ $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
 
 =item B<[--setup-COGdb]>
 
-Setup COG database. Users should execute "pgcgap --setup-COGdb" after first installation of pgcgap
+Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first installation of pgcgap
 
 =back
 
@@ -473,7 +473,7 @@ $options{'kmmer=i'} = \(my $opt_kmmer = 81);
 
 =item B<[--genomeSize (FLOAT)]>
 
-I<[Required]> An estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
+I<[Required]> An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
 
 =back
 
@@ -649,7 +649,7 @@ $options{'aS=f'} = \( my $opt_aS = 0.7 );
 
 =item B<[-g (INT)]>
 
-If set to 0, a sequence is clustered to the first cluster that meet the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meet the threshold (accurate but slow mode, Default 1)
+If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)
 
 =back
 
