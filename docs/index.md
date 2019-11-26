@@ -83,11 +83,11 @@
 
 ## Introduction
 
-PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels) with only one line of commands.
 
 ## Installation
 
-The software was tested successfully on Windows WSL, Linux x64 platform and macOS. Because this software relies on a large number of other softwares, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. Because PGCGAP relies on both __Gubbins__ and __Orthofinder__, which are developed in different versions of python, Gubbins must be installed separately. Once Orthofinder was upgraded to python 3, PGCGAP can be installed with only one command.
+The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. Because PGCGAP relies on both __Gubbins__ and __Orthofinder__, which are developed in different versions of python, Gubbins must be installed separately. Once Orthofinder was upgraded to python 3, PGCGAP can be installed with only one command.
 
 
 __Step1: Install Gubbins__
@@ -106,7 +106,7 @@ $conda install gubbins
 
 
 
-If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory need to be added to the environment variable.
+If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory needs to be added to the environment variable.
 
 
 
@@ -169,7 +169,7 @@ $conda deactivate
 
 ```
 
-__Step3: Setup COG database__ (Users should execute this after first installation of pgcgap)
+__Step3: Setup COG database__ (Users should execute this after the first installation of pgcgap)
 
 
 
@@ -258,9 +258,9 @@ $conda deactivate
 
   - __[--Annotate]__                     Genome annotation
 
-  - __[--CoreTree]__                     Construct single-core proteins tree and SNPs tree of single core genes
+  - __[--CoreTree]__                     Construct single-core proteins tree and SNPs tree of single-copy core genes
 
-  - __[--Pan]__                          Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
+  - __[--Pan]__                          Run "roary" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
   - __[--OrthoF]__                       Identify orthologous protein sequence
                                          families with "OrthoFinder"
@@ -345,7 +345,7 @@ $conda deactivate
 
       - __[--kmmer (INT)]__              [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
 
-      - __[--genomeSize (FLOAT)]__       [Required] An estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
+      - __[--genomeSize (FLOAT)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
 
   - __--Annotate__
 
@@ -374,17 +374,17 @@ $conda deactivate
 
       - __[-aL (FLOAT)]__                Alignment coverage for the longer
                                          sequence. If set to 0.9, the alignment
-                                         must covers 90% of the sequence ( Default 0.5 )
+                                         must cover 90% of the sequence ( Default 0.5 )
 
       - __[-aS (FLOAT)]__                Alignment coverage for the shorter sequence.
                                          If set to 0.9, the alignment must covers
                                          90% of the sequence ( Default 0.7 )
 
       - __[-g (INT)]__                   If set to 0, a sequence is clustered to
-                                         the first cluster that meet the threshold
+                                         the first cluster that meets the threshold
                                          (fast cluster). If set to 1, the program
                                          will cluster it into the most similar
-                                         cluster that meet the threshold (accurate
+                                         cluster that meets the threshold (accurate
                                          but slow mode, Default 1)
 
       - __[-d (INT)]__                   length of description in .clstr file. if
@@ -412,7 +412,7 @@ $conda deactivate
       - __[--refL (FILE)]__              [Required] The file containing paths to reference genomes,
                                          one per line. ( Default scaf.list )
 
-      - __[--ANIO (FILE)]__              The name of output file ( Default "Results/ANI/ANIs" )
+      - __[--ANIO (FILE)]__              The name of the output file ( Default "Results/ANI/ANIs" )
 
   <br/>
   - **--VAR**
@@ -523,7 +523,7 @@ $conda deactivate
 
     - Oxford reads assembly
 
-      Oxford nanopore only produces one reads file, so only the parameter of "--reads1" needs to be set, where the value is ".fasta". “--genomeSize” is the estimated genome size, and users can check the genome size of similar strains in NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "--suffix_len" is set to 6.
+      Oxford nanopore only produces one reads file, so only the parameter of "--reads1" needs to be set, where the value is ".fasta". “--genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "--suffix_len" is set to 6.
 
      ```
      $pgcgap --Assemble --platform oxford --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
@@ -585,7 +585,7 @@ $conda deactivate
     $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
     ```
 
-  - __Example 11:__ Variants calling and phylogenetic tree construction based on reference genome.
+  - __Example 11:__ Variants calling and phylogenetic tree construction based on the reference genome.
 
     ```
     $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
@@ -607,7 +607,7 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.
 
 ### CoreTree
-Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Annotate” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
+Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Annotate” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
 
 ### MASH
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
@@ -720,10 +720,10 @@ Intermediate directories and files.
 ### MASH
 
 - __Results/MASH/MASH__<br/>
-Pairwise distance between pair genomes, each column represents Reference-ID, Query-ID, Mash-distance, P-value, and Matching-hashes, respectively.
+The pairwise distance between pair genomes, each column represents Reference-ID, Query-ID, Mash-distance, P-value, and Matching-hashes, respectively.
 
 - __Results/MASH/MASH2__<br/>
-Pairwise similarity between pair genomes, each column represents Reference-ID, Query-ID, similarity, P-value, and Matching-hashes, respectively.
+The pairwise similarity between pair genomes, each column represents Reference-ID, Query-ID, similarity, P-value, and Matching-hashes, respectively.
 
 - __Results/MASH/MASH.heatmap__<br/>
 A similarity matrix of all genomes.
@@ -740,7 +740,7 @@ Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 ### Pan
 
 - __Results/PanGenome/Pangenome_Pie.pdf__<br/>
-A 3D pie chart and a fan chart of the breakdown of genes and the number of isolate they are present in.
+A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 <br/>
 
 - __Results/PanGenome/pangenome_frequency.pdf__<br/>
@@ -803,10 +803,10 @@ If you use this software please cite: (__Please keep an eye on it as it will be 
 ## FAQ
 
 
-### Q1 VAR founction ran failed to get annotated VCFs and Core results
+### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 
-Check the log file named in "strain_name.log" under Results/Variants/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is an snpEff error. Users can install JDK8 to solve this problem.
+Check the log file named in "strain_name.log" under Results/Variants/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
 
 
 
@@ -821,7 +821,7 @@ $conda install java-jdk=8.0.112
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
 
 ### Q2 Could not determine version of minced please install version 2 or higher
-When running prokka of Assemble founction, this error could happened, the error message shows as following:
+When running the Annotate function, this error could happen, the error message shows as following:
 
 ```
 Error: A JNI error has occurred, please check your installation and try again
@@ -851,7 +851,7 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 ### Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib
 
-This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as following:
+This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
 ```
 #Firstly, install brew if have not installed before
@@ -878,7 +878,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.3
 
-  - Updated ANI fuction.
+  - Updated ANI function.
 
 - V1.0.4
 
@@ -887,7 +887,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.5
 
-  - Bug repair for input of gubbins.
+  - Bug repair for the input of gubbins.
 
 - V1.0.6
 
@@ -896,7 +896,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.7
 
   - Split Assemble and Annotate into two functions.
-  - Added third generation genome assembly function.
+  - Added third-generation genome assembly function.
   - Changed the default parameters of the CoreTree function (aS 0.8 to 0.7 and aL 0.8 to 0.5).
   - Changed the name of function "COG" to "pCOG".
   - Fixed the sorting bug for ANI heat map.
@@ -909,4 +909,4 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
   - The function of constructing a single-copy core protein phylogenetic tree was added to "Pan".
   - Fixed a bug of plot_3Dpie.R, Optimized image display, and a fan chart has been added.
-  - Fixed a bug for ploting the ANI matrix.
+  - Fixed a bug for plotting the ANI matrix.
