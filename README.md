@@ -147,5 +147,5 @@ If you use this software please cite: (__Please keep an eye on it as it will be 
 ## Usages
 
 
-For more detial informations, please visit the webpage of [PGCGAP](https://liaochenlanruo.github.io/pgcgap?_blank).
+For more detial informations, please visit the webpage of [PGCGAP](https://liaochenlanruo.github.io/pgcgap?_blank) and [WIKI](https://github.com/liaochenlanruo/pgcgap/wiki).
 
