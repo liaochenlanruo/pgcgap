@@ -87,89 +87,30 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 ## Installation
 
-The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__. Because PGCGAP relies on both __Gubbins__ and __Orthofinder__, which are developed in different versions of python, Gubbins must be installed separately. Once Orthofinder was upgraded to python 3, PGCGAP can be installed with only one command.
-
-
-__Step1: Install Gubbins__
-
-
-If the system is installed with python 3 version of miniconda, Gubbins can be installed directly via conda.
-
+The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__.
 
 
 
 ```
 
-$conda install gubbins
-
-```
 
 
-
-If the python 2 version of miniconda is installed on the system, users need to create a new python 3 environment to install Gubbins. And the Gubbins installation directory needs to be added to the environment variable.
+__Step1: Install PGCGAP__
 
 
 
 ```
 
-#Create an environment called gubbins
-
-
-$conda create -n gubbins python=3
-
-
-#Activate the gubbins environment
-$conda activate gubbins
-
-
-#Installation of Gubbins
-
-
-$conda install gubbins
-```
-
-
-
-View the installation path of gubbins and then add this path to the environment variable.
-
-
-
-```
-
-$whereis gubbins
-
-```
-
-
-
-Exit the gubbins environment
-
-
-
-```
-
-$conda deactivate
-
-```
-
-
-
-__Step2: Install PGCGAP__
-
-
-
-```
-
-$conda create -n pgcgap python=2
+$conda create -n pgcgap python=3
 
 $conda activate pgcgap
 
 $conda install pgcgap
-$conda deactivate
+
 
 ```
 
-__Step3: Setup COG database__ (Users should execute this after the first installation of pgcgap)
+__Step2: Setup COG database__ (Users should execute this after the first installation of pgcgap)
 
 
 
