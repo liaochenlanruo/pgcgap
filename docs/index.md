@@ -123,6 +123,15 @@ $conda deactivate
 
 ```
 
+Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
+
+```
+docker pull quay.io/biocontainers/pgcgap:<tag>
+```
+
+(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for <tag>)
+
+
 ## Required dependencies
 
 
