@@ -129,7 +129,7 @@ Users with [docker container](https://hub.docker.com/) installed have another ch
 docker pull quay.io/biocontainers/pgcgap:<tag>
 ```
 
-(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for <tag>)
+(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for &lt;tag&gt;)
 
 
 ## Required dependencies
