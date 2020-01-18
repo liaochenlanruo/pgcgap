@@ -45,6 +45,7 @@
   * [COG](#cog)
 
   * [VAR](#var)
+  * [AntiRes](#antires)
 
 - [Output Files](#output-files)
 
@@ -63,6 +64,7 @@
   * [COG](#cog)
 
   * [VAR](#var-1)
+  * [AntiRes](#antires-1)
 
 - [License](#license)
 
@@ -226,7 +228,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - **[--VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
 
-  - __[AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
+  - __[--AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
 
 <br/>
 
@@ -403,13 +405,13 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __--AntiRes__
 
-        __[--db (STRING)]__              [Required] The database to use, options: argannot, 
+      - __[--db (STRING)]__              [Required] The database to use, options: argannot, 
 	                                 card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
 
-        __[--identity (INT)]__           [Required] Minimum %identity to keep the result, 
+      - __[--identity (INT)]__           [Required] Minimum %identity to keep the result, 
 	                                 should be a number between 1 to 100. ( Default 75 )
 
-        __[--coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
+      - __[--coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
 	                                 should be a number between 0 to 100. ( Default 50 )
 
 - __Paths of external programs__
@@ -560,7 +562,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __Example 12:__ Screening of contigs for antimicrobial and virulence genes
 
     ```
-    $pgcgap.pl --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
+    $pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
     ```
 
 
@@ -766,9 +768,8 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 
 ### AntiRes
 - __Results/AntiRes__<br/>
-  - __*tab__ : Screening results of each strain.
+  - __*.tab__ : Screening results of each strain.
   - __summary.txt__ : A matrix of gene presence/absence for all strains.
-“*.tab”
 
 ## License
 
