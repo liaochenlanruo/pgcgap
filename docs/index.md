@@ -206,7 +206,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Functions:__
 
-  - __[\-\-All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH and pCOG functions with one command
+  - __[\-\-All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
 
   - __[\-\-Assemble]__                     Assemble reads into contigs
 
@@ -236,32 +236,32 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Global Options:__
 
-  - __[\-\-strain_num (INT)]__             [Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--COG"]
+  - __[\-\-strain_num (INT)]__             [Required by "\-\-All", "\-\-CoreTree", "\-\-Pan", "\-\-VAR" and "\-\-pCOG"]
                                          The total number of strains used for analysis, not including the reference genome
 
-  - __[\-\-ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
+  - __[\-\-ReadsPath (PATH)]__             [Required by "\-\-All", "\-\-Assemble" and "\-\-VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[\-\-scafPath (PATH)]__              [Required by "--All", "--Annotate", "--MASH" and "--AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
+  - __[\-\-scafPath (PATH)]__              [Required by "\-\-All", "\-\-Annotate", "\-\-MASH" and "\-\-AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
-  - __[\-\-AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--Pan", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
+  - __[\-\-AAsPath (PATH)]__               [Required by "\-\-All", "\-\-CoreTree", "\-\-Pan", "\-\-OrthoF" and "\-\-pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
-  - __[\-\-reads1 (STRING)]__              [Required by "--All", "--Assemble" and
-                                         "--VAR"] The suffix name of reads 1 ( for
+  - __[\-\-reads1 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
+                                         "\-\-VAR"] The suffix name of reads 1 ( for
                                          example: if the name of reads 1 is
                                          "YBT-1520_L1_I050.R1.clean.fastq.gz",
                                          "YBT-1520" is the strain same, so the
                                          suffix name should be ".R1.clean.fastq.gz")
 
-  - __[\-\-reads2 (STRING)]__              [Required by "--All", "--Assemble" and
-                                         "--VAR"] The suffix name of reads 2( for
+  - __[\-\-reads2 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
+                                         "\-\-VAR"] The suffix name of reads 2( for
                                          example: if the name of reads 2 is
                                          "YBT-1520_2.fq", the suffix name should be "_2.fq" )
 
-  - **[\-\-Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "--MASH", "--ANI" and "--AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[\-\-Scaf_suffix (STRING)]**         [Required by "\-\-All", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
-  - __[\-\-codon (INT)]__                  [Required by "--All", "--Annotate", "--CoreTree" and "--Pan"] Translation table ( Default 11 )
+  - __[\-\-codon (INT)]__                  [Required by "\-\-All", "\-\-Annotate", "\-\-CoreTree" and "\-\-Pan"] Translation table ( Default 11 )
 
       -    1                             Universal code
       -    2                             Vertebrate mitochondrial code
@@ -281,8 +281,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       -    22                            Scenedesmus obliquus mitochondrial code
       -    23                            Thraustochytrium mitochondrial code
 
-  - __[\-\-suffix_len (INT)]__             [Required by "--All", "--Assemble" and
-                                         "--VAR"] __(Strongly recommended)__ The suffix length of the reads,
+  - __[\-\-suffix_len (INT)]__             [Required by "\-\-All", "\-\-Assemble" and
+                                         "\-\-VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
                                          example the --suffix_len of
@@ -418,7 +418,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Paths of external programs__
 
-  Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs.
+  Not needed if they were in the environment variables path. Users can check with the "\-\-check-external-programs" option for the essential programs.
   <br/>
 
   - __[\-\-abricate-bin (PATH)]__          Path to abyss binary file. Default tries if abyss is in PATH;
@@ -485,7 +485,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - Illumina reads assembly
 
-      In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "--suffix_len" is set to 11.
+      In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "\-\-suffix_len" is set to 11.
 
      ```
      pgcgap --Assemble --platform illumina --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
@@ -493,7 +493,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - Oxford reads assembly
 
-      Oxford nanopore only produces one reads file, so only the parameter of "--reads1" needs to be set, where the value is ".fasta". “--genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "--suffix_len" is set to 6.
+      Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" is set to 6.
 
      ```
      $pgcgap --Assemble --platform oxford --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
@@ -501,7 +501,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - PacBio reads assembly
 
-     PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "--suffix_len" is set to 6.
+     PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" is set to 6.
 
      ```
      $pgcgap --Assemble --platform pacbio --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
