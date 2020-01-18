@@ -45,6 +45,7 @@
   * [COG](#cog)
 
   * [VAR](#var)
+
   * [AntiRes](#antires)
 
 - [Output Files](#output-files)
@@ -64,6 +65,7 @@
   * [COG](#cog)
 
   * [VAR](#var-1)
+
   * [AntiRes](#antires-1)
 
 - [License](#license)
@@ -204,7 +206,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Functions:__
 
-  - __[--All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH and pCOG functions with one command
+  - __[\-\-All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH and pCOG functions with one command
 
   - __[--Assemble]__                     Assemble reads into contigs
 
