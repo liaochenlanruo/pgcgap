@@ -29,7 +29,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 =head1 USAGE
 
-  $ pgcgap [Fuctions] [Options]
+  $pgcgap [Fuctions] [Options]
 
   The main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/
 
@@ -79,7 +79,11 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   Example 12: Variants calling and phylogenetic tree construction based on a reference genome
 
-             pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> 
+             pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
+
+  Example 13: Screening of contigs for antimicrobial and virulence genes
+
+             pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>
 
 =head1 OPTIONS
 
@@ -257,6 +261,18 @@ Rapid haploid variant calling and core genome alignment
 
 $options{'VAR'} = \(my $opt_VAR);
 
+=over 30
+
+=item B<[--AntiRes]>
+
+Screening for antimicrobial and virulence genes
+
+=back
+
+=cut
+
+$options{'AntiRes'} = \(my $opt_AntiRes);
+
 =head2 ******************************************************** Global Options ********************************************************
 
 =for text
@@ -267,7 +283,7 @@ $options{'VAR'} = \(my $opt_VAR);
 
 =item B<[--strain_num (INT)]>
 
-I<[Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--pCOG"]> The total number of strains used for analysis, not including the reference genome
+I<[Required by "All", "CoreTree", "Pan", "VAR" and "pCOG"]> The total number of strains used for analysis, not including the reference genome
 
 =back
 
@@ -279,7 +295,7 @@ $options{'strain_num=i'} = \( my $opt_strain_num );
 
 =item B<[--ReadsPath (PATH)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> Reads of all strains as file paths ( Default ./Reads/Illumina )
+I<[Required by "All", "Assemble" and "VAR"]> Reads of all strains as file paths ( Default ./Reads/Illumina )
 
 =back
 
@@ -291,7 +307,7 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 =item B<[--scafPath (PATH)]>
 
-I<[Required by "--All", "--Annotate" and "--MASH"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
+I<[Required by "All", "Annotate", "MASH" and "AntiRes"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
 
 =back
 
@@ -303,7 +319,7 @@ $options{'scafPath=s'} = \(my $opt_scafPath = "Results/Assembles/Scaf/Illumina")
 
 =item B<[--AAsPath (PATH)]>
 
-I<[Required by "--All", "--CoreTree", "--OrthoF" and "--pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
+I<[Required by "All", "CoreTree", "OrthoF" and "pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
 
 =back
 
@@ -315,7 +331,7 @@ $options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
 =item B<[--reads1 (STRING)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> The suffix name of reads 1 ( for example: if the name of reads 1 is "YBT-1520_L1_I050.R1.clean.fastq.gz", "YBT-1520" is the strain same, so the suffix name should be ".R1.clean.fastq.gz" )
+I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 1 ( for example: if the name of reads 1 is "YBT-1520_L1_I050.R1.clean.fastq.gz", "YBT-1520" is the strain same, so the suffix name should be ".R1.clean.fastq.gz" )
 
 =back
 
@@ -327,7 +343,7 @@ $options{'reads1=s'} = \(my $opt_reads1);
 
 =item B<[--reads2 (STRING)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> The suffix name of reads 2( for example: if the name of reads 2 is "YBT-1520_2.fq", the suffix name should be _2.fq" )
+I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 2( for example: if the name of reads 2 is "YBT-1520_2.fq", the suffix name should be _2.fq" )
 
 =back
 
@@ -339,7 +355,7 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genomes [Required by "--All", "--Annotate" "MASH" and "--ANI"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+The suffix of scaffolds or genomes [Required by "All", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
 
 =back
 
@@ -351,7 +367,7 @@ $options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
 
 =item B<[--codon (INT)]>
 
-I<[Required by "--All", "--Annotate", "--CoreTree" and "--Pan"]> Translation table ( Default 11 )
+I<[Required by "All", "Annotate", "CoreTree" and "Pan"]> Translation table ( Default 11 )
 
 =back
 
@@ -387,7 +403,7 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
 
 =item B<[--suffix_len (INT)]>
 
-I<[Required by "--All", "--Assemble" and "--VAR"]> B<(Strongly recommended)> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
+I<[Required by "All", "Assemble" and "VAR"]> B<(Strongly recommended)> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
 
 =back
 
@@ -935,6 +951,45 @@ Maximum No. of iterations for gubbins ( Default 5 )
 
 $options{'iterations=i'} = \(my $opt_iterations = "5");
 
+=head3 ===================================== Options for "--AntiRes" analysis ============================================================
+
+=over 30
+
+=item B<[--db (STRING)]>
+
+I<[Required]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
+
+=back
+
+=cut
+
+$options{'db=s'} = \( my $opt_db = "ncbi");
+
+=over 30
+
+=item B<[--identity (INT)]>
+
+I<[Required]> Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )
+
+=back
+
+=cut
+
+$options{'identity=i'} = \(my $opt_identity = "75");
+
+
+=over 30
+
+=item B<[--coverage (INT)]>
+
+I<[Required]> Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )
+
+=back
+
+=cut
+
+$options{'coverage=i'} = \(my $opt_coverage = "50");
+
 =head2 ************************************* Paths of external programs ***************************************************************
 
 =for text
@@ -1141,6 +1196,18 @@ Path to mash binary file. Default tries if mash is in PATH;
 
 $options{'mash-bin=s'} = \( my $opt_mash_bin = `which mash 2>/dev/null` );
 
+=over 30
+
+=item B<[--abricate-bin (PATH)]>
+
+Path to abricate binary file. Default tries if abricate is in PATH;
+
+=back
+
+=cut
+
+$options{'abricate-bin=s'} = \( my $opt_abricate_bin = `which abricate 2>/dev/null` );
+
 =begin text
 
   ############################################ About The Software ##############################################################################
@@ -1170,14 +1237,14 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.9\n";
+    print "PGCGAP version: 1.0.10\n";
     exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
 pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
@@ -1195,11 +1262,12 @@ pod2usage( -msg => 'gubbins not in $PATH and binary not specified use --gubbins-
 pod2usage( -msg => 'snippy not in $PATH and binary not specified use --snippy-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snippy_bin);
 pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_sickle_bin);
 pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mash_bin);
+pod2usage( -msg => 'abricate not in $PATH and binary not specified use --abricate-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abricate_bin);
 
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -2264,6 +2332,24 @@ if ($opt_VAR) {
 	my $time_VARd = time();
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
 	print "The 'ANI' program runs for $time_VAR hours.\n\n";
+}
+
+if ($opt_All or $opt_AntiRes) {
+	my $time_Antis = time();
+	print "Performing --AntiRes function...\n\n";
+	system("mkdir Results/AntiRes");
+	chdir $opt_scafPath;
+	my @genome = glob("*$opt_Scaf_suffix");
+	foreach  (@genome) {
+		$_=~/(.+)$opt_Scaf_suffix/;
+		my $out = $1 . ".tab";
+		system("abricate --threads $opt_threads --db $opt_db --minid $opt_identity --mincov $opt_coverage $_ > $working_dir/Results/AntiRes/$out");
+	}
+	chdir $working_dir;
+	system("abricate --summary Results/AntiRes/*.tab > Results/AntiRes/summary.txt");
+	my $time_Antid = time();
+	my $time_Anti = ($time_Antid - $time_Antis)/3600;
+	print "The 'AntiRes' program runs for $time_Anti hours.\n\n";
 }
 
 if ($opt_All or $opt_pCOG) {

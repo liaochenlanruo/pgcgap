@@ -83,7 +83,7 @@
 
 ## Introduction
 
-PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.
 
 ## Installation
 
@@ -135,6 +135,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 ## Required dependencies
 
 
+- [Abricate](https://github.com/tseemann/abricate)
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
 - [Canu](http://canu.readthedocs.org/)
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
@@ -193,7 +194,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     ```
 <br/>
 
-- __Setup COG database:__ (Users should execute this after first installation of pgcgap)
+- __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
     ```
     $pgcgap --setup-COGdb
     ```
@@ -224,6 +225,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - **[--VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
+
+  - __[AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
+
 <br/>
 
 - __Global Options:__
@@ -234,7 +238,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[--scafPath (PATH)]__              [Required by "--All", "--Annotate" and "--MASH"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
+  - __[--scafPath (PATH)]__              [Required by "--All", "--Annotate", "--MASH" and "--AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
   - __[--AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--Pan", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
@@ -251,7 +255,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          example: if the name of reads 2 is
                                          "YBT-1520_2.fq", the suffix name should be "_2.fq" )
 
-  - **[--Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "MASH" and "--ANI"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[--Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "--MASH", "--ANI" and "--AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
   - __[--codon (INT)]__                  [Required by "--All", "--Annotate", "--CoreTree" and "--Pan"] Translation table ( Default 11 )
 
@@ -397,10 +401,23 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       - __[--iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
 <br/>
 
+  - __--AntiRes__
+
+        __[--db (STRING)]__              [Required] The database to use, options: argannot, 
+	                                 card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
+
+        __[--identity (INT)]__           [Required] Minimum %identity to keep the result, 
+	                                 should be a number between 1 to 100. ( Default 75 )
+
+        __[--coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
+	                                 should be a number between 0 to 100. ( Default 50 )
+
 - __Paths of external programs__
 
   Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs.
   <br/>
+
+  - __[--abricate-bin (PATH)]__          Path to abyss binary file. Default tries if abyss is in PATH;
 
   - __[--abyss-bin (PATH)]__             Path to abyss binary file. Default tries if abyss is in PATH;
 
@@ -540,6 +557,13 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
     ```
 
+  - __Example 12:__ Screening of contigs for antimicrobial and virulence genes
+
+    ```
+    $pgcgap.pl --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
+    ```
+
+
 ## Generating Input files
 
 ### Working directory
@@ -575,6 +599,9 @@ Amino acids file (With “.faa” as the suffix) of each strain placed into a di
 <br/>
 
 - The full path of reference genome in fasta format or GenBank format (__must be provided__).
+
+### AntiRes
+Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
 ## Output Files
 
@@ -737,6 +764,12 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
   - __.nwk__ : Phylogenetic tree constructed with __FastTree__ (ignoring possible recombination).
   - **_tree.tre** : Phylogenetic tree constructed with __gubbins__ (get rid of recombination).
 
+### AntiRes
+- __Results/AntiRes__<br/>
+  - __*tab__ : Screening results of each strain.
+  - __summary.txt__ : A matrix of gene presence/absence for all strains.
+“*.tab”
+
 ## License
 
 PGCGAP is free software, licensed under GPLv3.
@@ -859,3 +892,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - The function of constructing a single-copy core protein phylogenetic tree was added to "Pan".
   - Fixed a bug of plot_3Dpie.R, Optimized image display, and a fan chart has been added.
   - Fixed a bug for plotting the ANI matrix.
+
+- V1.0.10
+
+  - Add the "AntiRes" function to screening of contigs for antimicrobial and virulence genes.

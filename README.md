@@ -22,7 +22,7 @@
 
 ## Introduction
 
-PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) with only one line of commands.
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (snps) and insertions/deletions (indels) and antimicrobial and virulence genes mining with only one line of commands.
 
 ## Installation
 
@@ -56,6 +56,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 ## Required dependencies
 
+- [Abricate](https://github.com/tseemann/abricate)
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
 - [Canu](http://canu.readthedocs.org/)
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
