@@ -208,60 +208,60 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __[\-\-All]__                          Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH and pCOG functions with one command
 
-  - __[--Assemble]__                     Assemble reads into contigs
+  - __[\-\-Assemble]__                     Assemble reads into contigs
 
-  - __[--Annotate]__                     Genome annotation
+  - __[\-\-Annotate]__                     Genome annotation
 
-  - __[--CoreTree]__                     Construct single-core proteins tree and SNPs tree of single-copy core genes
+  - __[\-\-CoreTree]__                     Construct single-core proteins tree and SNPs tree of single-copy core genes
 
-  - __[--Pan]__                          Run "roary" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
+  - __[\-\-Pan]__                          Run "roary" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
-  - __[--OrthoF]__                       Identify orthologous protein sequence
+  - __[\-\-OrthoF]__                       Identify orthologous protein sequence
                                          families with "OrthoFinder"
 
-  - __[--ANI]__                          Compute whole-genome Average Nucleotide Identity ( ANI )
+  - __[\-\-ANI]__                          Compute whole-genome Average Nucleotide Identity ( ANI )
 
-  - __[--MASH]__                         Genome and metagenome similarity estimation using MinHash
+  - __[\-\-MASH]__                         Genome and metagenome similarity estimation using MinHash
 
-  - __[--pCOG]__                          Run COG annotation for each strain (*.faa),
+  - __[\-\-pCOG]__                          Run COG annotation for each strain (*.faa),
 				          and generate a table containing the relative
 				          abundance of each flag for all strains
 
-  - **[--VAR]**                          Rapid haploid variant calling and core
+  - **[\-\-VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
 
-  - __[--AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
+  - __[\-\-AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
 
 <br/>
 
 - __Global Options:__
 
-  - __[--strain_num (INT)]__             [Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--COG"]
+  - __[\-\-strain_num (INT)]__             [Required by "--All", "--CoreTree", "--Pan", "--VAR" and "--COG"]
                                          The total number of strains used for analysis, not including the reference genome
 
-  - __[--ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
+  - __[\-\-ReadsPath (PATH)]__             [Required by "--All", "--Assemble" and "--VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[--scafPath (PATH)]__              [Required by "--All", "--Annotate", "--MASH" and "--AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
+  - __[\-\-scafPath (PATH)]__              [Required by "--All", "--Annotate", "--MASH" and "--AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
-  - __[--AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--Pan", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
+  - __[\-\-AAsPath (PATH)]__               [Required by "--All", "--CoreTree", "--Pan", "--OrthoF" and "--pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
 
-  - __[--reads1 (STRING)]__              [Required by "--All", "--Assemble" and
+  - __[\-\-reads1 (STRING)]__              [Required by "--All", "--Assemble" and
                                          "--VAR"] The suffix name of reads 1 ( for
                                          example: if the name of reads 1 is
                                          "YBT-1520_L1_I050.R1.clean.fastq.gz",
                                          "YBT-1520" is the strain same, so the
                                          suffix name should be ".R1.clean.fastq.gz")
 
-  - __[--reads2 (STRING)]__              [Required by "--All", "--Assemble" and
+  - __[\-\-reads2 (STRING)]__              [Required by "--All", "--Assemble" and
                                          "--VAR"] The suffix name of reads 2( for
                                          example: if the name of reads 2 is
                                          "YBT-1520_2.fq", the suffix name should be "_2.fq" )
 
-  - **[--Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "--MASH", "--ANI" and "--AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[\-\-Scaf_suffix (STRING)]**         [Required by "--All", "--Annotate" "--MASH", "--ANI" and "--AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
-  - __[--codon (INT)]__                  [Required by "--All", "--Annotate", "--CoreTree" and "--Pan"] Translation table ( Default 11 )
+  - __[\-\-codon (INT)]__                  [Required by "--All", "--Annotate", "--CoreTree" and "--Pan"] Translation table ( Default 11 )
 
       -    1                             Universal code
       -    2                             Vertebrate mitochondrial code
@@ -281,7 +281,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       -    22                            Scenedesmus obliquus mitochondrial code
       -    23                            Thraustochytrium mitochondrial code
 
-  - __[--suffix_len (INT)]__             [Required by "--All", "--Assemble" and
+  - __[\-\-suffix_len (INT)]__             [Required by "--All", "--Assemble" and
                                          "--VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
@@ -289,31 +289,31 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26
                                          ( "YBT-1520" is the strain name ) ( Default 0 )
 
-  - __[--logs (STRING)]__                Name of the log file ( Default Logs.txt )
+  - __[\-\-logs (STRING)]__                Name of the log file ( Default Logs.txt )
 
-  - __[--threads (INT)]__                Number of threads to be used ( Default 4 )
+  - __[\-\-threads (INT)]__                Number of threads to be used ( Default 4 )
 <br/>
 
 - __Local Options:__
 
-  - __--Assemble__
+  - __\-\-Assemble__
 
-      - __[--platform (STRING)]__        [Required] Sequencing Platform, “illumina”, “pacbio” and “oxford” available (Default illumina)
+      - __[\-\-platform (STRING)]__        [Required] Sequencing Platform, “illumina”, “pacbio” and “oxford” available (Default illumina)
 
-      - __[--kmmer (INT)]__              [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
+      - __[\-\-kmmer (INT)]__              [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
 
-      - __[--genomeSize (FLOAT)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
+      - __[\-\-genomeSize (FLOAT)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
 
-  - __--Annotate__
+  - __\-\-Annotate__
 
-      - __[--genus (STRING)]__           Genus name of your strain ( Default "NA" )
+      - __[\-\-genus (STRING)]__           Genus name of your strain ( Default "NA" )
 
-      - __[--species (STRING)]__         Species name of your strain ( Default "NA")
+      - __[\-\-species (STRING)]__         Species name of your strain ( Default "NA")
   <br/>
 
-  - **--CoreTree**
+  - **\-\-CoreTree**
 
-      - __[--CDsPath (PATH)]__           [Required] CDs of all strains as fasta file
+      - __[\-\-CDsPath (PATH)]__           [Required] CDs of all strains as fasta file
                                          paths ( Default "./Results/Annotations/CDs" ),
 					 if set to "NO", the SNPs of single-copy core
 					 genes will not be called
@@ -349,71 +349,71 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          stops at first space ( Default 0 )
   <br/>
 
-  - __--Pan__
+  - __\-\-Pan__
 
-      - __[--GffPath (PATH)]__           [Required] Gff files of all strains as paths
+      - __[\-\-GffPath (PATH)]__           [Required] Gff files of all strains as paths
                                          ( Default "./Results/Annotations/GFF" )
   <br/>
 
-  - __--OrthoF__
+  - __\-\-OrthoF__
 
-      - __[--Sprogram (STRING)]__        Sequence search program, Options: blast,
+      - __[\-\-Sprogram (STRING)]__        Sequence search program, Options: blast,
                                          mmseqs, blast_gz, diamond ( Default blast)
   <br/>
 
-  - __--ANI__
+  - __\-\-ANI__
 
-      - __[--queryL (FILE)]__            [Required] The file containing paths to query
+      - __[\-\-queryL (FILE)]__            [Required] The file containing paths to query
                                          genomes, one per line ( Default scaf.list )
 
-      - __[--refL (FILE)]__              [Required] The file containing paths to reference genomes,
+      - __[\-\-refL (FILE)]__              [Required] The file containing paths to reference genomes,
                                          one per line. ( Default scaf.list )
 
-      - __[--ANIO (FILE)]__              The name of the output file ( Default "Results/ANI/ANIs" )
+      - __[\-\-ANIO (FILE)]__              The name of the output file ( Default "Results/ANI/ANIs" )
 
   <br/>
-  - **--VAR**
+  - **\-\-VAR**
 
-      - __[--refgbk (FILE)]__            [Required] The full path and name of
+      - __[\-\-refgbk (FILE)]__            [Required] The full path and name of
                                          reference genome in GENBANK format (
                                          recommended ), fasta format is also OK.
                                          For example: "/mnt/g/test/ref.gbk"
 
-      - __[--qualtype (STRING)]__        [Required] Type of quality values (solexa
+      - __[\-\-qualtype (STRING)]__        [Required] Type of quality values (solexa
                                          (CASAVA < 1.3), illumina (CASAVA 1.3 to 1.7),
 				         sanger (which is CASAVA >= 1.8)). ( Default sanger )
 
-      - __[--qual (INT)]__               Threshold for trimming based on average
+      - __[\-\-qual (INT)]__               Threshold for trimming based on average
                                          quality in a window. ( Default 20 )
 
-      - __[--length (INT)]__             Threshold to keep a read based on length
+      - __[\-\-length (INT)]__             Threshold to keep a read based on length
                                          after trimming. ( Default 20 )
 
-      - __[--mincov (INT)]__             The minimum number of reads covering a
+      - __[\-\-mincov (INT)]__             The minimum number of reads covering a
                                          site to be considered ( Default 10 )
 
-      - __[--minfrac (FLOAT)]__          The minimum proportion of those reads
+      - __[\-\-minfrac (FLOAT)]__          The minimum proportion of those reads
                                          which must differ from the reference ( Default 0.9 )
 
-      - __[--minqual (INT)]__            The minimum VCF variant call "quality" ( Default 100 )
+      - __[\-\-minqual (INT)]__            The minimum VCF variant call "quality" ( Default 100 )
 
-      - __[--ram (INT)]__                Try and keep RAM under this many GB ( Default 8 )
+      - __[\-\-ram (INT)]__                Try and keep RAM under this many GB ( Default 8 )
 
-      - __[--tree_builder (STRING)]__    Application to use for tree building
+      - __[\-\-tree_builder (STRING)]__    Application to use for tree building
                                          [raxml|fasttree|hybrid] ( Default fasttree)
 
-      - __[--iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
+      - __[\-\-iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
 <br/>
 
-  - __--AntiRes__
+  - __\-\-AntiRes__
 
-      - __[--db (STRING)]__              [Required] The database to use, options: argannot, 
+      - __[\-\-db (STRING)]__              [Required] The database to use, options: argannot, 
 	                                 card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
 
-      - __[--identity (INT)]__           [Required] Minimum %identity to keep the result, 
+      - __[\-\-identity (INT)]__           [Required] Minimum %identity to keep the result, 
 	                                 should be a number between 1 to 100. ( Default 75 )
 
-      - __[--coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
+      - __[\-\-coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
 	                                 should be a number between 0 to 100. ( Default 50 )
 
 - __Paths of external programs__
@@ -421,46 +421,46 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs.
   <br/>
 
-  - __[--abricate-bin (PATH)]__          Path to abyss binary file. Default tries if abyss is in PATH;
+  - __[\-\-abricate-bin (PATH)]__          Path to abyss binary file. Default tries if abyss is in PATH;
 
-  - __[--abyss-bin (PATH)]__             Path to abyss binary file. Default tries if abyss is in PATH;
+  - __[\-\-abyss-bin (PATH)]__             Path to abyss binary file. Default tries if abyss is in PATH;
 
-  - __[--canu-bin (PATH)]__             Path to canu binary file. Default tries if canu is in PATH;
+  - __[\-\-canu-bin (PATH)]__             Path to canu binary file. Default tries if canu is in PATH;
 
-  - __[--prodigal-bin (PATH)]__          Path to prodigal binary file. Default tries if prodigal is in PATH;
+  - __[\-\-prodigal-bin (PATH)]__          Path to prodigal binary file. Default tries if prodigal is in PATH;
 
-  - __[--prokka-bin (PATH)]__            Path to prokka binary file. Default tries if prokka is in PATH;
+  - __[\-\-prokka-bin (PATH)]__            Path to prokka binary file. Default tries if prokka is in PATH;
 
-  - __[--cd-hit-bin (PATH)]__            Path to cd-hit binary file. Default tries if cd-hit is in PATH;
+  - __[\-\-cd-hit-bin (PATH)]__            Path to cd-hit binary file. Default tries if cd-hit is in PATH;
 
-  - __[--mafft-bin (PATH)]__             Path to mafft binary file. Default tries if mafft is in PATH;
+  - __[\-\-mafft-bin (PATH)]__             Path to mafft binary file. Default tries if mafft is in PATH;
 
-  - __[--fasttree-bin (PATH)]__        Path to the fasttree binary file. Default tries if fasttree is in PATH;
+  - __[\-\-fasttree-bin (PATH)]__        Path to the fasttree binary file. Default tries if fasttree is in PATH;
 
-  - __[--pal2nal-bin (PATH)]__           Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
+  - __[\-\-pal2nal-bin (PATH)]__           Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
 
-  - __[--snp-sites-bin (PATH)]__         Path to the snp-sites binary file. Default tries if snp-sites is in PATH;
+  - __[\-\-snp-sites-bin (PATH)]__         Path to the snp-sites binary file. Default tries if snp-sites is in PATH;
 
-  - __[--roary-bin (PATH)]__             Path to the roary binary file. Default tries if roary is in PATH;
+  - __[\-\-roary-bin (PATH)]__             Path to the roary binary file. Default tries if roary is in PATH;
 
-  - __[--orthofinder-bin (PATH)]__       Path to the orthofinder binary file. Default tries if orthofinder is in PATH;
+  - __[\-\-orthofinder-bin (PATH)]__       Path to the orthofinder binary file. Default tries if orthofinder is in PATH;
 
-  - __[--fastANI-bin (PATH)]__           Path to the fastANI binary file. Default tries if fastANI is in PATH;
+  - __[\-\-fastANI-bin (PATH)]__           Path to the fastANI binary file. Default tries if fastANI is in PATH;
 
-  - __[--gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
+  - __[\-\-gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
 
-  - __[--snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
+  - __[\-\-snippy-bin (PATH)]__            Path to the snippy binary file. Default tries if snippy is in PATH;
 
-  - __[--sickle-bin (PATH)]__            Path to the sickle-trim binary file. Default tries if sickle is in PATH.
+  - __[\-\-sickle-bin (PATH)]__            Path to the sickle-trim binary file. Default tries if sickle is in PATH.
 
-  - __[--mash-bin (PATH)]__            Path to the mash binary file. Default tries if mash is in PATH.
+  - __[\-\-mash-bin (PATH)]__            Path to the mash binary file. Default tries if mash is in PATH.
 <br/>
 
 - __Setup COG database__
 
 
 
-  - __[--setup-COGdb]__                  Users should execute this after first installation of pgcgap.
+  - __[\-\-setup-COGdb]__                  Users should execute this after first installation of pgcgap.
 <br/>
 
 
@@ -581,22 +581,22 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 ### ANI
 
-QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.
+QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
 
 ### CoreTree
-Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Annotate” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.
+Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “\-\-Annotate” function was run first, the files will be generated automatically. If the “\-\-CDsPath” was set to “NO”, the nucleotide files will not be needed.
 
 ### MASH
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
 ### OrthoF
-A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.
+A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### Pan
-GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.
+GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### pCOG
-Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “--Annotate” function was run first, the files will be generated automatically.
+Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### VAR
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
@@ -867,7 +867,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.4
 
-  - Add parallel for function "COG".
+  - Add parallel for function "pCOG".
   - Optimized drawing of ANI heat map.
 
 - V1.0.5
