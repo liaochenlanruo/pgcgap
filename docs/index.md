@@ -407,8 +407,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __\-\-AntiRes__
 
-      - __[\-\-db (STRING)]__              [Required] The database to use, options: argannot, 
-	                                 card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
+      - __[\-\-db (STRING)]__              [Required] The database to use, options: [argannot](https://www.ncbi.nlm.nih.gov/pubmed/24145532), 
+	                                 [card](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [ecoh](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), ecoli_vf, [ncbi](https://www.biorxiv.org/content/10.1101/550707v1), [plasmidfinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487) and [vfdb](https://www.ncbi.nlm.nih.gov/pubmed/26578559). ( Default ncbi )
 
       - __[\-\-identity (INT)]__           [Required] Minimum %identity to keep the result, 
 	                                 should be a number between 1 to 100. ( Default 75 )
