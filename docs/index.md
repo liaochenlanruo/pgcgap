@@ -769,9 +769,8 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
   - **_tree.tre** : Phylogenetic tree constructed with __gubbins__ (get rid of recombination).
 
 ### AntiRes
-- __Results/AntiRes__<br/>
-  - __*.tab__ : Screening results of each strain.
-  - __summary.txt__ : A matrix of gene presence/absence for all strains.
+- __Results/AntiRes/*.tab__ : Screening results of each strain.
+- __Results/AntiRes/summary.txt__ : A matrix of gene presence/absence for all strains.
 
 ## License
 
@@ -791,7 +790,7 @@ If you use this software please cite: (__Please keep an eye on it as it will be 
 ### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 
-Check the log file named in "strain_name.log" under Results/Variants/<strain_name>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
+Check the log file named in "strain_name.log" under Results/Variants/\<strain_name\>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
 
 
 
