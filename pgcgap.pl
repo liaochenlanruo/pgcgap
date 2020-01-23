@@ -1225,7 +1225,7 @@ $options{'abricate-bin=s'} = \( my $opt_abricate_bin = `which abricate 2>/dev/nu
     Contact: liaochenlanruo@webmail.hzau.edu.cn
 
 
-    Citation: 
+    Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol Exchange, 2020. DOI: 10.21203/rs.2.21224/v1
 
 
 =end text
