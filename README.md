@@ -111,7 +111,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [+https://doi.org/10.21203/rs.2.21224/v1+](https://doi.org/10.21203/rs.2.21224/v1)
+If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [\[+https://doi.org/10.21203/rs.2.21224/v1+\]](https://doi.org/10.21203/rs.2.21224/v1)
 
 
 ## Usages
