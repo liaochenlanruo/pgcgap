@@ -17,7 +17,7 @@ def get_options():
 
     parser.add_argument('--labels', action='store_true',
                         default=False,
-                        help='Add node labels to the tree (up to 10 chars)')
+                        help='Add node labels to the tree (up to 18 chars)')
     parser.add_argument('--format',
                         choices=('png',
                                  'tiff',
