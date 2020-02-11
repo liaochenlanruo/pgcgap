@@ -32,7 +32,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform and macO
 __Step1: Install PGCGAP__
 
 ```
-$conda create -n pgcgap python=2
+$conda create -n pgcgap python=3
 $conda activate pgcgap
 $conda install pgcgap
 ```
@@ -64,11 +64,11 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
-- [FastTree](http://www.microbesonline.org/fasttree/)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
-- [Mash](https://mash.readthedocs.io/en/latest/index.html)
+- [Mash](https://github.com/marbl/Mash)
+- [ModelTest-NG](https://github.com/ddarriba/modeltest)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
@@ -94,10 +94,12 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - [gplots](https://cran.r-project.org/web/packages/gplots/)
   - [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html)
   - [plotrix](https://cran.r-project.org/web/packages/plotrix/)
+- [RAxML-NG](https://github.com/amkozlov/raxml-ng)
 - [Roary](https://sanger-pathogens.github.io/Roary/)
 - [Sickle-trim](https://github.com/najoshi/sickle)
 - [Snippy](https://github.com/tseemann/snippy)
 - [Snp-sites](https://github.com/sanger-pathogens/snp-sites)
+- [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
 
 

@@ -899,3 +899,8 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.10
 
   - Add the "AntiRes" function to screening of contigs for antimicrobial and virulence genes.
+
+- V1.0.11 (Soon)
+
+  - New support for hybrid assembly of paired-end short reads and long reads.
+  - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
