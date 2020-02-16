@@ -35,6 +35,7 @@
   * [Annotate](#annotate)
 
   * [ANI](#ani)
+
   * [MASH](#mash)
 
   * [CoreTree](#coretree)
@@ -56,6 +57,7 @@
   * [Annotate](#annotate-1)
 
   * [ANI](#ani-1)
+
   * [MASH](#mash-1)
 
   * [CoreTree](#coretree-1)
@@ -944,4 +946,4 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Users now can choose "abyss" or "spades" for illumina reads aseembly.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
-  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]", and can look up the examples of each module with command "pgcgap Examples".
+  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]", and can look up the examples of each module with command "pgcgap Examples".

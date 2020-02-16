@@ -29,61 +29,11 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 =head1 USAGE
 
-  $pgcgap [Fuctions] [Options]
+  General usage: pgcgap [Modules] [Options]
 
-  The main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/
+  Show parameters for each module: pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]
 
-  Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the "VAR" function needs to be added separately
-
-             pgcgap --All --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --genus <STRING> --species <STRING> --codon <INT> --strain_num <INT> --threads <INT> --VAR --refgbk <full path> --qualtype <STRING>
-
-  Example 2: Conduct pair-end reads assembly
-
-             pgcgap --Assemble --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>
-
-  Example 3: Conduct PacBio/Oxford reads assembly
-
-             pgcgap --Assemble --platform [pacbio|oxford] --ReadsPath <PATH> --reads1 <reads suffix> --suffix_len <INT> --genomeSize <Float> --threads <INT>
-
-  Example 4: Conduct gene prediction and annotation
-
-             pgcgap --Annotate --scafPath <PATH> --Scaf_suffix <STRING> --genus <STRING> --species <STRING> --codon <INT> --threads <INT>
-
-  Example 5: Constructing the phylogenetic trees of single-copy core proteins and core SNPs
-
-             pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
-
-  Example 6: Constructing a single-copy core protein tree only.
-
-             pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>
-
-  Example 7: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
-
-             pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --GffPath <PATH> --PanTree --AAsPath <PATH>
-
-  Example 8: Inference of orthologous gene groups
-
-             pgcgap --OrthoF --threads <INT> --AAsPath <PATH>
-
-  Example 9: Compute whole-genome Average Nucleotide Identity (ANI)
-
-             pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --ANIO <STRING> --Scaf_suffix <STRING>
-
-  Example 10: Genome and metagenome similarity estimation using MinHash
-
-             pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
-
-  Example 11: Run COG annotation for each strain
-
-              pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>
-
-  Example 12: Variants calling and phylogenetic tree construction based on a reference genome
-
-             pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING>
-
-  Example 13: Screening of contigs for antimicrobial and virulence genes
-
-             pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>
+  Show examples of each module: pgcgap Examples
 
 =head1 OPTIONS
 
@@ -135,7 +85,7 @@ Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first 
 
 $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
-=head2 *********************************************************** Fuctions ***********************************************************
+=head2 *********************************************************** Modules ***********************************************************
 
 =for text
 
@@ -145,7 +95,7 @@ $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
 =item B<[--All]>
 
-Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI and pCOG functions with one command
+Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
 
 =back
 
@@ -157,7 +107,7 @@ $options{'All'} = \(my $opt_All);
 
 =item B<[--Assemble]>
 
-Assemble reads into contigs
+Assemble reads (short, long or hybrid) into contigs
 
 =back
 
@@ -465,7 +415,7 @@ If you use the results of "--Assemble" function in your work, please also cite o
 
 =item B<[--platform (STRING)]>
 
-I<[Required]> Sequencing Platform, "illumina", "pacbio" and "oxford" available ( Default illumina )
+I<[Required]> Sequencing Platform, "illumina", "pacbio", "oxford" and "hybrid" available ( Default illumina )
 
 =back
 
@@ -475,9 +425,21 @@ $options{'platform=s'} = \(my $opt_platform = "illumina");
 
 =over 30
 
+=item B<[--assembler (STRING)]>
+
+I<[Required]> Software used for illumina reads assembly, "abyss" and "spades" available ( Default abyss )
+
+=back
+
+=cut
+
+$options{'assembler=s'} = \(my $opt_assembler = "abyss");
+
+=over 30
+
 =item B<[--kmmer (INT)]>
 
-I<[Required]> k-mer size for genome assembly of Illumina data ( Default 81 )
+I<[Required]> k-mer size for genome assembly of Illumina data with abyss( Default 81 )
 
 =back
 
@@ -487,7 +449,7 @@ $options{'kmmer=i'} = \(my $opt_kmmer = 81);
 
 =over 30
 
-=item B<[--genomeSize (FLOAT)]>
+=item B<[--genomeSize (STRING)]>
 
 I<[Required]> An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
 
@@ -496,6 +458,54 @@ I<[Required]> An estimate of the size of the genome. Common suffixes are allowed
 =cut
 
 $options{'genomeSize=s'} = \(my $opt_genomeSize);
+
+=over 30
+
+=item B<[--short1 (STRING)]>
+
+I<[Required]> FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
+
+=back
+
+=cut
+
+$options{'short1=s'} = \(my $opt_short1);
+
+=over 30
+
+=item B<[--short2 (STRING)]>
+
+I<[Required]> FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )
+
+=back
+
+=cut
+
+$options{'short2=s'} = \(my $opt_short2);
+
+=over 30
+
+=item B<[--long (STRING)]>
+
+I<[Required]> FASTQ or FASTA file of long reads. Needed by hybrid assembly ( Default Unset )
+
+=back
+
+=cut
+
+$options{'long=s'} = \(my $opt_long);
+
+=over 30
+
+=item B<[--hout (STRING)]>
+
+I<[Required]> Output directory for hybrid assembly ( Default ../../Results/Assembles/Hybrid )
+
+=back
+
+=cut
+
+$options{'hout=s'} = \(my $opt_hout = '../../Results/Assembles/Hybrid');
 
 =head3 ======================= Options of "--Annotate" for genome annotation ============================
 
@@ -1078,18 +1088,6 @@ $options{'mafft-bin=s'} = \( my $opt_mafft_bin = `which mafft 2>/dev/null` );
 
 =over 30
 
-=item B<[--fasttree-bin (PATH)]>
-
-Path to the fasttree binary file. Default tries if fasttree is in PATH;
-
-=back
-
-=cut
-
-$options{'fasttree-bin=s'} = \( my $opt_fasttree_bin = `which fasttree 2>/dev/null` );
-
-=over 30
-
 =item B<[--pal2nal-bin (PATH)]>
 
 Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
@@ -1208,6 +1206,42 @@ Path to abricate binary file. Default tries if abricate is in PATH;
 
 $options{'abricate-bin=s'} = \( my $opt_abricate_bin = `which abricate 2>/dev/null` );
 
+=over 30
+
+=item B<[--unicycler-bin (PATH)]>
+
+Path to unicycler binary file. Default tries if unicycler is in PATH;
+
+=back
+
+=cut
+
+$options{'unicycler-bin=s'} = \( my $opt_unicycler_bin = `which unicycler 2>/dev/null` );
+
+=over 30
+
+=item B<[--modeltest-ng-bin (PATH)]>
+
+Path to modeltest-ng binary file. Default tries if modeltest-ng is in PATH;
+
+=back
+
+=cut
+
+$options{'modeltest-ng-bin=s'} = \( my $opt_modeltestng_bin = `which modeltest-ng 2>/dev/null` );
+
+=over 30
+
+=item B<[--raxml-ng-bin (PATH)]>
+
+Path to raxml-ng binary file. Default tries if raxml-ng is in PATH;
+
+=back
+
+=cut
+
+$options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/null` );
+
 =begin text
 
   ############################################ About The Software ##############################################################################
@@ -1237,18 +1271,22 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.10\n";
+    print "PGCGAP version: 1.0.11\n";
     exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
-pod2usage(1) if ($opt_help);
+if ($opt_help) {
+	pod2usage(1);
+	exit 0;
+}
+#pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_fasttree_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
-pod2usage( -msg => 'fasttree not in $PATH and binary not specified use --fasttree-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fasttree_bin);
+pod2usage( -msg => 'modeltest-ng not in $PATH and binary not specified use --modeltestng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_modeltestng_bin);
 pod2usage( -msg => 'snp-sites not in $PATH and binary not specified use --snp-sites-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snpsites_bin);
 pod2usage( -msg => 'abyss not in $PATH and binary not specified use --abyss-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abyss_bin);
 pod2usage( -msg => 'canu not in $PATH and binary not specified use --canu-bin', -verbose => 0, -exitval => 1 ) unless ($opt_canu_bin);
@@ -1263,11 +1301,14 @@ pod2usage( -msg => 'snippy not in $PATH and binary not specified use --snippy-bi
 pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_sickle_bin);
 pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mash_bin);
 pod2usage( -msg => 'abricate not in $PATH and binary not specified use --abricate-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abricate_bin);
+pod2usage( -msg => 'unicycler not in $PATH and binary not specified use --unicycler-bin', -verbose => 0, -exitval => 1 ) unless ($opt_unicycler_bin);
+pod2usage( -msg => 'raxml-ng not in $PATH and binary not specified use --raxmlng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_raxmlng_bin);
+
 
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "fasttree" => $opt_fasttree_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "modeltest-ng" => $opt_modeltestng_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "raxml-ng" => $opt_raxmlng_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1314,8 +1355,8 @@ system("mkdir -p Results");
 # Genome Assemble with"Abyss" or "Canu"
 if ($opt_All or $opt_Assemble) {
 	system("mkdir -p Results/Assembles/Scaf");
-	if ($opt_platform eq "illumina") {
-		print "Performing --Assemble function for Illunina data...\n\n";
+	if ($opt_platform eq "illumina" and $opt_assembler eq "abyss") {
+		print "Performing --Assemble function for Illunina data with abyss...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
 		system("mkdir -p Results/Assembles/Scaf/Illumina");
 		
@@ -1350,10 +1391,43 @@ if ($opt_All or $opt_Assemble) {
 		my $time_assemble = time();
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+	}elsif ($opt_platform eq "illumina" and $opt_assembler eq "spades") {
+		print "Performing --Assemble function for Illunina data with spades...\n\n";
+		system("mkdir -p Results/Assembles/Illumina");
+		system("mkdir -p Results/Assembles/Scaf/Illumina");
+		
+		chdir $opt_ReadsPath;
+		my @files = glob("*$opt_reads1");
+		my %lists;
+		foreach (@files) {
+			if (/(\S+)$opt_reads1/) {
+				$lists{$1} = "1";
+			}
+		}
+
+		my @lists = keys %lists;
+
+		foreach my $name(@lists) {
+			my $read1 = $name . $opt_reads1;
+			my $read2 = $name . $opt_reads2;
+			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
+			print "Assembling...\n";
+			system("unicycler -1 $read1 -2 $read2 -t $opt_threads -o $str");
+			print "Assemble complete !\n";
+			my $scaf = $str . "-8.fa";
+			system("mv $str/assembly.fasta $str/$scaf");
+			system("cp $str/$scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+			system("cp -rf $str $working_dir/Results/Assembles/Illumina/");
+		}
+		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		my $time_assemble = time();
+		my $time_assemblex = ($time_assemble - $time_start)/3600;
+		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
 	}elsif ($opt_platform eq "pacbio") {
 		print "Performing --Assemble function for PacBio data...\n\n";
-		#system("mkdir Results/Assembles/PacBio");
-		system("mkdir Results/Assembles/Scaf/PacBio");
+		system("mkdir -p Results/Assembles/PacBio");
+		system("mkdir -p Results/Assembles/Scaf/PacBio");
 		chdir $opt_ReadsPath;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
@@ -1361,16 +1435,21 @@ if ($opt_All or $opt_Assemble) {
 #			if (/(\S+)$opt_reads1/) {
 #				my $name = $1;
 			my $outdir = "$working_dir/Results/Assembles/PacBio/" . $name;
+			my $cir_outdir = $outdir . "Circlator";
 			my $scaf = $name . ".contigs.fasta";
+			my $correct_reads = $name . ".correctedReads.fasta.gz";
+			my $cir_scaf = $name . ".fixstart.fasta";
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
+			##system("circlator all --assembler canu $outdir/$scaf $outdir/$correct_reads $cir_outdir");
 			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/PacBio/");
+			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/PacBio/$cir_scaf");
 #			}
 		}
 		chdir $working_dir;
 		system("realpath Results/Assembles/Scaf/PacBio/* >> scaf.list");
 	}elsif ($opt_platform eq "oxford") {
 		print "Performing --Assemble function for Oxford Nanopore data...\n\n";
-		#system("mkdir Results/Assembles/Oxford");
+		system("mkdir -p Results/Assembles/Oxford");
 		system("mkdir Results/Assembles/Scaf/Oxford");
 		chdir $opt_ReadsPath;
 		my @files = glob("*$opt_reads1");
@@ -1379,13 +1458,23 @@ if ($opt_All or $opt_Assemble) {
 #			if (/(\S+)$opt_reads1/) {
 #				my $name = $1;
 			my $outdir = "$working_dir/Results/Assembles/Oxford/" . $name;
+			my $cir_outdir = $outdir . "Circlator";
 			my $scaf = $name . ".contigs.fasta";
+			my $correct_reads = $name . ".correctedReads.fasta.gz";
+			my $cir_scaf = $name . ".fixstart.fasta";
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $_");
+			##system("circlator all --assembler canu --merge_min_id 85 --merge_breaklen 1000 $outdir/$scaf $outdir/$correct_reads $cir_outdir");
 			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/Oxford/");
+			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/Oxford/$cir_scaf");
 #			}
 		}
 		chdir $working_dir;
 		system("realpath Results/Assembles/Scaf/Oxford/* >> scaf.list");
+	}elsif ($opt_platform eq "hybrid") {
+		print "Performing --Assemble function for hybrid data...\n\n";
+		chdir $opt_ReadsPath;
+		system("unicycler -1 $opt_short1 -2 $opt_short2 -l $opt_long -o $opt_hout -t $opt_threads");
+		chdir $working_dir;
 	}
 }
 
@@ -1687,9 +1776,44 @@ if ($opt_All or $opt_CoreTree) {
 
 
 	print "Constructing ML tree of the single copy core proteins...\n\n";
-	system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
+	#===============================================================================
+	system("modeltest-ng -i ALL.core.protein.fasta -t ml -o modeltest_aa -p $opt_threads -d aa");
+	open LOGa, "modeltest_aa.log" || die;
+	my $bica;
+	my $aica;
+	my $aicca;
+	while (<LOGa>) {
+		chomp;
+		if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+			$bica = $1;
+		}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+			$aica = $1;
+		}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+			$aicca = $1;
+		}
+	}
+	close LOGa;
+
+	if ($bica eq $aica and $bica eq $aicca) {
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bica ne $aica and $aica eq $aicca) {
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bica eq $aica and $aica ne $aicca) {
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bica eq $aicca and $aica ne $aicca) {
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa ALL.core.protein.fasta --prefix ALL.core.protein.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}
+	#===================================================================================
+	#system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
 	print "Constructing single copy core protein tree completed\n\n";
-	system("mv ALL.core.protein.nwk ../Results/CoreTrees/");
+	system("mv ALL.core.protein.* ../Results/CoreTrees/");
 	my $time_coretreem = time();
 	my $time_coretreep = ($time_coretreem - $time_coretrees)/3600;
 	print "The 'CoreTree' program runs for $time_coretreep hours to build single-copy core proteins tree.\n\n";
@@ -1939,11 +2063,48 @@ if ($opt_All or $opt_CoreTree) {
 
 		print "Calling core SNPs...\n";
 		system("snp-sites -o ALL.core.snp.fasta ALL.core.nucl.fasta");
-
+		#===================modeltest-ng and raxml-ng====================================
+		system("modeltest-ng -i ALL.core.snp.fasta -t ml -o modeltest_nt -p $opt_threads -d nt");
 		print "Constructing ML tree of core SNPS...\n\n";
+		open LOG, "modeltest_nt.log" || die;
+		my $bic;
+		my $aic;
+		my $aicc;
+		while (<LOG>) {
+			chomp;
+			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+				$bic = $1;
+			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+				$aic = $1;
+			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+				$aicc = $1;
+			}
+		}
+		close LOG;
 
-		system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
-		system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
+		if ($bic eq $aic and $bic eq $aicc) {
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic ne $aic and $aic eq $aicc) {
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic eq $aic and $aic ne $aicc) {
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic eq $aicc and $aic ne $aicc) {
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa ALL.core.snp.fasta --prefix ALL.core.snp.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}
+		system("mv ALL.core.snp.* ../Results/CoreTrees/");
+		#===================end==========================================================
+
+		#print "Constructing ML tree of core SNPS...\n\n";
+
+		#system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
+		#system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
 		
 		chdir "../";
 		system("mv faa2ffn ./Results/CoreTrees/");
@@ -2208,7 +2369,42 @@ if ($opt_All or $opt_Pan) {
 		} # end of parse_fastar
 
 		print "Constructing ML tree of the single-copy core proteins...\n\n";
-		system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
+		#===============================================================================
+		system("modeltest-ng -i Roary.core.protein.fasta -t ml -o Roary.modeltest_aa -p $opt_threads -d aa");
+		open LOGa, "Roary.modeltest_aa.log" || die;
+		my $bica;
+		my $aica;
+		my $aicca;
+		while (<LOGa>) {
+			chomp;
+			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+				$bica = $1;
+			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+				$aica = $1;
+			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+				$aicca = $1;
+			}
+		}
+		close LOGa;
+
+		if ($bica eq $aica and $bica eq $aicca) {
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bica ne $aica and $aica eq $aicca) {
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bica eq $aica and $aica ne $aicca) {
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bica eq $aicca and $aica ne $aicca) {
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa Roary.core.protein.fasta --prefix Roary.core.protein.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}
+		#===================================================================================
+		#system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
 		print "Constructing single-copy core protein tree completed\n\n";
 	}
 	my $time_pand = time();
@@ -2316,22 +2512,134 @@ if ($opt_VAR) {
 		system("mv gubbins.* Results/Variants/Core/");
 		my $corefull = system(@corefull);
 		if (!($corefull == 0)) {
-			print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
-			system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
+			#print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
+			print "Some error happens when running gubbins! The recombinations will not be predicted, and running raxml-ng to construct the trees instead!\n";
+			#===================modeltest-ng and raxml-ng====================================
+			system("modeltest-ng -i core.full.aln -t ml -o core.full.modeltest_nt -p $opt_threads -d nt");
+			print "Constructing ML tree of core.full.aln...\n\n";
+			open LOG, "core.full.modeltest_nt.log" || die;
+			my $bic;
+			my $aic;
+			my $aicc;
+			while (<LOG>) {
+				chomp;
+				if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+					$bic = $1;
+				}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+					$aic = $1;
+				}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+					$aicc = $1;
+				}
+			}
+			close LOG;
+
+			if ($bic eq $aic and $bic eq $aicc) {
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			}elsif ($bic ne $aic and $aic eq $aicc) {
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			}elsif ($bic eq $aic and $aic ne $aicc) {
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			}elsif ($bic eq $aicc and $aic ne $aicc) {
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			}
+			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
+			#===================end==========================================================
+			#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
+			#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 		}else {
 			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Variants/Core/");
 			print "running gubbins successfully!\n";
 		}
 	} else {
-		system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-		system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
+		#===================modeltest-ng and raxml-ng====================================
+		system("modeltest-ng -i core.full.aln -t ml -o core.full.modeltest_nt -p $opt_threads -d nt");
+		print "Constructing ML tree of core.full.aln...\n\n";
+		open LOG, "core.full.modeltest_nt.log" || die;
+		my $bic;
+		my $aic;
+		my $aicc;
+		while (<LOG>) {
+			chomp;
+			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+				$bic = $1;
+			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+				$aic = $1;
+			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+				$aicc = $1;
+			}
+		}
+		close LOG;
+
+		if ($bic eq $aic and $bic eq $aicc) {
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic ne $aic and $aic eq $aicc) {
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic eq $aic and $aic ne $aicc) {
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}elsif ($bic eq $aicc and $aic ne $aicc) {
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		}
+		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
+		#===================end==========================================================
+		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
+		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
-	system("fasttree -nt -gtr core.aln > core.nwk");
-	system("mv core.aln core.nwk Results/Variants/Core/");
+	#===================modeltest-ng and raxml-ng====================================
+	system("modeltest-ng -i core.aln -t ml -o core.modeltest_nt -p $opt_threads -d nt");
+	print "Constructing ML tree of core.aln...\n\n";
+	open LOG, "core.modeltest_nt.log" || die;
+	my $bic;
+	my $aic;
+	my $aicc;
+	while (<LOG>) {
+		chomp;
+		if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+			$bic = $1;
+		}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+			$aic = $1;
+		}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+			$aicc = $1;
+		}
+	}
+	close LOG;
+
+	if ($bic eq $aic and $bic eq $aicc) {
+		system("raxml-ng --all --msa core.aln --prefix core.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bic ne $aic and $aic eq $aicc) {
+		system("raxml-ng --all --msa core.aln --prefix core.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa core.aln --prefix core.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
+		system("raxml-ng --all --msa core.aln --prefix core.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa core.aln --prefix core.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa core.aln --prefix core.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bic eq $aic and $aic ne $aicc) {
+		system("raxml-ng --all --msa core.aln --prefix core.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa core.aln --prefix core.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}elsif ($bic eq $aicc and $aic ne $aicc) {
+		system("raxml-ng --all --msa core.aln --prefix core.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+		system("raxml-ng --all --msa core.aln --prefix core.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
+	}
+	system("mv core.* Results/Variants/Core/");
+	#===================end==========================================================
+	#system("fasttree -nt -gtr core.aln > core.nwk");
+	#system("mv core.aln core.nwk Results/Variants/Core/");
 	my $time_VARd = time();
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
-	print "The 'ANI' program runs for $time_VAR hours.\n\n";
+	print "The 'VAR' program runs for $time_VAR hours.\n\n";
 }
 
 if ($opt_All or $opt_AntiRes) {
@@ -2366,4 +2674,223 @@ if ($opt_All or $opt_pCOG) {
 
 my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
-print "Total $time_total hours used.\n\n";
+#print "Total $time_total hours used.\n\n";
+
+sub printAssemble{
+	print "[--platform (STRING)] Sequencing Platform, 'illumina', 'pacbio', 'oxford' and 'hybrid' available ( Default illumina )\n";
+	print "[--assembler (STRING)] Software used for illumina reads assembly, 'abyss' and 'spades' available ( Default abyss )\n";
+	print "[--ReadsPath (PATH)] Reads of all strains as file paths ( Default ./Reads/Illumina )\n";
+	print "[--reads1 (STRING)] The suffix name of reads 1 ( for example: if the name of reads 1 is 'YBT-1520_L1_I050.R1.clean.fastq.gz', 'YBT-1520' is the strain same, the suffix name should be '.R1.clean.fastq.gz' )\n";
+	print "[--reads2 (STRING)] The suffix name of reads 2( for example: if the name of reads 2 is 'YBT-1520_2.fq', the suffix name should be '_2.fq' )\n";
+	print "[--suffix_len (INT)] (Strongly recommended) The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of 'YBT-1520_L1_I050.R1.clean.fastq.gz' is 26 ( 'YBT-1520' is the strain name ) ( Default 0 )\n";
+	print "[--kmmer (INT)] k-mer size for genome assembly of Illumina data with abyss( Default 81 )\n";
+	print "[--genomeSize (STRING)] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )\n";
+	print "[--short1 (STRING)] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )\n";
+	print "[--short2 (STRING)] FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )\n";
+	print "[--long (STRING)] FASTQ or FASTA file of long reads. Needed by hybrid assembly ( Default Unset )\n";
+	print "[--hout (STRING)] Output directory for hybrid assembly ( Default ../../Results/Assembles/Hybrid )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printAnnotate{
+	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
+	print "[--genus (STRING)] Genus name of the strain ( Default 'NA' )\n";
+	print "[--species (STRING)] Species name of the strain ( Default 'NA' )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printCoreTree{
+	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
+	print "[--CDsPath (PATH)] CDs of all strains as fasta file paths, ( Default './Results/Annotations/CDs' )\n";
+	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
+	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
+	print "[-c (FLOAT)] Sequence identity threshold, ( Default 0.5)\n";
+	print "[-n (INT)] Word_length, -n 2 for thresholds 0.4-0.5, -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n 5 for thresholds 0.7-1.0 ( Default 2 )\n";
+	print "[-G (INT)] Use global (set to 1) or local (set to 0) sequence identity, ( Default 0 )\n";
+	print "[-t (INT)] Tolerance for redundance ( Default 0 )\n";
+	print "[-aL (FLOAT)] Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.5 )\n";
+	print "[-aS (FLOAT)] Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )\n";
+	print "[-g (INT)] If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)\n";
+	print "[-d (INT)] length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printPan{
+	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
+	print "[--GffPath (PATH)] Gff files of all strains as paths ( Default './Results/Annotations/GFF' )\n";
+	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
+	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
+	print "[--PanTree] Construct a phylogenetic tree of single-copy core proteins called by roary\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printOrthoF{
+	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
+	print "[--Sprogram (STRING)] Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default blast )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printANI{
+	print "[--queryL (FILE)] The file containing full paths to query genomes, one per line ( Default scaf.list )\n";
+	print "[--refL (FILE)] The file containing full paths to reference genomes, one per line. ( Default scaf.list )\n";
+	print "[--ANIO (FILE)] The name of output file ( Default 'Results/ANI/ANIs' )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printMASH{
+	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printVAR{
+	print "[--ReadsPath (PATH)] Reads of all strains as file paths ( Default ./Reads/Illumina )\n";
+	print "[--reads1 (STRING)] The suffix name of reads 1 ( for example: if the name of reads 1 is 'YBT-1520_L1_I050.R1.clean.fastq.gz', 'YBT-1520' is the strain same, the suffix name should be '.R1.clean.fastq.gz' )\n";
+	print "[--reads2 (STRING)] The suffix name of reads 2( for example: if the name of reads 2 is 'YBT-1520_2.fq', the suffix name should be '_2.fq' )\n";
+	print "[--refgbk (FILE)] The B<full path and name> of reference genome in GENBANK format ( B<recommended> ), fasta format is also OK. For example: '/mnt/g/test/ref.gbk'\n";
+	print "[--suffix_len (INT)] (Strongly recommended) The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of 'YBT-1520_L1_I050.R1.clean.fastq.gz' is 26 ( 'YBT-1520' is the strain name ) ( Default 0 )\n";
+	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
+	print "[--qualtype (STRING)] Type of quality values (solexa (CASAVA < 1.3), illumina (CASAVA 1.3 to 1.7), sanger (which is CASAVA >= 1.8)). ( Default sanger )\n";
+	print "[--qual (INT)] Threshold for trimming based on average quality in a window. ( Default 20 )\n";
+	print "[--length (INT)] Threshold to keep a read based on length after trimming. ( Default 20 )\n";
+	print "[--mincov (INT)] The minimum number of reads covering a site to be considered ( Default 10 )\n";
+	print "[--minfrac (FLOAT)] The minimum proportion of those reads which must differ from the reference ( Default 0.9 )\n";
+	print "[--minqual (INT)] The minimum VCF variant call 'quality' ( Default 100 )\n";
+	print "[--ram (INT)] Try and keep RAM under this many GB ( Default 8 )\n";
+	print "[--tree_builder (STRING)] Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
+}
+
+sub printAntiRes{
+	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--db (STRING)]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )\n";
+	print "[--identity (INT)] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )\n";
+	print "[--coverage (INT)] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printpCOG{
+	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
+	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+}
+
+sub printExamples{
+	print "\nThe main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/\n\n";
+
+	print "Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the 'VAR' module needs to be added separately\n\n";
+
+	print "         pgcgap --All --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --genus <STRING> --species <STRING> --codon <INT> --strain_num <INT> --threads <INT> --VAR --refgbk <full path> --qualtype <STRING>\n\n";
+
+	print "Example 2: Conduct pair-end reads assembly\n\n";
+
+	print "         pgcgap --Assemble --platform illumina --assembler abyss --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>\n";
+	print "         pgcgap --Assemble --platform illumina --assembler spades --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --threads <INT>\n\n";
+
+	print "Example 3: Conduct PacBio/Oxford reads assembly\n\n";
+
+	print "         pgcgap --Assemble --platform [pacbio|oxford] --ReadsPath <PATH> --reads1 <reads suffix> --suffix_len <INT> --genomeSize <STRING> --threads <INT>\n\n";
+
+	print "Example 4: Conduct hybrid assembly\n\n";
+
+	print "         pgcgap --Assemble --platform hybrid --ReadsPath <PATH> --short1 <pair-end-reads1> --short2 <pair-end-reads2> --long <long-reads> --hout <output_dir> --threads <INT>\n\n";
+
+	print "Example 5: Conduct gene prediction and annotation\n\n";
+
+	print "         pgcgap --Annotate --scafPath <PATH> --Scaf_suffix <STRING> --genus <STRING> --species <STRING> --codon <INT> --threads <INT>\n\n";
+
+	print "Example 6: Constructing the phylogenetic trees of single-copy core proteins and core SNPs\n\n";
+
+	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>\n\n";
+
+	print "Example 7: Constructing a single-copy core protein tree only.\n\n";
+
+	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>\n\n";
+
+	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
+
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --GffPath <PATH> --PanTree --AAsPath <PATH>\n\n";
+
+	print "Example 9: Inference of orthologous gene groups\n\n";
+
+	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH>\n\n";
+
+	print "Example 10: Compute whole-genome Average Nucleotide Identity (ANI)\n\n";
+
+	print "         pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --ANIO <STRING> --Scaf_suffix <STRING>\n\n";
+
+	print "Example 11: Genome and metagenome similarity estimation using MinHash\n\n";
+
+	print "         pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>\n\n";
+
+	print "Example 12: Run COG annotation for each strain\n\n";
+
+	print "          pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>\n\n";
+
+	print "Example 13: Variants calling and phylogenetic tree construction based on a reference genome\n\n";
+
+	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING>\n\n";
+
+	print "Example 14: Screening of contigs for antimicrobial and virulence genes\n\n";
+
+	print "         pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>\n";
+}
+
+if ( grep {$_ eq "Assemble"} @ARGV ){
+	printAssemble();
+	exit 0;
+}
+
+if ( grep {$_ eq "Annotate"} @ARGV ){
+	printAnnotate();
+	exit 0;
+}
+
+if ( grep {$_ eq "CoreTree"} @ARGV ){
+	printCoreTree();
+	exit 0;
+}
+
+if ( grep {$_ eq "Pan"} @ARGV ){
+	printPan();
+	exit 0;
+}
+
+if ( grep {$_ eq "OrthoF"} @ARGV ){
+	printOrthoF();
+	exit 0;
+}
+
+if ( grep {$_ eq "ANI"} @ARGV ){
+	printANI();
+	exit 0;
+}
+
+if ( grep {$_ eq "MASH"} @ARGV ){
+	printMASH();
+	exit 0;
+}
+
+if ( grep {$_ eq "VAR"} @ARGV ){
+	printVAR();
+	exit 0;
+}
+
+if ( grep {$_ eq "pCOG"} @ARGV ){
+	printpCOG();
+	exit 0;
+}
+
+if ( grep {$_ eq "AntiRes"} @ARGV ){
+	printAntiRes();
+	exit 0;
+}
+
+if ( grep {$_ eq "Examples"} @ARGV ){
+	printExamples();
+	exit 0;
+}
