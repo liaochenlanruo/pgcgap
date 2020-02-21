@@ -848,7 +848,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use "\-\-Pan", please also cite [Roary](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421), [MAFFT](https://doi.org/10.1093/nar/gkf436), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), and [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305).
 
-- If you use "\-\-OrthoF", please also cite [OrthoFinder](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421).
+- If you use "\-\-OrthoF", please also cite [OrthoFinder](https://dx.doi.org/10.1186%2Fs13059-019-1832-y).
 
 - If you use "\-\-ANI", please also cite [fastANI](https://dx.doi.org/10.1038%2Fs41467-018-07641-9).
 
@@ -856,7 +856,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use "\-\-VAR", please also cite [Sickle](https://github.com/najoshi/sickle), [Snippy](https://github.com/tseemann/snippy), [Gubbins](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305), and [SnpEff](https://dx.doi.org/10.4161%2Ffly.19695).
 
-- If you use "\-\-AntiRes", please also cite [Abricate](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), and [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
+- If you use "\-\-AntiRes", please also cite [Abricate](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), or [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
 
 
 ## FAQ
