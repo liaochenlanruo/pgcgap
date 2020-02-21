@@ -840,23 +840,23 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [\[+https://doi.org/10.21203/rs.2.21224/v1+\]](https://doi.org/10.21203/rs.2.21224/v1)
 
-- If you use "--Assemble", please also cite one of [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
+- If you use "\-\-Assemble", please also cite one of [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
-- If you use "--Annotate", please also cite [Prokka, Seemann, T, 2014](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=24642063).
+- If you use "\-\-Annotate", please also cite [Prokka](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=24642063).
 
-- If you use "--CoreTree", please also cite [CD-HIT, Weizhong Li & Adam Godzik, 2006](https://doi.org/10.1093/bioinformatics/btl158), [MAFFT, Katoh, K. _et al._, 2002](https://doi.org/10.1093/nar/gkf436), [PAL2NAL, Suyama, M. _et al._, 2006](https://doi.org/10.1093/nar/gkl315), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305), and [SNP-sites, Page, A. J. _et al._, 2016](https://dx.doi.org/10.1099%2Fmgen.0.000056).
+- If you use "\-\-CoreTree", please also cite [CD-HIT](https://doi.org/10.1093/bioinformatics/btl158), [MAFFT](https://doi.org/10.1093/nar/gkf436), [PAL2NAL](https://doi.org/10.1093/nar/gkl315), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305), and [SNP-sites](https://dx.doi.org/10.1099%2Fmgen.0.000056).
 
-- If you use "--Pan", please also cite [Roary, Page, A. J. _et al._, 2015](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421), [MAFFT, Katoh, K. _et al._, 2002](https://doi.org/10.1093/nar/gkf436), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), and [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305).
+- If you use "\-\-Pan", please also cite [Roary](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421), [MAFFT](https://doi.org/10.1093/nar/gkf436), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), and [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305).
 
-- If you use "--OrthoF", please also cite [OrthoFinder, Emms, D. M. & Kelly, S., 2019](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421).
+- If you use "\-\-OrthoF", please also cite [OrthoFinder](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421).
 
-- If you use "--ANI", please also cite [fastANI, Jain, C. _et al._, 2018](https://dx.doi.org/10.1038%2Fs41467-018-07641-9).
+- If you use "\-\-ANI", please also cite [fastANI](https://dx.doi.org/10.1038%2Fs41467-018-07641-9).
 
-- If you use "--MASH", please also cite [Mash, Ondov, B. D. _et al._, 2016](https://dx.doi.org/10.1186%2Fs13059-016-0997-x).
+- If you use "\-\-MASH", please also cite [Mash](https://dx.doi.org/10.1186%2Fs13059-016-0997-x).
 
-- If you use "--VAR", please also cite [Sickle, Joshi NA & JN, F, 2011](https://github.com/najoshi/sickle), [Snippy, Seemann, T, 2014](https://github.com/tseemann/snippy), [Gubbins, Croucher, N. J. _et al._, 2015](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305), and [SnpEff, Cingolani, P. _et al._, 2012](https://dx.doi.org/10.4161%2Ffly.19695).
+- If you use "\-\-VAR", please also cite [Sickle](https://github.com/najoshi/sickle), [Snippy](https://github.com/tseemann/snippy), [Gubbins](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305), and [SnpEff](https://dx.doi.org/10.4161%2Ffly.19695).
 
-- If you use "--AntiRes", please also cite [Abricate, Seemann T](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), and [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
+- If you use "\-\-AntiRes", please also cite [Abricate](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), and [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
 
 
 ## FAQ
