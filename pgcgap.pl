@@ -8,6 +8,9 @@ use Bio::SeqIO;
 use Data::Dumper;
 use File::Tee qw(tee);
 use Cwd;
+use List::Util qw(sum min max);
+use File::Basename;
+
 
 my %options;
 
@@ -427,13 +430,13 @@ $options{'platform=s'} = \(my $opt_platform = "illumina");
 
 =item B<[--assembler (STRING)]>
 
-I<[Required]> Software used for illumina reads assembly, "abyss" and "spades" available ( Default abyss )
+I<[Required]> Software used for illumina reads assembly, "abyss", "spades" and "auto" available ( Default auto )
 
 =back
 
 =cut
 
-$options{'assembler=s'} = \(my $opt_assembler = "abyss");
+$options{'assembler=s'} = \(my $opt_assembler = "auto");
 
 =over 30
 
@@ -458,6 +461,18 @@ I<[Required]> An estimate of the size of the genome. Common suffixes are allowed
 =cut
 
 $options{'genomeSize=s'} = \(my $opt_genomeSize);
+
+=over 30
+
+=item B<[--filter_length (INT)]>
+
+I<[Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
+
+=back
+
+=cut
+
+$options{'filter_length=i'} = \(my $filter_length = 200);
 
 =over 30
 
@@ -1271,12 +1286,12 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.11\n";
+    print "PGCGAP version: 1.0.12\n";
     exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
-if ($opt_help) {
+if ($opt_help or !@ARGV) {
 	pod2usage(1);
 	exit 0;
 }
@@ -1388,9 +1403,23 @@ if ($opt_All or $opt_Assemble) {
 		}
 		chdir $working_dir;
 		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
+		my @fas = glob("*-8.fa");
+		foreach  (@fas) {
+			$_=~/(\S+)-8.fa/;
+			my $outpre = $1 . ".prefilter.stats";
+			my $outfilter = $1 . ".filtered.stats";
+			my $filterscaf = $1. ".filtered.fas";
+			getstats($_, $outpre);
+			#system("perl N50Stat.pl -i $_ -o $outpre");
+			lenfilter($_, $filterscaf, $filter_length);
+			getstats($filterscaf, $outfilter);
+			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
+		}
 		my $time_assemble = time();
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+		chdir $working_dir;
 	}elsif ($opt_platform eq "illumina" and $opt_assembler eq "spades") {
 		print "Performing --Assemble function for Illunina data with spades...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
@@ -1421,9 +1450,88 @@ if ($opt_All or $opt_Assemble) {
 		}
 		chdir $working_dir;
 		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
+		my @fas = glob("*-8.fa");
+		foreach  (@fas) {
+			$_=~/(\S+)-8.fa/;
+			my $outpre = $1 . ".prefilter.stats";
+			my $outfilter = $1 . ".filtered.stats";
+			my $filterscaf = $1. ".filtered.fas";
+			getstats($_, $outpre);
+			#system("perl N50Stat.pl -i $_ -o $outpre");
+			lenfilter($_, $filterscaf, $filter_length);
+			getstats($filterscaf, $outfilter);
+			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
+		}
 		my $time_assemble = time();
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+		chdir $working_dir;
+	}elsif ($opt_platform eq "illumina" and $opt_assembler eq "auto") {
+		print "Performing --Assemble function for Illunina data with abyss...\n\n";
+		system("mkdir -p Results/Assembles/Illumina");
+		system("mkdir -p Results/Assembles/Scaf/Illumina");
+		
+		chdir $opt_ReadsPath;
+		my @files = glob("*$opt_reads1");
+		my %lists;
+		foreach (@files) {
+			if (/(\S+)$opt_reads1/) {
+				$lists{$1} = "1";
+			}
+		}
+
+		my @lists = keys %lists;
+
+		foreach my $name(@lists) {
+			my $read1 = $name . $opt_reads1;
+			my $read2 = $name . $opt_reads2;
+			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
+			print "Assembling...\n";
+			system("abyss-pe name=$str k=$opt_kmmer in='$read1 $read2' np=$opt_threads");
+			print "Assemble complete !\n";
+			my $assem = $str . "_assembly";
+			system("mkdir -p $working_dir/Results/Assembles/Illumina/$assem");
+			my $scaf = $str . "-8.fa";
+			#system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+			system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
+			my $stats = "$working_dir/Results/Assembles/Illumina/$assem/" . $str . "-stats.tab";
+			print "Checking the assembly stats...\n";
+			open IN, "$stats" || die;
+			my @array = <IN>;
+			my $lastline = $array[-1];#get the last line of the file
+			my @stats = split "\t", $lastline;
+			if ($stats[5] < 50000) {
+				print "Performing --Assemble function for Illunina data with spades...\n\n";
+				system("unicycler -1 $read1 -2 $read2 -t $opt_threads -o $str");
+				print "Assemble completed!\n";
+				#my $scaf = $str . "-8.fa";
+				system("mv $str/assembly.fasta $str/$scaf");
+				system("cp $str/$scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+				system("cp -rf $str $working_dir/Results/Assembles/Illumina/");
+			}else {
+				system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+			}
+		}
+		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
+		my @fas = glob("*-8.fa");
+		foreach  (@fas) {
+			$_=~/(\S+)-8.fa/;
+			my $outpre = $1 . ".prefilter.stats";
+			my $outfilter = $1 . ".filtered.stats";
+			my $filterscaf = $1. ".filtered.fas";
+			getstats($_, $outpre);
+			#system("perl N50Stat.pl -i $_ -o $outpre");
+			lenfilter($_, $filterscaf, $filter_length);
+			getstats($filterscaf, $outfilter);
+			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
+		}
+		my $time_assemble = time();
+		my $time_assemblex = ($time_assemble - $time_start)/3600;
+		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
+		chdir $working_dir;
 	}elsif ($opt_platform eq "pacbio") {
 		print "Performing --Assemble function for PacBio data...\n\n";
 		system("mkdir -p Results/Assembles/PacBio");
@@ -1447,6 +1555,20 @@ if ($opt_All or $opt_Assemble) {
 		}
 		chdir $working_dir;
 		system("realpath Results/Assembles/Scaf/PacBio/* >> scaf.list");
+		chdir "$working_dir/Results/Assembles/Scaf/PacBio/";
+		my @fas = glob("*.fasta");
+		foreach  (@fas) {
+			$_=~/(\S+).fasta/;
+			my $outpre = $1 . ".prefilter.stats";
+			my $outfilter = $1 . ".filtered.stats";
+			my $filterscaf = $1. ".filtered.fas";
+			getstats($_, $outpre);
+			#system("perl N50Stat.pl -i $_ -o $outpre");
+			lenfilter($_, $filterscaf, $filter_length);
+			getstats($filterscaf, $outfilter);
+			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
+		}
+		chdir $working_dir;
 	}elsif ($opt_platform eq "oxford") {
 		print "Performing --Assemble function for Oxford Nanopore data...\n\n";
 		system("mkdir -p Results/Assembles/Oxford");
@@ -1470,6 +1592,20 @@ if ($opt_All or $opt_Assemble) {
 		}
 		chdir $working_dir;
 		system("realpath Results/Assembles/Scaf/Oxford/* >> scaf.list");
+		chdir "$working_dir/Results/Assembles/Scaf/Oxford/";
+		my @fas = glob("*.fasta");
+		foreach  (@fas) {
+			$_=~/(\S+).fasta/;
+			my $outpre = $1 . ".prefilter.stats";
+			my $outfilter = $1 . ".filtered.stats";
+			my $filterscaf = $1. ".filtered.fas";
+			getstats($_, $outpre);
+			#system("perl N50Stat.pl -i $_ -o $outpre");
+			lenfilter($_, $filterscaf, $filter_length);
+			getstats($filterscaf, $outfilter);
+			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
+		}
+		chdir $working_dir;
 	}elsif ($opt_platform eq "hybrid") {
 		print "Performing --Assemble function for hybrid data...\n\n";
 		chdir $opt_ReadsPath;
@@ -2676,14 +2812,154 @@ my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
 #print "Total $time_total hours used.\n\n";
 
+sub lenfilter{
+	my $scaf = shift;
+	my $scaf_filter = shift;
+	my $length = shift;
+	my $in = Bio::SeqIO->new(-file=>"$scaf", -format=>"fasta");
+	my $out = Bio::SeqIO->new(-file=>">$scaf_filter", -format=>"fasta");
+	while (my $seq = $in->next_seq) {
+		my $len = $seq->length;
+		if ($len >= $length) {
+			$out->write_seq($seq);
+		}
+	}
+}
+
+{
+	my $As = 0;
+	my $Ts = 0;
+	my $Gs = 0;
+	my $Cs = 0;
+	my $Ns = 0;
+	sub getstats {
+		# Parameter variables
+		my $file = shift;
+		my $outFile = shift;
+
+		my ($fileName, $filePath) = fileparse($file);
+		$outFile = $file . "_n50_stat" if($outFile eq "");
+
+		open(I, "<$file") or die "Can not open file: $file\n";
+		open(O, ">$outFile") or die "Can not open file: $outFile\n";
+
+		my @len = ();
+
+		my $prevFastaSeqId = "";
+		my $fastaSeqId = "";
+		my $fastaSeq = "";
+
+		while(my $line = <I>) {
+			chomp $line;
+			if($line =~ /^>/) {
+				$prevFastaSeqId = $fastaSeqId;
+				$fastaSeqId = $line;
+				if($fastaSeq ne "") {
+					push(@len, length $fastaSeq);
+					baseCount($fastaSeq);
+				}
+				$fastaSeq = "";
+			}
+			else {
+				$fastaSeq .= $line;
+			}
+		}
+		if($fastaSeq ne "") {
+			$prevFastaSeqId = $fastaSeqId;
+			push(@len, length $fastaSeq);
+			baseCount($fastaSeq);
+		}
+
+		my $totalReads = scalar @len;
+		my $bases = sum(@len);
+		my $minReadLen = min(@len);
+		my $maxReadLen = max(@len);
+		my $avgReadLen = sprintf "%0.2f", $bases/$totalReads;
+		my $medianLen = calcMedian(@len);
+		my $n25 = calcN50(\@len, 25);
+		my $n50 = calcN50(\@len, 50);
+		my $n75 = calcN50(\@len, 75);
+		my $n90 = calcN50(\@len, 90);
+		my $n95 = calcN50(\@len, 95);
+
+		printf O "%-25s %d\n" , "Total sequences", $totalReads;
+		printf O "%-25s %d\n" , "Total bases", $bases;
+		printf O "%-25s %d\n" , "Min sequence length", $minReadLen;
+		printf O "%-25s %d\n" , "Max sequence length", $maxReadLen;
+		printf O "%-25s %0.2f\n", "Average sequence length", $avgReadLen;
+		printf O "%-25s %0.2f\n", "Median sequence length", $medianLen;
+		printf O "%-25s %d\n", "N25 length", $n25;
+		printf O "%-25s %d\n", "N50 length", $n50;
+		printf O "%-25s %d\n", "N75 length", $n75;
+		printf O "%-25s %d\n", "N90 length", $n90;
+		printf O "%-25s %d\n", "N95 length", $n95;
+		printf O "%-25s %0.2f %s\n", "As", $As/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "Ts", $Ts/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "Gs", $Gs/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "Cs", $Cs/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "(A + T)s", ($As+$Ts)/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "(G + C)s", ($Gs+$Cs)/$bases*100, "%";
+		printf O "%-25s %0.2f %s\n", "Ns", $Ns/$bases*100, "%";
+
+		print "N50 Statisitcs file: $outFile\n";
+
+		exit;
+
+
+		sub calcN50 {
+			my @x = @{$_[0]};
+			my $n = $_[1];
+			@x=sort{$b<=>$a} @x;
+			my $total = sum(@x);
+			my ($count, $n50)=(0,0);
+			for (my $j=0; $j<@x; $j++){
+				$count+=$x[$j];
+				if(($count>=$total*$n/100)){
+					$n50=$x[$j];
+					last;
+				}
+			}
+			return $n50;
+		}
+
+		sub calcMedian {
+			my @arr = @_;
+			my @sArr = sort{$a<=>$b} @arr;
+			my $arrLen = @arr;
+			my $median;
+			if($arrLen % 2 == 0) {
+				$median = ($sArr[$arrLen/2-1] + $sArr[$arrLen/2])/2;
+			}
+			else {
+				$median = $sArr[$arrLen/2];
+			}
+			return $median;
+		}
+
+		sub baseCount {
+			my $seq = $_[0];
+			my $tAs += $seq =~ s/A/A/gi;
+			my $tTs += $seq =~ s/T/T/gi;
+			my $tGs += $seq =~ s/G/G/gi;
+			my $tCs += $seq =~ s/C/C/gi;
+			$Ns += (length $seq) - $tAs - $tTs - $tGs - $tCs;
+			$As += $tAs;
+			$Ts += $tTs;
+			$Gs += $tGs;
+			$Cs += $tCs;
+		}
+	}
+}
+
 sub printAssemble{
 	print "[--platform (STRING)] Sequencing Platform, 'illumina', 'pacbio', 'oxford' and 'hybrid' available ( Default illumina )\n";
-	print "[--assembler (STRING)] Software used for illumina reads assembly, 'abyss' and 'spades' available ( Default abyss )\n";
+	print "[--assembler (STRING)] Software used for illumina reads assembly, 'abyss', 'spades' and 'auto' available ( Default auto )\n";
 	print "[--ReadsPath (PATH)] Reads of all strains as file paths ( Default ./Reads/Illumina )\n";
 	print "[--reads1 (STRING)] The suffix name of reads 1 ( for example: if the name of reads 1 is 'YBT-1520_L1_I050.R1.clean.fastq.gz', 'YBT-1520' is the strain same, the suffix name should be '.R1.clean.fastq.gz' )\n";
 	print "[--reads2 (STRING)] The suffix name of reads 2( for example: if the name of reads 2 is 'YBT-1520_2.fq', the suffix name should be '_2.fq' )\n";
 	print "[--suffix_len (INT)] (Strongly recommended) The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of 'YBT-1520_L1_I050.R1.clean.fastq.gz' is 26 ( 'YBT-1520' is the strain name ) ( Default 0 )\n";
 	print "[--kmmer (INT)] k-mer size for genome assembly of Illumina data with abyss( Default 81 )\n";
+	print "[--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )";
 	print "[--genomeSize (STRING)] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )\n";
 	print "[--short1 (STRING)] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )\n";
 	print "[--short2 (STRING)] FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )\n";

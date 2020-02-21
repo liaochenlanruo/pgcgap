@@ -202,6 +202,19 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     ```
     $pgcgap [modules] [options]
     ```
+
+- __Show parameters for each module:__
+    ```
+    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]
+    ```
+
+- __Show examples of each module:__
+    ```
+    $pgcgap Examples
+    ```
+
+=head1 OPTIONS
+
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
@@ -304,13 +317,15 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __\-\-Assemble__
 
-      - __[\-\-platform (STRING)]__         [Required] Sequencing Platform, "illumina", "pacbio", "oxford" and "hybrid" available (Default illumina)
+      - __[\-\-platform (STRING)]__         [Required] Sequencing Platform, "illumina", "pacbio", "oxford" and "hybrid" available ( Default illumina )
 
       - __[\-\-assembler (STRING)]__        [Required] Software used for illumina reads assembly, "abyss" and "spades" available ( Default abyss )
 
       - __[\-\-kmmer (INT)]__               [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
 
-      - __[\-\-genomeSize (STRING)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data (Default Unset)
+      - __[\-\-genomeSize (STRING)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
+
+      - __[\-\-filter_length (INT)]__       [Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
 
       - __[\-\-short1 (STRING)]__           [Required] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
@@ -513,6 +528,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
      ```
      $pgcgap --Assemble --platform illumina --assembler abyss --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      $pgcgap --Assemble --platform illumina --assembler spades --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
+     $pgcgap --Assemble --platform illumina --assembler auto --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      ```
 
     - Oxford reads assembly
@@ -661,7 +677,7 @@ Directory contains hybrid assembly files of the short reads and long reads of th
 <br/>
 
 - __Results/Assembles/Scaf/Illumina__<br/>
-Directory contains Illumina contigs/scaffolds of all strains.
+Directory contains Illumina contigs/scaffolds of all strains. "\*.filtered.fas" is the genome after excluding short sequences. "\*.prefilter.stats" describes the status of the genome before filtering, and "\*.filtered.stats" describes the status of the genome after filtering.
 <br/>
 
 - __Results/Assembles/Scaf/Oxford__<br/>
@@ -947,3 +963,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
   - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]", and can look up the examples of each module with command "pgcgap Examples".
+
+- V1.0.12
+
+  - Added automatic mode for illumina genome assembly. First, PGCGAP calls "ABySS" for genome assembly. When the assembled N50 is less than 50,000, it automatically calls "SPAdes" to try multiple parameters for assembly.
+  - Added ability to filter short sequences of assembled genomes.
+  - Added function of genome assembly status assessment.
