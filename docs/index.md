@@ -212,8 +212,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     $pgcgap Examples
     ```
 
-=head1 OPTIONS
-
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
