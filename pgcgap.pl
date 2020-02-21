@@ -530,7 +530,7 @@ $options{'hout=s'} = \(my $opt_hout = '../../Results/Assembles/Hybrid');
 
 =begin html
 
-If you use the results of "--Assemble" function in your work, please also cite:
+If you use the results of "--Annotate" function in your work, please also cite:
 
 </br>
 
@@ -583,10 +583,6 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 </br>
 
 </br>Katoh K, Misawa K, Kuma K, Miyata T. MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform. Nucleic Acids Res. 2002;30(14):3059-3066
-
-</br>
-
-</br>Price MN, Dehal PS, Arkin AP. FastTree 2--approximately maximum-likelihood trees for large alignments. PLoS One. 2010;5(3):e9490. Published 2010 Mar 10. doi:10.1371/journal.pone.0009490
 
 </br>
 

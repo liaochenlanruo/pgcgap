@@ -196,7 +196,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     ```
     $pgcgap --help
     ```
-<br/>
 
 - __General usage:__
     ```
@@ -516,7 +515,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
     ```
-    $pgcgap --All --platform illumina --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+    $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
     ```
 
   - __Example 2:__ Genome assembly.
@@ -526,9 +525,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "\-\-suffix_len" was set to 11.
 
      ```
-     $pgcgap --Assemble --platform illumina --assembler abyss --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
-     $pgcgap --Assemble --platform illumina --assembler spades --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
-     $pgcgap --Assemble --platform illumina --assembler auto --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+     $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+     $pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
+     $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      ```
 
     - Oxford reads assembly
@@ -839,7 +838,25 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [\[+https://doi.org/10.21203/rs.2.21224/v1+\]](https://doi.org/10.21203/rs.2.21224/v1)
+- If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [\[+https://doi.org/10.21203/rs.2.21224/v1+\]](https://doi.org/10.21203/rs.2.21224/v1)
+
+- If you use "--Assemble", please also cite one of [ABySS, Jackman, S. D. _et al._, 2017](https://doi.org/10.1101/gr.214346.116), [SPAdes, Nurk, S. _et al._, 2013](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu, Koren, S. _et al._, 2017](https://doi.org/10.1101/gr.215087.116), or [Unicycler, Wick, R. _et al._, 2017](https://doi.org/10.1371/journal.pcbi.1005595).
+
+- If you use "--Annotate", please also cite [Prokka, Seemann, T, 2014](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=24642063).
+
+- If you use "--CoreTree", please also cite [CD-HIT, Weizhong Li & Adam Godzik, 2006](https://doi.org/10.1093/bioinformatics/btl158), [MAFFT, Katoh, K. _et al._, 2002](https://doi.org/10.1093/nar/gkf436), [PAL2NAL, Suyama, M. _et al._, 2006](https://doi.org/10.1093/nar/gkl315), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305), and [SNP-sites, Page, A. J. _et al._, 2016](https://dx.doi.org/10.1099%2Fmgen.0.000056).
+
+- If you use "--Pan", please also cite [Roary, Page, A. J. _et al._, 2015](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421), [MAFFT, Katoh, K. _et al._, 2002](https://doi.org/10.1093/nar/gkf436), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), and [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305).
+
+- If you use "--OrthoF", please also cite [OrthoFinder, Emms, D. M. & Kelly, S., 2019](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421).
+
+- If you use "--ANI", please also cite [fastANI, Jain, C. _et al._, 2018](https://dx.doi.org/10.1038%2Fs41467-018-07641-9).
+
+- If you use "--MASH", please also cite [Mash, Ondov, B. D. _et al._, 2016](https://dx.doi.org/10.1186%2Fs13059-016-0997-x).
+
+- If you use "--VAR", please also cite [Sickle, Joshi NA & JN, F, 2011](https://github.com/najoshi/sickle), [Snippy, Seemann, T, 2014](https://github.com/tseemann/snippy), [Gubbins, Croucher, N. J. _et al._, 2015](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [ModelTest-NG, Darriba, D. _et al._, 2019](https://doi.org/10.1093/molbev/msz189), [RAxML-NG, Kozlov, A. M. _et al._, 2019](https://doi.org/10.1093/bioinformatics/btz305), and [SnpEff, Cingolani, P. _et al._, 2012](https://dx.doi.org/10.4161%2Ffly.19695).
+
+- If you use "--AntiRes", please also cite [Abricate, Seemann T](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), and [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
 
 
 ## FAQ
