@@ -840,7 +840,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use this software please cite: Hualin Liu, Bingyue Xin, Jinshui Zheng *et al*. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [\[+https://doi.org/10.21203/rs.2.21224/v1+\]](https://doi.org/10.21203/rs.2.21224/v1)
 
-- If you use "--Assemble", please also cite one of [ABySS, Jackman, S. D. _et al._, 2017](https://doi.org/10.1101/gr.214346.116), [SPAdes, Nurk, S. _et al._, 2013](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu, Koren, S. _et al._, 2017](https://doi.org/10.1101/gr.215087.116), or [Unicycler, Wick, R. _et al._, 2017](https://doi.org/10.1371/journal.pcbi.1005595).
+- If you use "--Assemble", please also cite one of [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
 - If you use "--Annotate", please also cite [Prokka, Seemann, T, 2014](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=24642063).
 
