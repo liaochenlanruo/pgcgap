@@ -533,7 +533,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
 
      ```
-     $pgcgap --Assemble --platform oxford --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+     $pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
      ```
 
     - PacBio reads assembly
@@ -541,7 +541,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
      PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" was set to 6.
 
      ```
-     $pgcgap --Assemble --platform pacbio --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+     $pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
      ```
 
     - Hybrid assembly of short reads and long reads
