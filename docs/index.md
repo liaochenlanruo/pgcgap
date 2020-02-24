@@ -984,3 +984,4 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Added automatic mode for illumina genome assembly. First, PGCGAP calls "ABySS" for genome assembly. When the assembled N50 is less than 50,000, it automatically calls "SPAdes" to try multiple parameters for assembly.
   - Added ability to filter short sequences of assembled genomes.
   - Added function of genome assembly status assessment.
+  - Modified the drawing script of ANI and MASH modules so that it can automatically adjust the font size according to the number of samples.
