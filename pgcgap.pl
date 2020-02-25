@@ -1270,7 +1270,7 @@ $options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/nul
     Contact: liaochenlanruo@webmail.hzau.edu.cn
 
 
-    Citation: Hualin Liu, Bingyue Xin, Jinshui Zheng et al. Build a Bioinformatics Analysis Platform and Apply it to Routine Analysis of Microbial Genomics and Comparative Genomics, 27 January 2020, PROTOCOL (Version 1) available at Protocol Exchange [+https://doi.org/10.21203/rs.2.21224/v1+]
+    Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v1
 
 
 =end text
