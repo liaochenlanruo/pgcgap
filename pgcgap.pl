@@ -1490,23 +1490,25 @@ if ($opt_All or $opt_Assemble) {
 			system("mkdir -p $working_dir/Results/Assembles/Illumina/$assem");
 			my $scaf = $str . "-8.fa";
 			#system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
-			system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
-			my $stats = "$working_dir/Results/Assembles/Illumina/$assem/" . $str . "-stats.tab";
+			#system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
+			my $stats = $str . "-stats.tab";
 			print "Checking the assembly stats...\n";
 			open IN, "$stats" || die;
 			my @array = <IN>;
 			my $lastline = $array[-1];#get the last line of the file
 			my @stats = split "\t", $lastline;
 			if ($stats[5] < 50000) {
+				system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
 				print "Performing --Assemble function for Illunina data with spades...\n\n";
 				system("unicycler -1 $read1 -2 $read2 -t $opt_threads -o $str");
 				print "Assemble completed!\n";
 				#my $scaf = $str . "-8.fa";
 				system("mv $str/assembly.fasta $str/$scaf");
 				system("cp $str/$scaf $working_dir/Results/Assembles/Scaf/Illumina/");
-				system("cp -rf $str $working_dir/Results/Assembles/Illumina/");
+				system("mv -f $str $working_dir/Results/Assembles/Illumina/");
 			}else {
 				system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
+				system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
 			}
 		}
 		chdir $working_dir;
@@ -2899,8 +2901,6 @@ sub lenfilter{
 
 		print "N50 Statisitcs file: $outFile\n";
 
-		exit;
-
 
 		sub calcN50 {
 			my @x = @{$_[0]};
@@ -3061,7 +3061,8 @@ sub printExamples{
 	print "Example 2: Conduct pair-end reads assembly\n\n";
 
 	print "         pgcgap --Assemble --platform illumina --assembler abyss --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>\n";
-	print "         pgcgap --Assemble --platform illumina --assembler spades --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --threads <INT>\n\n";
+	print "         pgcgap --Assemble --platform illumina --assembler spades --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --threads <INT>\n";
+	print "         pgcgap --Assemble --platform illumina --assembler auto --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>\n\n";
 
 	print "Example 3: Conduct PacBio/Oxford reads assembly\n\n";
 
