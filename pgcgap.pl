@@ -1287,7 +1287,7 @@ if($opt_version){
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
-if ($opt_help or !@ARGV) {
+if ($opt_help) {
 	pod2usage(1);
 	exit 0;
 }
