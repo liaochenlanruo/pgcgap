@@ -34,7 +34,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   General usage: pgcgap [Modules] [Options]
 
-  Show parameters for each module: pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]
+  Show parameters for each module: pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|ACC]
 
   Show examples of each module: pgcgap Examples
 
@@ -226,6 +226,18 @@ Screening for antimicrobial and virulence genes
 
 $options{'AntiRes'} = \(my $opt_AntiRes);
 
+=over 30
+
+=item B<[--ACC]>
+
+Other useful gadgets
+
+=back
+
+=cut
+
+$options{'ACC'} = \(my $opt_ACC);
+
 =head2 ******************************************************** Global Options ********************************************************
 
 =for text
@@ -260,7 +272,7 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 =item B<[--scafPath (PATH)]>
 
-I<[Required by "All", "Annotate", "MASH" and "AntiRes"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
+I<[Required by "All", "Assess", "Annotate", "MASH" and "AntiRes"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
 
 =back
 
@@ -308,13 +320,25 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genomes [Required by "All", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+The suffix of scaffolds or genomes [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
 
 =back
 
 =cut
 
 $options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
+
+=over 30
+
+=item B<[--filter_length (INT)]>
+
+I<[Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes [Required by "All", "Assemble" and "Assess"]. ( Default 200 )
+
+=back
+
+=cut
+
+$options{'filter_length=i'} = \(my $opt_filter_length = 200);
 
 =over 30
 
@@ -461,18 +485,6 @@ I<[Required]> An estimate of the size of the genome. Common suffixes are allowed
 =cut
 
 $options{'genomeSize=s'} = \(my $opt_genomeSize);
-
-=over 30
-
-=item B<[--filter_length (INT)]>
-
-I<[Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
-
-=back
-
-=cut
-
-$options{'filter_length=i'} = \(my $filter_length = 200);
 
 =over 30
 
@@ -1011,6 +1023,20 @@ I<[Required]> Minimum %coverage to keep the result, should be a number between 0
 
 $options{'coverage=i'} = \(my $opt_coverage = "50");
 
+=head3 ===================================== Options for "--ACC" ============================================================
+
+=over 30
+
+=item B<[--Assess (STRING)]>
+
+Filter short sequences in the genome and assess the status of the genome.
+
+=back
+
+=cut
+
+$options{'Assess=s'} = \( my $opt_Assess);
+
 =head2 ************************************* Paths of external programs ***************************************************************
 
 =for text
@@ -1408,7 +1434,7 @@ if ($opt_All or $opt_Assemble) {
 			my $filterscaf = $1. ".filtered.fas";
 			getstats($_, $outpre);
 			#system("perl N50Stat.pl -i $_ -o $outpre");
-			lenfilter($_, $filterscaf, $filter_length);
+			lenfilter($_, $filterscaf, $opt_filter_length);
 			getstats($filterscaf, $outfilter);
 			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
 		}
@@ -1455,7 +1481,7 @@ if ($opt_All or $opt_Assemble) {
 			my $filterscaf = $1. ".filtered.fas";
 			getstats($_, $outpre);
 			#system("perl N50Stat.pl -i $_ -o $outpre");
-			lenfilter($_, $filterscaf, $filter_length);
+			lenfilter($_, $filterscaf, $opt_filter_length);
 			getstats($filterscaf, $outfilter);
 			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
 		}
@@ -1522,7 +1548,7 @@ if ($opt_All or $opt_Assemble) {
 			my $filterscaf = $1. ".filtered.fas";
 			getstats($_, $outpre);
 			#system("perl N50Stat.pl -i $_ -o $outpre");
-			lenfilter($_, $filterscaf, $filter_length);
+			lenfilter($_, $filterscaf, $opt_filter_length);
 			getstats($filterscaf, $outfilter);
 			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
 		}
@@ -1562,7 +1588,7 @@ if ($opt_All or $opt_Assemble) {
 			my $filterscaf = $1. ".filtered.fas";
 			getstats($_, $outpre);
 			#system("perl N50Stat.pl -i $_ -o $outpre");
-			lenfilter($_, $filterscaf, $filter_length);
+			lenfilter($_, $filterscaf, $opt_filter_length);
 			getstats($filterscaf, $outfilter);
 			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
 		}
@@ -1599,7 +1625,7 @@ if ($opt_All or $opt_Assemble) {
 			my $filterscaf = $1. ".filtered.fas";
 			getstats($_, $outpre);
 			#system("perl N50Stat.pl -i $_ -o $outpre");
-			lenfilter($_, $filterscaf, $filter_length);
+			lenfilter($_, $filterscaf, $opt_filter_length);
 			getstats($filterscaf, $outfilter);
 			#system("perl N50Stat.pl -i $filterscaf -o $outfilter");
 		}
@@ -2810,6 +2836,13 @@ my $time_end = time();
 my $time_total = ($time_end - $time_start)/3600;
 #print "Total $time_total hours used.\n\n";
 
+if ($opt_ACC) {
+	if ($opt_Assess) {
+		chdir $opt_scafPath;
+		system("perl genome_LenFilter_stats.pl --Scaf_suffix $opt_Scaf_suffix --filter_length $opt_filter_length");
+		chdir $working_dir;
+	}
+}
 sub lenfilter{
 	my $scaf = shift;
 	my $scaf_filter = shift;
@@ -2901,6 +2934,11 @@ sub lenfilter{
 
 		print "N50 Statisitcs file: $outFile\n";
 
+		$As = 0;
+		$Ts = 0;
+		$Gs = 0;
+		$Cs = 0;
+		$Ns = 0;
 
 		sub calcN50 {
 			my @x = @{$_[0]};
@@ -3051,6 +3089,11 @@ sub printpCOG{
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
+sub printACC{
+	print "Applets in ACC include 'Assess' now\n";
+	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genomes ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
+}
+
 sub printExamples{
 	print "\nThe main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/\n\n";
 
@@ -3111,6 +3154,10 @@ sub printExamples{
 	print "Example 14: Screening of contigs for antimicrobial and virulence genes\n\n";
 
 	print "         pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>\n";
+
+	print "Example 15: \n\n";
+
+	print "         pgcgap --ACC --Assess --scafPath <PATH> --Scaf_suffix <STRING> --filter_length <INT>\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){
@@ -3165,5 +3212,10 @@ if ( grep {$_ eq "AntiRes"} @ARGV ){
 
 if ( grep {$_ eq "Examples"} @ARGV ){
 	printExamples();
+	exit 0;
+}
+
+if ( grep {$_ eq "ACC"} @ARGV ) {
+	printACC();
 	exit 0;
 }

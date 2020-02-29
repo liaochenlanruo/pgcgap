@@ -204,7 +204,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Show parameters for each module:__
     ```
-    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]
+    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|ACC]
     ```
 
 - __Show examples of each module:__
@@ -239,14 +239,16 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __[\-\-MASH]__                         Genome and metagenome similarity estimation using MinHash
 
-  - __[\-\-pCOG]__                          Run COG annotation for each strain (*.faa),
+  - __[\-\-pCOG]__                         Run COG annotation for each strain (*.faa),
 				          and generate a table containing the relative
 				          abundance of each flag for all strains
 
   - **[\-\-VAR]**                          Rapid haploid variant calling and core
                                          genome alignment with "Snippy"
 
-  - __[\-\-AntiRes]__                        Screening of contigs for antimicrobial and virulence genes
+  - __[\-\-AntiRes]__                      Screening of contigs for antimicrobial and virulence genes
+
+  - __[\-\-ACC]__                          Other useful gadgets (now includes 'Assess' for filtering short sequences in the genome and assessing the status of the genome only)
 
 <br/>
 
@@ -258,7 +260,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __[\-\-ReadsPath (PATH)]__             [Required by "\-\-All", "\-\-Assemble" and "\-\-VAR"]
                                          Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - __[\-\-scafPath (PATH)]__              [Required by "\-\-All", "\-\-Annotate", "\-\-MASH" and "\-\-AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
+  - __[\-\-scafPath (PATH)]__              [Required by "\-\-All", "\-\-Assess", "\-\-Annotate", "\-\-MASH" and "\-\-AntiRes"] Path for contigs/scaffolds (Default "Results/Assembles/Scaf/Illumina")
 
   - __[\-\-AAsPath (PATH)]__               [Required by "\-\-All", "\-\-CoreTree", "\-\-Pan", "\-\-OrthoF" and "\-\-pCOG"] Amino acids of all strains as fasta file paths,
                                          ( Default "./Results/Annotations/AAs" )
@@ -275,7 +277,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          example: if the name of reads 2 is
                                          "YBT-1520_2.fq", the suffix name should be "_2.fq" )
 
-  - **[\-\-Scaf_suffix (STRING)]**         [Required by "\-\-All", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[\-\-Scaf_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+
+  - __[\-\-filter_length (INT)]__          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
 
   - __[\-\-codon (INT)]__                  [Required by "\-\-All", "\-\-Annotate", "\-\-CoreTree" and "\-\-Pan"] Translation table ( Default 11 )
 
@@ -321,8 +325,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       - __[\-\-kmmer (INT)]__               [Required] k-mer size for genome assembly of Illumina data ( Default 81 )
 
       - __[\-\-genomeSize (STRING)]__       [Required] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
-
-      - __[\-\-filter_length (INT)]__       [Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
 
       - __[\-\-short1 (STRING)]__           [Required] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
@@ -445,6 +447,10 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
       - __[\-\-coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
 	                                 should be a number between 0 to 100. ( Default 50 )
+
+  - __\-\-ACC__
+
+      - __[\-\-Assess (STRING)]__           Filter short sequences in the genome and assess the status of the genome
 
 - __Paths of external programs__
 
@@ -610,6 +616,12 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     ```
     $pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
+    ```
+
+  - __Example 13:__ Filter short sequences in the genome and assess the status of the genome
+
+    ```
+    $pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
     ```
 
 

@@ -10,7 +10,7 @@ my %options;
 
 =head1 USAGE
 
-  $ perl COG.pl --threads <INT>
+  $perl COG.pl --threads <INT>
 
 =head1 OPTIONS
 
