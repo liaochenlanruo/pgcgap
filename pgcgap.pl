@@ -3157,7 +3157,7 @@ sub printExamples{
 
 	print "Example 15: \n\n";
 
-	print "         pgcgap --ACC --Assess --scafPath <PATH> --Scaf_suffix <STRING> --filter_length <INT>\n";
+	print "         pgcgap --ACC --Assess --scafPath <PATH> --Scaf_suffix <STRING> --filter_length <INT>\n\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){
