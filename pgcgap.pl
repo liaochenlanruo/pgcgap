@@ -2839,7 +2839,7 @@ my $time_total = ($time_end - $time_start)/3600;
 if ($opt_ACC) {
 	if ($opt_Assess) {
 		chdir $opt_scafPath;
-		system("perl genome_LenFilter_stats.pl --Scaf_suffix $opt_Scaf_suffix --filter_length $opt_filter_length");
+		system("genome_LenFilter_stats.pl --Scaf_suffix $opt_Scaf_suffix --filter_length $opt_filter_length");
 		chdir $working_dir;
 	}
 }
