@@ -64,12 +64,15 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
+- [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
+- [IQ-TREE](http://www.iqtree.org/)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
 - [Mash](https://github.com/marbl/Mash)
 - [ModelTest-NG](https://github.com/ddarriba/modeltest)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
+- [Muscle](https://www.ebi.ac.uk/Tools/msa/muscle/)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
 - [OpenJDK8](https://openjdk.java.net/)
@@ -105,7 +108,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 ## License
 
-PCGAP is free software, licensed under GPLv3.
+PGCGAP is free software, licensed under GPLv3.
 
 ## Feedback and Issues
 

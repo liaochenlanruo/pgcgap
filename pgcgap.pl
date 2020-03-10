@@ -10,7 +10,7 @@ use File::Tee qw(tee);
 use Cwd;
 use List::Util qw(sum min max);
 use File::Basename;
-
+use POSIX;
 
 my %options;
 
@@ -34,7 +34,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   General usage: pgcgap [Modules] [Options]
 
-  Show parameters for each module: pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|ACC]
+  Show parameters for each module: pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
 
   Show examples of each module: pgcgap Examples
 
@@ -225,6 +225,18 @@ Screening for antimicrobial and virulence genes
 =cut
 
 $options{'AntiRes'} = \(my $opt_AntiRes);
+
+=over 30
+
+=item B<[--STREE]>
+
+Construct a phylogenetic tree based on multiple sequences in one file
+
+=back
+
+=cut
+
+$options{'STREE'} = \(my $opt_STREE);
 
 =over 30
 
@@ -1023,6 +1035,44 @@ I<[Required]> Minimum %coverage to keep the result, should be a number between 0
 
 $options{'coverage=i'} = \(my $opt_coverage = "50");
 
+=head3 ===================================== Options for "--STREE" ============================================================
+
+=over 30
+
+=item B<[--seqfile (STRING)]>
+
+Path of the sequence file for analysis.
+
+=back
+
+=cut
+
+$options{'seqfile=s'} = \( my $opt_seqfile);
+
+=over 30
+
+=item B<[--seqtype (STRING)]>
+
+Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
+
+=back
+
+=cut
+
+$options{'seqtype=s'} = \( my $opt_seqtype = "p");
+
+=over 30
+
+=item B<[--bsnum (INT)]>
+
+Times for bootstrap. ( Default 1000 )
+
+=back
+
+=cut
+
+$options{'bsnum=i'} = \( my $opt_bsnum = "1000");
+
 =head3 ===================================== Options for "--ACC" ============================================================
 
 =over 30
@@ -1279,6 +1329,42 @@ Path to raxml-ng binary file. Default tries if raxml-ng is in PATH;
 
 $options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/null` );
 
+=over 30
+
+=item B<[--muscle-bin (PATH)]>
+
+Path to nuscle binary file. Default tries if muscle in PATH;
+
+=back
+
+=cut
+
+$options{'muscle-bin=s'} = \( my $opt_muscle_bin = `which muscle 2>/dev/null` );
+
+=over 30
+
+=item B<[--Gblocks-bin (PATH)]>
+
+Path to Gblocks binary file. Default tries if Gblocks is in PATH;
+
+=back
+
+=cut
+
+$options{'Gblocks-bin=s'} = \( my $opt_Gblocks_bin = `which Gblocks 2>/dev/null` );
+
+=over 30
+
+=item B<[--iqtree-bin (PATH)]>
+
+Path to iqtree binary file. Default tries if iqtree is in PATH;
+
+=back
+
+=cut
+
+$options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
+
 =begin text
 
   ############################################ About The Software ##############################################################################
@@ -1308,7 +1394,7 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.12\n";
+    print "PGCGAP version: 1.0.13\n";
     exit 0;
 }
 
@@ -1319,7 +1405,7 @@ if ($opt_help) {
 }
 #pod2usage(1) if ($opt_help);
 #pod2usage(1) if ($#ARGV == -1);
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin, $opt_muscle_bin, $opt_Gblocks_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
@@ -1340,12 +1426,13 @@ pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', 
 pod2usage( -msg => 'abricate not in $PATH and binary not specified use --abricate-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abricate_bin);
 pod2usage( -msg => 'unicycler not in $PATH and binary not specified use --unicycler-bin', -verbose => 0, -exitval => 1 ) unless ($opt_unicycler_bin);
 pod2usage( -msg => 'raxml-ng not in $PATH and binary not specified use --raxmlng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_raxmlng_bin);
-
-
+pod2usage( -msg => 'muscle not in $PATH and binary not specified use --muscle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_muscle_bin);
+pod2usage( -msg => 'Gblocks not in $PATH and binary not specified use --Gblocks-bin', -verbose => 0, -exitval => 1 ) unless ($opt_Gblocks_bin);
+pod2usage( -msg => 'iqtree not in $PATH and binary not specified use --iqtree-bin', -verbose => 0, -exitval => 1 ) unless ($opt_iqtree_bin);
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "modeltest-ng" => $opt_modeltestng_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "raxml-ng" => $opt_raxmlng_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "modeltest-ng" => $opt_modeltestng_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "raxml-ng" => $opt_raxmlng_bin, "muscle" => $opt_muscle_bin, "Gblocks" => $opt_Gblocks_bin, "iqtree" => $opt_iqtree_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1389,6 +1476,26 @@ if ($opt_setup_COGdb) {
 my $time_start = $^T;
 my $working_dir = getcwd;
 system("mkdir -p Results");
+
+# Phylogenetic tree construction with sequences of single/concatenated dna/protein
+if ($opt_STREE) {
+	system("mkdir -p $working_dir/Results/STREE");
+	my $seqfile = $opt_seqfile;
+	my $align_seq = $seqfile . ".aln";
+	my $gblocks_out = $align_seq . ".gb";
+	my $seqnum = `grep -c '^>' $seqfile`;
+	print "There are $seqnum sequences in the input file\n\n";
+	my $b12 = ceil($seqnum/2) + 1;
+	print "Running muscle for sequence alignment...\n\n";
+	system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
+	print "Running Gblocks for selection of conserved blocks...\n\n";
+	chdir "$working_dir/Results/STREE/";
+	system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
+	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+	system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
+	chdir $working_dir;
+}
+
 # Genome Assemble with"Abyss" or "Canu"
 if ($opt_All or $opt_Assemble) {
 	system("mkdir -p Results/Assembles/Scaf");
@@ -3089,6 +3196,12 @@ sub printpCOG{
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
+sub printSTREE{
+	print "[--seqfile (STRING)] Path of the sequence file for analysis.\n";
+	print "[--seqtype (STRING)] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )\n";
+	print "[--bsnum (INT)] Times for bootstrap. ( Default 1000 )\n\n";
+}
+
 sub printACC{
 	print "Applets in ACC include 'Assess' now\n";
 	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genomes ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
@@ -3155,7 +3268,11 @@ sub printExamples{
 
 	print "         pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>\n";
 
-	print "Example 15: \n\n";
+	print "Example 15: Construct a phylogenetic tree based on multiple sequences in one file\n\n";
+
+	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT>\n\n";
+
+	print "Example 16: Perform the short sequences filter from the assembled genome and get the genome status\n\n";
 
 	print "         pgcgap --ACC --Assess --scafPath <PATH> --Scaf_suffix <STRING> --filter_length <INT>\n\n";
 }
@@ -3212,6 +3329,11 @@ if ( grep {$_ eq "AntiRes"} @ARGV ){
 
 if ( grep {$_ eq "Examples"} @ARGV ){
 	printExamples();
+	exit 0;
+}
+
+if ( grep {$_ eq "STREE"} @ARGV ) {
+	printSTREE();
 	exit 0;
 }
 

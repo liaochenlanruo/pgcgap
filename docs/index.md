@@ -48,6 +48,8 @@
 
   * [VAR](#var)
 
+  * [STREE](#stree)
+
   * [AntiRes](#antires)
 
 - [Output Files](#output-files)
@@ -69,6 +71,8 @@
   * [COG](#cog)
 
   * [VAR](#var-1)
+
+  * [STREE](#stree-1)
 
   * [AntiRes](#antires-1)
 
@@ -151,12 +155,15 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
+- [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
+- [IQ-TREE](http://www.iqtree.org/)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
 - [Mash](https://github.com/marbl/Mash)
 - [ModelTest-NG](https://github.com/ddarriba/modeltest)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
+- [Muscle](https://www.ebi.ac.uk/Tools/msa/muscle/)
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
 - [OpenJDK8](https://openjdk.java.net/)
@@ -204,7 +211,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Show parameters for each module:__
     ```
-    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|ACC]
+    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
     ```
 
 - __Show examples of each module:__
@@ -247,6 +254,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          genome alignment with "Snippy"
 
   - __[\-\-AntiRes]__                      Screening of contigs for antimicrobial and virulence genes
+
+  - __[\-\-STREE]__                        Construct a phylogenetic tree based on multiple sequences in one file
 
   - __[\-\-ACC]__                          Other useful gadgets (now includes 'Assess' for filtering short sequences in the genome and assessing the status of the genome only)
 
@@ -448,6 +457,14 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       - __[\-\-coverage (INT)]__           [Required] Minimum %coverage to keep the result, 
 	                                 should be a number between 0 to 100. ( Default 50 )
 
+  - __\-\-STREE__
+
+      - __[\-\-seqfile (STRING)]__        [Required] Path of the sequence file for analysis.
+
+      - __[\-\-seqtype (INT)]__           [Required] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
+
+      - __[\-\-bsnum (INT)]__             [Required] Times for bootstrap. ( Default 1000 )
+
   - __\-\-ACC__
 
       - __[\-\-Assess (STRING)]__           Filter short sequences in the genome and assess the status of the genome
@@ -467,13 +484,19 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __[\-\-fastANI-bin (PATH)]__           Path to the fastANI binary file. Default tries if fastANI is in PATH;
 
+  - __[\-\-Gblocks-bin (PATH)]__           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;
+
   - __[\-\-gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
+
+  - __[\-\-iqtree-bin (PATH)]__            Path to the iqtree binary file. Default tries if iqtree is in PATH;
 
   - __[\-\-mafft-bin (PATH)]__             Path to mafft binary file. Default tries if mafft is in PATH;
 
   - __[\-\-mash-bin (PATH)]__              Path to the mash binary file. Default tries if mash is in PATH.
 
   - __[\-\-modeltest-ng-bin (PATH)]__      Path to the modeltest-ng binary file. Default tries if modeltest-ng is in PATH.
+
+  - __[\-\-muscle-bin (PATH)]__            Path to the muscle binary file. Default tries if muscle is in PATH.
 
   - __[\-\-orthofinder-bin (PATH)]__       Path to the orthofinder binary file. Default tries if orthofinder is in PATH;
 
@@ -624,6 +647,12 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     $pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
     ```
 
+  - __Example 14:__ Construct a phylogenetic tree based on multiple sequences in one file
+
+    ```
+    $pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000
+    ```
+
 
 ## Generating Input files
 
@@ -664,6 +693,9 @@ Amino acids file (With “.faa” as the suffix) of each strain placed into a di
 
 ### AntiRes
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
+
+### STREE
+multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
 ## Output Files
 
@@ -838,6 +870,11 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 - __Results/AntiRes/*.tab__ : Screening results of each strain.
 - __Results/AntiRes/summary.txt__ : A matrix of gene presence/absence for all strains.
 
+### STREE
+- __Results/STREE/*.aln__ : Aligned sequences.
+- __Results/STREE/*.aln.gb__ : Conserved blocks of the sequences.
+- __Results/STREE/*.aln.gb.treefile__ : The final phylogenetic tree.
+
 ## License
 
 PGCGAP is free software, licensed under GPLv3.
@@ -867,6 +904,8 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 - If you use "\-\-VAR", please also cite [Sickle](https://github.com/najoshi/sickle), [Snippy](https://github.com/tseemann/snippy), [Gubbins](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [ModelTest-NG](https://doi.org/10.1093/molbev/msz189), [RAxML-NG](https://doi.org/10.1093/bioinformatics/btz305), and [SnpEff](https://dx.doi.org/10.4161%2Ffly.19695).
 
 - If you use "\-\-AntiRes", please also cite [Abricate](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), or [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
+
+- If you use "\-\-STREE", please also cite [Muscle](http://europepmc.org/abstract/MED/30976793), [Gblocks](https://doi.org/10.1093/oxfordjournals.molbev.a026334), and [IQ-TREE](https://doi.org/10.1093/molbev/msaa015).
 
 
 ## FAQ
@@ -997,3 +1036,8 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Added ability to filter short sequences of assembled genomes.
   - Added function of genome assembly status assessment.
   - Modified the drawing script of ANI and MASH modules so that it can automatically adjust the font size according to the number of samples.
+
+- V1.0.13
+
+  - Fixed the "running error" bug of function "Assess" in module "ACC".
+  - Added module "STREE" for constructing a phylogenetic tree based on multiple sequences in one file.
