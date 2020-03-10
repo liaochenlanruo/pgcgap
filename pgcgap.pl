@@ -1481,7 +1481,8 @@ system("mkdir -p Results");
 if ($opt_STREE) {
 	system("mkdir -p $working_dir/Results/STREE");
 	my $seqfile = $opt_seqfile;
-	my $align_seq = $seqfile . ".aln";
+	$seqfile =~ /(.+\/)*(.+)/;
+	my $align_seq = $2 . ".aln";
 	my $gblocks_out = $align_seq . ".gb";
 	my $seqnum = `grep -c '^>' $seqfile`;
 	print "There are $seqnum sequences in the input file\n\n";
