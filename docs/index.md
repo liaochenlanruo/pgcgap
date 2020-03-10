@@ -411,8 +411,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          one per line. ( Default scaf.list )
 
       - __[\-\-ANIO (FILE)]__              The name of the output file ( Default "Results/ANI/ANIs" )
-
   <br/>
+
   - **\-\-VAR**
 
       - __[\-\-refgbk (FILE)]__            [Required] The full path and name of
@@ -695,7 +695,7 @@ Amino acids file (With “.faa” as the suffix) of each strain placed into a di
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
 ### STREE
-multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
+Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
 ## Output Files
 
