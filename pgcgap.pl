@@ -1382,7 +1382,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
     Contact: liaochenlanruo@webmail.hzau.edu.cn
 
 
-    Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v1
+    Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v2
 
 
 =end text
