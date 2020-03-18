@@ -116,7 +116,7 @@ $conda create -n pgcgap python=3
 
 $conda activate pgcgap
 
-$conda install pgcgap
+$conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
 
 
 ```
