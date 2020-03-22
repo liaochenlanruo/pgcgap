@@ -1041,3 +1041,6 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
   - Fixed the "running error" bug of function "Assess" in module "ACC".
   - Added module "STREE" for constructing a phylogenetic tree based on multiple sequences in one file.
+
+- V1.0.14
+  - The relative_abundances of flags among strains will not be called while the strain number is less than two.

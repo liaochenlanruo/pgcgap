@@ -93,9 +93,10 @@ $pm->wait_all_children;
 
 
 #============================Get the relative abundance table==========================
-
-system("perl $COG_dir/get_flag_relative_abundances_table.pl");
-system("Rscript $COG_dir/Plot_COG_Abundance.R");
+if ($opt_strain_num > 1) {
+	system("perl $COG_dir/get_flag_relative_abundances_table.pl");
+	system("Rscript $COG_dir/Plot_COG_Abundance.R");
+}
 
 sub rm_duplicate {
 	my $array_ref = shift;
