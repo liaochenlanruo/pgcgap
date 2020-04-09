@@ -1394,7 +1394,7 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.13\n";
+    print "PGCGAP version: 1.0.14\n";
     exit 0;
 }
 
