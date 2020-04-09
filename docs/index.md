@@ -1044,3 +1044,6 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.14
   - The relative_abundances of flags among strains will not be called while the strain number is less than two.
+
+- V1.0.15
+  - Fixed the error of function "Assess" in module "ACC".
