@@ -1,5 +1,5 @@
 # PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
-![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS?list=|)
+![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS,Docker?list=|)
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
@@ -1044,3 +1044,4 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.14
   - The relative_abundances of flags among strains will not be called while the strain number is less than two.
+  - Fixed the error of function "Assess" in module "ACC".

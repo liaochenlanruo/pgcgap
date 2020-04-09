@@ -290,7 +290,7 @@ I<[Required by "All", "Assess", "Annotate", "MASH" and "AntiRes"]> Path for cont
 
 =cut
 
-$options{'scafPath=s'} = \(my $opt_scafPath = "Results/Assembles/Scaf/Illumina");
+$options{'scafPath=s'} = \(my $opt_scafPath = "./Results/Assembles/Scaf/Illumina");
 
 =over 30
 
@@ -1085,7 +1085,7 @@ Filter short sequences in the genome and assess the status of the genome.
 
 =cut
 
-$options{'Assess=s'} = \( my $opt_Assess);
+$options{'Assess'} = \( my $opt_Assess);
 
 =head2 ************************************* Paths of external programs ***************************************************************
 
@@ -1394,7 +1394,7 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.13\n";
+    print "PGCGAP version: 1.0.14\n";
     exit 0;
 }
 
