@@ -14,9 +14,9 @@
 [English Readme](https://liaochenlanruo.github.io/pgcgap) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/)
 
 
-	  ____      ____     ____    ____      _       ____    
-	U|  _"\ uU /"___|uU /"___|U /"___|uU  /"\  u U|  _"\ u 
-	\| |_) |/\| |  _ /\| | u  \| |  _ / \/ _ \/  \| |_) |/ 
+	<center>  ____      ____     ____    ____      _       ____    </center>
+	<center>U|  _"\ uU /"___|uU /"___|U /"___|uU  /"\  u U|  _"\ u </center>
+	<center>\| |_) |/\| |  _ /\| | u  \| |  _ / \/ _ \/  \| |_) |/ </center>
 	 |  __/   | |_| |  | |/__  | |_| |  / ___ \   |  __/   
 	 |_|       \____|   \____|  \____| /_/   \_\  |_|      
 	 ||>>_     _)(|_   _// \\   _)(|_   \\    >>  ||>>_    
