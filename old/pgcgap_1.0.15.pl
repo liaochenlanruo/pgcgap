@@ -49,7 +49,7 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 Print the help message and exit
 
-=back
+#=back
 
 =cut
 
@@ -61,7 +61,7 @@ $options{'help|h|?'} = \( my $opt_help );
 
 Show version number of PGCGAP and exit
 
-=back
+#=back
 
 =cut
 
@@ -73,7 +73,7 @@ $options{'version'} = \( my $opt_version );
 
 Check if all of the required external programs can be found and are executable, then exit
 
-=back
+#=back
 
 =cut
 
@@ -85,7 +85,7 @@ $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
 
 Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first installation of pgcgap
 
-=back
+#=back
 
 =cut
 
@@ -103,7 +103,7 @@ $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
 Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
 
-=back
+#=back
 
 =cut
 
@@ -115,7 +115,7 @@ $options{'All'} = \(my $opt_All);
 
 Assemble reads (short, long or hybrid) into contigs
 
-=back
+#=back
 
 =cut
 
@@ -127,7 +127,7 @@ $options{'Assemble'} = \(my $opt_Assemble);
 
 Genome annotation
 
-=back
+#=back
 
 =cut
 
@@ -139,7 +139,7 @@ $options{'Annotate'} = \(my $opt_Annotate);
 
 Construct single-copy core proteins tree and core SNPs tree
 
-=back
+#=back
 
 =cut
 
@@ -151,7 +151,7 @@ $options{'CoreTree'} = \(my $opt_CoreTree);
 
 Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
-=back
+#=back
 
 =cut
 
@@ -163,7 +163,7 @@ $options{'Pan'} = \(my $opt_Pan);
 
 Identify orthologous protein sequence families
 
-=back
+#=back
 
 =cut
 
@@ -175,7 +175,7 @@ $options{'OrthoF'} = \(my $opt_OrthoF);
 
 Compute whole-genome Average Nucleotide Identity ( ANI )
 
-=back
+#=back
 
 =cut
 
@@ -187,7 +187,7 @@ $options{'ANI'} = \(my $opt_ANI);
 
 Genome and metagenome similarity estimation using MinHash
 
-=back
+#=back
 
 =cut
 
@@ -199,7 +199,7 @@ $options{'MASH'} = \(my $opt_MASH);
 
 Run COG annotation for each strain (*.faa), and generate a table containing the relative abundance of each flag for all strains
 
-=back
+#=back
 
 =cut
 
@@ -211,7 +211,7 @@ $options{'pCOG'} = \(my $opt_pCOG);
 
 Rapid haploid variant calling and core genome alignment
 
-=back
+#=back
 
 =cut
 
@@ -223,7 +223,7 @@ $options{'VAR'} = \(my $opt_VAR);
 
 Screening for antimicrobial and virulence genes
 
-=back
+#=back
 
 =cut
 
@@ -235,7 +235,7 @@ $options{'AntiRes'} = \(my $opt_AntiRes);
 
 Construct a phylogenetic tree based on multiple sequences in one file
 
-=back
+#=back
 
 =cut
 
@@ -247,7 +247,7 @@ $options{'STREE'} = \(my $opt_STREE);
 
 Other useful gadgets
 
-=back
+#=back
 
 =cut
 
@@ -265,7 +265,7 @@ $options{'ACC'} = \(my $opt_ACC);
 
 I<[Required by "All", "CoreTree", "Pan", "VAR" and "pCOG"]> The total number of strains used for analysis, not including the reference genome
 
-=back
+#=back
 
 =cut
 
@@ -277,7 +277,7 @@ $options{'strain_num=i'} = \( my $opt_strain_num );
 
 I<[Required by "All", "Assemble" and "VAR"]> Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-=back
+#=back
 
 =cut
 
@@ -289,7 +289,7 @@ $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
 
 I<[Required by "All", "Assess", "Annotate", "MASH" and "AntiRes"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
 
-=back
+#=back
 
 =cut
 
@@ -301,7 +301,7 @@ $options{'scafPath=s'} = \(my $opt_scafPath = "./Results/Assembles/Scaf/Illumina
 
 I<[Required by "All", "CoreTree", "OrthoF" and "pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
 
-=back
+#=back
 
 =cut
 
@@ -313,7 +313,7 @@ $options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
 I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 1 ( for example: if the name of reads 1 is "YBT-1520_L1_I050.R1.clean.fastq.gz", "YBT-1520" is the strain same, so the suffix name should be ".R1.clean.fastq.gz" )
 
-=back
+#=back
 
 =cut
 
@@ -325,7 +325,7 @@ $options{'reads1=s'} = \(my $opt_reads1);
 
 I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 2( for example: if the name of reads 2 is "YBT-1520_2.fq", the suffix name should be _2.fq" )
 
-=back
+#=back
 
 =cut
 
@@ -337,7 +337,7 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 The suffix of scaffolds or genomes [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
 
-=back
+#=back
 
 =cut
 
@@ -349,7 +349,7 @@ $options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
 
 I<[Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes [Required by "All", "Assemble" and "Assess"]. ( Default 200 )
 
-=back
+#=back
 
 =cut
 
@@ -361,7 +361,7 @@ $options{'filter_length=i'} = \(my $opt_filter_length = 200);
 
 I<[Required by "All", "Annotate", "CoreTree" and "Pan"]> Translation table ( Default 11 )
 
-=back
+#=back
 
 =cut
 
@@ -387,7 +387,7 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
  22  Scenedesmus obliquus mitochondrial code
  23  Thraustochytrium mitochondrial code
 
-=back
+#=back
 
 =cut
 
@@ -397,7 +397,7 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
 
 I<[Required by "All", "Assemble" and "VAR"]> B<(Strongly recommended)> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
 
-=back
+#=back
 
 =cut
 
@@ -409,7 +409,7 @@ $options{'suffix_len=i'} = \(my $opt_suffix_len = 0);
 
 Name of the log file ( Default Logs.txt )
 
-=back
+#=back
 
 =cut
 
@@ -421,7 +421,7 @@ $options{'logs=s'} = \( my $opt_logs = "Logs.txt" );
 
 Number of threads to be used ( Default 4 )
 
-=back
+#=back
 
 =cut
 
@@ -459,7 +459,7 @@ If you use the results of "--Assemble" function in your work, please also cite o
 
 I<[Required]> Sequencing Platform, "illumina", "pacbio", "oxford" and "hybrid" available ( Default illumina )
 
-=back
+#=back
 
 =cut
 
@@ -471,7 +471,7 @@ $options{'platform=s'} = \(my $opt_platform = "illumina");
 
 I<[Required]> Software used for illumina reads assembly, "abyss", "spades" and "auto" available ( Default auto )
 
-=back
+#=back
 
 =cut
 
@@ -483,7 +483,7 @@ $options{'assembler=s'} = \(my $opt_assembler = "auto");
 
 I<[Required]> k-mer size for genome assembly of Illumina data with abyss( Default 81 )
 
-=back
+#=back
 
 =cut
 
@@ -495,7 +495,7 @@ $options{'kmmer=i'} = \(my $opt_kmmer = 81);
 
 I<[Required]> An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
 
-=back
+#=back
 
 =cut
 
@@ -507,7 +507,7 @@ $options{'genomeSize=s'} = \(my $opt_genomeSize);
 
 I<[Required]> FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-=back
+#=back
 
 =cut
 
@@ -519,7 +519,7 @@ $options{'short1=s'} = \(my $opt_short1);
 
 I<[Required]> FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-=back
+#=back
 
 =cut
 
@@ -531,7 +531,7 @@ $options{'short2=s'} = \(my $opt_short2);
 
 I<[Required]> FASTQ or FASTA file of long reads. Needed by hybrid assembly ( Default Unset )
 
-=back
+#=back
 
 =cut
 
@@ -543,7 +543,7 @@ $options{'long=s'} = \(my $opt_long);
 
 I<[Required]> Output directory for hybrid assembly ( Default ../../Results/Assembles/Hybrid )
 
-=back
+#=back
 
 =cut
 
@@ -571,7 +571,7 @@ If you use the results of "--Annotate" function in your work, please also cite:
 
 Genus name of the strain ( Default "NA" )
 
-=back
+#=back
 
 =cut
 
@@ -583,7 +583,7 @@ $options{'genus=s'} = \(my $opt_genus = "NA");
 
 Species name of the strain ( Default "NA" )
 
-=back
+#=back
 
 =cut
 
@@ -631,7 +631,7 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 
 I<[Required]> CDs of all strains as fasta file paths, ( Default "./Results/Annotations/CDs" )
 
-=back
+#=back
 
 =cut
 
@@ -643,7 +643,7 @@ $options{'CDsPath=s'} = \( my $opt_CDsPath = "./Results/Annotations/CDs" );
 
 Sequence identity threshold, ( Default 0.5)
 
-=back
+#=back
 
 =cut
 
@@ -655,7 +655,7 @@ $options{'c=f'} = \( my $opt_c = 0.5 );
 
 Word_length, -n 2 for thresholds 0.4-0.5, -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n 5 for thresholds 0.7-1.0 ( Default 2 )
 
-=back
+#=back
 
 =cut
 
@@ -667,7 +667,7 @@ $options{'n=i'} = \( my $opt_n = 2 );
 
 Use global (set to 1) or local (set to 0) sequence identity, ( Default 0 )
 
-=back
+#=back
 
 =cut
 
@@ -679,7 +679,7 @@ $options{'G=i'} = \( my $opt_G = 0 );
 
 Tolerance for redundance ( Default 0 )
 
-=back
+#=back
 
 =cut
 
@@ -691,7 +691,7 @@ $options{'t=i'} = \( my $opt_t = 0 );
 
 Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.5 )
 
-=back
+#=back
 
 =cut
 
@@ -703,7 +703,7 @@ $options{'aL=f'} = \( my $opt_aL = 0.5 );
 
 Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )
 
-=back
+#=back
 
 =cut
 
@@ -715,7 +715,7 @@ $options{'aS=f'} = \( my $opt_aS = 0.7 );
 
 If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)
 
-=back
+#=back
 
 =cut
 
@@ -727,7 +727,7 @@ $options{'g=i'} = \( my $opt_g = 1 );
 
 length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )
 
-=back
+#=back
 
 =cut
 
@@ -755,7 +755,7 @@ If you use the results of "--Pan" function in your work, please also cite:
 
 I<[Required]> Gff files of all strains as paths ( Default "./Results/Annotations/GFF" )
 
-=back
+#=back
 
 =cut
 
@@ -767,7 +767,7 @@ $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
 
 Construct a phylogenetic tree of single-copy core proteins called by roary
 
-=back
+#=back
 
 =cut
 
@@ -795,7 +795,7 @@ If you use the results of "--OrthoF" function in your work, please also cite:
 
 Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default blast )
 
-=back
+#=back
 
 =cut
 
@@ -823,7 +823,7 @@ If you use the results of "--ANI" function in your work, please also cite:
 
 I<[Required]> The file containing full paths to query genomes, one per line ( Default scaf.list )
 
-=back
+#=back
 
 =cut
 
@@ -835,7 +835,7 @@ $options{'queryL=s'} = \( my $opt_queryL = "scaf.list" );
 
 I<[Required]> The file containing full paths to reference genomes, one per line. ( Default scaf.list )
 
-=back
+#=back
 
 =cut
 
@@ -847,7 +847,7 @@ $options{'refL=s'} = \( my $opt_refL = "scaf.list" );
 
 The name of output file ( Default "Results/ANI/ANIs" )
 
-=back
+#=back
 
 =cut
 
@@ -885,7 +885,7 @@ If you use the results of "--VAR" function in your work, please also cite:
 
 I<[Required]> The B<full path and name> of reference genome in GENBANK format ( B<recommended> ), fasta format is also OK. For example: "/mnt/g/test/ref.gbk"
 
-=back
+#=back
 
 =cut
 
@@ -897,7 +897,7 @@ $options{'refgbk=s'} = \( my $opt_refgbk );
 
 I<[Required]> Type of quality values (solexa (CASAVA < 1.3), illumina (CASAVA 1.3 to 1.7), sanger (which is CASAVA >= 1.8)). ( Default sanger )
 
-=back
+#=back
 
 =cut
 
@@ -909,7 +909,7 @@ $options{'qualtype=s'} = \(my $opt_qualtype = "sanger");
 
 Threshold for trimming based on average quality in a window. ( Default 20 )
 
-=back
+#=back
 
 =cut
 
@@ -921,7 +921,7 @@ $options{'qual=i'} = \(my $opt_qual = "20");
 
 Threshold to keep a read based on length after trimming. ( Default 20 )
 
-=back
+#=back
 
 =cut
 
@@ -933,7 +933,7 @@ $options{'length=i'} = \(my $opt_length = "20");
 
 The minimum number of reads covering a site to be considered ( Default 10 )
 
-=back
+#=back
 
 =cut
 
@@ -945,7 +945,7 @@ $options{'mincov=i'} = \(my $opt_mincov = "10");
 
 The minimum proportion of those reads which must differ from the reference ( Default 0.9 )
 
-=back
+#=back
 
 =cut
 
@@ -957,7 +957,7 @@ $options{'minfrac=f'} = \(my $opt_minfrac = "0.9");
 
 The minimum VCF variant call "quality" ( Default 100 )
 
-=back
+#=back
 
 =cut
 
@@ -969,7 +969,7 @@ $options{'minqual=i'} = \(my $opt_minqual = "100");
 
 Try and keep RAM under this many GB ( Default 8 )
 
-=back
+#=back
 
 =cut
 
@@ -981,7 +981,7 @@ $options{'ram=i'} = \(my $opt_ram = "8");
 
 Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )
 
-=back
+#=back
 
 =cut
 
@@ -993,7 +993,7 @@ $options{'tree_builder=s'} = \(my $opt_tree_builder = "fasttree");
 
 Maximum No. of iterations for gubbins ( Default 5 )
 
-=back
+#=back
 
 =cut
 
@@ -1007,7 +1007,7 @@ $options{'iterations=i'} = \(my $opt_iterations = "5");
 
 I<[Required]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
 
-=back
+#=back
 
 =cut
 
@@ -1019,7 +1019,7 @@ $options{'db=s'} = \( my $opt_db = "ncbi");
 
 I<[Required]> Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )
 
-=back
+#=back
 
 =cut
 
@@ -1032,7 +1032,7 @@ $options{'identity=i'} = \(my $opt_identity = "75");
 
 I<[Required]> Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )
 
-=back
+#=back
 
 =cut
 
@@ -1046,7 +1046,7 @@ $options{'coverage=i'} = \(my $opt_coverage = "50");
 
 Path of the sequence file for analysis.
 
-=back
+#=back
 
 =cut
 
@@ -1058,7 +1058,7 @@ $options{'seqfile=s'} = \( my $opt_seqfile);
 
 Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
 
-=back
+#=back
 
 =cut
 
@@ -1070,7 +1070,7 @@ $options{'seqtype=s'} = \( my $opt_seqtype = "p");
 
 Times for bootstrap. ( Default 1000 )
 
-=back
+#=back
 
 =cut
 
@@ -1084,7 +1084,7 @@ $options{'bsnum=i'} = \( my $opt_bsnum = "1000");
 
 Filter short sequences in the genome and assess the status of the genome.
 
-=back
+#=back
 
 =cut
 
@@ -1100,7 +1100,7 @@ $options{'Assess'} = \( my $opt_Assess);
 
 Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs
 
-=back
+#=back
 
 =cut
 
@@ -1110,7 +1110,7 @@ Not needed if they were in the environment variables path. Users can check with 
 
 Path to abyss binary file. Default tries if abyss is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1122,7 +1122,7 @@ $options{'abyss-bin=s'} = \( my $opt_abyss_bin = `which abyss-pe 2>/dev/null` );
 
 Path to canu binary file. Default tries if canu is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1134,7 +1134,7 @@ $options{'canu-bin=s'} = \( my $opt_canu_bin = `which canu 2>/dev/null` );
 
 Path to prodigal binary file. Default tries if prodigal is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1146,7 +1146,7 @@ $options{'prodigal-bin=s'} = \( my $opt_prodigal_bin = `which prodigal 2>/dev/nu
 
 Path to prokka binary file. Default tries if prokka is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1158,7 +1158,7 @@ $options{'prokka-bin=s'} = \( my $opt_prokka_bin = `which prokka 2>/dev/null` );
 
 Path to cd-hit binary file. Default tries if cd-hit is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1170,7 +1170,7 @@ $options{'cd-hit-bin=s'} = \( my $opt_cdhit_bin = `which cd-hit 2>/dev/null` );
 
 Path to mafft binary file. Default tries if mafft is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1182,7 +1182,7 @@ $options{'mafft-bin=s'} = \( my $opt_mafft_bin = `which mafft 2>/dev/null` );
 
 Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1194,7 +1194,7 @@ $options{'pal2nal-bin=s'} = \( my $opt_pal2nal_bin = `which pal2nal.pl 2>/dev/nu
 
 Path to the snp-sites binary file. Default tries if snp-sites is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1206,7 +1206,7 @@ $options{'snp-sites-bin=s'} = \( my $opt_snpsites_bin = `which snp-sites 2>/dev/
 
 Path to the roary binary file. Default tries if roary is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1218,7 +1218,7 @@ $options{'roary-bin=s'} = \( my $opt_roary_bin = `which roary 2>/dev/null` );
 
 Path to the orthofinder binary file. Default tries if orthofinder is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1230,7 +1230,7 @@ $options{'orthofinder-bin=s'} = \( my $opt_orthofinder_bin = `which orthofinder 
 
 Path to the fastANI binary file. Default tries if fastANI is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1242,7 +1242,7 @@ $options{'fastANI-bin=s'} = \( my $opt_fastANI_bin = `which fastANI 2>/dev/null`
 
 Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1254,7 +1254,7 @@ $options{'gubbins-bin=s'} = \( my $opt_gubbins_bin = `which run_gubbins.py 2>/de
 
 Path to the snippy binary file. Default tries if snippy is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1266,7 +1266,7 @@ $options{'snippy-bin=s'} = \( my $opt_snippy_bin = `which snippy 2>/dev/null` );
 
 Path to the sickle-trim binary file. Default tries if sickle is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1278,7 +1278,7 @@ $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
 
 Path to mash binary file. Default tries if mash is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1290,7 +1290,7 @@ $options{'mash-bin=s'} = \( my $opt_mash_bin = `which mash 2>/dev/null` );
 
 Path to abricate binary file. Default tries if abricate is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1302,7 +1302,7 @@ $options{'abricate-bin=s'} = \( my $opt_abricate_bin = `which abricate 2>/dev/nu
 
 Path to unicycler binary file. Default tries if unicycler is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1314,7 +1314,7 @@ $options{'unicycler-bin=s'} = \( my $opt_unicycler_bin = `which unicycler 2>/dev
 
 Path to modeltest-ng binary file. Default tries if modeltest-ng is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1326,7 +1326,7 @@ $options{'modeltest-ng-bin=s'} = \( my $opt_modeltestng_bin = `which modeltest-n
 
 Path to raxml-ng binary file. Default tries if raxml-ng is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1338,7 +1338,7 @@ $options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/nul
 
 Path to nuscle binary file. Default tries if muscle in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1350,7 +1350,7 @@ $options{'muscle-bin=s'} = \( my $opt_muscle_bin = `which muscle 2>/dev/null` );
 
 Path to Gblocks binary file. Default tries if Gblocks is in PATH;
 
-=back
+#=back
 
 =cut
 
@@ -1374,19 +1374,22 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
 =for text
 
+		  ____       ____      ____     ____       _        ____    
+		U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+		\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+		 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+		 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+		 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+		(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
 
     Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
-
     Author: Hualin Liu
-
 
     Contact: liaochenlanruo@webmail.hzau.edu.cn
 
-
     Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v2
-
 
 =end text
 
@@ -1665,7 +1668,7 @@ if ($opt_All or $opt_Assemble) {
 			my @stats = split "\t", $lastline;
 			if ($stats[5] < 50000) {
 				system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
-				print "Performing --Assemble function for Illunina data with unicycler...\n\n";
+				print "The N50 is less than 50k, now performing --Assemble function for Illunina data with unicycler to try to get a better assembly result...\n\n";
 				system("unicycler -1 $fastp_out1 -2 $fastp_out2 -t $opt_threads -o $str");#2020/4/15
 				#system("unicycler -1 $read1 -2 $read2 -t $opt_threads -o $str");
 				print "Assemble completed!\n";
