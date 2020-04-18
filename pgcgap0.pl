@@ -25,13 +25,19 @@ PGCGAP
 
 The prokaryotic genomics and comparative genomics analysis pipeline
 
+=cut
+
 =head1 AUTHOR
 
 Hualin Liu
 
+=cut
+
 =head1 CONTACT
 
 liaochenlanruo@webmail.hzau.edu.cn
+
+=cut
 
 =head1 USAGE
 
@@ -41,7 +47,11 @@ liaochenlanruo@webmail.hzau.edu.cn
 
   Show examples of each module: pgcgap Examples
 
+=cut
+
 =head1 OPTIONS
+
+=cut
 
 =over 30
 
@@ -49,49 +59,39 @@ liaochenlanruo@webmail.hzau.edu.cn
 
 Print the help message and exit
 
-#=back
-
 =cut
 
 $options{'help|h|?'} = \( my $opt_help );
-
-=over 30
 
 =item B<[--version]>
 
 Show version number of PGCGAP and exit
 
-#=back
-
 =cut
 
 $options{'version'} = \( my $opt_version );
-
-=over 30
 
 =item B<[--check-external-programs]>
 
 Check if all of the required external programs can be found and are executable, then exit
 
-#=back
-
 =cut
 
 $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
-
-=over 30
 
 =item B<[--setup-COGdb]>
 
 Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first installation of pgcgap
 
-#=back
-
 =cut
 
 $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
-=head2 *********************************************************** Modules ***********************************************************
+=back
+
+=head2 *********************************************** Modules ************************************************
+
+=cut
 
 =for text
 
@@ -103,157 +103,111 @@ $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
 Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
 
-#=back
-
 =cut
 
 $options{'All'} = \(my $opt_All);
-
-=over 30
 
 =item B<[--Assemble]>
 
 Assemble reads (short, long or hybrid) into contigs
 
-#=back
-
 =cut
 
 $options{'Assemble'} = \(my $opt_Assemble);
-
-=over 30
 
 =item B<[--Annotate]>
 
 Genome annotation
 
-#=back
-
 =cut
 
 $options{'Annotate'} = \(my $opt_Annotate);
-
-=over 30
 
 =item B<[--CoreTree]>
 
 Construct single-copy core proteins tree and core SNPs tree
 
-#=back
-
 =cut
 
 $options{'CoreTree'} = \(my $opt_CoreTree);
-
-=over 30
 
 =item B<[--Pan]>
 
 Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
-#=back
-
 =cut
 
 $options{'Pan'} = \(my $opt_Pan);
-
-=over 30
 
 =item B<[--OrthoF]>
 
 Identify orthologous protein sequence families
 
-#=back
-
 =cut
 
 $options{'OrthoF'} = \(my $opt_OrthoF);
-
-=over 30
 
 =item B<[--ANI]>
 
 Compute whole-genome Average Nucleotide Identity ( ANI )
 
-#=back
-
 =cut
 
 $options{'ANI'} = \(my $opt_ANI);
-
-=over 30
 
 =item B<[--MASH]>
 
 Genome and metagenome similarity estimation using MinHash
 
-#=back
-
 =cut
 
 $options{'MASH'} = \(my $opt_MASH);
-
-=over 30
 
 =item B<[--pCOG]>
 
 Run COG annotation for each strain (*.faa), and generate a table containing the relative abundance of each flag for all strains
 
-#=back
-
 =cut
 
 $options{'pCOG'} = \(my $opt_pCOG);
-
-=over 30
 
 =item B<[--VAR]>
 
 Rapid haploid variant calling and core genome alignment
 
-#=back
-
 =cut
 
 $options{'VAR'} = \(my $opt_VAR);
-
-=over 30
 
 =item B<[--AntiRes]>
 
 Screening for antimicrobial and virulence genes
 
-#=back
-
 =cut
 
 $options{'AntiRes'} = \(my $opt_AntiRes);
-
-=over 30
 
 =item B<[--STREE]>
 
 Construct a phylogenetic tree based on multiple sequences in one file
 
-#=back
-
 =cut
 
 $options{'STREE'} = \(my $opt_STREE);
-
-=over 30
 
 =item B<[--ACC]>
 
 Other useful gadgets
 
-#=back
-
 =cut
 
 $options{'ACC'} = \(my $opt_ACC);
 
-=head2 ******************************************************** Global Options ********************************************************
+=back
+
+=head2 *********************************************** Global Options *****************************************
+
+=cut
 
 =for text
 
@@ -265,131 +219,99 @@ $options{'ACC'} = \(my $opt_ACC);
 
 I<[Required by "All", "CoreTree", "Pan", "VAR" and "pCOG"]> The total number of strains used for analysis, not including the reference genome
 
-#=back
-
 =cut
 
 $options{'strain_num=i'} = \( my $opt_strain_num );
-
-=over 30
 
 =item B<[--ReadsPath (PATH)]>
 
 I<[Required by "All", "Assemble" and "VAR"]> Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-#=back
-
 =cut
 
 $options{'ReadsPath=s'} = \( my $opt_ReadsPath = "./Reads/Illumina" );
-
-=over 30
 
 =item B<[--scafPath (PATH)]>
 
 I<[Required by "All", "Assess", "Annotate", "MASH" and "AntiRes"]> Path for contigs/scaffolds ( Default "Results/Assembles/Scaf/Illumina" )
 
-#=back
-
 =cut
 
 $options{'scafPath=s'} = \(my $opt_scafPath = "./Results/Assembles/Scaf/Illumina");
-
-=over 30
 
 =item B<[--AAsPath (PATH)]>
 
 I<[Required by "All", "CoreTree", "OrthoF" and "pCOG"]> Amino acids of all strains as fasta file paths, ( Default "./Results/Annotations/AAs" )
 
-#=back
-
 =cut
 
 $options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
-
-=over 30
 
 =item B<[--reads1 (STRING)]>
 
 I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 1 ( for example: if the name of reads 1 is "YBT-1520_L1_I050.R1.clean.fastq.gz", "YBT-1520" is the strain same, so the suffix name should be ".R1.clean.fastq.gz" )
 
-#=back
-
 =cut
 
 $options{'reads1=s'} = \(my $opt_reads1);
-
-=over 30
 
 =item B<[--reads2 (STRING)]>
 
 I<[Required by "All", "Assemble" and "VAR"]> The suffix name of reads 2( for example: if the name of reads 2 is "YBT-1520_2.fq", the suffix name should be _2.fq" )
 
-#=back
-
 =cut
 
 $options{'reads2=s'} = \(my $opt_reads2);
-
-=over 30
 
 =item B<[--Scaf_suffix (STRING)]>
 
 The suffix of scaffolds or genomes [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
 
-#=back
-
 =cut
 
 $options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
-
-=over 30
 
 =item B<[--filter_length (INT)]>
 
 I<[Required]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes [Required by "All", "Assemble" and "Assess"]. ( Default 200 )
 
-#=back
-
 =cut
 
 $options{'filter_length=i'} = \(my $opt_filter_length = 200);
-
-=over 30
 
 =item B<[--codon (INT)]>
 
 I<[Required by "All", "Annotate", "CoreTree" and "Pan"]> Translation table ( Default 11 )
 
-#=back
-
 =cut
 
 $options{'codon=i'} = \( my $opt_codon = 11 );
 
-=over 30
+=back
 
- 1   Universal code
- 2   Vertebrate mitochondrial code
- 3   Yeast mitochondrial code
- 4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code
- 5   Invertebrate mitochondrial
- 6   Ciliate, Dasycladacean and Hexamita nuclear code
- 9   Echinoderm and Flatworm mitochondrial code
- 10  Euplotid nuclear code
- 11  Bacterial, archaeal and plant plastid code ( Default )
- 12  Alternative yeast nuclear code
- 13  Ascidian mitochondrial code
- 14  Alternative flatworm mitochondrial code
- 15  Blepharisma nuclear code
- 16  Chlorophycean mitochondrial code
- 21  Trematode mitochondrial code
- 22  Scenedesmus obliquus mitochondrial code
- 23  Thraustochytrium mitochondrial code
+=begin text
 
-#=back
+                                  1   Universal code
+                                  2   Vertebrate mitochondrial code
+                                  3   Yeast mitochondrial code
+                                  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code
+                                  5   Invertebrate mitochondrial
+                                  6   Ciliate, Dasycladacean and Hexamita nuclear code
+                                  9   Echinoderm and Flatworm mitochondrial code
+                                  10  Euplotid nuclear code
+                                  11  Bacterial, archaeal and plant plastid code ( Default )
+                                  12  Alternative yeast nuclear code
+                                  13  Ascidian mitochondrial code
+                                  14  Alternative flatworm mitochondrial code
+                                  15  Blepharisma nuclear code
+                                  16  Chlorophycean mitochondrial code
+                                  21  Trematode mitochondrial code
+                                  22  Scenedesmus obliquus mitochondrial code
+                                  23  Thraustochytrium mitochondrial code
 
-=cut
+
+
+=end text
 
 =over 30
 
@@ -397,43 +319,39 @@ $options{'codon=i'} = \( my $opt_codon = 11 );
 
 I<[Required by "All", "Assemble" and "VAR"]> B<(Strongly recommended)> The suffix length of the reads file, that is the length of the reads name minus the length of the strain name. For example the --suffix_len of "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26 ( "YBT-1520" is the strain name ) ( Default 0 )
 
-#=back
-
 =cut
 
 $options{'suffix_len=i'} = \(my $opt_suffix_len = 0);
-
-=over 30
 
 =item B<[--logs (STRING)]>
 
 Name of the log file ( Default Logs.txt )
 
-#=back
-
 =cut
 
 $options{'logs=s'} = \( my $opt_logs = "Logs.txt" );
-
-=over 30
 
 =item B<[--threads (INT)]>
 
 Number of threads to be used ( Default 4 )
 
-#=back
-
 =cut
 
 $options{'threads=i'} = \( my $opt_threads = 4 );
 
-=head2 ******************************************************** Local Options *********************************************************
+=back
+
+=head2 *********************************************** Local Options ******************************************
+
+=cut
 
 =for text
 
 
 
-=head3 ======================= Options of "--Assemble" for reads assembly ============================
+=head3 =========================== Options of "--Assemble" for reads assembly ================================
+
+=cut
 
 =for text
 
@@ -459,97 +377,71 @@ If you use the results of "--Assemble" function in your work, please also cite o
 
 I<[Required]> Sequencing Platform, "illumina", "pacbio", "oxford" and "hybrid" available ( Default illumina )
 
-#=back
-
 =cut
 
 $options{'platform=s'} = \(my $opt_platform = "illumina");
-
-=over 30
 
 =item B<[--assembler (STRING)]>
 
 I<[Required]> Software used for illumina reads assembly, "abyss", "spades" and "auto" available ( Default auto )
 
-#=back
-
 =cut
 
 $options{'assembler=s'} = \(my $opt_assembler = "auto");
-
-=over 30
 
 =item B<[--kmmer (INT)]>
 
 I<[Required]> k-mer size for genome assembly of Illumina data with abyss( Default 81 )
 
-#=back
-
 =cut
 
 $options{'kmmer=i'} = \(my $opt_kmmer = 81);
-
-=over 30
 
 =item B<[--genomeSize (STRING)]>
 
 I<[Required]> An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
 
-#=back
-
 =cut
 
 $options{'genomeSize=s'} = \(my $opt_genomeSize);
-
-=over 30
 
 =item B<[--short1 (STRING)]>
 
 I<[Required]> FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-#=back
-
 =cut
 
 $options{'short1=s'} = \(my $opt_short1);
-
-=over 30
 
 =item B<[--short2 (STRING)]>
 
 I<[Required]> FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-#=back
-
 =cut
 
 $options{'short2=s'} = \(my $opt_short2);
-
-=over 30
 
 =item B<[--long (STRING)]>
 
 I<[Required]> FASTQ or FASTA file of long reads. Needed by hybrid assembly ( Default Unset )
 
-#=back
-
 =cut
 
 $options{'long=s'} = \(my $opt_long);
-
-=over 30
 
 =item B<[--hout (STRING)]>
 
 I<[Required]> Output directory for hybrid assembly ( Default ../../Results/Assembles/Hybrid )
 
-#=back
-
 =cut
 
 $options{'hout=s'} = \(my $opt_hout = '../../Results/Assembles/Hybrid');
 
-=head3 ======================= Options of "--Annotate" for genome annotation ============================
+=back
+
+=head3 ========================== Options of "--Annotate" for genome annotation ==============================
+
+=cut
 
 =for text
 
@@ -571,25 +463,23 @@ If you use the results of "--Annotate" function in your work, please also cite:
 
 Genus name of the strain ( Default "NA" )
 
-#=back
-
 =cut
 
 $options{'genus=s'} = \(my $opt_genus = "NA");
-
-=over 30
 
 =item B<[--species (STRING)]>
 
 Species name of the strain ( Default "NA" )
 
-#=back
-
 =cut
 
 $options{'species=s'} = \(my $opt_species = "NA");
 
-=head3 ======================================== Options for "--CoreTree" constructing ================================================
+=back
+
+=head3 ========================== Options for "--CoreTree" constructing ======================================
+
+=cut
 
 =for text
 
@@ -631,109 +521,79 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 
 I<[Required]> CDs of all strains as fasta file paths, ( Default "./Results/Annotations/CDs" )
 
-#=back
-
 =cut
 
 $options{'CDsPath=s'} = \( my $opt_CDsPath = "./Results/Annotations/CDs" );
-
-=over 30
 
 =item B<[-c (FLOAT)]>
 
 Sequence identity threshold, ( Default 0.5)
 
-#=back
-
 =cut
 
 $options{'c=f'} = \( my $opt_c = 0.5 );
-
-=over 30
 
 =item B<[-n (INT)]>
 
 Word_length, -n 2 for thresholds 0.4-0.5, -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n 5 for thresholds 0.7-1.0 ( Default 2 )
 
-#=back
-
 =cut
 
 $options{'n=i'} = \( my $opt_n = 2 );
-
-=over 30
 
 =item B<[-G (INT)]>
 
 Use global (set to 1) or local (set to 0) sequence identity, ( Default 0 )
 
-#=back
-
 =cut
 
 $options{'G=i'} = \( my $opt_G = 0 );
-
-=over 30
 
 =item B<[-t (INT)]>
 
 Tolerance for redundance ( Default 0 )
 
-#=back
-
 =cut
 
 $options{'t=i'} = \( my $opt_t = 0 );
-
-=over 30
 
 =item B<[-aL (FLOAT)]>
 
 Alignment coverage for the longer sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.5 )
 
-#=back
-
 =cut
 
 $options{'aL=f'} = \( my $opt_aL = 0.5 );
-
-=over 30
 
 =item B<[-aS (FLOAT)]>
 
 Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )
 
-#=back
-
 =cut
 
 $options{'aS=f'} = \( my $opt_aS = 0.7 );
-
-=over 30
 
 =item B<[-g (INT)]>
 
 If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)
 
-#=back
-
 =cut
 
 $options{'g=i'} = \( my $opt_g = 1 );
-
-=over 30
 
 =item B<[-d (INT)]>
 
 length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )
 
-#=back
-
 =cut
 
 $options{'d=i'} = \( my $opt_d = 0 );
 
-=head3 ===================================== Options for "--Pan" analysis ============================================================
+=back
+
+=head3 ========================== Options for "--Pan" analysis ===============================================
+
+=cut
 
 =for text
 
@@ -755,25 +615,23 @@ If you use the results of "--Pan" function in your work, please also cite:
 
 I<[Required]> Gff files of all strains as paths ( Default "./Results/Annotations/GFF" )
 
-#=back
-
 =cut
 
 $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
-
-=over 30
 
 =item B<[--PanTree]>
 
 Construct a phylogenetic tree of single-copy core proteins called by roary
 
-#=back
-
 =cut
 
 $options{'PanTree'} = \(my $opt_PanTree);
 
-=head3 ===================================== Options for "--OrthoF" analysis =========================================================
+=back
+
+=head3 ========================== Options for "--OrthoF" analysis ============================================
+
+=cut
 
 =for text
 
@@ -795,13 +653,15 @@ If you use the results of "--OrthoF" function in your work, please also cite:
 
 Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default blast )
 
-#=back
-
 =cut
 
 $options{'Sprogram=s'} = \( my $opt_Sprogram = "blast" );
 
-=head3 ===================================== Options for "--ANI" analysis ============================================================
+=back
+
+=head3 ========================== Options for "--ANI" analysis ===============================================
+
+=cut
 
 =for text
 
@@ -823,37 +683,31 @@ If you use the results of "--ANI" function in your work, please also cite:
 
 I<[Required]> The file containing full paths to query genomes, one per line ( Default scaf.list )
 
-#=back
-
 =cut
 
 $options{'queryL=s'} = \( my $opt_queryL = "scaf.list" );
-
-=over 30
 
 =item B<[--refL (FILE)]>
 
 I<[Required]> The file containing full paths to reference genomes, one per line. ( Default scaf.list )
 
-#=back
-
 =cut
 
 $options{'refL=s'} = \( my $opt_refL = "scaf.list" );
-
-=over 30
 
 =item B<[--ANIO (FILE)]>
 
 The name of output file ( Default "Results/ANI/ANIs" )
 
-#=back
-
 =cut
 
 $options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
 
-=head3 ===================================== Options for "--VAR" analysis ============================================================
+=back
+
+=head3 ========================== Options for "--VAR" analysis ===============================================
+
+=cut
 
 =for text
 
@@ -885,121 +739,87 @@ If you use the results of "--VAR" function in your work, please also cite:
 
 I<[Required]> The B<full path and name> of reference genome in GENBANK format ( B<recommended> ), fasta format is also OK. For example: "/mnt/g/test/ref.gbk"
 
-#=back
-
 =cut
 
 $options{'refgbk=s'} = \( my $opt_refgbk );
-
-=over 30
 
 =item B<[--qualtype (STRING)]>
 
 I<[Required]> Type of quality values (solexa (CASAVA < 1.3), illumina (CASAVA 1.3 to 1.7), sanger (which is CASAVA >= 1.8)). ( Default sanger )
 
-#=back
-
 =cut
 
 $options{'qualtype=s'} = \(my $opt_qualtype = "sanger");
-
-=over 30
 
 =item B<[--qual (INT)]>
 
 Threshold for trimming based on average quality in a window. ( Default 20 )
 
-#=back
-
 =cut
 
 $options{'qual=i'} = \(my $opt_qual = "20");
-
-=over 30
 
 =item B<[--length (INT)]>
 
 Threshold to keep a read based on length after trimming. ( Default 20 )
 
-#=back
-
 =cut
 
 $options{'length=i'} = \(my $opt_length = "20");
-
-=over 30
 
 =item B<[--mincov (INT)]>
 
 The minimum number of reads covering a site to be considered ( Default 10 )
 
-#=back
-
 =cut
 
 $options{'mincov=i'} = \(my $opt_mincov = "10");
-
-=over 30
 
 =item B<[--minfrac (FLOAT)]>
 
 The minimum proportion of those reads which must differ from the reference ( Default 0.9 )
 
-#=back
-
 =cut
 
 $options{'minfrac=f'} = \(my $opt_minfrac = "0.9");
-
-=over 30
 
 =item B<[--minqual (INT)]>
 
 The minimum VCF variant call "quality" ( Default 100 )
 
-#=back
-
 =cut
 
 $options{'minqual=i'} = \(my $opt_minqual = "100");
-
-=over 30
 
 =item B<[--ram (INT)]>
 
 Try and keep RAM under this many GB ( Default 8 )
 
-#=back
-
 =cut
 
 $options{'ram=i'} = \(my $opt_ram = "8");
-
-=over 30
 
 =item B<[--tree_builder (STRING)]>
 
 Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )
 
-#=back
-
 =cut
 
 $options{'tree_builder=s'} = \(my $opt_tree_builder = "fasttree");
-
-=over 30
 
 =item B<[--iterations (INT)]>
 
 Maximum No. of iterations for gubbins ( Default 5 )
 
-#=back
-
 =cut
 
 $options{'iterations=i'} = \(my $opt_iterations = "5");
 
-=head3 ===================================== Options for "--AntiRes" analysis ============================================================
+=back
+
+=head3 ========================== Options for "--AntiRes" analysis ===========================================
+
+=cut
 
 =over 30
 
@@ -1007,38 +827,32 @@ $options{'iterations=i'} = \(my $opt_iterations = "5");
 
 I<[Required]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
 
-#=back
-
 =cut
 
 $options{'db=s'} = \( my $opt_db = "ncbi");
 
-=over 30
-
 =item B<[--identity (INT)]>
 
 I<[Required]> Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )
-
-#=back
 
 =cut
 
 $options{'identity=i'} = \(my $opt_identity = "75");
 
 
-=over 30
-
 =item B<[--coverage (INT)]>
 
 I<[Required]> Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )
-
-#=back
 
 =cut
 
 $options{'coverage=i'} = \(my $opt_coverage = "50");
 
-=head3 ===================================== Options for "--STREE" ============================================================
+=back
+
+=head3 ========================== Options for "--STREE" ======================================================
+
+=cut
 
 =over 30
 
@@ -1046,37 +860,31 @@ $options{'coverage=i'} = \(my $opt_coverage = "50");
 
 Path of the sequence file for analysis.
 
-#=back
-
 =cut
 
 $options{'seqfile=s'} = \( my $opt_seqfile);
-
-=over 30
 
 =item B<[--seqtype (STRING)]>
 
 Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
 
-#=back
-
 =cut
 
 $options{'seqtype=s'} = \( my $opt_seqtype = "p");
-
-=over 30
 
 =item B<[--bsnum (INT)]>
 
 Times for bootstrap. ( Default 1000 )
 
-#=back
-
 =cut
 
 $options{'bsnum=i'} = \( my $opt_bsnum = "1000");
 
-=head3 ===================================== Options for "--ACC" ============================================================
+=back
+
+=head3 ========================== Options for "--ACC" ========================================================
+
+=cut
 
 =over 30
 
@@ -1084,25 +892,21 @@ $options{'bsnum=i'} = \( my $opt_bsnum = "1000");
 
 Filter short sequences in the genome and assess the status of the genome.
 
-#=back
-
 =cut
 
 $options{'Assess'} = \( my $opt_Assess);
 
-=head2 ************************************* Paths of external programs ***************************************************************
+=back
+
+=head2 *************************** Paths of external programs *************************************************
+
+=cut
 
 =for text
 
 
 
-=over 1
-
 Not needed if they were in the environment variables path. Users can check with the "--check-external-programs" option for the essential programs
-
-#=back
-
-=cut
 
 =over 30
 
@@ -1110,267 +914,183 @@ Not needed if they were in the environment variables path. Users can check with 
 
 Path to abyss binary file. Default tries if abyss is in PATH;
 
-#=back
-
 =cut
 
 $options{'abyss-bin=s'} = \( my $opt_abyss_bin = `which abyss-pe 2>/dev/null` );
-
-=over 30
 
 =item B<[--canu-bin (PATH)]>
 
 Path to canu binary file. Default tries if canu is in PATH;
 
-#=back
-
 =cut
 
 $options{'canu-bin=s'} = \( my $opt_canu_bin = `which canu 2>/dev/null` );
-
-=over 30
 
 =item B<[--prodigal-bin (PATH)]>
 
 Path to prodigal binary file. Default tries if prodigal is in PATH;
 
-#=back
-
 =cut
 
 $options{'prodigal-bin=s'} = \( my $opt_prodigal_bin = `which prodigal 2>/dev/null` );
-
-=over 30
 
 =item B<[--prokka-bin (PATH)]>
 
 Path to prokka binary file. Default tries if prokka is in PATH;
 
-#=back
-
 =cut
 
 $options{'prokka-bin=s'} = \( my $opt_prokka_bin = `which prokka 2>/dev/null` );
-
-=over 30
 
 =item B<[--cd-hit-bin (PATH)]>
 
 Path to cd-hit binary file. Default tries if cd-hit is in PATH;
 
-#=back
-
 =cut
 
 $options{'cd-hit-bin=s'} = \( my $opt_cdhit_bin = `which cd-hit 2>/dev/null` );
-
-=over 30
 
 =item B<[--mafft-bin (PATH)]>
 
 Path to mafft binary file. Default tries if mafft is in PATH;
 
-#=back
-
 =cut
 
 $options{'mafft-bin=s'} = \( my $opt_mafft_bin = `which mafft 2>/dev/null` );
-
-=over 30
 
 =item B<[--pal2nal-bin (PATH)]>
 
 Path to the pal2nal.pl binary file. Default tries if pal2nal.pl is in PATH;
 
-#=back
-
 =cut
 
 $options{'pal2nal-bin=s'} = \( my $opt_pal2nal_bin = `which pal2nal.pl 2>/dev/null` );
-
-=over 30
 
 =item B<[--snp-sites-bin (PATH)]>
 
 Path to the snp-sites binary file. Default tries if snp-sites is in PATH;
 
-#=back
-
 =cut
 
 $options{'snp-sites-bin=s'} = \( my $opt_snpsites_bin = `which snp-sites 2>/dev/null` );
-
-=over 30
 
 =item B<[--roary-bin (PATH)]>
 
 Path to the roary binary file. Default tries if roary is in PATH;
 
-#=back
-
 =cut
 
 $options{'roary-bin=s'} = \( my $opt_roary_bin = `which roary 2>/dev/null` );
-
-=over 30
 
 =item B<[--orthofinder-bin (PATH)]>
 
 Path to the orthofinder binary file. Default tries if orthofinder is in PATH;
 
-#=back
-
 =cut
 
 $options{'orthofinder-bin=s'} = \( my $opt_orthofinder_bin = `which orthofinder 2>/dev/null` );
-
-=over 30
 
 =item B<[--fastANI-bin (PATH)]>
 
 Path to the fastANI binary file. Default tries if fastANI is in PATH;
 
-#=back
-
 =cut
 
 $options{'fastANI-bin=s'} = \( my $opt_fastANI_bin = `which fastANI 2>/dev/null` );
-
-=over 30
 
 =item B<[--gubbins-bin (PATH)]>
 
 Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
 
-#=back
-
 =cut
 
 $options{'gubbins-bin=s'} = \( my $opt_gubbins_bin = `which run_gubbins.py 2>/dev/null` );
-
-=over 30
 
 =item B<[--snippy-bin (PATH)]>
 
 Path to the snippy binary file. Default tries if snippy is in PATH;
 
-#=back
-
 =cut
 
 $options{'snippy-bin=s'} = \( my $opt_snippy_bin = `which snippy 2>/dev/null` );
-
-=over 30
 
 =item B<[--sickle-bin (PATH)]>
 
 Path to the sickle-trim binary file. Default tries if sickle is in PATH;
 
-#=back
-
 =cut
 
 $options{'sickle-bin=s'} = \( my $opt_sickle_bin = `which sickle 2>/dev/null` );
-
-=over 30
 
 =item B<[--mash-bin (PATH)]>
 
 Path to mash binary file. Default tries if mash is in PATH;
 
-#=back
-
 =cut
 
 $options{'mash-bin=s'} = \( my $opt_mash_bin = `which mash 2>/dev/null` );
-
-=over 30
 
 =item B<[--abricate-bin (PATH)]>
 
 Path to abricate binary file. Default tries if abricate is in PATH;
 
-#=back
-
 =cut
 
 $options{'abricate-bin=s'} = \( my $opt_abricate_bin = `which abricate 2>/dev/null` );
-
-=over 30
 
 =item B<[--unicycler-bin (PATH)]>
 
 Path to unicycler binary file. Default tries if unicycler is in PATH;
 
-#=back
-
 =cut
 
 $options{'unicycler-bin=s'} = \( my $opt_unicycler_bin = `which unicycler 2>/dev/null` );
-
-=over 30
 
 =item B<[--modeltest-ng-bin (PATH)]>
 
 Path to modeltest-ng binary file. Default tries if modeltest-ng is in PATH;
 
-#=back
-
 =cut
 
 $options{'modeltest-ng-bin=s'} = \( my $opt_modeltestng_bin = `which modeltest-ng 2>/dev/null` );
-
-=over 30
 
 =item B<[--raxml-ng-bin (PATH)]>
 
 Path to raxml-ng binary file. Default tries if raxml-ng is in PATH;
 
-#=back
-
 =cut
 
 $options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/null` );
-
-=over 30
 
 =item B<[--muscle-bin (PATH)]>
 
 Path to nuscle binary file. Default tries if muscle in PATH;
 
-#=back
-
 =cut
 
 $options{'muscle-bin=s'} = \( my $opt_muscle_bin = `which muscle 2>/dev/null` );
-
-=over 30
 
 =item B<[--Gblocks-bin (PATH)]>
 
 Path to Gblocks binary file. Default tries if Gblocks is in PATH;
 
-#=back
-
 =cut
 
 $options{'Gblocks-bin=s'} = \( my $opt_Gblocks_bin = `which Gblocks 2>/dev/null` );
-
-=over 30
 
 =item B<[--iqtree-bin (PATH)]>
 
 Path to iqtree binary file. Default tries if iqtree is in PATH;
 
-=back
-
 =cut
 
 $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
+=back
+
 =begin text
 
-  ############################################ About The Software ##############################################################################
+  ################################### About The Software ###################################
 
 =for text
 
@@ -1531,7 +1251,7 @@ if ($opt_All or $opt_Assemble) {
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
 			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
@@ -1589,7 +1309,7 @@ if ($opt_All or $opt_Assemble) {
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
 			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
@@ -1645,7 +1365,7 @@ if ($opt_All or $opt_Assemble) {
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
 			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
@@ -1716,17 +1436,17 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
-			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastph = $name . ".fastp.html";#2020/4/15
-			my $fastpj = $name . ".fastp.json";#2020/4/15
-			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
-			system("fastp -i $_ -o $fastp_out1 -j $fastpj -h $fastph -w $opt_threads");#2020/4/15
+			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
+			##my $fastph = $name . ".fastp.html";#2020/4/15
+			##my $fastpj = $name . ".fastp.json";#2020/4/15
+			##print "Performing reads preprocessor with fastp\n\n";#2020/4/15
+			##system("fastp -i $_ -o $fastp_out1 -j $fastpj -h $fastph -w $opt_threads");#2020/4/15
 			print "Performing --Assemble function for PacBio data...\n\n";
-			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $fastp_out1");#2020/4/15
-			#system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
+			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $fastp_out1");#2020/4/15
+			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
 			##system("circlator all --assembler canu $outdir/$scaf $outdir/$correct_reads $cir_outdir");
 			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/PacBio/");
-			system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
+			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/PacBio/$cir_scaf");
 #			}
 		}
@@ -1761,17 +1481,17 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
-			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastph = $name . ".fastp.html";#2020/4/15
-			my $fastpj = $name . ".fastp.json";#2020/4/15
-			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
-			system("fastp -i $_ -o $fastp_out1 -j $fastpj -h $fastph -w $opt_threads");#2020/4/15
+			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
+			##my $fastph = $name . ".fastp.html";#2020/4/15
+			##my $fastpj = $name . ".fastp.json";#2020/4/15
+			##print "Performing reads preprocessor with fastp\n\n";#2020/4/15
+			##system("fastp -i $_ -o $fastp_out1 -j $fastpj -h $fastph -w $opt_threads");#2020/4/15
 			print "Performing --Assemble function for Oxford Nanopore data...\n\n";
-			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $fastp_out1");#2020/4/15
-			#system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $_");
+			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $fastp_out1");#2020/4/15
+			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore $_");
 			##system("circlator all --assembler canu --merge_min_id 85 --merge_breaklen 1000 $outdir/$scaf $outdir/$correct_reads $cir_outdir");
 			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/Oxford/");
-			system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
+			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/Oxford/$cir_scaf");
 #			}
 		}
