@@ -1816,7 +1816,7 @@ if ($opt_All or $opt_Annotate) {
 		my $gff = $str . ".gff";
 		my $outdir = $str . "_annotation";
 		print "Running ORFs finding and annotating...\n";
-		system("prokka --outdir $outdir --prefix $str --locustag $str --genus $opt_genus --species $opt_species --strain $str --gcode $opt_codon --cpus $opt_threads $scaf");
+		system("prokka --force --outdir $outdir --prefix $str --locustag $str --genus $opt_genus --species $opt_species --strain $str --gcode $opt_codon --cpus $opt_threads $scaf");
 		system("cp $outdir/$faa $working_dir/Results/Annotations/AAs");
 		system("cp $outdir/$fna $working_dir/Results/Annotations/CDs");
 		system("cp $outdir/$gff $working_dir/Results/Annotations/GFF");
