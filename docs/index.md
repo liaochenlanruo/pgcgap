@@ -1060,7 +1060,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Add FASTQ preprocessor before Illunima genome assembly: adapter trimming, polyG tail trimming of Illumina NextSeq/NovaSeq reads, quality filtering (Q value filtering, N base filtering, sliding window filtering), length filtering.
 <!--  - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.-->
 
+<center>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <span id="busuanzi_container_site_pv">Total visits: <span id="busuanzi_value_site_pv"></span> times</span>
 <span class="post-meta-divider">|</span>
 <span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv"></span> people</span>
+</center>
