@@ -1058,7 +1058,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.15
   - When the number of threads set by the user exceeds the number of threads owned by the system, PGCGAP will automatically adjust the number of threads to avoid program crash.
   - Add FASTQ preprocessor before Illunima genome assembly: adapter trimming, polyG tail trimming of Illumina NextSeq/NovaSeq reads, quality filtering (Q value filtering, N base filtering, sliding window filtering), length filtering.
-<!--  - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.-->
+
+- V1.0.16
+  - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
+  - Force overwriting existing output folder when running "Annotate" analysis to avoid program crash.
 
 ---
 

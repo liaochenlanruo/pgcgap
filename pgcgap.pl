@@ -1397,7 +1397,7 @@ tee STDOUT, ">>$opt_logs";
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.15\n";
+    print "PGCGAP version: 1.0.16\n";
     exit 0;
 }
 
@@ -1456,6 +1456,7 @@ if ($bin=~/(.+)\/pgcgap/) {
 	$pgcgap_dir = $1;
 }
 
+
 #=============================== setup COG database ================================================
 if ($opt_setup_COGdb) {
 	#system("mkdir -p ~/COGdb");
@@ -1505,6 +1506,16 @@ my $threads_half = CPU();
 if ($opt_All or $opt_Assemble) {
 	system("mkdir -p Results/Assembles/Scaf");
 	system("mkdir -p Results/Assembles/FASTQ_Preprocessor");#2020/4/15
+	my $unicycler_set;
+	if ($bin=~/(.+)bin\/pgcgap/) {
+		$unicycler_set = $1 . "lib/python3.6/site-packages/unicycler/settings.py";
+		if (-e $unicycler_set) {
+			system("sed -i 's/RACON_POLISH_LOOP_COUNT_HYBRID = .*/RACON_POLISH_LOOP_COUNT_HYBRID = 2/g' $unicycler_set");
+			system("sed -i 's/RACON_POLISH_LOOP_COUNT_LONG_ONLY = .*/RACON_POLISH_LOOP_COUNT_LONG_ONLY = 4/g' $unicycler_set");
+		}else {
+			print "Can not find the unicycler setting file\n";
+		}
+	}
 	if ($opt_platform eq "illumina" and $opt_assembler eq "abyss") {
 		#print "Performing --Assemble function for Illunina data with abyss...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
