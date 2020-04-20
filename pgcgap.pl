@@ -1585,8 +1585,8 @@ if ($opt_All or $opt_Assemble) {
 			my $read1 = $name . $opt_reads1;
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
-			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
+			my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . ".fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
@@ -1641,8 +1641,8 @@ if ($opt_All or $opt_Assemble) {
 			my $read1 = $name . $opt_reads1;
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
-			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
+			my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . ".fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
