@@ -14,6 +14,15 @@
 [English Readme](https://liaochenlanruo.github.io/pgcgap) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/)
 
 
+	  ____       ____      ____     ____       _        ____    
+	U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+	\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+	 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+	 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+	 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+	(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
+
+
 ## Contents
 
 - [Introduction](#introduction)
@@ -1045,3 +1054,20 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.14
   - The relative_abundances of flags among strains will not be called while the strain number is less than two.
   - Fixed the error of function "Assess" in module "ACC".
+
+- V1.0.15
+  - When the number of threads set by the user exceeds the number of threads owned by the system, PGCGAP will automatically adjust the number of threads to avoid program crash.
+  - Add FASTQ preprocessor before Illunima genome assembly: adapter trimming, polyG tail trimming of Illumina NextSeq/NovaSeq reads, quality filtering (Q value filtering, N base filtering, sliding window filtering), length filtering.
+
+- V1.0.16
+  - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
+  - Force overwriting existing output folder when running "Annotate" analysis to avoid program crash.
+
+---
+
+<center><strong>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">Total visits: <span id="busuanzi_value_site_pv"></span> times</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv"></span> people</span>
+</strong></center>
