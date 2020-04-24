@@ -164,6 +164,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
+- [Fastp](https://github.com/OpenGene/fastp)
 - [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)

@@ -9,13 +9,13 @@
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
 
-	  ____       ____      ____     ____       _        ____    
-	U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
-	\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
-	 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
-	 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
-	 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
-	(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
+		  ____       ____      ____     ____       _        ____    
+		U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+		\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+		 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+		 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+		 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+		(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
 
 ## Contents
@@ -73,6 +73,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
+- [Fastp](https://github.com/OpenGene/fastp)
 - [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
