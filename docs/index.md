@@ -1063,6 +1063,11 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
   - Force overwriting existing output folder when running "Annotate" analysis to avoid program crash.
 
+- V1.0.17
+  - Fixed a bug that the program can not go back to the working directory after genome annotation.
+  - Added scripts to check if there were single-copy core proteins found while running module "CoreTree".
+  - Modified the help message.
+
 ---
 
 <center><strong>
