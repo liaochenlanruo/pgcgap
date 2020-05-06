@@ -185,18 +185,18 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __[\-\-reads1 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
                                          "\-\-VAR"] The suffix name of reads 1 ( for
                                          example: if the name of reads 1 is
-                                         "YBT-1520_L1_I050.R1.clean.fastq.gz",
+                                         "YBT-1520\_L1\_I050.R1.clean.fastq.gz",
                                          "YBT-1520" is the strain same, so the
                                          suffix name should be ".R1.clean.fastq.gz")
 
   - __[\-\-reads2 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
                                          "\-\-VAR"] The suffix name of reads 2( for
                                          example: if the name of reads 2 is
-                                         "YBT-1520_2.fq", the suffix name should be "_2.fq" )
+                                         "YBT-1520\_2.fq", the suffix name should be "\_2.fq" )
 
   - **[\-\-Scaf\_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
-  - **[\-\-filter\_length (INT)]**          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
+  - **[\-\-filter\_length (INT)]**          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter\_length' will be deleted from the assembled genomes. ( Default 200 )
 
   - __[\-\-codon (INT)]__                  [Required by "\-\-All", "\-\-Annotate", "\-\-CoreTree" and "\-\-Pan"] Translation table ( Default 11 )
 
@@ -222,8 +222,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          "\-\-VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
-                                         example the \-\-suffix_len of
-                                         "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26
+                                         example the \-\-suffix\_len of
+                                         "YBT-1520\_L1\_I050.R1.clean.fastq.gz" is 26
                                          ( "YBT-1520" is the strain name ) ( Default 0 )
 
   - __[\-\-logs (STRING)]__                Name of the log file ( Default Logs.txt )
@@ -348,7 +348,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
       - __[\-\-ram (INT)]__                Try and keep RAM under this many GB ( Default 8 )
 
-      - __[\-\-tree_builder (STRING)]__    Application to use for tree building
+      - __[\-\-tree\_builder (STRING)]__    Application to use for tree building
                                          [raxml|fasttree|hybrid] ( Default fasttree)
 
       - __[\-\-iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
@@ -394,7 +394,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __[\-\-Gblocks-bin (PATH)]__           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;
 
-  - __[\-\-gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
+  - __[\-\-gubbins-bin (PATH)]__           Path to the run\_gubbins.py binary file. Default tries if run\_gubbins.py is in PATH;
 
   - __[\-\-iqtree-bin (PATH)]__            Path to the iqtree binary file. Default tries if iqtree is in PATH;
 
@@ -455,7 +455,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - Illumina reads assembly
 
-        In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "\-\-suffix_len" was set to 11.
+        In this dataset, the naming format of the genome is “strain\_1.fastq.gz” and “strain\_2.fastq.gz”. The string after the strain name is “\_1.fastq.gz”, and its length is 11, so "\-\-suffix\_len" was set to 11.
 
          <pre>
      $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
@@ -540,7 +540,7 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 ### ANI
 
-QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
+QUERY\_LIST and REFERENCE\_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
 
 ### MASH
 
@@ -604,7 +604,7 @@ Directory contains PacBio contigs/scaffolds of all strains.
 
 ### Annotate
 
-- **Results/Annotations/*_annotation**<br/>
+- **Results/Annotations/\*\_annotation**<br/>
 directories contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.
 <br/>
 
@@ -634,7 +634,7 @@ file with identity values arranged in a [phylip-formatted lower triangular matri
 An ANI matrix of all strains.
 <br/>
 
-- __Results/ANI/ANI_matrix.pdf__<br/>
+- __Results/ANI/ANI\_matrix.pdf__<br/>
 The heatmap plot of "ANIs.heatmap".
 
 ### MASH
@@ -648,7 +648,7 @@ The pairwise similarity between pair genomes, each column represents Reference-I
 - __Results/MASH/MASH.heatmap__<br/>
 A similarity matrix of all genomes.
 
-- __Results/MASH/MASH_matrix.pdf__<br/>
+- __Results/MASH/MASH\_matrix.pdf__<br/>
 A heat map plot of "MASH.heatmap".
 
 ### CoreTree
@@ -674,27 +674,27 @@ The phylogenetic tree file of SNPs of single-copy core genes for all strains bas
 <br/>
 
 
-- __Results/CoreTrees/"Other_files"__<br/>
+- __Results/CoreTrees/"Other\_files"__<br/>
 Intermediate directories and files.
 <br/>
 
 ### OrthoF
 
-- __Results/OrthoFinder/Results_orthoF__<br/>
+- __Results/OrthoFinder/Results\_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 <br/>
 
 ### Pan
 
-- __Results/PanGenome/Pangenome_Pie.pdf__<br/>
+- __Results/PanGenome/Pangenome\_Pie.pdf__<br/>
 A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 <br/>
 
-- __Results/PanGenome/pangenome_frequency.pdf__<br/>
+- __Results/PanGenome/pangenome\_frequency.pdf__<br/>
 A graph with the frequency of genes versus the number of genomes.
 <br/>
 
-- __Results/PanGenome/Pangenome_matrix.pdf__<br/>
+- __Results/PanGenome/Pangenome\_matrix.pdf__<br/>
 A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
 <br/>
 
@@ -706,25 +706,25 @@ Alignments of single-copy core proteins called by roary software.
 A phylogenetic tree of Roary.core.protein.fasta based on the best-fit model of evolution selected using BIC, AIC and AICc criteria.
 <br/>
 
-- __Results/PanGenome/Other_files__<br/>
+- __Results/PanGenome/Other\_files__<br/>
 see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 <br/>
 
 ### pCOG
 
-- __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
+- __\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table__<br/>
 Intermediate files.
 <br/>
 
-- __*.2Scog.table__<br/>
+- __\*.2Scog.table__<br/>
 The super COG table of each strain.
 <br/>
 
-- __*.2Scog.table.pdf__<br/>
+- __\*.2Scog.table.pdf__<br/>
 A plot of super COG table in pdf format.
 <br/>
 
-- __All_flags_relative_abundances.table__
+- __All\_flags\_relative\_abundances.table__
 A table containing the relative abundance of each flag for all strains.
 
 ### VAR
@@ -737,7 +737,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
   - __core.aln__ : A core SNP alignment includes only SNP sites.
   - __core.full.aln__ : A whole genome SNP alignment (includes invariant sites).
   - __core.*.support__ : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using BIC, AIC and AICc criteria (ignoring possible recombination).
-  - **gubbins.core.full.node_labelled.final_tree.tre** : Phylogenetic tree of the whole genome SNP alignment constructed with __gubbins__ (get rid of recombination).
+  - **gubbins.core.full.node\_labelled.final\_tree.tre** : Phylogenetic tree of the whole genome SNP alignment constructed with __gubbins__ (get rid of recombination).
 
 ### AntiRes
 - __Results/AntiRes/*.tab__ : Screening results of each strain.
@@ -787,7 +787,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 ### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 
-Check the log file named in "strain_name.log" under Results/Variants/\<strain_name\>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
+Check the log file named in "strain_name.log" under Results/Variants/<strain\_name\>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
 
 
 
@@ -895,7 +895,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Users now can choose "abyss" or "spades" for illumina reads aseembly.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
-  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]", and can look up the examples of each module with command "pgcgap Examples".
+  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR\]", and can look up the examples of each module with command "pgcgap Examples".
 
 - V1.0.12
 

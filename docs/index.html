@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PGCGAP-the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline</title>
+<title>PGCGAP</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /**
@@ -41,10 +41,10 @@ body {
 	line-height: 1.42857142857143;
 	color: #333;
 	background-color: #fff;
-	padding: 20px;
+	/*padding: 20px;*/
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 15px 20px;
+	padding: 15px 350px 10px 10px;
 }
 
 body > *:first-child {
@@ -75,11 +75,11 @@ h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, 
 }
 
 h1 {
-	font-size: 24px;
-	font-weight: normal;
+	font-size: 28px;
+	font-weight: bold;
 	line-height: 1.25;
 	margin: 20px 0 10px;
-	padding: 0
+	padding: 0px 0px 0px 15px
 }
 
 h2 {
@@ -398,7 +398,7 @@ img {
 			var distance = n - scrollTop;
 			if(distance >= 0){
 				$(".BlogAnchor li .nav_item.current").removeClass('current');
-				$(headerNavs[i]).addClass('current');
+				$(headerNavs[i-1]).addClass('current');
 				return false;
 			}
 		});
@@ -424,24 +424,30 @@ img {
 	right: 48px;
 	top: 48px;
 	border: 1px solid #aaaaaa;
+	width: 230px;
+	overflow-x: auto;
     }
     .BlogAnchor p {
 	font-size: 18px;
 	color: #15a230;
 	margin: 0 0 0.3rem 0;
 	text-align: right;
+	white-space: nowrap;
     }
     .BlogAnchor .AnchorContent {
 	padding: 5px 0px;
 	overflow: auto;
+	white-space: nowrap;
     }
     .BlogAnchor li{
 	text-indent: 0.5rem;
 	font-size: 14px;
 	list-style: none;
+	white-space: nowrap;
     }
 	.BlogAnchor li .nav_item{
 		padding: 3px;
+		white-space: nowrap;
 	}
     .BlogAnchor li .item_h1{
 	margin-left: 0rem;
@@ -678,7 +684,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--reads1 (STRING)]</strong>              [Required by &quot;--All&quot;, &quot;--Assemble&quot; and
                                  &quot;--VAR&quot;] The suffix name of reads 1 ( for
                                  example: if the name of reads 1 is
-                                 &quot;YBT-1520<em>L1</em>I050.R1.clean.fastq.gz&quot;,
+                                 &quot;YBT-1520_L1_I050.R1.clean.fastq.gz&quot;,
                                  &quot;YBT-1520&quot; is the strain same, so the
                                  suffix name should be &quot;.R1.clean.fastq.gz&quot;)</p>
 </li>
@@ -686,7 +692,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--reads2 (STRING)]</strong>              [Required by &quot;--All&quot;, &quot;--Assemble&quot; and
                                  &quot;--VAR&quot;] The suffix name of reads 2( for
                                  example: if the name of reads 2 is
-                                 &quot;YBT-1520<em>2.fq&quot;, the suffix name should be &quot;</em>2.fq&quot; )</p>
+                                 &quot;YBT-1520_2.fq&quot;, the suffix name should be &quot;_2.fq&quot; )</p>
 </li>
 <li>
 <p><strong>[--Scaf_suffix (STRING)]</strong>         [Required by &quot;--All&quot;, &quot;--Assess&quot;, &quot;--Annotate&quot; &quot;--MASH&quot;, &quot;--ANI&quot; and &quot;--AntiRes&quot;] The suffix of scaffolds or genomes. Here, &quot;-8.fa&quot; for Illumina data, &quot;.contigs.fasta&quot; for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)</p>
@@ -721,8 +727,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                  &quot;--VAR&quot;] <strong>(Strongly recommended)</strong> The suffix length of the reads,
                                  that is the length of your reads name
                                  minus the length of your strain name. For
-                                 example the --suffix<em>len of
-                                 &quot;YBT-1520</em>L1_I050.R1.clean.fastq.gz&quot; is 26
+                                 example the --suffix_len of
+                                 &quot;YBT-1520_L1_I050.R1.clean.fastq.gz&quot; is 26
                                  ( &quot;YBT-1520&quot; is the strain name ) ( Default 0 )</p>
 </li>
 <li>
@@ -905,7 +911,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--ram (INT)]</strong>                Try and keep RAM under this many GB ( Default 8 )</p>
 </li>
 <li>
-<p><em><em>[--tree</em>builder (STRING)]</em>_    Application to use for tree building
+<p><strong>[--tree_builder (STRING)]</strong>    Application to use for tree building
                              [raxml|fasttree|hybrid] ( Default fasttree)</p>
 </li>
 <li>
@@ -977,7 +983,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--Gblocks-bin (PATH)]</strong>           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;</p>
 </li>
 <li>
-<p><strong>[--gubbins-bin (PATH)]</strong>           Path to the run<em>gubbins.py binary file. Default tries if run</em>gubbins.py is in PATH;</p>
+<p><strong>[--gubbins-bin (PATH)]</strong>           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;</p>
 </li>
 <li>
 <p><strong>[--iqtree-bin (PATH)]</strong>            Path to the iqtree binary file. Default tries if iqtree is in PATH;</p>
@@ -1056,7 +1062,7 @@ $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina
 <ul>
 <li>
 <p>Illumina reads assembly</p>
-<p>In this dataset, the naming format of the genome is “strain<em>1.fastq.gz” and “strain</em>2.fastq.gz”. The string after the strain name is “<em>1.fastq.gz”, and its length is 11, so &quot;--suffix</em>len&quot; was set to 11.</p>
+<p>In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so &quot;--suffix_len&quot; was set to 11.</p>
 <pre>
 $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
 $pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
@@ -1136,7 +1142,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <h3>Annotate</h3>
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
 <h3>ANI</h3>
-<p>QUERY<em>LIST and REFERENCE</em>LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.</p>
+<p>QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.</p>
 <h3>MASH</h3>
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
 <h3>CoreTree</h3>
@@ -1203,7 +1209,7 @@ Directory contains PacBio contigs/scaffolds of all strains.
 <h3>Annotate</h3>
 <ul>
 <li>
-<p><em><em>Results/Annotations/</em>_annotation</em>*<br/>
+<p><strong>Results/Annotations/*_annotation</strong><br/>
 directories contain <a href="https://github.com/tseemann/prokka?_blank">annotation files</a> of each strain.
 <br/></p>
 </li>
@@ -1240,7 +1246,7 @@ An ANI matrix of all strains.
 <br/></p>
 </li>
 <li>
-<p><em><em>Results/ANI/ANI</em>matrix.pdf</em>_<br/>
+<p><strong>Results/ANI/ANI_matrix.pdf</strong><br/>
 The heatmap plot of &quot;ANIs.heatmap&quot;.</p>
 </li>
 </ul>
@@ -1259,7 +1265,7 @@ The pairwise similarity between pair genomes, each column represents Reference-I
 A similarity matrix of all genomes.</p>
 </li>
 <li>
-<p><em><em>Results/MASH/MASH</em>matrix.pdf</em>_<br/>
+<p><strong>Results/MASH/MASH_matrix.pdf</strong><br/>
 A heat map plot of &quot;MASH.heatmap&quot;.</p>
 </li>
 </ul>
@@ -1291,31 +1297,31 @@ The phylogenetic tree file of SNPs of single-copy core genes for all strains bas
 <br/></p>
 </li>
 <li>
-<p><em><em>Results/CoreTrees/&quot;Other</em>files&quot;</em>_<br/>
+<p><strong>Results/CoreTrees/&quot;Other_files&quot;</strong><br/>
 Intermediate directories and files.
 <br/></p>
 </li>
 </ul>
 <h3>OrthoF</h3>
 <ul>
-<li><em><em>Results/OrthoFinder/Results</em>orthoF</em>_<br/>
+<li><strong>Results/OrthoFinder/Results_orthoF</strong><br/>
 Same as <a href="https://github.com/davidemms/OrthoFinder?_blank">OrthoFinder</a> outputs.
 <br/></li>
 </ul>
 <h3>Pan</h3>
 <ul>
 <li>
-<p><em><em>Results/PanGenome/Pangenome</em>Pie.pdf</em>_<br/>
+<p><strong>Results/PanGenome/Pangenome_Pie.pdf</strong><br/>
 A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 <br/></p>
 </li>
 <li>
-<p><em><em>Results/PanGenome/pangenome</em>frequency.pdf</em>_<br/>
+<p><strong>Results/PanGenome/pangenome_frequency.pdf</strong><br/>
 A graph with the frequency of genes versus the number of genomes.
 <br/></p>
 </li>
 <li>
-<p><em><em>Results/PanGenome/Pangenome</em>matrix.pdf</em>_<br/>
+<p><strong>Results/PanGenome/Pangenome_matrix.pdf</strong><br/>
 A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
 <br/></p>
 </li>
@@ -1330,7 +1336,7 @@ A phylogenetic tree of Roary.core.protein.fasta based on the best-fit model of e
 <br/></p>
 </li>
 <li>
-<p><em><em>Results/PanGenome/Other</em>files</em>_<br/>
+<p><strong>Results/PanGenome/Other_files</strong><br/>
 see <a href="https://sanger-pathogens.github.io/Roary/?_blank">roary</a> outputs.
 <br/></p>
 </li>
@@ -1338,22 +1344,22 @@ see <a href="https://sanger-pathogens.github.io/Roary/?_blank">roary</a> outputs
 <h3>pCOG</h3>
 <ul>
 <li>
-<p>__*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
+<p><strong>*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table</strong><br/>
 Intermediate files.
 <br/></p>
 </li>
 <li>
-<p>__*.2Scog.table__<br/>
+<p><strong>*.2Scog.table</strong><br/>
 The super COG table of each strain.
 <br/></p>
 </li>
 <li>
-<p>__*.2Scog.table.pdf__<br/>
+<p><strong>*.2Scog.table.pdf</strong><br/>
 A plot of super COG table in pdf format.
 <br/></p>
 </li>
 <li>
-<p><em><em>All</em>flags</em>relative<em>abundances.table</em>_
+<p><strong>All_flags_relative_abundances.table</strong>
 A table containing the relative abundance of each flag for all strains.</p>
 </li>
 </ul>
@@ -1370,7 +1376,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <li><strong>core.aln</strong> : A core SNP alignment includes only SNP sites.</li>
 <li><strong>core.full.aln</strong> : A whole genome SNP alignment (includes invariant sites).</li>
 <li><strong>core.*.support</strong> : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using BIC, AIC and AICc criteria (ignoring possible recombination).</li>
-<li><strong>gubbins.core.full.node<em>labelled.final</em>tree.tre</strong> : Phylogenetic tree of the whole genome SNP alignment constructed with <strong>gubbins</strong> (get rid of recombination).</li>
+<li><strong>gubbins.core.full.node_labelled.final_tree.tre</strong> : Phylogenetic tree of the whole genome SNP alignment constructed with <strong>gubbins</strong> (get rid of recombination).</li>
 </ul>
 </li>
 </ul>
@@ -1427,7 +1433,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 </ul>
 <h2>FAQ</h2>
 <h3>Q1 VAR function ran failed to get annotated VCFs and Core results</h3>
-<p>Check the log file named in &quot;strain<em>name.log&quot; under Results/Variants/\&lt;strain</em>name&gt;/ directory. If you find a sentence like &quot;WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate.&quot; This is a snpEff error. Users can install JDK8 to solve this problem.</p>
+<p>Check the log file named in &quot;strain_name.log&quot; under Results/Variants/&lt;strain_name&gt;/ directory. If you find a sentence like &quot;WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate.&quot; This is a snpEff error. Users can install JDK8 to solve this problem.</p>
 <pre>$conda install java-jdk=8.0.112</pre>
 <p>Click <a href="https://github.com/tseemann/snippy/issues/259?_blank">here</a> for more solutions.</p>
 <h3>Q2 Could not determine version of minced please install version 2 or higher</h3>
@@ -1535,7 +1541,7 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <li>Users now can choose &quot;abyss&quot; or &quot;spades&quot; for illumina reads aseembly.</li>
 <li>New support for hybrid assembly of paired-end short reads and long reads.</li>
 <li>Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.</li>
-<li>Optimized display of help information. Users can check parameters for each modulewith command &quot;pgcgap [Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR]&quot;, and can look up the examples of each module with command &quot;pgcgap Examples&quot;.</li>
+<li>Optimized display of help information. Users can check parameters for each modulewith command &quot;pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR]&quot;, and can look up the examples of each module with command &quot;pgcgap Examples&quot;.</li>
 </ul>
 </li>
 <li>
