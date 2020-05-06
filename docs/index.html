@@ -254,7 +254,7 @@ hr {
   clear: both;
   margin: 15px 0;
   height: 0px;
-  overflow: hidden;
+  overflow: scroll;
   border: none;
   background: transparent;
   border-bottom: 4px solid #ddd;
@@ -371,7 +371,7 @@ img {
 	$("#AnchorContent").toggle();
     });
     $(".anchor-link").click(function(){
-	$("html,body").animate({scrollTop: $($(this).attr("link")).offset().top}, 200);
+	$("html,body").animate({scrollTop: $($(this).attr("link")).offset().top}, 500);
     });
 
 	var headerNavs = $(".BlogAnchor li .nav_item");
