@@ -1,4 +1,4 @@
-# PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
+# PGCGAP - the <font color=red>P</font>rokaryotic <font color=red>G</font>enomics and <font color=red>C</font>omparative <font color=red>G</font>enomics <font color=red>A</font>nalysis <font color=red>P</font>ipeline
 ---
 <center>
 ![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS,Docker?list=|)
