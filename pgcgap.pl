@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.17\n";
+    print "PGCGAP version: 1.0.18\n";
     exit 0;
 }
 
@@ -1493,7 +1493,8 @@ if ($opt_STREE) {
 	chdir "$working_dir/Results/STREE/";
 	system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-	system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
+	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
+	system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 	chdir $working_dir;
 }
 my $threads_half = CPU();
@@ -3275,6 +3276,7 @@ sub printpCOG{
 sub printSTREE{
 	print "[--seqfile (STRING)] Path of the sequence file for analysis.\n";
 	print "[--seqtype (STRING)] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )\n";
+	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--bsnum (INT)] Times for bootstrap. ( Default 1000 )\n\n";
 }
 
@@ -3346,7 +3348,7 @@ sub printExamples{
 
 	print "Example 15: Construct a phylogenetic tree based on multiple sequences in one file\n\n";
 
-	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT>\n\n";
+	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT> --threads <INT>\n\n";
 
 	print "Example 16: Perform the short sequences filter from the assembled genome and get the genome status\n\n";
 
