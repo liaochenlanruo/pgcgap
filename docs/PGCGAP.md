@@ -529,7 +529,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __Example 14:__ Construct a phylogenetic tree based on multiple sequences in one file
 
-    <pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000</pre>
+    <pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4</pre>
 
 
 ## Generating Input files
