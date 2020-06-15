@@ -931,6 +931,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Added scripts to check if there were single-copy core proteins found while running module "CoreTree".
   - Modified the help message.
 
+- V1.0.18
+  - Updated the downloading link of COG database.
+  - Users can choose the number of threads used for running module "STREE".
+
 ---
 
 <center><strong>
