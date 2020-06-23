@@ -1,9 +1,12 @@
-# PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
+# PGCGAP - the <font color=red>P</font>rokaryotic <font color=red>G</font>enomics and <font color=red>C</font>omparative <font color=red>G</font>enomics <font color=red>A</font>nalysis <font color=red>P</font>ipeline
+---
+<center>
 ![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS,Docker?list=|)
 ![License](https://badgen.net/github/license/liaochenlanruo/pgcgap)
 [![GitHubversion](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg)](https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
+</center>
 
 <center>
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
@@ -11,96 +14,19 @@
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/0.js?i=0ett3z77b0x&amp;d=3&amp;p=1&amp;b=1&amp;w=293&amp;g=2&amp;f=arial&amp;fs=13&amp;r=0&amp;c0=ff8a00&amp;c1=0006ff&amp;c2=000000&amp;ic0=0&amp;ic1=0" async="async"></script>
 </center>
 
+<center>
 [English Readme](https://liaochenlanruo.github.io/pgcgap) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/)
 
 
-	  ____       ____      ____     ____       _        ____    
-	U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
-	\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
-	 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
-	 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
-	 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
-	(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
+		  ____       ____      ____     ____       _        ____    
+		U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+		\| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+		 |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+		 |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+		 ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+		(__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
-
-## Contents
-
-- [Introduction](#introduction)
-
-- [Installation](#installation)
-
-- [Required dependencies](#required-dependencies)
-
-- [Usage](#usage)
-
-- [Examples](#examples)
-
-- [Generating Input files](#generating-input-files)
-
-  * [Working directory](#working-directory)
-
-  * [Assemble](#assemble)
-
-  * [Annotate](#annotate)
-
-  * [ANI](#ani)
-
-  * [MASH](#mash)
-
-  * [CoreTree](#coretree)
-
-  * [OrthoF](#orthof)
-
-  * [Pan](#pan)
-
-  * [COG](#cog)
-
-  * [VAR](#var)
-
-  * [STREE](#stree)
-
-  * [AntiRes](#antires)
-
-- [Output Files](#output-files)
-
-  * [Assemble](#assemble-1)
-
-  * [Annotate](#annotate-1)
-
-  * [ANI](#ani-1)
-
-  * [MASH](#mash-1)
-
-  * [CoreTree](#coretree-1)
-
-  * [OrthoF](#orthof-1)
-
-  * [Pan](#pan-1)
-
-  * [COG](#cog)
-
-  * [VAR](#var-1)
-
-  * [STREE](#stree-1)
-
-  * [AntiRes](#antires-1)
-
-- [License](#license)
-
-- [Feedback and Issues](#feedback-and-issues)
-
-- [Citation](#citation)
-
-- [FAQ](#faq)
-
-  * [Q1 VAR FOUNCTION ran failed to get annotated VCFs and Core results](#q1-var-founction-ran-failed-to-get-annotated-vcfs-and-core-results)
-  * [Q2 Could not determine version of minced please install version 2.0 or higher](#q2-could-not-determine-version-of-minced-please-install-version-2-or-higher)
-  * [Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib](#q3-dyld:-Library-not-loaded:-@rpath/libcrypto.1.0.0.dylib)
-  * [Q4 Use of uninitialized value in require at Encode.pm line 61](#q4-use-of-uninitialized-value-in-require-at-encode.pm-line-61)
-
-- [Updates](#updates)
-
-
+</center>
 
 ## Introduction
 
@@ -117,38 +43,25 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 __Step1: Install PGCGAP__
 
-
-
-```
-
+<pre>
 $conda create -n pgcgap python=3
-
 $conda activate pgcgap
-
 $conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
-
-
-```
+</pre>
 
 __Step2: Setup COG database__ (Users should execute this after the first installation of pgcgap)
 
-
-
-```
-
+<pre>
 $conda activate pgcgap
-
 $pgcgap --setup-COGdb
-
 $conda deactivate
-
-```
+</pre>
 
 Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
-```
+<pre>
 $docker pull quay.io/biocontainers/pgcgap:<tag>
-```
+</pre>
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for &lt;tag&gt;)
 
@@ -164,6 +77,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [Diamond](https://github.com/bbuchfink/diamond)
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
+- [Fastp](https://github.com/OpenGene/fastp)
 - [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
 - [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
@@ -209,31 +123,21 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 
 - __Print the help messages:__
-    ```
-    $pgcgap --help
-    ```
+    <pre>$pgcgap --help</pre>
 
 - __General usage:__
-    ```
-    $pgcgap [modules] [options]
-    ```
+    <pre>$pgcgap [modules] [options]</pre>
 
 - __Show parameters for each module:__
-    ```
-    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
-    ```
+    <pre>$pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]</pre>
 
 - __Show examples of each module:__
-    ```
-    $pgcgap Examples
-    ```
+    <pre>$pgcgap Examples</pre>
 
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
-    ```
-    $pgcgap --setup-COGdb
-    ```
+    <pre>$pgcgap --setup-COGdb</pre>
 <br/>
 
 - __Modules:__
@@ -272,7 +176,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Global Options:__
 
-  - __[\-\-strain_num (INT)]__             [Required by "\-\-All", "\-\-CoreTree", "\-\-Pan", "\-\-VAR" and "\-\-pCOG"]
+  - **[\-\-strain\_num (INT)]**             [Required by "\-\-All", "\-\-CoreTree", "\-\-Pan", "\-\-VAR" and "\-\-pCOG"]
                                          The total number of strains used for analysis, not including the reference genome
 
   - __[\-\-ReadsPath (PATH)]__             [Required by "\-\-All", "\-\-Assemble" and "\-\-VAR"]
@@ -286,18 +190,18 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __[\-\-reads1 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
                                          "\-\-VAR"] The suffix name of reads 1 ( for
                                          example: if the name of reads 1 is
-                                         "YBT-1520_L1_I050.R1.clean.fastq.gz",
+                                         "YBT-1520\_L1\_I050.R1.clean.fastq.gz",
                                          "YBT-1520" is the strain same, so the
                                          suffix name should be ".R1.clean.fastq.gz")
 
   - __[\-\-reads2 (STRING)]__              [Required by "\-\-All", "\-\-Assemble" and
                                          "\-\-VAR"] The suffix name of reads 2( for
                                          example: if the name of reads 2 is
-                                         "YBT-1520_2.fq", the suffix name should be "_2.fq" )
+                                         "YBT-1520\_2.fq", the suffix name should be "\_2.fq" )
 
-  - **[\-\-Scaf_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[\-\-Scaf\_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
 
-  - __[\-\-filter_length (INT)]__          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )
+  - **[\-\-filter\_length (INT)]**          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter\_length' will be deleted from the assembled genomes. ( Default 200 )
 
   - __[\-\-codon (INT)]__                  [Required by "\-\-All", "\-\-Annotate", "\-\-CoreTree" and "\-\-Pan"] Translation table ( Default 11 )
 
@@ -319,12 +223,12 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
       -    22                            Scenedesmus obliquus mitochondrial code
       -    23                            Thraustochytrium mitochondrial code
 
-  - __[\-\-suffix_len (INT)]__             [Required by "\-\-All", "\-\-Assemble" and
+  - __[\-\-suffix\_len (INT)]__             [Required by "\-\-All", "\-\-Assemble" and
                                          "\-\-VAR"] __(Strongly recommended)__ The suffix length of the reads,
                                          that is the length of your reads name
                                          minus the length of your strain name. For
-                                         example the \-\-suffix_len of
-                                         "YBT-1520_L1_I050.R1.clean.fastq.gz" is 26
+                                         example the \-\-suffix\_len of
+                                         "YBT-1520\_L1\_I050.R1.clean.fastq.gz" is 26
                                          ( "YBT-1520" is the strain name ) ( Default 0 )
 
   - __[\-\-logs (STRING)]__                Name of the log file ( Default Logs.txt )
@@ -449,7 +353,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
       - __[\-\-ram (INT)]__                Try and keep RAM under this many GB ( Default 8 )
 
-      - __[\-\-tree_builder (STRING)]__    Application to use for tree building
+      - __[\-\-tree\_builder (STRING)]__    Application to use for tree building
                                          [raxml|fasttree|hybrid] ( Default fasttree)
 
       - __[\-\-iterations (INT)]__         Maximum No. of iterations for gubbins ( Default 5 )
@@ -480,7 +384,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Paths of external programs__
 
-  Not needed if they were in the environment variables path. Users can check with the "\-\-check-external-programs" option for the essential programs.
+    Not needed if they were in the environment variables path. Users can check with the "\-\-check-external-programs" option for the essential programs.
   <br/>
 
   - __[\-\-abricate-bin (PATH)]__          Path to abyss binary file. Default tries if abyss is in PATH;
@@ -495,7 +399,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __[\-\-Gblocks-bin (PATH)]__           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;
 
-  - __[\-\-gubbins-bin (PATH)]__           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
+  - __[\-\-gubbins-bin (PATH)]__           Path to the run\_gubbins.py binary file. Default tries if run\_gubbins.py is in PATH;
 
   - __[\-\-iqtree-bin (PATH)]__            Path to the iqtree binary file. Default tries if iqtree is in PATH;
 
@@ -538,10 +442,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of PGCGAP__):
+    <pre>$pgcgap --check-external-programs</pre>
 
-    ```
-    $pgcgap --check-external-programs
-    ```
 <br/>
 
 ## Examples
@@ -550,117 +452,84 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
-    ```
+    <pre>
     $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
-    ```
+    </pre>
 
   - __Example 2:__ Genome assembly.
 
     - Illumina reads assembly
 
-      In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "\-\-suffix_len" was set to 11.
+        In this dataset, the naming format of the genome is “strain\_1.fastq.gz” and “strain\_2.fastq.gz”. The string after the strain name is “\_1.fastq.gz”, and its length is 11, so "\-\-suffix\_len" was set to 11.
 
-     ```
+         <pre>
      $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      $pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
-     $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
-     ```
+     $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11</pre>
 
     - Oxford reads assembly
 
-      Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
+          Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
 
-     ```
-     $pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
-     ```
+         <pre>$pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
 
     - PacBio reads assembly
 
-     PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" was set to 6.
+         PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" was set to 6.
 
-     ```
-     $pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
-     ```
+         <pre>$pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
 
     - Hybrid assembly of short reads and long reads
 
-     Paired-end short reads and long reads in the directory “Reads/Hybrid/” were used as inputs. Illumina reads and long reads must be from the same isolates.
+         Paired-end short reads and long reads in the directory “Reads/Hybrid/” were used as inputs. Illumina reads and long reads must be from the same isolates.
 
-     ```
-     $pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
-     ```
+         <pre>$pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4</pre>
 
   - __Example 3__: Gene prediction and annotation
 
-     ```
-     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
-     ```
+     <pre>$pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4</pre>
 
   - __Example 4__: Constructing single-copy core protein tree and core SNPs tree
 
-     ```
-     $pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
-     ```
+     <pre>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
 
   - __Example 5:__ Constructing single-copy core protein tree only.
-
-    ```
-    $pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
-    ```
+    <pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
 
   - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
-    ```
-    $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs
-    ```
+    <pre>$pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
 
   - __Example 7:__ Inference of orthologous gene groups.
 
-    ```
-    $pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs
-    ```
+    <pre>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs</pre>
 
   - __Example 8:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
-    ```
-    $pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa
-    ```
+    <pre>$pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa</pre>
 
   - __Example 9:__ Genome and metagenome similarity estimation using MinHash
-
-    ```
-    $pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
-    ```
+    <pre>$pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING></pre>
 
   - __Example 10:__ Run COG annotation for each strain.
 
-    ```
-    $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
-    ```
+    <pre>$pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs</pre>
 
   - __Example 11:__ Variants calling and phylogenetic tree construction based on the reference genome.
 
-    ```
-    $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
-    ```
+    <pre>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree</pre>
 
   - __Example 12:__ Screening of contigs for antimicrobial and virulence genes
 
-    ```
-    $pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
-    ```
+    <pre>$pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50</pre>
 
   - __Example 13:__ Filter short sequences in the genome and assess the status of the genome
 
-    ```
-    $pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
-    ```
+    <pre>$pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200</pre>
 
   - __Example 14:__ Construct a phylogenetic tree based on multiple sequences in one file
 
-    ```
-    $pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000
-    ```
+    <pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4</pre>
 
 
 ## Generating Input files
@@ -676,7 +545,7 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 ### ANI
 
-QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
+QUERY\_LIST and REFERENCE\_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
 
 ### MASH
 
@@ -740,7 +609,7 @@ Directory contains PacBio contigs/scaffolds of all strains.
 
 ### Annotate
 
-- **Results/Annotations/*_annotation**<br/>
+- **Results/Annotations/\*\_annotation**<br/>
 directories contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.
 <br/>
 
@@ -770,7 +639,7 @@ file with identity values arranged in a [phylip-formatted lower triangular matri
 An ANI matrix of all strains.
 <br/>
 
-- __Results/ANI/ANI_matrix.pdf__<br/>
+- __Results/ANI/ANI\_matrix.pdf__<br/>
 The heatmap plot of "ANIs.heatmap".
 
 ### MASH
@@ -784,7 +653,7 @@ The pairwise similarity between pair genomes, each column represents Reference-I
 - __Results/MASH/MASH.heatmap__<br/>
 A similarity matrix of all genomes.
 
-- __Results/MASH/MASH_matrix.pdf__<br/>
+- __Results/MASH/MASH\_matrix.pdf__<br/>
 A heat map plot of "MASH.heatmap".
 
 ### CoreTree
@@ -810,27 +679,27 @@ The phylogenetic tree file of SNPs of single-copy core genes for all strains bas
 <br/>
 
 
-- __Results/CoreTrees/"Other_files"__<br/>
+- __Results/CoreTrees/"Other\_files"__<br/>
 Intermediate directories and files.
 <br/>
 
 ### OrthoF
 
-- __Results/OrthoFinder/Results_orthoF__<br/>
+- __Results/OrthoFinder/Results\_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 <br/>
 
 ### Pan
 
-- __Results/PanGenome/Pangenome_Pie.pdf__<br/>
+- __Results/PanGenome/Pangenome\_Pie.pdf__<br/>
 A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 <br/>
 
-- __Results/PanGenome/pangenome_frequency.pdf__<br/>
+- __Results/PanGenome/pangenome\_frequency.pdf__<br/>
 A graph with the frequency of genes versus the number of genomes.
 <br/>
 
-- __Results/PanGenome/Pangenome_matrix.pdf__<br/>
+- __Results/PanGenome/Pangenome\_matrix.pdf__<br/>
 A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
 <br/>
 
@@ -842,25 +711,25 @@ Alignments of single-copy core proteins called by roary software.
 A phylogenetic tree of Roary.core.protein.fasta based on the best-fit model of evolution selected using BIC, AIC and AICc criteria.
 <br/>
 
-- __Results/PanGenome/Other_files__<br/>
+- __Results/PanGenome/Other\_files__<br/>
 see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 <br/>
 
 ### pCOG
 
-- __*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table__<br/>
+- __\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table__<br/>
 Intermediate files.
 <br/>
 
-- __*.2Scog.table__<br/>
+- __\*.2Scog.table__<br/>
 The super COG table of each strain.
 <br/>
 
-- __*.2Scog.table.pdf__<br/>
+- __\*.2Scog.table.pdf__<br/>
 A plot of super COG table in pdf format.
 <br/>
 
-- __All_flags_relative_abundances.table__
+- __All\_flags\_relative\_abundances.table__
 A table containing the relative abundance of each flag for all strains.
 
 ### VAR
@@ -873,7 +742,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
   - __core.aln__ : A core SNP alignment includes only SNP sites.
   - __core.full.aln__ : A whole genome SNP alignment (includes invariant sites).
   - __core.*.support__ : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using BIC, AIC and AICc criteria (ignoring possible recombination).
-  - **gubbins.core.full.node_labelled.final_tree.tre** : Phylogenetic tree of the whole genome SNP alignment constructed with __gubbins__ (get rid of recombination).
+  - **gubbins.core.full.node\_labelled.final\_tree.tre** : Phylogenetic tree of the whole genome SNP alignment constructed with __gubbins__ (get rid of recombination).
 
 ### AntiRes
 - __Results/AntiRes/*.tab__ : Screening results of each strain.
@@ -894,9 +763,9 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v2](https://dx.doi.org/10.21203/rs.2.21224/v2)
+- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v3](https://dx.doi.org/10.21203/rs.2.21224/v3)
 
-- If you use "\-\-Assemble", please also cite one of [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
+- If you use "\-\-Assemble", please also cite one or two of [Fastp](https://github.com/OpenGene/fastp), [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
 - If you use "\-\-Annotate", please also cite [Prokka](https://www.pixiv.net/member_illust.php?mode=medium&illust_id=24642063).
 
@@ -923,15 +792,11 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 ### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 
-Check the log file named in "strain_name.log" under Results/Variants/\<strain_name\>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
+Check the log file named in "strain_name.log" under Results/Variants/<strain\_name\>/ directory. If you find a sentence like "WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate." This is a snpEff error. Users can install JDK8 to solve this problem.
 
 
 
-```
-
-$conda install java-jdk=8.0.112
-
-```
+<pre>$conda install java-jdk=8.0.112</pre>
 
 
 
@@ -940,7 +805,7 @@ Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solu
 ### Q2 Could not determine version of minced please install version 2 or higher
 When running the Annotate function, this error could happen, the error message shows as following:
 
-```
+<pre>
 Error: A JNI error has occurred, please check your installation and try again
 Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
 	at java.lang.ClassLoader.defineClass1(Native Method)
@@ -957,12 +822,10 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has be
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
 	at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
 [01:09:40] Could not determine version of minced - please install version 2.0 or higher
-```
+</pre>
 Users can downgrade the minced to version 0.3 to solve this problem.
 
-```
-$conda install minced=0.3
-```
+<pre>$conda install minced=0.3</pre>
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
 
@@ -970,7 +833,7 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
-```
+<pre>
 #Firstly, install brew if have not installed before
 $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -981,7 +844,7 @@ $brew install openssl
 $ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 
 $ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
-```
+</pre>
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations
 
@@ -1037,7 +900,7 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Users now can choose "abyss" or "spades" for illumina reads aseembly.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
-  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]", and can look up the examples of each module with command "pgcgap Examples".
+  - Optimized display of help information. Users can check parameters for each modulewith command "pgcgap \[Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR\]", and can look up the examples of each module with command "pgcgap Examples".
 
 - V1.0.12
 
@@ -1062,6 +925,15 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.16
   - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
   - Force overwriting existing output folder when running "Annotate" analysis to avoid program crash.
+
+- V1.0.17
+  - Fixed a bug that the program can not go back to the working directory after genome annotation.
+  - Added scripts to check if there were single-copy core proteins found while running module "CoreTree".
+  - Modified the help message.
+
+- V1.0.18
+  - Updated the downloading link of COG database.
+  - Users can choose the number of threads used for running module "STREE".
 
 ---
 
