@@ -763,7 +763,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v2](https://dx.doi.org/10.21203/rs.2.21224/v2)
+- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v3](https://dx.doi.org/10.21203/rs.2.21224/v3)
 
 - If you use "\-\-Assemble", please also cite one or two of [Fastp](https://github.com/OpenGene/fastp), [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
