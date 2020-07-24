@@ -935,6 +935,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Updated the downloading link of COG database.
   - Users can choose the number of threads used for running module "STREE".
 
+- V1.0.19
+  - Can resume from break-point when downloading the COG database.
+  - Fixed a bug that failed to create multi-level directories.
 ---
 
 <center><strong>

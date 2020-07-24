@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.18\n";
+    print "PGCGAP version: 1.0.19\n";
     exit 0;
 }
 
@@ -1458,10 +1458,10 @@ if ($opt_setup_COGdb) {
 	#system("mkdir -p ~/COGdb");
 #	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 #	system("gunzip prot2003-2014.fa.gz");
-	system("wget -P ./ http://122.205.95.26/COGdb/cognames2003-2014.tab");
-	system("wget -P ./ http://122.205.95.26/COGdb/fun2003-2014.tab");
-	system("wget -P ./ http://122.205.95.26/COGdb/cog2003-2014.csv");
-	system("wget -P ./ http://122.205.95.26/COGdb/prot2003-2014.fa");
+	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cognames2003-2014.tab");
+	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/fun2003-2014.tab");
+	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cog2003-2014.csv");
+	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/prot2003-2014.fa");
 	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
 	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab $pgcgap_dir/");
 	system("chmod a+x $pgcgap_dir/COG*");
@@ -1754,7 +1754,7 @@ if ($opt_All or $opt_Assemble) {
 	}elsif ($opt_platform eq "oxford") {
 		#print "Performing --Assemble function for Oxford Nanopore data...\n\n";
 		system("mkdir -p Results/Assembles/Oxford");
-		system("mkdir Results/Assembles/Scaf/Oxford");
+		system("mkdir -p Results/Assembles/Scaf/Oxford");
 		chdir $opt_ReadsPath;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
@@ -2761,7 +2761,7 @@ if ($opt_All or $opt_OrthoF) {
 if ($opt_All or $opt_MASH) {
 	my $time_MASHs = time();
 	print "Performing --MASH function...\n\n";
-	system("mkdir Results/MASH");
+	system("mkdir -p Results/MASH");
 	chdir $opt_scafPath;
 	my @genome = glob("*$opt_Scaf_suffix");
 	foreach  (@genome) {
@@ -2795,7 +2795,7 @@ if ($opt_All or $opt_MASH) {
 if ($opt_All or $opt_ANI) {
 	my $time_ANIs = time();
 	print "Performing --ANI function...\n\n";
-	system("mkdir Results/ANI");
+	system("mkdir -p Results/ANI");
 	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
 	chdir "Results/ANI";
 	system("perl $pgcgap_dir/triangle2list.pl");
@@ -2810,7 +2810,7 @@ if ($opt_All or $opt_ANI) {
 if ($opt_VAR) {
 	my $time_VARs = time();
 	print "Performing --VAR function...\n\n";
-	system("mkdir Results/Variants");
+	system("mkdir -p Results/Variants");
 	chdir "$opt_ReadsPath";
 	system("mkdir Trimmed");
 	system("cp $opt_refgbk ./");
@@ -2836,7 +2836,7 @@ if ($opt_VAR) {
 	}
 	chdir $working_dir;
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Variants/*");
-	system("mkdir Results/Variants/Core");
+	system("mkdir -p Results/Variants/Core");
 
 	if ($opt_strain_num > 2) {
 		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.core.full core.full.aln");
@@ -2976,7 +2976,7 @@ if ($opt_VAR) {
 if ($opt_All or $opt_AntiRes) {
 	my $time_Antis = time();
 	print "Performing --AntiRes function...\n\n";
-	system("mkdir Results/AntiRes");
+	system("mkdir -p Results/AntiRes");
 	chdir $opt_scafPath;
 	my @genome = glob("*$opt_Scaf_suffix");
 	foreach  (@genome) {
@@ -2994,7 +2994,7 @@ if ($opt_All or $opt_AntiRes) {
 if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
-	system("mkdir Results/COG");
+	system("mkdir -p Results/COG");
 	system("COG.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
