@@ -938,6 +938,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.19
   - Can resume from break-point when downloading the COG database.
   - Fixed a bug that failed to create multi-level directories.
+
+- V1.0.20
+  - Fixed a little bug (path error) of module "VAR".
+
 ---
 
 <center><strong>

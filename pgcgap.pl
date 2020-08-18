@@ -1380,7 +1380,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Contact: liaochenlanruo@webmail.hzau.edu.cn
 
-  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v2
+  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v3+
 
 =end text
 
@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.19\n";
+    print "PGCGAP version: 1.0.20\n";
     exit 0;
 }
 
@@ -2832,7 +2832,7 @@ if ($opt_VAR) {
 		my $trir = $str . "_trimmed_2.fastq";
 		my $tris = $str . "_trimmed_s.fastq";
 		system("sickle pe -f $read1 -r $read2 -t $opt_qualtype -o Trimmed/$trif -p Trimmed/$trir -s Trimmed/$tris -q $opt_qual -l $opt_length");#Quality trimming
-		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir ../../Results/Variants/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
+		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir $working_dir/Results/Variants/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
 	}
 	chdir $working_dir;
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Variants/*");
@@ -2965,6 +2965,7 @@ if ($opt_VAR) {
 		system("raxml-ng --all --msa core.aln --prefix core.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
 	}
 	system("mv core.* Results/Variants/Core/");
+	chdir $working_dir;
 	#===================end==========================================================
 	#system("fasttree -nt -gtr core.aln > core.nwk");
 	#system("mv core.aln core.nwk Results/Variants/Core/");
