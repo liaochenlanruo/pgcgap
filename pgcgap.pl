@@ -1898,11 +1898,23 @@ if ($opt_All or $opt_CoreTree) {
 	}
 	#============================extract ortholog cluster of protein=============================
 	open SEQP, "All.pep" || die;
+	open OUT, ">All.pep2" || die;
+	while (<SEQP>) {
+		chomp;
+		if (/^(>\S+)/) {
+			print OUT $1 . "\n";
+		}else {
+			print OUT $_ . "\n";
+		}
+	}
+	close SEQP;
+	close OUT;
 
+	open IN, "All.pep2" || die;
 	local $/ = '>';
 	my %hashP = ();
 
-	while(<SEQP>){
+	while(<IN>){
 		chomp;
 		my ($name, $sequence) = split (/\n/, $_, 2);
 		next unless ($name && $sequence);
@@ -1910,7 +1922,7 @@ if ($opt_All or $opt_CoreTree) {
 		$sequence =~ s/\s+|\n|\-//g;
 		$hashP{$n} = $sequence;
 	}
-	close(SEQP);
+	close(IN);
 
 	$/ = "\n";
 	open LISTP, "core.pep.list" || die;
@@ -1937,7 +1949,7 @@ if ($opt_All or $opt_CoreTree) {
 				if(exists $hashP{$ele}){
 					print OUT ">$ele\n$hashP{$ele}\n";
 				}else{
-					warn "error! The gene id is missing in the sequence file.\n";
+					warn "error! The gene id $ele is missing in the sequence file.\n";
 				}
 			}
 		}
