@@ -1380,7 +1380,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Contact: liaochenlanruo@webmail.hzau.edu.cn
 
-  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v2
+  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v3+
 
 =end text
 
@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.19\n";
+    print "PGCGAP version: 1.0.20\n";
     exit 0;
 }
 
@@ -1535,8 +1535,8 @@ if ($opt_All or $opt_Assemble) {
 			my $read1 = $name . $opt_reads1;
 			my $read2 = $name . $opt_reads2;
 			my $str = substr($read1,0,(length($read1)-$opt_suffix_len));
-			my $fastp_out1 = $name . "fastp" . $opt_reads1;#2020/4/15
-			my $fastp_out2 = $name . "fastp" . $opt_reads2;#2020/4/15
+			my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
+			my $fastp_out2 = $name . ".fastp" . $opt_reads2;#2020/4/15
 			my $fastph = $str . ".fastp.html";#2020/4/15
 			my $fastpj = $str . ".fastp.json";#2020/4/15
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
@@ -1898,11 +1898,23 @@ if ($opt_All or $opt_CoreTree) {
 	}
 	#============================extract ortholog cluster of protein=============================
 	open SEQP, "All.pep" || die;
+	open OUT, ">All.pep2" || die;
+	while (<SEQP>) {
+		chomp;
+		if (/^(>\S+)/) {
+			print OUT $1 . "\n";
+		}else {
+			print OUT $_ . "\n";
+		}
+	}
+	close SEQP;
+	close OUT;
 
+	open IN, "All.pep2" || die;
 	local $/ = '>';
 	my %hashP = ();
 
-	while(<SEQP>){
+	while(<IN>){
 		chomp;
 		my ($name, $sequence) = split (/\n/, $_, 2);
 		next unless ($name && $sequence);
@@ -1910,7 +1922,7 @@ if ($opt_All or $opt_CoreTree) {
 		$sequence =~ s/\s+|\n|\-//g;
 		$hashP{$n} = $sequence;
 	}
-	close(SEQP);
+	close(IN);
 
 	$/ = "\n";
 	open LISTP, "core.pep.list" || die;
@@ -1937,7 +1949,7 @@ if ($opt_All or $opt_CoreTree) {
 				if(exists $hashP{$ele}){
 					print OUT ">$ele\n$hashP{$ele}\n";
 				}else{
-					warn "error! The gene id is missing in the sequence file.\n";
+					warn "error! The gene id $ele is missing in the sequence file.\n";
 				}
 			}
 		}
@@ -2832,7 +2844,7 @@ if ($opt_VAR) {
 		my $trir = $str . "_trimmed_2.fastq";
 		my $tris = $str . "_trimmed_s.fastq";
 		system("sickle pe -f $read1 -r $read2 -t $opt_qualtype -o Trimmed/$trif -p Trimmed/$trir -s Trimmed/$tris -q $opt_qual -l $opt_length");#Quality trimming
-		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir ../../Results/Variants/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
+		system("snippy --cpus $opt_threads --ram $opt_ram --prefix $str --mincov $opt_mincov --minfrac $opt_minfrac --minqual $opt_minqual --outdir $working_dir/Results/Variants/$str --ref $opt_refgbk --R1 Trimmed/$trif --R2 Trimmed/$trir --report");
 	}
 	chdir $working_dir;
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Variants/*");
@@ -2965,6 +2977,7 @@ if ($opt_VAR) {
 		system("raxml-ng --all --msa core.aln --prefix core.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
 	}
 	system("mv core.* Results/Variants/Core/");
+	chdir $working_dir;
 	#===================end==========================================================
 	#system("fasttree -nt -gtr core.aln > core.nwk");
 	#system("mv core.aln core.nwk Results/Variants/Core/");
