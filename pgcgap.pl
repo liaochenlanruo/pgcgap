@@ -793,13 +793,13 @@ If you use the results of "--OrthoF" function in your work, please also cite:
 
 =item B<[--Sprogram (STRING)]>
 
-Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default blast )
+Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default diamond )
 
 =back
 
 =cut
 
-$options{'Sprogram=s'} = \( my $opt_Sprogram = "blast" );
+$options{'Sprogram=s'} = \( my $opt_Sprogram = "diamond" );
 
 =head3 ========================== Options for "--ANI" analysis ===============================================
 
@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.20\n";
+    print "PGCGAP version: 1.0.21\n";
     exit 0;
 }
 
@@ -3235,7 +3235,7 @@ sub printPan{
 
 sub printOrthoF{
 	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
-	print "[--Sprogram (STRING)] Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default blast )\n";
+	print "[--Sprogram (STRING)] Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default diamond )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 

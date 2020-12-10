@@ -926,7 +926,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <ul>
 <li>
 <p><strong>[--Sprogram (STRING)]</strong>        Sequence search program, Options: blast,
-                             mmseqs, blast_gz, diamond ( Default blast)</p>
+                             mmseqs, blast_gz, diamond ( Default diamond)</p>
 </li>
 <li>
 <p><strong>[--PanTree]</strong>                  Construct a phylogenetic tree of single-copy core proteins called by roary
@@ -1687,6 +1687,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <ul>
 <li>Fixed a little bug (path error) of module "VAR".</li>
 <li>Fixed a little bug of module "CoreTree" to avoid the interference of special characters in sequence ID to the program.</li>
+</ul>
+</li>
+
+<li>
+<p>V1.0.21</p>
+<ul>
+<li>Change the default search program "blast" to "diamond" of module "OrthoF".</li>
+<li>Fixed a bug of module "pCOG" to output the right figure.</li>
 </ul>
 </li>
 
