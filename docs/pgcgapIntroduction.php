@@ -556,7 +556,7 @@ img {
 <p><center>
 <img src="https://badgen.net/badge/platform/WSL,Linux,macOS,Docker?list=|" alt="Platform" />
 <img src="https://badgen.net/github/license/liaochenlanruo/pgcgap" alt="License" />
-<a href="https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap"><img src="https://badge.fury.io/gh/liaochenlanruo%2Fpgcgap.svg" alt="GitHubversion" /></a>
+<a href="https://anaconda.org/bioconda/pgcgap"><img src="https://anaconda.org/bioconda/pgcgap/badges/version.svg" alt="GitHubversion" /></a>
 <img src="https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat" alt="Downloads conda" />
 <a href="http://bioconda.github.io/recipes/pgcgap/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda" /></a>
 </center></p>
@@ -926,7 +926,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <ul>
 <li>
 <p><strong>[--Sprogram (STRING)]</strong>        Sequence search program, Options: blast,
-                             mmseqs, blast_gz, diamond ( Default blast)</p>
+                             mmseqs, blast_gz, diamond ( Default diamond)</p>
 </li>
 <li>
 <p><strong>[--PanTree]</strong>                  Construct a phylogenetic tree of single-copy core proteins called by roary
@@ -1687,6 +1687,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <ul>
 <li>Fixed a little bug (path error) of module "VAR".</li>
 <li>Fixed a little bug of module "CoreTree" to avoid the interference of special characters in sequence ID to the program.</li>
+</ul>
+</li>
+
+<li>
+<p>V1.0.21</p>
+<ul>
+<li>Change the default search program "blast" to "diamond" of module "OrthoF".</li>
+<li>Fixed a bug of module "pCOG" to output the right figure.</li>
 </ul>
 </li>
 
