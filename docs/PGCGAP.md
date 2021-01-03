@@ -947,6 +947,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Change the default search program "blast" to "diamond" of module "OrthoF".
   - Fixed a bug of module "pCOG" to output the right figure.
 
+- V1.0.22
+  - The drawing function of module "ANI" and module "MASH" has been enhanced, including automatic adjustment of font size and legend according to the size of the picture.
+
 ---
 
 <center><strong>
