@@ -949,6 +949,8 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.22
   - The drawing function of module "ANI" and module "MASH" has been enhanced, including automatic adjustment of font size and legend according to the size of the picture.
+  - Fixed a bug of module "ANI", that is no heatmap will be drawn when there is "NA" in the ANI matrix in the previous versions.
+  - When the ANI value or genome similarity is greater than 95%, an asterisk (*) will be drawn in the corresponding cell of the heatmap.
 
 ---
 
