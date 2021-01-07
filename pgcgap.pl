@@ -1393,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.22\n";
+    print "PGCGAP version: 1.0.23\n";
     exit 0;
 }
 
@@ -3024,6 +3024,7 @@ if ($opt_ACC) {
 	if ($opt_Assess) {
 		chdir $opt_scafPath;
 		system("genome_LenFilter_stats.pl --Scaf_suffix $opt_Scaf_suffix --filter_length $opt_filter_length");
+		system("get_stats_summary.pl --Scaf_suffix $opt_Scaf_suffix");
 		chdir $working_dir;
 	}
 }

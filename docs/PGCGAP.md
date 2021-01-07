@@ -952,6 +952,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
   - Fixed a bug of module "ANI", that is no heatmap will be drawn when there is "NA" in the ANI matrix in the previous versions.
   - When the ANI value or genome similarity is greater than 95%, an asterisk (*) will be drawn in the corresponding cell of the heatmap.
 
+- V1.0.23
+  - The "--Assess" function of module "ACC" was enhanced to (1) generate a summary file containing the status of all genomes (before and after the short sequence filtering), (2) auto move the low-quality genomes (that is genomes with N50 length less than 50 k) to a directory, and others to another directory.
+
 ---
 
 <center><strong>
