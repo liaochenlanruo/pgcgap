@@ -2482,8 +2482,21 @@ if ($opt_All or $opt_Pan) {
 		my %hash;
 		system("cat $opt_AAsPath/*.faa > Results/PanGenome/Core/All_aa.fa");
 		chdir "Results/PanGenome/Core";
+		open SEQP, "All_aa.fa" || die;
+		open OUT, ">All_aa.fa2" || die;
+		while (<SEQP>) {
+			chomp;
+			if (/^(>\S+)/) {
+				print OUT $1 . "\n";
+			}else {
+				print OUT $_ . "\n";
+			}
+		}
+		close SEQP;
+		close OUT;
+
 		local $/ = ">";
-		open AA, "All_aa.fa" || die;
+		open AA, "All_aa.fa2" || die;
 		<AA>;
 		while (<AA>) {
 			chomp;

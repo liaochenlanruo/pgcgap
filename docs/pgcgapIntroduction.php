@@ -1714,6 +1714,12 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 </ul>
 </li>
 
+<li>
+<p>V1.0.24</p>
+<ul>
+<li>Fixed a little bug of module "Pan" to avoid the interference of special characters (>) in sequence ID to the program.</li>
+</ul>
+</li>
 
 </ul>
 <hr />

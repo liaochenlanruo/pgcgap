@@ -955,6 +955,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.23
   - The "--Assess" function of module "ACC" was enhanced to (1) generate a summary file containing the status of all genomes (before and after the short sequence filtering), (2) auto move the low-quality genomes (that is genomes with N50 length less than 50 k) to a directory, and others to another directory.
 
+- V1.0.24
+  - Fixed a little bug of module "Pan" to avoid the interference of special characters (>) in sequence ID to the program.
+
+
 ---
 
 <center><strong>
