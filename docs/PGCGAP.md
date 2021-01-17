@@ -303,6 +303,10 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __\-\-Pan__
 
+      - __[\-\-identi (INT)]__                  Minimum percentage identity for blastp ( Default 95 )
+  <br/>
+      - __[\-\-PanTree]__                        Construct a phylogenetic tree of single-copy core proteins called by roary
+ <br/>
       - __[\-\-GffPath (PATH)]__           [Required] Gff files of all strains as paths
                                          ( Default "./Results/Annotations/GFF" )
   <br/>
@@ -958,7 +962,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.24
   - Fixed a little bug of module "Pan" to avoid the interference of special characters (>) in sequence ID to the program.
 
-
+- V1.0.25
+  - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module "CoreTree" and "Pan".
+  - The parameter "--identi" was added into module "Pan" to allow users to set the minimum percentage identity for blastp.
 ---
 
 <center><strong>
