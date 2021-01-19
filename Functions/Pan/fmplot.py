@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 def get_options():
     import argparse
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # Plot presence/absence matrix against the tree
     with sns.axes_style('whitegrid'):
-        fig = plt.figure(figsize=(17, 10))
+        fig = plt.figure(figsize=(27, 27))
 
         ax1=plt.subplot2grid((1,40), (0, 15), colspan=30)
         a=ax1.matshow(roary_sorted.T, cmap=plt.cm.Blues,

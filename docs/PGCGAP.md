@@ -303,6 +303,10 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __\-\-Pan__
 
+      - __[\-\-identi (INT)]__                  Minimum percentage identity for blastp ( Default 95 )
+  <br/>
+      - __[\-\-PanTree]__                        Construct a phylogenetic tree of single-copy core proteins called by roary
+ <br/>
       - __[\-\-GffPath (PATH)]__           [Required] Gff files of all strains as paths
                                          ( Default "./Results/Annotations/GFF" )
   <br/>
@@ -949,7 +953,18 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
 - V1.0.22
   - The drawing function of module "ANI" and module "MASH" has been enhanced, including automatic adjustment of font size and legend according to the size of the picture.
+  - Fixed a bug of module "ANI", that is no heatmap will be drawn when there is "NA" in the ANI matrix in the previous versions.
+  - When the ANI value or genome similarity is greater than 95%, an asterisk (*) will be drawn in the corresponding cell of the heatmap.
 
+- V1.0.23
+  - The "--Assess" function of module "ACC" was enhanced to (1) generate a summary file containing the status of all genomes (before and after the short sequence filtering), (2) auto move the low-quality genomes (that is genomes with N50 length less than 50 k) to a directory, and others to another directory.
+
+- V1.0.24
+  - Fixed a little bug of module "Pan" to avoid the interference of special characters (>) in sequence ID to the program.
+
+- V1.0.25
+  - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module "CoreTree" and "Pan".
+  - The parameter "--identi" was added into module "Pan" to allow users to set the minimum percentage identity for blastp.
 ---
 
 <center><strong>
