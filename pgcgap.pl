@@ -1392,7 +1392,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Contact: liaochenlanruo@webmail.hzau.edu.cn
 
-  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v3+
+  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatic analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2021. DOI: 10.21203/rs.2.21224/v5
 
 =end text
 
@@ -1405,7 +1405,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.25\n";
+    print "PGCGAP version: 1.0.26\n";
     exit 0;
 }
 

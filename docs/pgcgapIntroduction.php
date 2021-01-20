@@ -1187,7 +1187,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.</p>
-<pre>$pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+<pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
 </li>
 <li>
 <p><strong>Example 7:</strong> Inference of orthologous gene groups.</p>
@@ -1486,7 +1486,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <h2>Citation</h2>
 <ul>
 <li>
-<p>If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. <em>Protocol exchange</em>, 2020. DOI: <a href="https://dx.doi.org/10.21203/rs.2.21224/v3">10.21203/rs.2.21224/v3+</a></p>
+<p>If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. <em>Protocol exchange</em>, 2020. DOI: <a href="https://doi.org/10.21203/rs.2.21224/v5">10.21203/rs.2.21224/v5</a></p>
 </li>
 <li>
 <p>If you use &quot;--Assemble&quot;, please also cite one or two of <a href="https://github.com/OpenGene/fastp">Fastp</a>, <a href="https://doi.org/10.1101/gr.214346.116">ABySS</a>, <a href="http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13">SPAdes</a>, <a href="https://doi.org/10.1101/gr.215087.116">Canu</a>, or <a href="https://doi.org/10.1371/journal.pcbi.1005595">Unicycler</a>.</p>
@@ -1737,6 +1737,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <ul>
 <li>Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module "CoreTree" and "Pan".</li>
 <li>The parameter "--identi" was added into module "Pan" to allow users to set the minimum percentage identity for blastp.</li>
+</ul>
+</li>
+
+<li>
+<p>V1.0.26</p>
+<ul>
+<li>Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module "ANI" and "MASH".</li>
+<li>Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the "ANI" and "MASH" analysis.</li>
 </ul>
 </li>
 

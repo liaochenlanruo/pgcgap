@@ -502,7 +502,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
-    <pre>$pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+    <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
 
   - __Example 7:__ Inference of orthologous gene groups.
 
@@ -767,7 +767,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v3+](https://dx.doi.org/10.21203/rs.2.21224/v3)
+- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v5](https://doi.org/10.21203/rs.2.21224/v5)
 
 - If you use "\-\-Assemble", please also cite one or two of [Fastp](https://github.com/OpenGene/fastp), [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
@@ -965,6 +965,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.25
   - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module "CoreTree" and "Pan".
   - The parameter "--identi" was added into module "Pan" to allow users to set the minimum percentage identity for blastp.
+ 
+ - V1.0.26
+   - Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module "ANI" and "MASH".
+   - Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the "ANI" and "MASH" analysis.
 ---
 
 <center><strong>
