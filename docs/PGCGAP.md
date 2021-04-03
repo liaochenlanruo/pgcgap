@@ -502,7 +502,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
-    <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+    <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
 
   - __Example 7:__ Inference of orthologous gene groups.
 
@@ -562,7 +562,7 @@ Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn”
 A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### Pan
-GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
+GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### pCOG
 Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
@@ -969,6 +969,10 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
  - V1.0.26
    - Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module "ANI" and "MASH".
    - Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the "ANI" and "MASH" analysis.
+
+ - V1.0.27
+   - The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.
+
 ---
 
 <center><strong>

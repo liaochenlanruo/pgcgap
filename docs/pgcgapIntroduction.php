@@ -1187,7 +1187,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.</p>
-<pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+<pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
 </li>
 <li>
 <p><strong>Example 7:</strong> Inference of orthologous gene groups.</p>
@@ -1238,7 +1238,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <h3>OrthoF</h3>
 <p>A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.</p>
 <h3>Pan</h3>
-<p>GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.</p>
+<p>GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the “--Annotate” function was run first, the files will be generated automatically.</p>
 <h3>pCOG</h3>
 <p>Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “--Annotate” function was run first, the files will be generated automatically.</p>
 <h3>VAR</h3>
@@ -1745,6 +1745,13 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <ul>
 <li>Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module "ANI" and "MASH".</li>
 <li>Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the "ANI" and "MASH" analysis.</li>
+</ul>
+</li>
+
+<li>
+<p>V1.0.27</p>
+<ul>
+<li>The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.</li>
 </ul>
 </li>
 

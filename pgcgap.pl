@@ -1405,7 +1405,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.26\n";
+    print "PGCGAP version: 1.0.27\n";
     exit 0;
 }
 
@@ -2505,19 +2505,31 @@ if ($opt_All or $opt_Pan) {
 	my $pangenome = "Results/PanGenome";
 	#system("roary -p $opt_threads -e --mafft -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
 	system("roary -p $opt_threads -r -t $opt_codon -i $opt_identi -f $pangenome $opt_GffPath/*.gff");
-	chdir "Results/PanGenome";
+	#my $dir = "Results/PanGenome_*";
+	#chdir $dir || print "Can not cd into $dir";
+	chdir $pangenome;
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
 	system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
-
+	chdir $working_dir;
 	if ($opt_PanTree) {
 		#Constructing Roary single-copy core proteins tree
-		system("mkdir Core");
-		chdir $working_dir;
+		system("mkdir $working_dir/$pangenome/Core");
+		chdir $opt_GffPath;
+		my @gff = glob("*.gff");
+		foreach my $gff (@gff) {
+			$gff=~/(.+).gff/;
+			my $name = $1;
+			print $name . "\n";
+			system("perl $pgcgap_dir/grep_cds_aas_from_gff3.pl $gff $name");
+		}
+		system("mv *.id *.cds *.pep $working_dir/$pangenome/Core");
+		chdir "$working_dir/$pangenome/Core";
+		#chdir $working_dir;
 		
 		my %hash;
-		system("cat $opt_AAsPath/*.faa > Results/PanGenome/Core/All_aa.fa");
-		chdir "Results/PanGenome/Core";
+		system("cat *.pep > All_aa.fa");
+		#chdir "Results/PanGenome/Core";
 		open SEQP, "All_aa.fa" || die;
 		open OUT, ">All_aa.fa2" || die;
 		while (<SEQP>) {
@@ -3282,7 +3294,6 @@ sub printCoreTree{
 }
 
 sub printPan{
-	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
 	print "[--GffPath (PATH)] Gff files of all strains as paths ( Default './Results/Annotations/GFF' )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
@@ -3391,7 +3402,7 @@ sub printExamples{
 
 	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --AAsPath <PATH>\n\n";
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree\n\n";
 
 	print "Example 9: Inference of orthologous gene groups\n\n";
 
