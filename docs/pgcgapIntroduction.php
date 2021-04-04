@@ -1186,7 +1186,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
 </li>
 <li>
-<p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.</p>
+<p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <strong>Applicable to v1.0.27 and later</strong>.</p>
 <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
 </li>
 <li>

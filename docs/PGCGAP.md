@@ -500,7 +500,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __Example 5:__ Constructing single-copy core protein tree only.
     <pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
 
-  - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
+  - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **Applicable to v1.0.27 and later**.
 
     <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
 
