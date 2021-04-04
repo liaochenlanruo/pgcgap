@@ -44,7 +44,7 @@ while(<GFF>){
 				$cds{$pep} = [$chr, $p[3], $p[4], $p[6]];
 			}
 		}
-	}else {
+	}else {# process the scaffolds
 		my ($id, $seq) = split (/\n/, $_, 2);
 		$id =~ /^(\S+)/;
 		my $index= $1;
@@ -54,19 +54,19 @@ while(<GFF>){
 }
 close GFF;
 
+$/="\n";
 # get id list
 my $id_gene_cds_pep=$prefix.".cds.id";
 open ID, ">",$id_gene_cds_pep||die;
 foreach my $i(sort keys %cds){
 	if($cds{$i}){
 		my $out=join "\t",$i,$cds{$i}[0],$cds{$i}[1],$cds{$i}[2],$cds{$i}[3];
-		print ID $out,"\n";
+		print ID $out . "\n";
 	}
 }
 warn "create file:$id_gene_cds_pep\n";
 close ID;
 
-$/="\n";
 # Get CDs sequences
 open LIST, "$id_gene_cds_pep" || die;
 my %gene;
@@ -86,20 +86,24 @@ while (<LIST>) {
 	}
 }
 
+
 # Print CDs sequences
 my $cds=$prefix.".cds";
 warn "create file:$cds\n";
 open CDS, ">$cds" || die;
 foreach  (sort keys %gene) {
-	print CDS ">$_\n$gene{$_}\n";
+	print CDS ">$_\n$gene{$_} \n\n";
 }
-print CDS "\n";
+close CDS;
 
-# Get AAs sequences
+# Print AAs sequences
 my $raw_pep=$prefix.".pep";
-open PEP1,">",$raw_pep||die;
-my @raw_pep=sort &cds2pep($cds);
-print PEP1 $_ for@raw_pep;
+open PEP1, ">$raw_pep" || die;
+my @raw_pep= &cds2pep($cds);
+foreach  (@raw_pep) {
+	print PEP1 $_ . "\n";
+}
+#print PEP1 $_ for@raw_pep;
 close PEP1;
 warn "create file:$raw_pep\n";
 
@@ -114,7 +118,6 @@ sub reverse_complement{
 
 # subroutine
 sub cds2pep{
-	my $file=shift;
 	my %code = (
 						"standard" =>
 							{
@@ -166,31 +169,35 @@ sub cds2pep{
 							}
 							## more translate table could be added here in future
 	);
-	open IN,$file||die;
-	$/=">";
+	local $/=">";
+	my $file=shift;
+	open IN, $file || die;
 	<IN>;
 	my @results_set;
 	while(<IN>){
 		chomp;
-		my ($id, $seq) = split (/\n/, $_, 2);
-		my @a=split/\s+/,$id;
-			$seq=~s/\n|>//g;
-			my $len=length$seq;
-			my $info_out= $a[0];
-			my ($pep_out,$triplet);
-			for(my $i=0;$i<$len;$i+=3){
-				$triplet=substr($seq,$i,3);
-				next if(length$triplet!=3);
-				if(exists $code{code11}{$triplet}){
-					$pep_out.=$code{code11}{$triplet};
-					}else{$pep_out.="X"}
+		my ($id, $seq) = split (/\n/, $_);
+		my @a=split /\s+/, $id;
+		$seq =~ s/\s+|\n|\-//g;
+#		$seq=~s/\n|>//g;
+		my $len=length $seq;# length of sequence
+		my $info_out= $a[0];# sequence id
+		my ($pep_out, $triplet);
+		for(my $i=0;$i<$len;$i+=3){
+			$triplet=substr($seq,$i,3);
+			next if (length $triplet != 3);
+			if (exists $code{code11}{$triplet}){
+				$pep_out .= $code{code11}{$triplet};# protein sequence
+			}else{
+				$pep_out .= "X";
 			}
-			$pep_out=~s/U$// if($pep_out=~/U$/);
-			my $pep_len=length$pep_out;
-			$pep_out=~s/([A-Z]{50})/$1\n/g;
-			chop($pep_out) unless($pep_len%50);
-			my $results= ">$info_out\n$pep_out\n";
-		push @results_set,$results;
+		}
+		$pep_out=~s/U$// if ($pep_out=~/U$/);
+		my $pep_len = length $pep_out;
+		$pep_out=~s/([A-Z]{50})/$1\n/g;# split to 50 characters per line
+		chop($pep_out) unless($pep_len%50);
+		my $results= ">$info_out\n$pep_out\n";
+		push @results_set, $results;
 	}
 	return @results_set;
 	$/="\n";
