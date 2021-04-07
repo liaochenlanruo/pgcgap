@@ -669,6 +669,10 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <pre>$pgcgap --help</pre>
 </li>
 <li>
+<p><strong>Check for update:</strong></p>
+<pre>$pgcgap --check-update</pre>
+</li>
+<li>
 <p><strong>General usage:</strong></p>
 <pre>$pgcgap [modules] [options]</pre>
 </li>
@@ -1752,6 +1756,13 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <p>V1.0.27</p>
 <ul>
 <li>The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.</li>
+</ul>
+</li>
+
+<li>
+<p>V1.0.28</p>
+<ul>
+<li>Users can check and install the latest version of PGCGAP by the command "pgcgap --check-update".</li>
 </ul>
 </li>
 

@@ -124,7 +124,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Print the help messages:__
     <pre>$pgcgap --help</pre>
-
+- __Check for update:__
+    <pre>$pgcgap --check-update</pre>
 - __General usage:__
     <pre>$pgcgap [modules] [options]</pre>
 
@@ -973,6 +974,8 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
  - V1.0.27
    - The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.
 
+ - V1.0.28
+   - Users can check and install the latest version of PGCGAP by the command "pgcgap --check-update".
 ---
 
 <center><strong>

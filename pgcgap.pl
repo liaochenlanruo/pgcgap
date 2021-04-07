@@ -82,6 +82,18 @@ $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
 
 =over 30
 
+=item B<[--check-update]>
+
+Check if there is a new version of PGCGAP that can be upgraded
+
+=back
+
+=cut
+
+$options{'check-update'} = \( my $opt_check_update = 0 );
+
+=over 30
+
 =item B<[--setup-COGdb]>
 
 Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first installation of pgcgap
@@ -1405,7 +1417,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.27\n";
+    print "PGCGAP version: 1.0.28\n";
     exit 0;
 }
 
@@ -1418,6 +1430,7 @@ if ($opt_help) {
 #pod2usage(1) if ($#ARGV == -1);
 chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin, $opt_muscle_bin, $opt_Gblocks_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
+check_update() if ($opt_check_update);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
 pod2usage( -msg => 'modeltest-ng not in $PATH and binary not specified use --modeltestng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_modeltestng_bin);
@@ -1457,6 +1470,27 @@ sub check_external_programs{
 	exit($fail);
 }
 
+
+sub check_update{
+	my $search = `pgcgap --version`;
+	$search=~/PGCGAP version: (\S+)/;
+	my $current_version = $1;
+	if (my $version_conda=`conda search pgcgap`) {
+		my @lines = split /\n/, $version_conda;
+		$lines[-1]=~/pgcgap\s+(\S+).+/;
+		my $latest_version = $1;
+		if ($current_version ne $latest_version) {
+			print "Oh, No! You are running an old version of PGCGAP, we are going to update to the latest version $latest_version now!\n\n";
+			print "Please wait patiently, take a break and have a cup of tea or coffee\n";
+			my $installation = `conda install -y pgcgap=$latest_version`;
+			print "$installation\n";
+			exit(0);
+		}else {
+			print "Congratulations, You are running the latest version of PGCGAP v $latest_version.\n";
+			exit(0);
+		}
+	}
+}
 #=============================== Get bin PATH ======================================================
 my $pgcgap_dir;
 my $bin = `which pgcgap`;
