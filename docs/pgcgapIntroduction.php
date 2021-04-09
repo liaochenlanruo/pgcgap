@@ -776,7 +776,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                  &quot;YBT-1520_2.fq&quot;, the suffix name should be &quot;_2.fq&quot; )</p>
 </li>
 <li>
-<p><strong>[--Scaf_suffix (STRING)]</strong>         [Required by &quot;--All&quot;, &quot;--Assess&quot;, &quot;--Annotate&quot; &quot;--MASH&quot;, &quot;--ANI&quot; and &quot;--AntiRes&quot;] The suffix of scaffolds or genomes. Here, &quot;-8.fa&quot; for Illumina data, &quot;.contigs.fasta&quot; for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)</p>
+<p><strong>[--Scaf_suffix (STRING)]</strong>         [Required by &quot;--All&quot;, &quot;--Assess&quot;, &quot;--Annotate&quot; &quot;--MASH&quot;, &quot;--ANI&quot; and &quot;--AntiRes&quot;] The suffix of scaffolds or genome files. This is an important parameter that must be set (Default -8.fa)</p>
 </li>
 <li>
 <p><strong>[--filter_length (INT)]</strong>          [Required by &quot;--All&quot;, &quot;--Assemble&quot; and &quot;--Assess&quot;]&gt; Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )</p>

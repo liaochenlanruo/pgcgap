@@ -348,7 +348,7 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genomes [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+The suffix of scaffolds or genome files [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"]. This is an important parameter that must be set ( Default -8.fa )
 
 =back
 
@@ -3304,7 +3304,7 @@ sub printAssemble{
 
 sub printAnnotate{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--genus (STRING)] Genus name of the strain ( Default 'NA' )\n";
 	print "[--species (STRING)] Species name of the strain ( Default 'NA' )\n";
@@ -3351,7 +3351,7 @@ sub printANI{
 
 sub printMASH{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3376,7 +3376,7 @@ sub printVAR{
 
 sub printAntiRes{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--db (STRING)]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )\n";
 	print "[--identity (INT)] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )\n";
 	print "[--coverage (INT)] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )\n";
@@ -3398,7 +3398,7 @@ sub printSTREE{
 
 sub printACC{
 	print "Applets in ACC include 'Assess' now\n";
-	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genomes ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
+	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
 }
 
 sub printExamples{
