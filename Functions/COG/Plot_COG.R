@@ -29,7 +29,7 @@ par(oma=c(2,2,2,2))
 p+geom_bar(aes(fill=flag),alpha=0.7)+
 	theme_bw()+
 	scale_fill_manual(values=rainbow(26), guide = guide_legend(title = NULL, ncol=1), breaks=factor(unique(tbl$flag)), labels=unique(tbl$name))+
-	xlab("Function Class")+
+	xlab("COG Functional Category")+
 	ylab("Frequency")
 
 invisible(dev.off())

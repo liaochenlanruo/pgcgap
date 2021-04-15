@@ -1504,6 +1504,7 @@ if ($opt_setup_COGdb) {
 	#system("mkdir -p ~/COGdb");
 #	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 #	system("gunzip prot2003-2014.fa.gz");
+=pod
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cognames2003-2014.tab");
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/fun2003-2014.tab");
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cog2003-2014.csv");
@@ -1515,7 +1516,17 @@ if ($opt_setup_COGdb) {
 	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
 	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
 	system("rm prot2003-2014.fa");
-#	system("rm prot2003-2014.fa prot2003-2014.gi2gbk.tab prot2003-2014.tab Readme.201610.txt");
+=cut
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.cog.csv");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.def.tab");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.fa");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/fun-20.tab");
+	system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
+	system("rm cog-20.fa");
+	system("mv COG_2020.* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COG_2020.*");
+	system("chmod a+x $pgcgap_dir/cog-20.*");
+	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
 
 #===================================================================================================
@@ -1757,6 +1768,7 @@ if ($opt_All or $opt_Assemble) {
 		system("mkdir -p Results/Assembles/PacBio");
 		system("mkdir -p Results/Assembles/Scaf/PacBio");
 		chdir $opt_ReadsPath;
+		my $dir_ReadsPath = getcwd;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
 			my $name = substr($_,0,(length($_)-$opt_suffix_len));
@@ -1767,6 +1779,8 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
+			my $sam = $name . ".sam";
+			my $polished_scaf = $name . ".polished.contigs.fasta";
 			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
 			##my $fastph = $name . ".fastp.html";#2020/4/15
 			##my $fastpj = $name . ".fastp.json";#2020/4/15
@@ -1775,8 +1789,13 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing --Assemble function for PacBio data...\n\n";
 			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $fastp_out1");#2020/4/15
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
+			print "Begin polishing with racon\n\n";
+			chdir $outdir;
+			system("bwa index $scaf");
+			system("bwa mem -x pacbio -t $opt_threads -o $sam $scaf $dir_ReadsPath/$_");
+			system("racon -t $opt_threads $dir_ReadsPath/$_ $sam $scaf > $polished_scaf");
 			##system("circlator all --assembler canu $outdir/$scaf $outdir/$correct_reads $cir_outdir");
-			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/PacBio/");
+			system("cp $polished_scaf $working_dir/Results/Assembles/Scaf/PacBio/");
 			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/PacBio/$cir_scaf");
 #			}
@@ -1802,6 +1821,7 @@ if ($opt_All or $opt_Assemble) {
 		system("mkdir -p Results/Assembles/Oxford");
 		system("mkdir -p Results/Assembles/Scaf/Oxford");
 		chdir $opt_ReadsPath;
+		my $dir_ReadsPath = getcwd;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
 			my $name = substr($_,0,(length($_)-$opt_suffix_len));
@@ -1812,6 +1832,8 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
+			my $sam = $name . ".sam";
+			my $polished_scaf = $name . ".polished.contigs.fasta";
 			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
 			##my $fastph = $name . ".fastp.html";#2020/4/15
 			##my $fastpj = $name . ".fastp.json";#2020/4/15
@@ -1820,8 +1842,13 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing --Assemble function for Oxford Nanopore data...\n\n";
 			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $fastp_out1");#2020/4/15
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore $_");
+			print "Begin polishing with racon\n\n";
+			chdir $outdir;
+			system("bwa index $scaf");
+			system("bwa mem -x ont2d -t $opt_threads -o $sam $scaf $dir_ReadsPath/$_");
+			system("racon -t $opt_threads $dir_ReadsPath/$_ $sam $scaf > $polished_scaf");
 			##system("circlator all --assembler canu --merge_min_id 85 --merge_breaklen 1000 $outdir/$scaf $outdir/$correct_reads $cir_outdir");
-			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/Oxford/");
+			system("cp $polished_scaf $working_dir/Results/Assembles/Scaf/Oxford/");
 			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/Oxford/$cir_scaf");
 #			}
@@ -3110,7 +3137,7 @@ if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir -p Results/COG");
-	system("COG.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
+	system("COG2020.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
