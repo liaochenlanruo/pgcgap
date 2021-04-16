@@ -593,7 +593,7 @@ Directories contain PacBio assembly files and information of each strain.
 <br/>
 
 - **Results/Assembles/Oxford/**<br/>
-Directories contain Oxford nanopore assembly files and information of each strain.
+Directories contain ONT assembly files and information of each strain.
 <br/>
 
 - **Results/Assembles/Hybrid/**<br/>
@@ -601,7 +601,7 @@ Directory contains hybrid assembly files of the short reads and long reads of th
 <br/>
 
 - __Results/Assembles/Scaf/Illumina__<br/>
-Directory contains Illumina contigs/scaffolds of all strains. "\*.filtered.fas" is the genome after excluding short sequences. "\*.prefilter.stats" describes the status of the genome before filtering, and "\*.filtered.stats" describes the status of the genome after filtering.
+Directory contains Illumina contigs/scaffolds of all strains. "\*.filtered.fas" is the genome after excluding short sequences. "\*.prefilter.stats" describes the stats of the genome before filtering, and "\*.filtered.stats" describes the stats of the genome after filtering.
 <br/>
 
 - __Results/Assembles/Scaf/Oxford__<br/>
