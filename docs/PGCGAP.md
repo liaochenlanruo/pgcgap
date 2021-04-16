@@ -124,7 +124,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Print the help messages:__
     <pre>$pgcgap --help</pre>
-
+- __Check for update:__
+    <pre>$pgcgap --check-update</pre>
 - __General usage:__
     <pre>$pgcgap [modules] [options]</pre>
 
@@ -199,7 +200,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                          example: if the name of reads 2 is
                                          "YBT-1520\_2.fq", the suffix name should be "\_2.fq" )
 
-  - **[\-\-Scaf\_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genomes. Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation (Default -8.fa)
+  - **[\-\-Scaf\_suffix (STRING)]**         [Required by "\-\-All", "\-\-Assess", "\-\-Annotate" "\-\-MASH", "\-\-ANI" and "\-\-AntiRes"] The suffix of scaffolds or genome files. This is an important parameter that must be set (Default -8.fa)
 
   - **[\-\-filter\_length (INT)]**          [Required by "\-\-All", "\-\-Assemble" and "\-\-Assess"]> Sequences shorter than the 'filter\_length' will be deleted from the assembled genomes. ( Default 200 )
 
@@ -500,9 +501,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __Example 5:__ Constructing single-copy core protein tree only.
     <pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
 
-  - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
+  - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **Applicable to v1.0.27 and later**.
 
-    <pre>$pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+    <pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
 
   - __Example 7:__ Inference of orthologous gene groups.
 
@@ -562,7 +563,7 @@ Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn”
 A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### Pan
-GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
+GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
 
 ### pCOG
 Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
@@ -592,7 +593,7 @@ Directories contain PacBio assembly files and information of each strain.
 <br/>
 
 - **Results/Assembles/Oxford/**<br/>
-Directories contain Oxford nanopore assembly files and information of each strain.
+Directories contain ONT assembly files and information of each strain.
 <br/>
 
 - **Results/Assembles/Hybrid/**<br/>
@@ -600,7 +601,7 @@ Directory contains hybrid assembly files of the short reads and long reads of th
 <br/>
 
 - __Results/Assembles/Scaf/Illumina__<br/>
-Directory contains Illumina contigs/scaffolds of all strains. "\*.filtered.fas" is the genome after excluding short sequences. "\*.prefilter.stats" describes the status of the genome before filtering, and "\*.filtered.stats" describes the status of the genome after filtering.
+Directory contains Illumina contigs/scaffolds of all strains. "\*.filtered.fas" is the genome after excluding short sequences. "\*.prefilter.stats" describes the stats of the genome before filtering, and "\*.filtered.stats" describes the stats of the genome after filtering.
 <br/>
 
 - __Results/Assembles/Scaf/Oxford__<br/>
@@ -767,7 +768,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 ## Citation
 
-- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v3+](https://dx.doi.org/10.21203/rs.2.21224/v3)
+- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2020. DOI: [10.21203/rs.2.21224/v5](https://doi.org/10.21203/rs.2.21224/v5)
 
 - If you use "\-\-Assemble", please also cite one or two of [Fastp](https://github.com/OpenGene/fastp), [ABySS](https://doi.org/10.1101/gr.214346.116), [SPAdes](http://link.springer.com/chapter/10.1007%2F978-3-642-37195-0_13), [Canu](https://doi.org/10.1101/gr.215087.116), or [Unicycler](https://doi.org/10.1371/journal.pcbi.1005595).
 
@@ -965,6 +966,19 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.25
   - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module "CoreTree" and "Pan".
   - The parameter "--identi" was added into module "Pan" to allow users to set the minimum percentage identity for blastp.
+ 
+ - V1.0.26
+   - Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module "ANI" and "MASH".
+   - Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the "ANI" and "MASH" analysis.
+
+ - V1.0.27
+   - The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.
+
+ - V1.0.28
+   - Users can check and install the latest version of PGCGAP by the command "pgcgap --check-update".
+   - Update module Assemble to allow polish after the assembly of PacBio and ONT data.
+   - Update module pCOG to adjust the latest database of [COG 2020](https://ftp.ncbi.nih.gov/pub/COG/COG2020/data/COG).
+
 ---
 
 <center><strong>

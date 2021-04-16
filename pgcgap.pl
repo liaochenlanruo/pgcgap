@@ -82,6 +82,18 @@ $options{'check-external-programs'} = \( my $opt_check_external_programs = 0 );
 
 =over 30
 
+=item B<[--check-update]>
+
+Check if there is a new version of PGCGAP that can be upgraded
+
+=back
+
+=cut
+
+$options{'check-update'} = \( my $opt_check_update = 0 );
+
+=over 30
+
 =item B<[--setup-COGdb]>
 
 Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first installation of pgcgap
@@ -336,7 +348,7 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genomes [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"] Here, "-8.fa" for Illumina data, ".contigs.fasta" for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )
+The suffix of scaffolds or genome files [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"]. This is an important parameter that must be set ( Default -8.fa )
 
 =back
 
@@ -1392,7 +1404,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Contact: liaochenlanruo@webmail.hzau.edu.cn
 
-  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2020. DOI: 10.21203/rs.2.21224/v3+
+  Citation: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatic analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. Protocol exchange, 2021. DOI: 10.21203/rs.2.21224/v5
 
 =end text
 
@@ -1405,7 +1417,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.25\n";
+    print "PGCGAP version: 1.0.28\n";
     exit 0;
 }
 
@@ -1418,6 +1430,7 @@ if ($opt_help) {
 #pod2usage(1) if ($#ARGV == -1);
 chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin, $opt_muscle_bin, $opt_Gblocks_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
+check_update() if ($opt_check_update);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
 pod2usage( -msg => 'modeltest-ng not in $PATH and binary not specified use --modeltestng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_modeltestng_bin);
@@ -1457,6 +1470,27 @@ sub check_external_programs{
 	exit($fail);
 }
 
+
+sub check_update{
+	my $search = `pgcgap --version`;
+	$search=~/PGCGAP version: (\S+)/;
+	my $current_version = $1;
+	if (my $version_conda=`conda search pgcgap`) {
+		my @lines = split /\n/, $version_conda;
+		$lines[-1]=~/pgcgap\s+(\S+).+/;
+		my $latest_version = $1;
+		if ($current_version ne $latest_version) {
+			print "Oh, No! You are running an old version of PGCGAP, we are going to update to the latest version $latest_version now!\n\n";
+			print "Please wait patiently, take a break and have a cup of tea or coffee\n";
+			my $installation = `conda install -y pgcgap=$latest_version`;
+			print "$installation\n";
+			exit(0);
+		}else {
+			print "Congratulations, You are running the latest version of PGCGAP v $latest_version.\n";
+			exit(0);
+		}
+	}
+}
 #=============================== Get bin PATH ======================================================
 my $pgcgap_dir;
 my $bin = `which pgcgap`;
@@ -1470,6 +1504,7 @@ if ($opt_setup_COGdb) {
 	#system("mkdir -p ~/COGdb");
 #	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 #	system("gunzip prot2003-2014.fa.gz");
+=pod
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cognames2003-2014.tab");
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/fun2003-2014.tab");
 	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cog2003-2014.csv");
@@ -1481,7 +1516,17 @@ if ($opt_setup_COGdb) {
 	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
 	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
 	system("rm prot2003-2014.fa");
-#	system("rm prot2003-2014.fa prot2003-2014.gi2gbk.tab prot2003-2014.tab Readme.201610.txt");
+=cut
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.cog.csv");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.def.tab");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.fa");
+	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/fun-20.tab");
+	system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
+	system("rm cog-20.fa");
+	system("mv COG_2020.* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COG_2020.*");
+	system("chmod a+x $pgcgap_dir/cog-20.*");
+	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
 
 #===================================================================================================
@@ -1723,6 +1768,7 @@ if ($opt_All or $opt_Assemble) {
 		system("mkdir -p Results/Assembles/PacBio");
 		system("mkdir -p Results/Assembles/Scaf/PacBio");
 		chdir $opt_ReadsPath;
+		my $dir_ReadsPath = getcwd;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
 			my $name = substr($_,0,(length($_)-$opt_suffix_len));
@@ -1733,6 +1779,8 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
+			my $sam = $name . ".sam";
+			my $polished_scaf = $name . ".polished.contigs.fasta";
 			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
 			##my $fastph = $name . ".fastp.html";#2020/4/15
 			##my $fastpj = $name . ".fastp.json";#2020/4/15
@@ -1741,8 +1789,13 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing --Assemble function for PacBio data...\n\n";
 			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $fastp_out1");#2020/4/15
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -pacbio-raw $_");
+			print "Begin polishing with racon\n\n";
+			chdir $outdir;
+			system("bwa index $scaf");
+			system("bwa mem -x pacbio -t $opt_threads -o $sam $scaf $dir_ReadsPath/$_");
+			system("racon -t $opt_threads $dir_ReadsPath/$_ $sam $scaf > $polished_scaf");
 			##system("circlator all --assembler canu $outdir/$scaf $outdir/$correct_reads $cir_outdir");
-			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/PacBio/");
+			system("cp $polished_scaf $working_dir/Results/Assembles/Scaf/PacBio/");
 			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/PacBio/$cir_scaf");
 #			}
@@ -1768,6 +1821,7 @@ if ($opt_All or $opt_Assemble) {
 		system("mkdir -p Results/Assembles/Oxford");
 		system("mkdir -p Results/Assembles/Scaf/Oxford");
 		chdir $opt_ReadsPath;
+		my $dir_ReadsPath = getcwd;
 		my @files = glob("*$opt_reads1");
 		foreach (@files) {
 			my $name = substr($_,0,(length($_)-$opt_suffix_len));
@@ -1778,6 +1832,8 @@ if ($opt_All or $opt_Assemble) {
 			my $scaf = $name . ".contigs.fasta";
 			my $correct_reads = $name . ".correctedReads.fasta.gz";
 			my $cir_scaf = $name . ".fixstart.fasta";
+			my $sam = $name . ".sam";
+			my $polished_scaf = $name . ".polished.contigs.fasta";
 			##my $fastp_out1 = $name . ".fastp" . $opt_reads1;#2020/4/15
 			##my $fastph = $name . ".fastp.html";#2020/4/15
 			##my $fastpj = $name . ".fastp.json";#2020/4/15
@@ -1786,8 +1842,13 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing --Assemble function for Oxford Nanopore data...\n\n";
 			##system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore-raw $fastp_out1");#2020/4/15
 			system("canu -p $name -d $outdir genomeSize=$opt_genomeSize maxThreads=$opt_threads useGrid=false -nanopore $_");
+			print "Begin polishing with racon\n\n";
+			chdir $outdir;
+			system("bwa index $scaf");
+			system("bwa mem -x ont2d -t $opt_threads -o $sam $scaf $dir_ReadsPath/$_");
+			system("racon -t $opt_threads $dir_ReadsPath/$_ $sam $scaf > $polished_scaf");
 			##system("circlator all --assembler canu --merge_min_id 85 --merge_breaklen 1000 $outdir/$scaf $outdir/$correct_reads $cir_outdir");
-			system("cp $outdir/$scaf $working_dir/Results/Assembles/Scaf/Oxford/");
+			system("cp $polished_scaf $working_dir/Results/Assembles/Scaf/Oxford/");
 			##system("mv $fastp_out1 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 			##system("cp $cir_outdir/06.fixstart.fasta $working_dir/Results/Assembles/Scaf/Oxford/$cir_scaf");
 #			}
@@ -2505,19 +2566,31 @@ if ($opt_All or $opt_Pan) {
 	my $pangenome = "Results/PanGenome";
 	#system("roary -p $opt_threads -e --mafft -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
 	system("roary -p $opt_threads -r -t $opt_codon -i $opt_identi -f $pangenome $opt_GffPath/*.gff");
-	chdir "Results/PanGenome";
+	#my $dir = "Results/PanGenome_*";
+	#chdir $dir || print "Can not cd into $dir";
+	chdir $pangenome;
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
 	system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
-
+	chdir $working_dir;
 	if ($opt_PanTree) {
 		#Constructing Roary single-copy core proteins tree
-		system("mkdir Core");
-		chdir $working_dir;
+		system("mkdir $working_dir/$pangenome/Core");
+		chdir $opt_GffPath;
+		my @gff = glob("*.gff");
+		foreach my $gff (@gff) {
+			$gff=~/(.+).gff/;
+			my $name = $1;
+			print $name . "\n";
+			system("perl $pgcgap_dir/grep_cds_aas_from_gff3.pl $gff $name");
+		}
+		system("mv *.id *.cds *.pep $working_dir/$pangenome/Core");
+		chdir "$working_dir/$pangenome/Core";
+		#chdir $working_dir;
 		
 		my %hash;
-		system("cat $opt_AAsPath/*.faa > Results/PanGenome/Core/All_aa.fa");
-		chdir "Results/PanGenome/Core";
+		system("cat *.pep > All_aa.fa");
+		#chdir "Results/PanGenome/Core";
 		open SEQP, "All_aa.fa" || die;
 		open OUT, ">All_aa.fa2" || die;
 		while (<SEQP>) {
@@ -3064,7 +3137,7 @@ if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir -p Results/COG");
-	system("COG.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
+	system("COG2020.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
@@ -3258,7 +3331,7 @@ sub printAssemble{
 
 sub printAnnotate{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--genus (STRING)] Genus name of the strain ( Default 'NA' )\n";
 	print "[--species (STRING)] Species name of the strain ( Default 'NA' )\n";
@@ -3282,7 +3355,6 @@ sub printCoreTree{
 }
 
 sub printPan{
-	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
 	print "[--GffPath (PATH)] Gff files of all strains as paths ( Default './Results/Annotations/GFF' )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
@@ -3306,7 +3378,7 @@ sub printANI{
 
 sub printMASH{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3331,7 +3403,7 @@ sub printVAR{
 
 sub printAntiRes{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genomes. Here, '-8.fa' for Illumina data, '.contigs.fasta' for PacBio data and Oxford data. Users can also fill in other suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
 	print "[--db (STRING)]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )\n";
 	print "[--identity (INT)] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )\n";
 	print "[--coverage (INT)] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )\n";
@@ -3353,7 +3425,7 @@ sub printSTREE{
 
 sub printACC{
 	print "Applets in ACC include 'Assess' now\n";
-	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genomes ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
+	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
 }
 
 sub printExamples{
@@ -3391,7 +3463,7 @@ sub printExamples{
 
 	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --AAsPath <PATH>\n\n";
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree\n\n";
 
 	print "Example 9: Inference of orthologous gene groups\n\n";
 
