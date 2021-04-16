@@ -1768,6 +1768,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 </ul>
 </li>
 
+<li>
+<p>V1.0.29</p>
+<ul>
+<li>Optimized the drawing and color scheme of the module pCOG.</li>
+</ul>
+</li>
+
+
 </ul>
 <hr />
 <p><center><strong>

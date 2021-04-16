@@ -1417,8 +1417,9 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-    print "PGCGAP version: 1.0.28\n";
-    exit 0;
+	print "PGCGAP version: 1.0.29\n";
+	print "Enter the command 'pgcgap --check-update' to check if there is a new version, and update to the new version if it exists.\n";
+	exit 0;
 }
 
 #pod2usage( -verbose => 1 ) if $opt_help;
