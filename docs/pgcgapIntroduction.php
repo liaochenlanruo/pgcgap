@@ -1765,8 +1765,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <li>Users can check and install the latest version of PGCGAP by the command "pgcgap --check-update".</li>
 <li>Update module Assemble to allow polish after the assembly of PacBio and ONT data.</li>
 <li>Update module pCOG to adjust the latest database of <a href="https://ftp.ncbi.nih.gov/pub/COG/COG2020/data/" target="_blank">COG 2020</a>.</li>
+<li>Optimized the drawing and color scheme of the module pCOG.</li>
+<li>Fix the parameter "CoreTree" in the module Pan to avoid program termination caused by the ">" in non-sequence lines.</li>
+
 </ul>
 </li>
+
+
+
 
 </ul>
 <hr />

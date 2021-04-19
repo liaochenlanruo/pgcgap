@@ -126,7 +126,7 @@ sub run_COG {
 	}else {
 		$threads = 1;
 	}
-	#system("blastp -db $cogdb_dir/COG_2020 -query $_ -out $blastout -evalue 1e-5 -outfmt 5 -show_gis -max_target_seqs 1 -num_threads $threads");
+	system("blastp -db $cogdb_dir/COG_2020 -query $_ -out $blastout -evalue 1e-5 -outfmt 5 -show_gis -max_target_seqs 1 -num_threads $threads");
 
 #======================================blast2gi========================================
 

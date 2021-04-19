@@ -15,7 +15,8 @@ use warnings;
 
 =head1 author
 	Hualin Liu
-		#2021-4-03
+		# 2021-4-03
+		# debug 2021-04-18
 
 =head1 #######################################
 =cut
@@ -26,7 +27,7 @@ my ($gff,$prefix)=@ARGV;
 # deal gff file
 open GFF, "$ARGV[0]" || die;
 my (%cds,%fasta);
-local $/=">";
+local $/="##FASTA";
 my $line = 0;
 while(<GFF>){
 	chomp;
@@ -45,11 +46,14 @@ while(<GFF>){
 			}
 		}
 	}else {# process the scaffolds
-		my ($id, $seq) = split (/\n/, $_, 2);
-		$id =~ /^(\S+)/;
-		my $index= $1;
-		$seq =~ s/\s+|\n|\-//g;
-		$fasta{$index} = $seq;
+		my @lines = split />/, $_;
+		for (my $i=1; $i<@lines; $i++) {
+			my ($id, $seq) = split (/\n/, $lines[$i], 2);
+			$id =~ /^(\S+)/;
+			my $index= $1;
+			$seq =~ s/\s+|\n|\-//g;
+			$fasta{$index} = $seq;
+		}
 	}
 }
 close GFF;
