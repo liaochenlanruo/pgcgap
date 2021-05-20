@@ -1767,11 +1767,16 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <li>Update module pCOG to adjust the latest database of <a href="https://ftp.ncbi.nih.gov/pub/COG/COG2020/data/" target="_blank">COG 2020</a>.</li>
 <li>Optimized the drawing and color scheme of the module pCOG.</li>
 <li>Fix the parameter "CoreTree" in the module Pan to avoid program termination caused by the ">" in non-sequence lines.</li>
-
 </ul>
 </li>
 
-
+<li>
+<p>V1.0.29</p>
+<ul>
+<li>Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.</li>
+<li>Fixed the "permission denied" error when moving directories on the WSL platform.</li>
+</ul>
+</li>
 
 
 </ul>

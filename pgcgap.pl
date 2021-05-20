@@ -13,7 +13,7 @@ use File::Basename;
 use POSIX;
 use Sys::Info;
 use Sys::Info::Constants qw( :device_cpu );
-
+use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
 
 my %options;
 
@@ -1417,7 +1417,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print "PGCGAP version: 1.0.28\n";
+	print "PGCGAP version: 1.0.29\n";
 	print "Enter the command 'pgcgap --check-update' to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
@@ -2548,10 +2548,13 @@ if ($opt_All or $opt_CoreTree) {
 		#system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
 		
 		chdir "../";
-		system("mv faa2ffn ./Results/CoreTrees/");
-		system("mv ffn ./Results/CoreTrees/");
+		rmove("faa2ffn", "./Results/CoreTrees/faa2ffn");
+		rmove("ffn", "./Results/CoreTrees/ffn");
+		#system("mv faa2ffn ./Results/CoreTrees/");
+		#system("mv ffn ./Results/CoreTrees/");
 	}
-	system("mv faa ./Results/CoreTrees/");
+	rmove("faa", "./Results/CoreTrees/faa");
+	#system("mv faa ./Results/CoreTrees/");
 	system("mv All.* ./Results/CoreTrees/");
 	system("mv core.pep.list ./Results/CoreTrees/");
 	my $time_coretreed = time();
@@ -2892,12 +2895,234 @@ if ($opt_All or $opt_OrthoF) {
 	#system("mkdir Results/OrthoF");
 	my $orthoFprefix = "orthoF";
 	system("orthofinder -a $opt_threads -t $opt_threads -S $opt_Sprogram -n $orthoFprefix -f $opt_AAsPath");
+	if (-e (glob("$working_dir/$opt_AAsPath/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Sequences/*.fa"))[0]) {
+		system("mkdir -p $working_dir/$opt_AAsPath/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree");
+		chdir "$working_dir/$opt_AAsPath/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Sequences";
+		print "Running mafft...\n\n";
+	#	system("unset MAFFT_BINARIES");
+		my @fa = glob("*.fa");
+		foreach (@fa){
+			my $name=substr($_,0,(length($_)-3));
+			my $in=$name.".fa";
+			my $out=$name.".aln";
+			system("mafft --quiet --auto --thread $opt_threads $in > $out");
+		}
+
+
+		##==============CONSTRUCT Single Copy Orthologue TREE========================================================
+		#print "Starting to construct Single Copy Orthologue tree...\n\n";
+		open CON, ">Single.Copy.Orthologue.fasta" || die "Open Single.Copy.Orthologue.fasta failed\n";
+		my $nfilesp = 0; # count number of files
+		my %nseqp_hashp = (); # key:infile, val:nseqp
+		my %seqid_count_hashp = (); # key:seqid, val:count
+		my %HoHp              = ();   #
+		my %seqid_HoHp        = ();   #
+		my $first_namep       = q{};  # First name in matrix.
+		my $lwidthp           = 60;   # default line width for fasta
+		my $spacep            = "\t"; # spacepr for aligned print
+		my $ncharp            = 0;    # ncharp for phyml header.
+		my $nseqp;                    # nseqp for phyml header. Do not initiate!
+		my $termp             = $/;   # input record separator
+		my @hash_refp_arrayp   = ();   # array with hash references
+
+
+		my @fasp = glob("*.aln");
+		foreach my $argp (@fasp) {
+			my $infilep  = $argp;
+			my %seq_hashp = parse_fastao($infilep); # key: seqid, value:sequence
+			$nfilesp++;
+
+			## Save sequences in array with hash references. Does this work for really large number of fasta files?
+			my $hash_refp     = \%seq_hashp;
+			push(@hash_refp_arrayp, $hash_refp);
+
+			## Add nseqps to global nseqp_hashp:
+			$nseqp_hashp{$infilep} = scalar(keys(%seq_hashp));
+
+			## Get length of sequence for all tax labels. Put in hashes.
+			foreach my $tax_keyp (keys %seq_hashp) {
+				$seqid_count_hashp{$tax_keyp}++;
+				$HoHp{$infilep}{$tax_keyp} = length($seq_hashp{$tax_keyp});
+				$seqid_HoHp{$infilep}{$tax_keyp}++;
+			}
+
+			## Check all seqs are same length
+			my $length;
+			my $lnamep;
+			foreach my $name (keys %seq_hashp) {
+				my $l = length $seq_hashp{$name};
+				if (defined $length) {
+					if ($length != $l) {
+						print STDERR "Error!\nseqpuences in $infilep not all same length ($lnamep is $length, $name is $l)\n";
+						exit(1);
+					}
+				}else {
+					$length = length $seq_hashp{$name};
+					$lnamep  = $name;
+				}
+			}
+		} # Done with file
+
+
+		#---------------------------------------------------------------------------
+		#  Check if the same number of sequences
+		#---------------------------------------------------------------------------
+		my $lnamep;
+		foreach my $file (keys %nseqp_hashp) {
+			my $l = $nseqp_hashp{$file}; # val is a length
+			if (defined $nseqp) {
+				if ($nseqp != $l) {
+					print STDERR "Error!\nNumber of sequences in files differ ($lnamep has $nseqp, $file has $l)\n";
+					exit(1);
+				}
+			}else {
+				$nseqp = $nseqp_hashp{$file};
+				$lnamep  = $file;
+			}
+		}
+
+
+		#---------------------------------------------------------------------------
+		#  Check sequence id's
+		#---------------------------------------------------------------------------
+		if (scalar((keys %seqid_count_hashp)) != $nseqp) { # number of unique seqid's not eq to nseqps
+			foreach my $key (sort { $seqid_count_hashp{$b} <=> $seqid_count_hashp{$a} } (keys %seqid_count_hashp)) {
+				print STDERR "$key --> $seqid_count_hashp{$key}\n";
+			}
+			print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
+			print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
+			exit(1);
+		}else {
+			## Find the longest taxon name for aligned printing
+			my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hashp;
+			$spacep = length( shift(@sorted_names) ) + 2;
+			$first_namep = $sorted_names[0];
+		}
+
+
+		#---------------------------------------------------------------------------
+		#Get ncharp
+		#---------------------------------------------------------------------------
+		foreach my $h_ref (@hash_refp_arrayp) {
+			$ncharp = $ncharp + length($h_ref->{$first_namep});
+		}
+
+
+		#---------------------------------------------------------------------------
+		#Print everything to STDOUT
+		#---------------------------------------------------------------------------
+		print STDERR "\nChecked $nfilesp files -- sequence labels and lengths seems OK.\n";
+		print STDERR "Concatenated $nseqp sequences, length $ncharp.\n";
+		print STDERR "Printing concatenation to 'Single.Copy.Orthologue.fasta'.\n\n";
+
+		##Print the array with hash references (does this work with really large number of files (hashes))?
+		##First, concatenate all sequences from hashes
+		my %print_hashp = (); # key:label, value:sequence
+		foreach my $h_ref (@hash_refp_arrayp) {
+			foreach my $seqid (sort keys %$h_ref) {
+				$print_hashp{$seqid} .= $h_ref->{$seqid};
+			}
+		}
+		##Then print, and add line breaks in sequences
+		foreach my $label (sort keys  %print_hashp) {
+			print CON ">$label\n";
+
+			##Print sequence
+			##TODO: phylip strict printing of sequence in blocks of 10
+			$print_hashp{$label} =~ s/\S{$lwidthp}/$&\n/gs; ## replace word of size $lwidthp with itself and "\n"
+			print CON $print_hashp{$label}, "\n";
+		}
+
+		print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
+
+
+		sub parse_fastao {
+			my ($infilep) = @_;
+			my $termp     = $/; # input record separator;
+			my %seq_hashp = (); # key:seqid, val:seq
+			open my $INFILEP, "<", $infilep or die "could not open infile '$infilep' : $! \n";
+			$/ = ">";
+			while(<$INFILEP>) {
+				chomp;
+				next if($_ eq '');
+				my ($id, @sequencelines) = split /\n/;
+				if ($id=~/(^\S+)_\S+$/) {
+					$id = $1;
+					foreach my $line (@sequencelines) {
+						$seq_hashp{$id} .= $line;
+					}
+				}
+			}
+			$/ = $termp;
+			return(%seq_hashp);
+		} # end of parse_fasta
+
+
+
+		#print "\n\n";
+		#system("mkdir -p $working_dir/Results/STREE");
+		my $seqfile = "Single.Copy.Orthologue.fasta";
+		#$seqfile =~ /(.+\/)*(.+)/;
+		#my $align_seq = $2 . ".aln";
+		my $gblocks_out = "Single.Copy.Orthologue.fasta.gb";
+		my $seqnum = `grep -c '^>' $seqfile`;
+		print "There are $seqnum sequences in the input file\n\n";
+		my $b12 = ceil($seqnum/2) + 1;
+		#print "Running muscle for sequence alignment...\n\n";
+		#system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
+		print "Running Gblocks for selection of conserved blocks...\n\n";
+		#chdir "$working_dir/Results/STREE/";
+		system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
+
+		print "Constructing ML tree of the Single Copy Orthologue proteins...\n\n";
+		#===============================================================================
+		system("modeltest-ng -i Single.Copy.Orthologue.fasta.gb -t ml -o modeltest_aa -p $opt_threads -d aa");
+		open LOGa, "modeltest_aa.log" || die;
+		my $bica;
+		my $aica;
+		my $aicca;
+		while (<LOGa>) {
+			chomp;
+			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
+				$bica = $1;
+			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
+				$aica = $1;
+			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
+				$aicca = $1;
+			}
+		}
+		close LOGa;
+
+		if ($bica eq $aica and $bica eq $aicca) {
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		}elsif ($bica ne $aica and $aica eq $aicca) {
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		}elsif ($bica eq $aica and $aica ne $aicca) {
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		}elsif ($bica eq $aicca and $aica ne $aicca) {
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		}
+		#===================================================================================
+		#system("fasttree Single.Copy.Orthologue.fasta > Single.Copy.Orthologue.nwk");
+		print "Constructing single copy Orthologue protein tree completed\n\n";
+		system("mv Single.Copy.Orthologue.* ../Single_Copy_Orthologue_Tree/");
+		#===============================================================================
+	}
+	chdir $working_dir;
+	rmove("$opt_AAsPath/OrthoFinder/", "Results/OrthoFinder");
 	my $time_OrthoFd = time();
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
 	#system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
 #	system("mv $opt_AAsPath/OrthoFinder/ Results/");
-	system("mv $opt_AAsPath/*rtho*/ Results/");
+#	system("mv $opt_AAsPath/*rtho*/ Results/");
 }
 
 if ($opt_All or $opt_MASH) {

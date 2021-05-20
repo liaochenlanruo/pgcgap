@@ -981,7 +981,9 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
    - Optimized the drawing and color scheme of the module pCOG.
    - Fixed the parameter "CoreTree" in the module Pan to avoid program termination caused by the ">" in non-sequence lines.
 
-
+- V1.0.29
+  - Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.
+  - Fixed the "permission denied" error when moving directories on the WSL platform.
 ---
 
 <center><strong>
