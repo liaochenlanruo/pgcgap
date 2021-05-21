@@ -693,6 +693,8 @@ Intermediate directories and files.
 - __Results/OrthoFinder/Results\_orthoF__<br/>
 Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 <br/>
+- __Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/__<br/>
+Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.<br/>
 
 ### Pan
 
