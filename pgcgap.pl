@@ -429,6 +429,30 @@ $options{'logs=s'} = \( my $opt_logs = "Logs.txt" );
 
 =over 30
 
+=item B<[--fasttree]>
+
+I<[Can be used with "CoreTree", "Pan" and "OrthoF"]> Use FastTree to construct phylogenetic tree quickly instead of IQ-TREE.
+
+=back
+
+=cut
+
+$options{'fasttree'} = \(my $opt_fasttree);
+
+=over 30
+
+=item B<[--bsnum (INT)]>
+
+I<[Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"]> Replicates for bootstrap of IQ-TREE. ( Default 1000 )
+
+=back
+
+=cut
+
+$options{'bsnum=i'} = \( my $opt_bsnum = "1000");
+
+=over 30
+
 =item B<[--threads (INT)]>
 
 Number of threads to be used ( Default 4 )
@@ -865,18 +889,6 @@ I<[Required]> The file containing full paths to reference genomes, one per line.
 
 $options{'refL=s'} = \( my $opt_refL = "scaf.list" );
 
-=over 30
-
-=item B<[--ANIO (FILE)]>
-
-The name of output file ( Default "Results/ANI/ANIs" )
-
-=back
-
-=cut
-
-$options{'ANIO=s'} = \( my $opt_ANIO = "Results/ANI/ANIs" );
-
 =head3 ========================== Options for "--VAR" analysis ===============================================
 
 =for text
@@ -1086,18 +1098,6 @@ Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
 =cut
 
 $options{'seqtype=s'} = \( my $opt_seqtype = "p");
-
-=over 30
-
-=item B<[--bsnum (INT)]>
-
-Times for bootstrap. ( Default 1000 )
-
-=back
-
-=cut
-
-$options{'bsnum=i'} = \( my $opt_bsnum = "1000");
 
 =head3 ========================== Options for "--ACC" ========================================================
 
@@ -1422,13 +1422,12 @@ if($opt_version){
 	exit 0;
 }
 
-#pod2usage( -verbose => 1 ) if $opt_help;
 if ($opt_help) {
 	pod2usage(1);
 	exit(0);
 }
-#pod2usage(1) if ($opt_help);
-#pod2usage(1) if ($#ARGV == -1);
+
+
 chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin, $opt_muscle_bin, $opt_Gblocks_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
 check_update() if ($opt_check_update);
@@ -1547,9 +1546,10 @@ if ($opt_STREE) {
 	my $b12 = ceil($seqnum/2) + 1;
 	print "Running muscle for sequence alignment...\n\n";
 	system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
-	print "Running Gblocks for selection of conserved blocks...\n\n";
+	print "Running trimAL for selection of conserved blocks...\n\n";
 	chdir "$working_dir/Results/STREE/";
-	system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
+	system("trimal -in $align_seq -out $gblocks_out -automated1");
+	#system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
 	system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
@@ -2204,44 +2204,21 @@ if ($opt_All or $opt_CoreTree) {
 	my $b12 = ceil($seqnum/2) + 1;
 	#print "Running muscle for sequence alignment...\n\n";
 	#system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
-	print "Running Gblocks for selection of conserved blocks...\n\n";
-	#chdir "$working_dir/Results/STREE/";
-	system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
+
+	print "Running trimAL for selection of conserved blocks...\n\n";
+	system("trimal -in $seqfile -out $gblocks_out -automated1");
+
+	#print "Running Gblocks for selection of conserved blocks...\n\n";
+	#system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 
 	print "Constructing ML tree of the single copy core proteins...\n\n";
 	#===============================================================================
-	system("modeltest-ng -i ALL.core.protein.fasta.gb -t ml -o modeltest_aa -p $opt_threads -d aa");
-	open LOGa, "modeltest_aa.log" || die;
-	my $bica;
-	my $aica;
-	my $aicca;
-	while (<LOGa>) {
-		chomp;
-		if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-			$bica = $1;
-		}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-			$aica = $1;
-		}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-			$aicca = $1;
-		}
-	}
-	close LOGa;
-
-	if ($bica eq $aica and $bica eq $aicca) {
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-	}elsif ($bica ne $aica and $aica eq $aicca) {
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-	}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-	}elsif ($bica eq $aica and $aica ne $aicca) {
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-	}elsif ($bica eq $aicca and $aica ne $aicca) {
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		system("raxml-ng --all --msa ALL.core.protein.fasta.gb --prefix ALL.core.protein.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+	if ($opt_fasttree) {
+		print "Running FastTree for phylogenetic tree construction...\n\n";
+		system("fasttree $gblocks_out > ALL.core.protein.nwk");
+	}else {
+		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 	}
 	#===================================================================================
 	#system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
@@ -2502,42 +2479,19 @@ if ($opt_All or $opt_CoreTree) {
 		my $seqnumn = `grep -c '^>' $seqfilen`;
 		print "There are $seqnumn sequences in the input file\n\n";
 		my $b12n = ceil($seqnumn/2) + 1;
-		print "Running Gblocks for selection of conserved blocks...\n\n";
-		system("Gblocks $seqfilen -t=d -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
-		#===================modeltest-ng and raxml-ng====================================
-		system("modeltest-ng -i ALL.core.snp.fasta.gb -t ml -o modeltest_nt -p $opt_threads -d nt");
-		print "Constructing ML tree of core SNPS...\n\n";
-		open LOG, "modeltest_nt.log" || die;
-		my $bic;
-		my $aic;
-		my $aicc;
-		while (<LOG>) {
-			chomp;
-			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-				$bic = $1;
-			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-				$aic = $1;
-			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-				$aicc = $1;
-			}
-		}
-		close LOG;
 
-		if ($bic eq $aic and $bic eq $aicc) {
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bic ne $aic and $aic eq $aicc) {
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bic eq $aic and $aic ne $aicc) {
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bic eq $aicc and $aic ne $aicc) {
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa ALL.core.snp.fasta.gb --prefix ALL.core.snp.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		print "Running trimAL for selection of conserved blocks...\n\n";
+		system("trimal -in $seqfilen -out $gblocks_outn -automated1");
+
+		#print "Running Gblocks for selection of conserved blocks...\n\n";
+		#system("Gblocks $seqfilen -t=d -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
+
+		if ($opt_fasttree) {
+			print "Running FastTree for phylogenetic tree construction...\n\n";
+			system("fasttree -nt -gtr $gblocks_outn > ALL.core.snp.nwk");
+		}else {
+			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 		}
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
 		#===================end==========================================================
@@ -2842,42 +2796,20 @@ if ($opt_All or $opt_Pan) {
 		my $seqnumn = `grep -c '^>' $seqfilen`;
 		print "There are $seqnumn sequences in the input file\n\n";
 		my $b12n = ceil($seqnumn/2) + 1;
-		print "Running Gblocks for selection of conserved blocks...\n\n";
-		system("Gblocks $seqfilen -t=p -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
+
+		print "Running trimAL for selection of conserved blocks...\n\n";
+		system("trimal -in $seqfilen -out $gblocks_outn -automated1");
+
+		#print "Running Gblocks for selection of conserved blocks...\n\n";
+		#system("Gblocks $seqfilen -t=p -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
 		print "Constructing ML tree of the single-copy core proteins...\n\n";
 		#===============================================================================
-		system("modeltest-ng -i Roary.core.protein.fasta.gb -t ml -o Roary.modeltest_aa -p $opt_threads -d aa");
-		open LOGa, "Roary.modeltest_aa.log" || die;
-		my $bica;
-		my $aica;
-		my $aicca;
-		while (<LOGa>) {
-			chomp;
-			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-				$bica = $1;
-			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-				$aica = $1;
-			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-				$aicca = $1;
-			}
-		}
-		close LOGa;
-
-		if ($bica eq $aica and $bica eq $aicca) {
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica ne $aica and $aica eq $aicca) {
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica eq $aica and $aica ne $aicca) {
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica eq $aicca and $aica ne $aicca) {
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Roary.core.protein.fasta.gb --prefix Roary.core.protein.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		if ($opt_fasttree) {
+			print "Running FastTree for phylogenetic tree construction...\n\n";
+			system("fasttree $gblocks_outn > Roary.core.protein.nwk");
+		}else {
+			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 		}
 		#===================================================================================
 		#system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
@@ -3070,44 +3002,21 @@ if ($opt_All or $opt_OrthoF) {
 		my $b12 = ceil($seqnum/2) + 1;
 		#print "Running muscle for sequence alignment...\n\n";
 		#system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
-		print "Running Gblocks for selection of conserved blocks...\n\n";
-		#chdir "$working_dir/Results/STREE/";
-		system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
+
+		print "Running trimAL for selection of conserved blocks...\n\n";
+		system("trimal -in $seqfile -out $gblocks_out -automated1");
+
+		#print "Running Gblocks for selection of conserved blocks...\n\n";
+		#system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 
 		print "Constructing ML tree of the Single Copy Orthologue proteins...\n\n";
 		#===============================================================================
-		system("modeltest-ng -i Single.Copy.Orthologue.fasta.gb -t ml -o modeltest_aa -p $opt_threads -d aa");
-		open LOGa, "modeltest_aa.log" || die;
-		my $bica;
-		my $aica;
-		my $aicca;
-		while (<LOGa>) {
-			chomp;
-			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-				$bica = $1;
-			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-				$aica = $1;
-			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-				$aicca = $1;
-			}
-		}
-		close LOGa;
-
-		if ($bica eq $aica and $bica eq $aicca) {
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica ne $aica and $aica eq $aicca) {
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.AICc.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica ne $aica and $aica ne $aicca and $bica ne $aicca) {
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.$aica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica eq $aica and $aica ne $aicca) {
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AIC.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AICc.$aicca --model $aicca --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-		}elsif ($bica eq $aicca and $aica ne $aicca) {
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.BIC.AICc.$bica --model $bica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
-			system("raxml-ng --all --msa Single.Copy.Orthologue.fasta.gb --prefix Single.Copy.Orthologue.AIC.$bica --model $aica --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads");
+		if ($opt_fasttree) {
+			print "Running FastTree for phylogenetic tree construction...\n\n";
+			system("fasttree $gblocks_out > Single.Copy.Orthologue.nwk");
+		}else {
+			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 		}
 		#===================================================================================
 		#system("fasttree Single.Copy.Orthologue.fasta > Single.Copy.Orthologue.nwk");
@@ -3163,7 +3072,8 @@ if ($opt_All or $opt_ANI) {
 	my $time_ANIs = time();
 	print "Performing --ANI function...\n\n";
 	system("mkdir -p Results/ANI");
-	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $opt_ANIO");
+	my $ANIO = "Results/ANI/ANIs";
+	system("fastANI --matrix -t $opt_threads --ql $opt_queryL --rl $opt_refL -o $ANIO");
 	chdir "Results/ANI";
 	system("perl $pgcgap_dir/triangle2list.pl");
 	system("perl $pgcgap_dir/get_ANImatrix.pl --Scaf_suffix $opt_Scaf_suffix");
@@ -3211,42 +3121,9 @@ if ($opt_VAR) {
 		my $corefull = system(@corefull);
 		if (!($corefull == 0)) {
 			#print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
-			print "Some error happens when running gubbins! The recombinations will not be predicted, and running raxml-ng to construct the trees instead!\n";
+			print "Some error happens when running gubbins! The recombinations will not be predicted, and running IQ-TREE to construct the trees instead!\n";
 			#===================modeltest-ng and raxml-ng====================================
-			system("modeltest-ng -i core.full.aln -t ml -o core.full.modeltest_nt -p $opt_threads -d nt");
-			print "Constructing ML tree of core.full.aln...\n\n";
-			open LOG, "core.full.modeltest_nt.log" || die;
-			my $bic;
-			my $aic;
-			my $aicc;
-			while (<LOG>) {
-				chomp;
-				if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-					$bic = $1;
-				}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-					$aic = $1;
-				}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-					$aicc = $1;
-				}
-			}
-			close LOG;
-
-			if ($bic eq $aic and $bic eq $aicc) {
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			}elsif ($bic ne $aic and $aic eq $aicc) {
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			}elsif ($bic eq $aic and $aic ne $aicc) {
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			}elsif ($bic eq $aicc and $aic ne $aicc) {
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-				system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			}
+			system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 			#===================end==========================================================
 			#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
@@ -3257,80 +3134,14 @@ if ($opt_VAR) {
 		}
 	} else {
 		#===================modeltest-ng and raxml-ng====================================
-		system("modeltest-ng -i core.full.aln -t ml -o core.full.modeltest_nt -p $opt_threads -d nt");
-		print "Constructing ML tree of core.full.aln...\n\n";
-		open LOG, "core.full.modeltest_nt.log" || die;
-		my $bic;
-		my $aic;
-		my $aicc;
-		while (<LOG>) {
-			chomp;
-			if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-				$bic = $1;
-			}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-				$aic = $1;
-			}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-				$aicc = $1;
-			}
-		}
-		close LOG;
-
-		if ($bic eq $aic and $bic eq $aicc) {
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		}elsif ($bic ne $aic and $aic eq $aicc) {
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		}elsif ($bic eq $aic and $aic ne $aicc) {
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		}elsif ($bic eq $aicc and $aic ne $aicc) {
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-			system("raxml-ng --all --msa core.full.aln --prefix core.full.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		}
+		system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
 		#===================end==========================================================
 		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
 		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
 	#===================modeltest-ng and raxml-ng====================================
-	system("modeltest-ng -i core.aln -t ml -o core.modeltest_nt -p $opt_threads -d nt");
-	print "Constructing ML tree of core.aln...\n\n";
-	open LOG, "core.modeltest_nt.log" || die;
-	my $bic;
-	my $aic;
-	my $aicc;
-	while (<LOG>) {
-		chomp;
-		if (/\s+BIC\s+(\S+)\s+\S+\s+\S+/) {
-			$bic = $1;
-		}elsif (/\s+AIC\s+(\S+)\s+\S+\s+\S+/) {
-			$aic = $1;
-		}elsif (/\s+AICc\s+(\S+)\s+\S+\s+\S+/) {
-			$aicc = $1;
-		}
-	}
-	close LOG;
-
-	if ($bic eq $aic and $bic eq $aicc) {
-		system("raxml-ng --all --msa core.aln --prefix core.BIC.AIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-	}elsif ($bic ne $aic and $aic eq $aicc) {
-		system("raxml-ng --all --msa core.aln --prefix core.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		system("raxml-ng --all --msa core.aln --prefix core.AIC.AICc.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-	}elsif ($bic ne $aic and $aic ne $aicc and $bic ne $aicc) {
-		system("raxml-ng --all --msa core.aln --prefix core.BIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		system("raxml-ng --all --msa core.aln --prefix core.AIC.$aic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		system("raxml-ng --all --msa core.aln --prefix core.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-	}elsif ($bic eq $aic and $aic ne $aicc) {
-		system("raxml-ng --all --msa core.aln --prefix core.BIC.AIC.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		system("raxml-ng --all --msa core.aln --prefix core.AICc.$aicc --model $aicc --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-	}elsif ($bic eq $aicc and $aic ne $aicc) {
-		system("raxml-ng --all --msa core.aln --prefix core.BIC.AICc.$bic --model $bic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-		system("raxml-ng --all --msa core.aln --prefix core.AIC.$bic --model $aic --tree pars{10} --bs-trees autoMRE{1000} --threads $opt_threads --force");
-	}
+	system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
 	system("mv core.* Results/Variants/Core/");
 	chdir $working_dir;
 	#===================end==========================================================
@@ -3577,6 +3388,8 @@ sub printCoreTree{
 	print "[-aS (FLOAT)] Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )\n";
 	print "[-g (INT)] If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)\n";
 	print "[-d (INT)] length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )\n";
+	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3587,18 +3400,21 @@ sub printPan{
 	print "[--PanTree] Construct a phylogenetic tree of single-copy core proteins called by roary\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--identi (INT)] Minimum percentage identity for blastp ( Default 95 )\n";
+	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
 }
 
 sub printOrthoF{
 	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
 	print "[--Sprogram (STRING)] Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default diamond )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
 }
 
 sub printANI{
 	print "[--queryL (FILE)] The file containing full paths to query genomes, one per line ( Default scaf.list )\n";
 	print "[--refL (FILE)] The file containing full paths to reference genomes, one per line. ( Default scaf.list )\n";
-	print "[--ANIO (FILE)] The name of output file ( Default 'Results/ANI/ANIs' )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3625,6 +3441,7 @@ sub printVAR{
 	print "[--tree_builder (STRING)] Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
 }
 
 sub printAntiRes{
@@ -3646,7 +3463,7 @@ sub printSTREE{
 	print "[--seqfile (STRING)] Path of the sequence file for analysis.\n";
 	print "[--seqtype (STRING)] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
-	print "[--bsnum (INT)] Times for bootstrap. ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
 }
 
 sub printACC{
@@ -3681,23 +3498,47 @@ sub printExamples{
 
 	print "Example 6: Constructing the phylogenetic trees of single-copy core proteins and core SNPs\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>\n\n";
+	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+
+	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+
+	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
 
 	print "Example 7: Constructing a single-copy core protein tree only.\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT>\n\n";
+	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+
+	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+
+	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
 
 	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree\n\n";
+	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
 
-	print "Example 9: Inference of orthologous gene groups\n\n";
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fasttree\n\n";
 
-	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH>\n\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --bsnum <INT>\n\n";
+
+	print "Example 9: Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins\n\n";
+
+	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+
+	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fasttree\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+
+	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --bsnum <INT>\n\n";
 
 	print "Example 10: Compute whole-genome Average Nucleotide Identity (ANI)\n\n";
 
-	print "         pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --ANIO <STRING> --Scaf_suffix <STRING>\n\n";
+	print "         pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --Scaf_suffix <STRING>\n\n";
 
 	print "Example 11: Genome and metagenome similarity estimation using MinHash\n\n";
 
@@ -3709,7 +3550,7 @@ sub printExamples{
 
 	print "Example 13: Variants calling and phylogenetic tree construction based on a reference genome\n\n";
 
-	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING>\n\n";
+	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> --bsnum <INT>\n\n";
 
 	print "Example 14: Screening of contigs for antimicrobial and virulence genes\n\n";
 
