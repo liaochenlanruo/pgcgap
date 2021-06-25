@@ -1111,19 +1111,19 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 4</strong>: Constructing single-copy core protein tree and core SNPs tree</p>
-<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 1000</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 1000</pre>
 </li>
 <li>
 <p><strong>Example 5:</strong> Constructing single-copy core protein tree only.</p>
-<pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 1000</pre>
 </li>
 <li>
 <p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <strong>Applicable to v1.0.27 and later</strong>.</p>
-<pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 1000</pre>
 </li>
 <li>
 <p><strong>Example 7:</strong> Inference of orthologous gene groups.</p>
-<pre>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 1000</pre>
 </li>
 <li>
 <p><strong>Example 8:</strong> Compute whole-genome Average Nucleotide Identity (ANI).</p>
@@ -1139,7 +1139,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 11:</strong> Variants calling and phylogenetic tree construction based on the reference genome.</p>
-<pre>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree</pre>
+<pre>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 1000</pre>
 </li>
 <li>
 <p><strong>Example 12:</strong> Screening of contigs for antimicrobial and virulence genes</p>
