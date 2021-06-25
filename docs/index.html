@@ -1122,7 +1122,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 1000</pre>
 </li>
 <li>
-<p><strong>Example 7:</strong> Inference of orthologous gene groups.</p>
+<p><strong>Example 7:</strong> Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. <strong>Applicable to v1.0.29 and later</strong>.</p>
 <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 1000</pre>
 </li>
 <li>
