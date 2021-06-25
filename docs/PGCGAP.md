@@ -986,6 +986,14 @@ Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 - V1.0.29
   - Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.
   - Fixed the "permission denied" error when moving directories on the WSL platform.
+
+
+- V1.0.30
+ - Replace Gblocks with trimAL to trim MSA (module CoreTree, Pan, STREE, and OrthoF).
+ - Replaced Modeltest-ng and Raxml-ng with IQ-TREE (module CoreTree, Pan OrthoF, and VAR).
+ - Added the option of using fasttree to build phylogenetic tree (module CoreTree, Pan, and OrthoF).
+
+
 ---
 
 <center><strong>
