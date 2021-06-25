@@ -1779,6 +1779,14 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 </ul>
 </li>
 
+<li>
+<p>V1.0.30</p>
+<ul>
+<li>Replace Gblocks with trimAL to trim MSA (module CoreTree, Pan, STREE, and OrthoF).</li>
+<li>Replaced Modeltest-ng and Raxml-ng with IQ-TREE (module CoreTree, Pan OrthoF, and VAR).</li>
+<li>Added the option of using fasttree to build phylogenetic tree (module CoreTree, Pan, and OrthoF).</li>
+</ul>
+</li>
 
 </ul>
 <hr />
