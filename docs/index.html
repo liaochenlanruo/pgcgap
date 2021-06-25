@@ -506,7 +506,7 @@ img {
 
 <p></center></p>
 <h2>Introduction</h2>
-<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.</p>
+<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.<strong>To follow this document, please upgrade PGCGAP to version v1.0.30.</strong></p>
 <h2>Installation</h2>
 <p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong>.</p>
 <p><strong>Step1: Install PGCGAP</strong></p>
@@ -1409,8 +1409,9 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <h3>STREE</h3>
 <ul>
 <li><strong>Results/STREE/*.aln</strong> : Aligned sequences.</li>
-<li><strong>Results/STREE/*.aln.gb</strong> : Conserved blocks of the sequences.</li>
+<li><strong>Results/STREE/*.aln.gb</strong> : Conserved blocks of the aligned sequences.</li>
 <li><strong>Results/STREE/*.aln.gb.treefile</strong> : The final phylogenetic tree.</li>
+<li><strong>Results/STREE/*.aln.gb.iqtree</strong> : Log of IQ-TREE.</li>
 </ul>
 <h2>License</h2>
 <p>PGCGAP is free software, licensed under GPLv3.</p>
