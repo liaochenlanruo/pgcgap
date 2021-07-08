@@ -443,13 +443,13 @@ $options{'fasttree'} = \(my $opt_fasttree);
 
 =item B<[--bsnum (INT)]>
 
-I<[Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"]> Replicates for bootstrap of IQ-TREE. ( Default 1000 )
+I<[Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"]> Replicates for bootstrap of IQ-TREE. ( Default 500 )
 
 =back
 
 =cut
 
-$options{'bsnum=i'} = \( my $opt_bsnum = "1000");
+$options{'bsnum=i'} = \( my $opt_bsnum = "500");
 
 =over 30
 
@@ -1327,30 +1327,6 @@ $options{'unicycler-bin=s'} = \( my $opt_unicycler_bin = `which unicycler 2>/dev
 
 =over 30
 
-=item B<[--modeltest-ng-bin (PATH)]>
-
-Path to modeltest-ng binary file. Default tries if modeltest-ng is in PATH;
-
-=back
-
-=cut
-
-$options{'modeltest-ng-bin=s'} = \( my $opt_modeltestng_bin = `which modeltest-ng 2>/dev/null` );
-
-=over 30
-
-=item B<[--raxml-ng-bin (PATH)]>
-
-Path to raxml-ng binary file. Default tries if raxml-ng is in PATH;
-
-=back
-
-=cut
-
-$options{'raxml-ng-bin=s'} = \( my $opt_raxmlng_bin = `which raxml-ng 2>/dev/null` );
-
-=over 30
-
 =item B<[--muscle-bin (PATH)]>
 
 Path to nuscle binary file. Default tries if muscle in PATH;
@@ -1363,15 +1339,15 @@ $options{'muscle-bin=s'} = \( my $opt_muscle_bin = `which muscle 2>/dev/null` );
 
 =over 30
 
-=item B<[--Gblocks-bin (PATH)]>
+=item B<[--trimAL-bin (PATH)]>
 
-Path to Gblocks binary file. Default tries if Gblocks is in PATH;
+Path to trimAL binary file. Default tries if trimAL is in PATH;
 
 =back
 
 =cut
 
-$options{'Gblocks-bin=s'} = \( my $opt_Gblocks_bin = `which Gblocks 2>/dev/null` );
+$options{'trimAL-bin=s'} = \( my $opt_trimAL_bin = `which trimal 2>/dev/null` );
 
 =over 30
 
@@ -1417,7 +1393,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print "PGCGAP version: 1.0.30\n";
+	print "PGCGAP version: 1.0.31\n";
 	print "Enter the command 'pgcgap --check-update' to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
@@ -1428,12 +1404,11 @@ if ($opt_help) {
 }
 
 
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_modeltestng_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_raxmlng_bin, $opt_muscle_bin, $opt_Gblocks_bin, $opt_iqtree_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_muscle_bin, $opt_trimAL_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
 check_update() if ($opt_check_update);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
 pod2usage( -msg => 'mafft not in $PATH and binary not specified use --mafft-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mafft_bin);
-pod2usage( -msg => 'modeltest-ng not in $PATH and binary not specified use --modeltestng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_modeltestng_bin);
 pod2usage( -msg => 'snp-sites not in $PATH and binary not specified use --snp-sites-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snpsites_bin);
 pod2usage( -msg => 'abyss not in $PATH and binary not specified use --abyss-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abyss_bin);
 pod2usage( -msg => 'canu not in $PATH and binary not specified use --canu-bin', -verbose => 0, -exitval => 1 ) unless ($opt_canu_bin);
@@ -1449,14 +1424,13 @@ pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bi
 pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mash_bin);
 pod2usage( -msg => 'abricate not in $PATH and binary not specified use --abricate-bin', -verbose => 0, -exitval => 1 ) unless ($opt_abricate_bin);
 pod2usage( -msg => 'unicycler not in $PATH and binary not specified use --unicycler-bin', -verbose => 0, -exitval => 1 ) unless ($opt_unicycler_bin);
-pod2usage( -msg => 'raxml-ng not in $PATH and binary not specified use --raxmlng-bin', -verbose => 0, -exitval => 1 ) unless ($opt_raxmlng_bin);
 pod2usage( -msg => 'muscle not in $PATH and binary not specified use --muscle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_muscle_bin);
-pod2usage( -msg => 'Gblocks not in $PATH and binary not specified use --Gblocks-bin', -verbose => 0, -exitval => 1 ) unless ($opt_Gblocks_bin);
+pod2usage( -msg => 'trimAL not in $PATH and binary not specified use --trimAL-bin', -verbose => 0, -exitval => 1 ) unless ($opt_trimAL_bin);
 pod2usage( -msg => 'iqtree not in $PATH and binary not specified use --iqtree-bin', -verbose => 0, -exitval => 1 ) unless ($opt_iqtree_bin);
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "modeltest-ng" => $opt_modeltestng_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "raxml-ng" => $opt_raxmlng_bin, "muscle" => $opt_muscle_bin, "Gblocks" => $opt_Gblocks_bin, "iqtree" => $opt_iqtree_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "muscle" => $opt_muscle_bin, "trimAL" => $opt_trimAL_bin, "iqtree" => $opt_iqtree_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1552,7 +1526,7 @@ if ($opt_STREE) {
 	#system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
-	system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+	system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 	chdir $working_dir;
 }
 my $threads_half = CPU();
@@ -2215,10 +2189,10 @@ if ($opt_All or $opt_CoreTree) {
 	#===============================================================================
 	if ($opt_fasttree) {
 		print "Running FastTree for phylogenetic tree construction...\n\n";
-		system("fasttree $gblocks_out > ALL.core.protein.nwk");
+		system("fasttree -quiet $gblocks_out > ALL.core.protein.nwk");
 	}else {
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 	}
 	#===================================================================================
 	#system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
@@ -2488,10 +2462,10 @@ if ($opt_All or $opt_CoreTree) {
 
 		if ($opt_fasttree) {
 			print "Running FastTree for phylogenetic tree construction...\n\n";
-			system("fasttree -nt -gtr $gblocks_outn > ALL.core.snp.nwk");
+			system("fasttree -nt -gtr -quiet $gblocks_outn > ALL.core.snp.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 		}
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
 		#===================end==========================================================
@@ -2806,10 +2780,10 @@ if ($opt_All or $opt_Pan) {
 		#===============================================================================
 		if ($opt_fasttree) {
 			print "Running FastTree for phylogenetic tree construction...\n\n";
-			system("fasttree $gblocks_outn > Roary.core.protein.nwk");
+			system("fasttree -quiet $gblocks_outn > Roary.core.protein.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 		}
 		#===================================================================================
 		#system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
@@ -3013,10 +2987,10 @@ if ($opt_All or $opt_OrthoF) {
 		#===============================================================================
 		if ($opt_fasttree) {
 			print "Running FastTree for phylogenetic tree construction...\n\n";
-			system("fasttree $gblocks_out > Single.Copy.Orthologue.nwk");
+			system("fasttree -quiet $gblocks_out > Single.Copy.Orthologue.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 		}
 		#===================================================================================
 		#system("fasttree Single.Copy.Orthologue.fasta > Single.Copy.Orthologue.nwk");
@@ -3123,7 +3097,7 @@ if ($opt_VAR) {
 			#print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running IQ-TREE to construct the trees instead!\n";
 			#===================modeltest-ng and raxml-ng====================================
-			system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+			system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 			#===================end==========================================================
 			#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
@@ -3134,14 +3108,14 @@ if ($opt_VAR) {
 		}
 	} else {
 		#===================modeltest-ng and raxml-ng====================================
-		system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+		system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
 		#===================end==========================================================
 		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
 		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
 	#===================modeltest-ng and raxml-ng====================================
-	system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum");
+	system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 	system("mv core.* Results/Variants/Core/");
 	chdir $working_dir;
 	#===================end==========================================================
@@ -3389,7 +3363,7 @@ sub printCoreTree{
 	print "[-g (INT)] If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)\n";
 	print "[-d (INT)] length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
-	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3401,7 +3375,7 @@ sub printPan{
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--identi (INT)] Minimum percentage identity for blastp ( Default 95 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
-	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 }
 
 sub printOrthoF{
@@ -3409,7 +3383,7 @@ sub printOrthoF{
 	print "[--Sprogram (STRING)] Sequence search program, Options: blast, mmseqs, blast_gz, diamond ( Default diamond )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
-	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 }
 
 sub printANI{
@@ -3441,7 +3415,7 @@ sub printVAR{
 	print "[--tree_builder (STRING)] Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
-	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 }
 
 sub printAntiRes{
@@ -3463,7 +3437,7 @@ sub printSTREE{
 	print "[--seqfile (STRING)] Path of the sequence file for analysis.\n";
 	print "[--seqtype (STRING)] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
-	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 1000 )\n\n";
+	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 }
 
 sub printACC{
