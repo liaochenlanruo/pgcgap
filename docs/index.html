@@ -506,14 +506,14 @@ img {
 
 <p></center></p>
 <h2>Introduction</h2>
-<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.<strong>To follow this document, please upgrade PGCGAP to version v1.0.30.</strong></p>
+<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.<strong>To follow this document, please upgrade PGCGAP to version v1.0.30 or later.</strong></p>
 <h2>Installation</h2>
 <p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong>.</p>
 <p><strong>Step1: Install PGCGAP</strong></p>
 <pre>
 $conda create -n pgcgap python=3
 $conda activate pgcgap
-$conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
+$conda install pgcgap
 </pre>
 <p><strong>Step2: Setup COG database</strong> (Users should execute this after the first installation of pgcgap)</p>
 <pre>
@@ -537,7 +537,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://github.com/ParBLiSS/FastANI">FastANI</a></li>
 <li><a href="http://www.atgc-montpellier.fr/fastme/binaries.php">Fastme</a></li>
 <li><a href="https://github.com/OpenGene/fastp">Fastp</a></li>
-<li><a href="http://molevol.cmima.csic.es/castresana/Gblocks_server.html">Gblocks</a></li>
 <li><a href="https://github.com/sanger-pathogens/gubbins">Gubbins</a> &gt;=2.3.4</li>
 <li><a href="https://github.com/samtools/htslib">Htslib</a></li>
 <li><a href="http://www.iqtree.org/">IQ-TREE</a></li>
@@ -549,7 +548,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://github.com/davidemms/OrthoFinder">OrthoFinder</a></li>
 <li><a href="https://openjdk.java.net/">OpenJDK8</a></li>
 <li><a href="http://www.bork.embl.de/pal2nal/">PAL2NAL v14</a></li>
-<li><a href="http://trimal.cgenomics.org/">trimAL v14</a></li>
+<li><a href="http://trimal.cgenomics.org/">trimAL</a></li>
 <li>
 <a href="http://www.perl.org/get.html">Perl</a> &amp; the modules
 <ul>
@@ -685,7 +684,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--scafPath (PATH)]</strong>              [Required by &quot;--All&quot;, &quot;--Assess&quot;, &quot;--Annotate&quot;, &quot;--MASH&quot; and &quot;--AntiRes&quot;] Path for contigs/scaffolds (Default &quot;Results/Assembles/Scaf/Illumina&quot;)</p>
 </li>
 <li>
-<p><strong>[--AAsPath (PATH)]</strong>               [Required by &quot;--All&quot;, &quot;--CoreTree&quot;, &quot;--Pan&quot;, &quot;--OrthoF&quot; and &quot;--pCOG&quot;] Amino acids of all strains as fasta file paths,
+<p><strong>[--AAsPath (PATH)]</strong>               [Required by &quot;--All&quot;, &quot;--Pan&quot;, &quot;--OrthoF&quot; and &quot;--pCOG&quot;] Amino acids of all strains as fasta file paths,
                                  ( Default &quot;./Results/Annotations/AAs&quot; )</p>
 </li>
 <li>
@@ -998,9 +997,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--fastANI-bin (PATH)]</strong>           Path to the fastANI binary file. Default tries if fastANI is in PATH;</p>
 </li>
 <li>
-<p><strong>[--Gblocks-bin (PATH)]</strong>           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;</p>
-</li>
-<li>
 <p><strong>[--gubbins-bin (PATH)]</strong>           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;</p>
 </li>
 <li>
@@ -1011,9 +1007,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 <li>
 <p><strong>[--mash-bin (PATH)]</strong>              Path to the mash binary file. Default tries if mash is in PATH.</p>
-</li>
-<li>
-<p><strong>[--modeltest-ng-bin (PATH)]</strong>      Path to the modeltest-ng binary file. Default tries if modeltest-ng is in PATH.</p>
 </li>
 <li>
 <p><strong>[--muscle-bin (PATH)]</strong>            Path to the muscle binary file. Default tries if muscle is in PATH.</p>
@@ -1031,9 +1024,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--prokka-bin (PATH)]</strong>            Path to prokka binary file. Default tries if prokka is in PATH;</p>
 </li>
 <li>
-<p><strong>[--raxml-ng-bin (PATH)]</strong>          Path to the raxml-ng binary file. Default tries if raxml-ng is in PATH;</p>
-</li>
-<li>
 <p><strong>[--roary-bin (PATH)]</strong>             Path to the roary binary file. Default tries if roary is in PATH;</p>
 </li>
 <li>
@@ -1044,6 +1034,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 <li>
 <p><strong>[--snp-sites-bin (PATH)]</strong>         Path to the snp-sites binary file. Default tries if snp-sites is in PATH;</p>
+</li>
+<li>
+<p><strong>[--trimAL-bin (PATH)]</strong>           Path to the trimAL binary file. Default tries if trimAL is in PATH;</p>
 </li>
 <li>
 <p><strong>[--unicycler-bin (PATH)]</strong>         Path to the unicycler binary file. Default tries if unicycler is in PATH;</p>
@@ -1127,7 +1120,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 8:</strong> Compute whole-genome Average Nucleotide Identity (ANI).</p>
-<pre>$pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa</pre>
+<pre>$pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .fa</pre>
 </li>
 <li>
 <p><strong>Example 9:</strong> Genome and metagenome similarity estimation using MinHash</p>
@@ -1339,6 +1332,7 @@ Same as <a href="https://github.com/davidemms/OrthoFinder?_blank">OrthoFinder</a
 <br/></li>
 <li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/</strong><br/>Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.<br/></li>
 <li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.nwk</strong><br/>Phylogenetic tree constructed by FastTree.<br/></li>
+<li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.fasta.gb.treefile</strong><br/>Phylogenetic tree constructed by IQ-TREE.<br/></li>
 </ul>
 <h3>Pan</h3>
 <ul>
@@ -1445,13 +1439,13 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--Annotate&quot;, please also cite <a href="https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=24642063">Prokka</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--CoreTree&quot;, please also cite <a href="https://doi.org/10.1093/bioinformatics/btl158">CD-HIT</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/nar/gkl315">PAL2NAL</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>, and <a href="https://dx.doi.org/10.1099%2Fmgen.0.000056">SNP-sites</a>.</p>
+<p>If you use &quot;--CoreTree&quot;, please also cite <a href="https://doi.org/10.1093/bioinformatics/btl158">CD-HIT</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/nar/gkl315">PAL2NAL</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>, and <a href="https://dx.doi.org/10.1099%2Fmgen.0.000056">SNP-sites</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--Pan&quot;, please also cite <a href="https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421">Roary</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, and <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>.</p>
+<p>If you use &quot;--Pan&quot;, please also cite <a href="https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421">Roary</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--OrthoF&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-019-1832-y">OrthoFinder</a>.</p>
+<p>If you use &quot;--OrthoF&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-019-1832-y">OrthoFinder</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>.</p>
 </li>
 <li>
 <p>If you use &quot;--ANI&quot;, please also cite <a href="https://dx.doi.org/10.1038%2Fs41467-018-07641-9">fastANI</a>.</p>
@@ -1460,13 +1454,13 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--MASH&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-016-0997-x">Mash</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--VAR&quot;, please also cite <a href="https://github.com/najoshi/sickle">Sickle</a>, <a href="https://github.com/tseemann/snippy">Snippy</a>, <a href="https://dx.doi.org/10.1093%2Fnar%2Fgku1196">Gubbins</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>, and <a href="https://dx.doi.org/10.4161%2Ffly.19695">SnpEff</a>.</p>
+<p>If you use &quot;--VAR&quot;, please also cite <a href="https://github.com/najoshi/sickle">Sickle</a>, <a href="https://github.com/tseemann/snippy">Snippy</a>, <a href="https://dx.doi.org/10.1093%2Fnar%2Fgku1196">Gubbins</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>, and <a href="https://dx.doi.org/10.4161%2Ffly.19695">SnpEff</a>.</p>
 </li>
 <li>
 <p>If you use &quot;--AntiRes&quot;, please also cite <a href="https://github.com/tseemann/abricate">Abricate</a> and the corresponding database you used: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410">NCBI AMRFinderPlus</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/27789705">CARD</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/22782487">Resfinder</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/24145532">ARG-ANNOT</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/26578559">VFDB</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/24777092">PlasmidFinder</a>, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/">EcOH</a>, or <a href="https://academic.oup.com/nar/article/48/D1/D561/5624973">MEGARES 2.00</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/oxfordjournals.molbev.a026334">Gblocks</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
+<p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
 </li>
 </ul>
 <h2>FAQ</h2>
