@@ -3539,7 +3539,7 @@ sub printExamples{
 
 	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
 
@@ -3553,7 +3553,7 @@ sub printExamples{
 
 	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --bsnum <INT>\n\n";
 
@@ -3567,7 +3567,7 @@ sub printExamples{
 
 	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --bsnum <INT>\n\n";
 
@@ -3603,7 +3603,7 @@ sub printExamples{
 
 	print "Example 15: Construct a phylogenetic tree based on multiple sequences in one file\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT> --threads <INT>\n\n";
 
