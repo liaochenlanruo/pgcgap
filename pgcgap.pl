@@ -453,6 +453,18 @@ $options{'bsnum=i'} = \( my $opt_bsnum = "500");
 
 =over 30
 
+=item B<[--fastboot (INT)]>
+
+I<[Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"]> Replicates for ultrafast bootstrap of IQ-TREE. ( must >= 1000, Default 1000 )
+
+=back
+
+=cut
+
+$options{'fastboot=i'} = \( my $opt_fastboot = "1000");
+
+=over 30
+
 =item B<[--threads (INT)]>
 
 Number of threads to be used ( Default 4 )
@@ -1526,7 +1538,11 @@ if ($opt_STREE) {
 	#system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
 	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
-	system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+	if ($opt_fastboot) {
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+	}else {
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+	}
 	chdir $working_dir;
 }
 my $threads_half = CPU();
@@ -2192,7 +2208,11 @@ if ($opt_All or $opt_CoreTree) {
 		system("fasttree -quiet $gblocks_out > ALL.core.protein.nwk");
 	}else {
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+		if ($opt_fastboot) {
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+		}else {
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+		}
 	}
 	#===================================================================================
 	#system("fasttree ALL.core.protein.fasta > ALL.core.protein.nwk");
@@ -2465,7 +2485,11 @@ if ($opt_All or $opt_CoreTree) {
 			system("fasttree -nt -gtr -quiet $gblocks_outn > ALL.core.snp.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			if ($opt_fastboot) {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			}else {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			}
 		}
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
 		#===================end==========================================================
@@ -2783,7 +2807,11 @@ if ($opt_All or $opt_Pan) {
 			system("fasttree -quiet $gblocks_outn > Roary.core.protein.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			if ($opt_fastboot) {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			}else {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			}
 		}
 		#===================================================================================
 		#system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
@@ -2990,7 +3018,11 @@ if ($opt_All or $opt_OrthoF) {
 			system("fasttree -quiet $gblocks_out > Single.Copy.Orthologue.nwk");
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			if ($opt_fastboot) {
+				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			}else {
+				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			}
 		}
 		#===================================================================================
 		#system("fasttree Single.Copy.Orthologue.fasta > Single.Copy.Orthologue.nwk");
@@ -3097,7 +3129,11 @@ if ($opt_VAR) {
 			#print "Some error happens when running gubbins! The recombinations will not be predicted, and running fasttree to construct the trees instead!\n";
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running IQ-TREE to construct the trees instead!\n";
 			#===================modeltest-ng and raxml-ng====================================
-			system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			if ($opt_fastboot) {
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			}else {
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			}
 			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 			#===================end==========================================================
 			#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
@@ -3107,15 +3143,23 @@ if ($opt_VAR) {
 			print "running gubbins successfully!\n";
 		}
 	} else {
-		#===================modeltest-ng and raxml-ng====================================
-		system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+		#===================IQ-TREE====================================
+		if ($opt_fastboot) {
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			}else {
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			}
 		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
 		#===================end==========================================================
 		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
 		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
 	#===================modeltest-ng and raxml-ng====================================
-	system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+	if ($opt_fastboot) {
+		system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+	}else {
+		system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+	}
 	system("mv core.* Results/Variants/Core/");
 	chdir $working_dir;
 	#===================end==========================================================
@@ -3364,6 +3408,7 @@ sub printCoreTree{
 	print "[-d (INT)] length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
+	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3376,6 +3421,7 @@ sub printPan{
 	print "[--identi (INT)] Minimum percentage identity for blastp ( Default 95 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
+	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 }
 
 sub printOrthoF{
@@ -3384,6 +3430,7 @@ sub printOrthoF{
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
+	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 }
 
 sub printANI{
@@ -3416,6 +3463,7 @@ sub printVAR{
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
+	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 }
 
 sub printAntiRes{
@@ -3438,6 +3486,7 @@ sub printSTREE{
 	print "[--seqtype (STRING)] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
+	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 }
 
 sub printACC{
@@ -3476,9 +3525,13 @@ sub printExamples{
 
 	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fastboot <INT>\n\n";
 
 	print "Example 7: Constructing a single-copy core protein tree only.\n\n";
 
@@ -3486,9 +3539,13 @@ sub printExamples{
 
 	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fastboot <INT>\n\n";
 
 	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
 
@@ -3496,9 +3553,13 @@ sub printExamples{
 
 	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --bsnum <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fastboot <INT>\n\n";
 
 	print "Example 9: Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins\n\n";
 
@@ -3506,9 +3567,13 @@ sub printExamples{
 
 	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fasttree\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)\n";
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
 
 	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --bsnum <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fastboot <INT>\n\n";
 
 	print "Example 10: Compute whole-genome Average Nucleotide Identity (ANI)\n\n";
 
@@ -3524,7 +3589,13 @@ sub printExamples{
 
 	print "Example 13: Variants calling and phylogenetic tree construction based on a reference genome\n\n";
 
+	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+
 	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> --bsnum <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> --fastboot <INT>\n\n";
 
 	print "Example 14: Screening of contigs for antimicrobial and virulence genes\n\n";
 
@@ -3532,7 +3603,13 @@ sub printExamples{
 
 	print "Example 15: Construct a phylogenetic tree based on multiple sequences in one file\n\n";
 
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, traditional bootstrap)\n";
+
 	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT> --threads <INT>\n\n";
+
+	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+
+	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --fastboot <INT> --threads <INT>\n\n";
 
 	print "Example 16: Perform the short sequences filter from the assembled genome and get the genome status\n\n";
 

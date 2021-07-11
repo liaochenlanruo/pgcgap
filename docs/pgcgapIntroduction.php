@@ -578,9 +578,9 @@ img {
 
 <p></center></p>
 <h2>Introduction</h2>
-<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.</p>
+<p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, Oxford reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.</p> <strong>To follow this document, please upgrade PGCGAP to version v1.0.31 or later.</strong></p>
 <h2>Installation</h2>
-<p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong>.</p>
+<p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. <font color=red>Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong></font>.</p>
 <p><strong>Step1: Install PGCGAP</strong></p>
 <pre>
 $conda create -n pgcgap python=3
@@ -609,19 +609,19 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://github.com/ParBLiSS/FastANI">FastANI</a></li>
 <li><a href="http://www.atgc-montpellier.fr/fastme/binaries.php">Fastme</a></li>
 <li><a href="https://github.com/OpenGene/fastp">Fastp</a></li>
-<li><a href="http://molevol.cmima.csic.es/castresana/Gblocks_server.html">Gblocks</a></li>
+<li><a href="http://www.microbesonline.org/fasttree">FastTree</a></li>
 <li><a href="https://github.com/sanger-pathogens/gubbins">Gubbins</a> &gt;=2.3.4</li>
 <li><a href="https://github.com/samtools/htslib">Htslib</a></li>
 <li><a href="http://www.iqtree.org/">IQ-TREE</a></li>
 <li><a href="https://mafft.cbrc.jp/alignment/software/">Mafft</a></li>
 <li><a href="https://github.com/marbl/Mash">Mash</a></li>
-<li><a href="https://github.com/ddarriba/modeltest">ModelTest-NG</a></li>
 <li><a href="https://github.com/soedinglab/mmseqs2">Mmseqs2</a></li>
 <li><a href="https://www.ebi.ac.uk/Tools/msa/muscle/">Muscle</a></li>
 <li><a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=Download">NCBI-blast+</a></li>
 <li><a href="https://github.com/davidemms/OrthoFinder">OrthoFinder</a></li>
 <li><a href="https://openjdk.java.net/">OpenJDK8</a></li>
 <li><a href="http://www.bork.embl.de/pal2nal/">PAL2NAL v14</a></li>
+<li><a href="http://trimal.cgenomics.org/">trimAL</a></li>
 <li>
 <a href="http://www.perl.org/get.html">Perl</a> &amp; the modules
 <ul>
@@ -654,7 +654,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://cran.r-project.org/web/packages/plotrix/">plotrix</a></li>
 </ul>
 </li>
-<li><a href="https://github.com/amkozlov/raxml-ng">RAxML-NG</a></li>
 <li><a href="https://sanger-pathogens.github.io/Roary/">Roary</a></li>
 <li><a href="https://github.com/najoshi/sickle">Sickle-trim</a></li>
 <li><a href="https://github.com/tseemann/snippy">Snippy</a></li>
@@ -812,6 +811,16 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
                                  &quot;YBT-1520_L1_I050.R1.clean.fastq.gz&quot; is 26
                                  ( &quot;YBT-1520&quot; is the strain name ) ( Default 0 )</p>
 </li>
+
+<li><p><strong>[--fasttree]</strong>             [Can be used with "CoreTree", "Pan" and "OrthoF"] Use FastTree to construct phylogenetic tree quickly instead of IQ-TREE</p></li>
+<li>
+<p><strong>[--bsnum (INT)]</strong>             [Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"] Replicates for bootstrap of IQ-TREE ( Default 500 )</p>
+</li>
+
+<li>
+<p><strong>[--fastboot (INT)]</strong>             [Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"] Replicates for ultrafast bootstrap of IQ-TREE. ( must >= 1000, Default 1000 )</p>
+</li>
+
 <li>
 <p><strong>[--logs (STRING)]</strong>                Name of the log file ( Default Logs.txt )</p>
 </li>
@@ -1072,9 +1081,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--fastANI-bin (PATH)]</strong>           Path to the fastANI binary file. Default tries if fastANI is in PATH;</p>
 </li>
 <li>
-<p><strong>[--Gblocks-bin (PATH)]</strong>           Path to the Gblocks binary file. Default tries if Gblocks is in PATH;</p>
-</li>
-<li>
 <p><strong>[--gubbins-bin (PATH)]</strong>           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;</p>
 </li>
 <li>
@@ -1085,9 +1091,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 <li>
 <p><strong>[--mash-bin (PATH)]</strong>              Path to the mash binary file. Default tries if mash is in PATH.</p>
-</li>
-<li>
-<p><strong>[--modeltest-ng-bin (PATH)]</strong>      Path to the modeltest-ng binary file. Default tries if modeltest-ng is in PATH.</p>
 </li>
 <li>
 <p><strong>[--muscle-bin (PATH)]</strong>            Path to the muscle binary file. Default tries if muscle is in PATH.</p>
@@ -1105,9 +1108,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>[--prokka-bin (PATH)]</strong>            Path to prokka binary file. Default tries if prokka is in PATH;</p>
 </li>
 <li>
-<p><strong>[--raxml-ng-bin (PATH)]</strong>          Path to the raxml-ng binary file. Default tries if raxml-ng is in PATH;</p>
-</li>
-<li>
 <p><strong>[--roary-bin (PATH)]</strong>             Path to the roary binary file. Default tries if roary is in PATH;</p>
 </li>
 <li>
@@ -1118,6 +1118,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 <li>
 <p><strong>[--snp-sites-bin (PATH)]</strong>         Path to the snp-sites binary file. Default tries if snp-sites is in PATH;</p>
+</li>
+<li>
+<p><strong>[--trimAL-bin (PATH)]</strong>           Path to the trimAL binary file. Default tries if trimAL is in PATH;</p>
 </li>
 <li>
 <p><strong>[--unicycler-bin (PATH)]</strong>         Path to the unicycler binary file. Default tries if unicycler is in PATH;</p>
@@ -1183,19 +1186,19 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 4</strong>: Constructing single-copy core protein tree and core SNPs tree</p>
-<pre>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 5:</strong> Constructing single-copy core protein tree only.</p>
-<pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <strong>Applicable to v1.0.27 and later</strong>.</p>
-<pre>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000</pre>
 </li>
 <li>
-<p><strong>Example 7:</strong> Inference of orthologous gene groups.</p>
-<pre>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs</pre>
+<p><strong>Example 7:</strong> Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. <strong>Applicable to v1.0.29 and later</strong>.</p>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 8:</strong> Compute whole-genome Average Nucleotide Identity (ANI).</p>
@@ -1211,7 +1214,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 11:</strong> Variants calling and phylogenetic tree construction based on the reference genome.</p>
-<pre>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree</pre>
+<pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 12:</strong> Screening of contigs for antimicrobial and virulence genes</p>
@@ -1223,7 +1226,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 14:</strong> Construct a phylogenetic tree based on multiple sequences in one file</p>
-<pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4</pre>
+<pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4</pre>
 </li>
 </ul>
 <h2>Generating Input files</h2>
@@ -1369,6 +1372,16 @@ Concatenated and aligned sequences file of single-copy core proteins.
 <br/></p>
 </li>
 <li>
+<p><strong>Results/CoreTrees/ALL.core.protein.nwk</strong><br/>
+The phylogenetic tree file of single-copy core proteins for all strains constructed by FastTree.
+<br/></p>
+</li>
+<li>
+<p><strong>Results/CoreTrees/ALL.core.protein.fasta.gb.treefile</strong><br/>
+The phylogenetic tree file of single-copy core proteins for all strains constructed by IQ-TREE.
+<br/></p>
+</li>
+<li>
 <p><strong>Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta</strong><br/>
 Concatenated and aligned sequences file of single-copy core genes.
 <br/></p>
@@ -1379,13 +1392,13 @@ Core SNPs of single-copy core genes in fasta format.
 <br/></p>
 </li>
 <li>
-<p><strong>Results/CoreTrees/ALL.core.protein.*.support</strong><br/>
-The phylogenetic tree file of single-copy proteins for all strains based on the best-fit model of evolution selected using BIC, AIC and AICc criteria.
+<p><strong>Results/CoreTrees/ALL.core.snp.nwk</strong><br/>
+The phylogenetic tree file of SNPs of single-copy core genes for all strains constructed by FastTree.
 <br/></p>
 </li>
 <li>
-<p><strong>Results/CoreTrees/faa2ffn/ALL.core.snp.*.support</strong><br/>
-The phylogenetic tree file of SNPs of single-copy core genes for all strains based on the best-fit model of evolution selected using BIC, AIC and AICc criteria.
+<p><strong>Results/CoreTrees/ALL.core.snp.fasta.gb.treefile</strong><br/>
+The phylogenetic tree file of SNPs of single-copy core genes for all strains constructed by IQ-TREE.
 <br/></p>
 </li>
 <li>
@@ -1400,6 +1413,8 @@ Intermediate directories and files.
 Same as <a href="https://github.com/davidemms/OrthoFinder?_blank">OrthoFinder</a> outputs.
 <br/></li>
 <li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/</strong><br/>Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.<br/></li>
+<li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.nwk</strong><br/>Phylogenetic tree constructed by FastTree.<br/></li>
+<li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.fasta.gb.treefile</strong><br/>Phylogenetic tree constructed by IQ-TREE.<br/></li>
 </ul>
 <h3>Pan</h3>
 <ul>
@@ -1424,8 +1439,13 @@ Alignments of single-copy core proteins called by roary software.
 <br/></p>
 </li>
 <li>
-<p><strong>Results/PanGenome/Core/Roary.core.protein.*.support</strong><br/>
-A phylogenetic tree of Roary.core.protein.fasta based on the best-fit model of evolution selected using BIC, AIC and AICc criteria.
+<p><strong>Results/PanGenome/Core/Roary.core.protein.nwk</strong><br/>
+A phylogenetic tree of Roary.core.protein.fasta constructed by FastTree.
+<br/></p>
+</li>
+<li>
+<p><strong>Results/PanGenome/Core/Roary.core.protein.fasta.gb.treefile</strong><br/>
+A phylogenetic tree of Roary.core.protein.fasta constructed by IQ-TREE.
 <br/></p>
 </li>
 <li>
@@ -1468,7 +1488,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <ul>
 <li><strong>core.aln</strong> : A core SNP alignment includes only SNP sites.</li>
 <li><strong>core.full.aln</strong> : A whole genome SNP alignment (includes invariant sites).</li>
-<li><strong>core.*.support</strong> : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using BIC, AIC and AICc criteria (ignoring possible recombination).</li>
+<li><strong>core.*.support</strong> : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using IQ-TREE (ignoring possible recombination).</li>
 <li><strong>gubbins.core.full.node_labelled.final_tree.tre</strong> : Phylogenetic tree of the whole genome SNP alignment constructed with <strong>gubbins</strong> (get rid of recombination).</li>
 </ul>
 </li>
@@ -1481,8 +1501,9 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <h3>STREE</h3>
 <ul>
 <li><strong>Results/STREE/*.aln</strong> : Aligned sequences.</li>
-<li><strong>Results/STREE/*.aln.gb</strong> : Conserved blocks of the sequences.</li>
+<li><strong>Results/STREE/*.aln.gb</strong> : Conserved blocks of the aligned sequences.</li>
 <li><strong>Results/STREE/*.aln.gb.treefile</strong> : The final phylogenetic tree.</li>
+<li><strong>Results/STREE/*.aln.gb.iqtree</strong> : Log of IQ-TREE.</li>
 </ul>
 <h2>License</h2>
 <p>PGCGAP is free software, licensed under GPLv3.</p>
@@ -1500,13 +1521,13 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--Annotate&quot;, please also cite <a href="https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=24642063">Prokka</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--CoreTree&quot;, please also cite <a href="https://doi.org/10.1093/bioinformatics/btl158">CD-HIT</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/nar/gkl315">PAL2NAL</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>, and <a href="https://dx.doi.org/10.1099%2Fmgen.0.000056">SNP-sites</a>.</p>
+<p>If you use &quot;--CoreTree&quot;, please also cite <a href="https://doi.org/10.1093/bioinformatics/btl158">CD-HIT</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/nar/gkl315">PAL2NAL</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>, and <a href="https://dx.doi.org/10.1099%2Fmgen.0.000056">SNP-sites</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--Pan&quot;, please also cite <a href="https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421">Roary</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, and <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>.</p>
+<p>If you use &quot;--Pan&quot;, please also cite <a href="https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421">Roary</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--OrthoF&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-019-1832-y">OrthoFinder</a>.</p>
+<p>If you use &quot;--OrthoF&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-019-1832-y">OrthoFinder</a>, <a href="https://doi.org/10.1093/nar/gkf436">MAFFT</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a> or <a href="https://doi.org/10.1371/journal.pone.0009490">FastTree</a>.</p>
 </li>
 <li>
 <p>If you use &quot;--ANI&quot;, please also cite <a href="https://dx.doi.org/10.1038%2Fs41467-018-07641-9">fastANI</a>.</p>
@@ -1515,13 +1536,13 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--MASH&quot;, please also cite <a href="https://dx.doi.org/10.1186%2Fs13059-016-0997-x">Mash</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--VAR&quot;, please also cite <a href="https://github.com/najoshi/sickle">Sickle</a>, <a href="https://github.com/tseemann/snippy">Snippy</a>, <a href="https://dx.doi.org/10.1093%2Fnar%2Fgku1196">Gubbins</a>, <a href="https://doi.org/10.1093/molbev/msz189">ModelTest-NG</a>, <a href="https://doi.org/10.1093/bioinformatics/btz305">RAxML-NG</a>, and <a href="https://dx.doi.org/10.4161%2Ffly.19695">SnpEff</a>.</p>
+<p>If you use &quot;--VAR&quot;, please also cite <a href="https://github.com/najoshi/sickle">Sickle</a>, <a href="https://github.com/tseemann/snippy">Snippy</a>, <a href="https://dx.doi.org/10.1093%2Fnar%2Fgku1196">Gubbins</a>, <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>, and <a href="https://dx.doi.org/10.4161%2Ffly.19695">SnpEff</a>.</p>
 </li>
 <li>
 <p>If you use &quot;--AntiRes&quot;, please also cite <a href="https://github.com/tseemann/abricate">Abricate</a> and the corresponding database you used: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410">NCBI AMRFinderPlus</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/27789705">CARD</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/22782487">Resfinder</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/24145532">ARG-ANNOT</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/26578559">VFDB</a>, <a href="https://www.ncbi.nlm.nih.gov/pubmed/24777092">PlasmidFinder</a>, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/">EcOH</a>, or <a href="https://academic.oup.com/nar/article/48/D1/D561/5624973">MEGARES 2.00</a>.</p>
 </li>
 <li>
-<p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/oxfordjournals.molbev.a026334">Gblocks</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
+<p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
 </li>
 </ul>
 <h2>FAQ</h2>
@@ -1791,7 +1812,8 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <li>
 <p>V1.0.31</p>
 <ul>
-<li>The default replicates for bootstrap testing was set to 500.</li>
+<li>The default replicates for bootstrap testing of IQ-TREE was set to 500.</li>
+<li>Add the method for phylogenetic tree constructing with ultrafast bootstrap of IQ-TREE.</li>
 <li>Prevent the log from being written to the tree file generated by FastTree.</li>
 </ul>
 </li>
