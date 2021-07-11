@@ -1149,7 +1149,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 14:</strong> Construct a phylogenetic tree based on multiple sequences in one file</p>
-<pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4</pre>
+<pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4</pre>
 </li>
 </ul>
 <h2>Generating Input files</h2>
