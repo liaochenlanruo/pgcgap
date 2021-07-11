@@ -742,7 +742,11 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 <li><p><strong>[--fasttree]</strong>             [Can be used with "CoreTree", "Pan" and "OrthoF"] Use FastTree to construct phylogenetic tree quickly instead of IQ-TREE</p></li>
 <li>
-<p><strong>[--bsnum (INT)]</strong>             [Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"] Replicates for bootstrap of IQ-TREE ( Default 1000 )</p>
+<p><strong>[--bsnum (INT)]</strong>             [Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"] Replicates for bootstrap of IQ-TREE ( Default 500 )</p>
+</li>
+
+<li>
+<p><strong>[--fastboot (INT)]</strong>             [Required by "CoreTree", "Pan", "OrthoF", "STREE", and "VAR"] Replicates for ultrafast bootstrap of IQ-TREE. ( must >= 1000, Default 1000 )</p>
 </li>
 
 <li>
@@ -1105,11 +1109,11 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 4</strong>: Constructing single-copy core protein tree and core SNPs tree</p>
-<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 1000</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 5:</strong> Constructing single-copy core protein tree only.</p>
-<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 1000</pre>
+<pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/><br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
 </li>
 <li>
 <p><strong>Example 6:</strong> Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <strong>Applicable to v1.0.27 and later</strong>.</p>
