@@ -5,14 +5,14 @@ use Getopt::Long;
 use Pod::Usage;
 use Getopt::Std;
 use Bio::SeqIO;
-use Data::Dumper;
+##use Data::Dumper;
 use File::Tee qw(tee);
 use Cwd;
 use List::Util qw(sum min max);
 use File::Basename;
-use POSIX;
-use Sys::Info;
-use Sys::Info::Constants qw( :device_cpu );
+##use POSIX;
+#use Sys::Info;
+#use Sys::Info::Constants qw( :device_cpu );
 use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
 
 my %options;
@@ -1545,7 +1545,11 @@ if ($opt_STREE) {
 	}
 	chdir $working_dir;
 }
-my $threads_half = CPU();
+
+my $cpu_count = `cat /proc/cpuinfo| grep "cpu cores"| uniq`;
+$cpu_count =~ /.+?(\d+)/;
+my $threads_half = $1;
+#my $threads_half = CPU();
 #print $threads_half . "\n";
 # Genome Assemble with"Abyss" or "Canu"
 if ($opt_All or $opt_Assemble) {
@@ -3354,6 +3358,7 @@ sub lenfilter{
 	}
 }
 
+=pod
 sub CPU{
 	my %options;
 	my $info = Sys::Info->new;
@@ -3367,6 +3372,7 @@ sub CPU{
 	#printf "There are %d Threads\n"  , $cpu->ht || 1;
 	#printf "CPU load: %s\n"       , $cpu->load  || 0;
 }
+=cut
 sub printAssemble{
 	print "[--platform (STRING)] Sequencing Platform, 'illumina', 'pacbio', 'oxford' and 'hybrid' available ( Default illumina )\n";
 	print "[--assembler (STRING)] Software used for illumina reads assembly, 'abyss', 'spades' and 'auto' available ( Default auto )\n";
