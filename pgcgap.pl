@@ -5,12 +5,12 @@ use Getopt::Long;
 use Pod::Usage;
 use Getopt::Std;
 use Bio::SeqIO;
-##use Data::Dumper;
+use Data::Dumper;
 use File::Tee qw(tee);
 use Cwd;
 use List::Util qw(sum min max);
 use File::Basename;
-##use POSIX;
+use POSIX;#ceil function
 #use Sys::Info;
 #use Sys::Info::Constants qw( :device_cpu );
 use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
