@@ -528,8 +528,12 @@ $mamba install pgcgap
 </li>
 
 <li>
-Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. First, download the <a href="">latest configure file</a>. Then, run the following command:
+Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
 <pre>
+# download pgcgap_latest_env.yml
+$wget https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml
+
+# create a conda environment named as pgcgap and install the latest version of PGCGAP
 $conda env create -f pgcgap_latest_env.yml
 </pre>
 </li>
