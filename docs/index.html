@@ -517,14 +517,23 @@ $conda install pgcgap
 </pre>
 
 <p><strong>Notice: What should we do when the installation is slow? </strong>As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making "Solving Environment" slower and slower. Sometimes we can't even install the software through CONDA. In fact, we can do something instead of just waiting.<br/></p>
-
+<ul>
+<li>
+Method 1: use mamba to deal with the slow development of "solving environment" when using CONDA.
 <pre>
-# method to deal with the slow development of "solving environment" when using CONDA
 $conda activate pgcgap
 $conda install mamba -c conda-forge
 $mamba install pgcgap
 </pre>
+</li>
 
+<li>
+Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. First, download the <a href="">latest configure file</a>. Then, run the following command:
+<pre>
+$conda env create -f pgcgap_latest_env.yml
+</pre>
+</li>
+</ul>
 <p><strong>Step2: Setup COG database</strong> (Users should execute this after the first installation of pgcgap)</p>
 <pre>
 $conda activate pgcgap
