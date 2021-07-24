@@ -208,7 +208,6 @@ sub run_COG {
 	}
 	close GI;
 
-	#open CSV, "$cogdb_dir/cog2003-2014.csv" || die;
 	open CSV, "$cogdb_dir/cog-20.cog.csv" || die;
 
 	my %gene2cog_id;
@@ -244,11 +243,10 @@ sub run_COG {
 	close QUERY;
 
 	my %gi2final_cog;
-	#open NAME, "$cogdb_dir/cognames2003-2014.tab" || die;
 	open NAME, "$cogdb_dir/cog-20.def.tab" || die;
 	while (<NAME>){
 		chomp;
-		my ($cog_id,$flag,$name) = split /\t/,$_,3;################6 columns
+		my ($cog_id,$flag,$name) = split /\t/,$_,3;
 		if ($cog2query{$cog_id}){
 			foreach (@{$cog2query{$cog_id}}){
 				push @{$gi2final_cog{$_}},"$flag\t$name";
