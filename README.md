@@ -1,5 +1,5 @@
 # PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
-![Platform](https://badgen.net/badge/platform/WSL,Linux,macOS?list=|)
+![](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green)
 [![GitHub license](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE)
 [![Version](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
