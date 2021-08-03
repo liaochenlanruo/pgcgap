@@ -14,6 +14,7 @@ use POSIX;#ceil function
 #use Sys::Info;
 #use Sys::Info::Constants qw( :device_cpu );
 use File::Copy::Recursive qw(fcopy rcopy dircopy fmove rmove dirmove);
+use Term::ANSIColor qw(:constants);
 
 my %options;
 
@@ -1053,13 +1054,13 @@ $options{'iterations=i'} = \(my $opt_iterations = "5");
 
 =item B<[--db (STRING)]>
 
-I<[Required]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )
+I<[Required]> The database to use, options: all, argannot, card, ecoh, ecoli_vf, megares, ncbi, plasmidfinder, resfinder and vfdb. ( Default all )
 
 =back
 
 =cut
 
-$options{'db=s'} = \( my $opt_db = "ncbi");
+$options{'db=s'} = \( my $opt_db = "all");
 
 =over 30
 
@@ -1405,8 +1406,8 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print "PGCGAP version: 1.0.31\n";
-	print "Enter the command 'pgcgap --check-update' to check if there is a new version, and update to the new version if it exists.\n";
+	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.32", RESET . "\n";
+	print "Enter the command " . BOLD, YELLOW, "pgcgap --check-update", RESET . " to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
 
@@ -1466,13 +1467,13 @@ sub check_update{
 		$lines[-1]=~/pgcgap\s+(\S+).+/;
 		my $latest_version = $1;
 		if ($current_version ne $latest_version) {
-			print "Oh, No! You are running an old version of PGCGAP, we are going to update to the latest version $latest_version now!\n\n";
-			print "Please wait patiently, take a break and have a cup of tea or coffee\n";
-			my $installation = `conda install -y pgcgap=$latest_version`;
+			print BOLD, RED, "Oh, No! You are running an old version of PGCGAP $current_version, we are going to update to the latest version ",RESET . BOLD, YELLOW, "$latest_version",RESET . BOLD, RED, " now!",RESET . "\n\n";
+			print "Please wait patiently, take a break and have a cup of tea or coffee!\n";
+			my $installation = `mamba install -y pgcgap=$latest_version`;
 			print "$installation\n";
 			exit(0);
 		}else {
-			print "Congratulations, You are running the latest version of PGCGAP v $latest_version.\n";
+			print BOLD, GREEN, "Congratulations, You are running the latest version of PGCGAP ",RESET . BOLD, YELLOW, "v $latest_version",RESET . ".\n";
 			exit(0);
 		}
 	}
@@ -1530,17 +1531,18 @@ if ($opt_STREE) {
 	my $seqnum = `grep -c '^>' $seqfile`;
 	print "There are $seqnum sequences in the input file\n\n";
 	my $b12 = ceil($seqnum/2) + 1;
-	print "Running muscle for sequence alignment...\n\n";
+	print BOLD, CYAN, "Running muscle for sequence alignment...\n\n", RESET;
 	system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
-	print "Running trimAL for selection of conserved blocks...\n\n";
+	print BOLD, CYAN, "Running trimAL for selection of conserved blocks...\n\n", RESET;
 	chdir "$working_dir/Results/STREE/";
 	system("trimal -in $align_seq -out $gblocks_out -automated1");
 	#system("Gblocks $align_seq -t=$opt_seqtype -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
-	print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
 	if ($opt_fastboot) {
+		print BOLD, CYAN, "Running IQ-TREE for phylogenetic tree construction with the fastboot mode...\n\n", RESET;
 		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
 	}else {
+		print BOLD, CYAN, "Running IQ-TREE for phylogenetic tree construction with the traditional bootstrap mode...\n\n", RESET;
 		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
 	}
 	chdir $working_dir;
@@ -3146,7 +3148,7 @@ if ($opt_VAR) {
 			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Variants/Core/");
 			print "running gubbins successfully!\n";
 		}
-	} else {
+	} elsif ($opt_strain_num > 1) {
 		#===================IQ-TREE====================================
 		if ($opt_fastboot) {
 				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
@@ -3158,14 +3160,17 @@ if ($opt_VAR) {
 		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
 		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
 	}
-	#===================modeltest-ng and raxml-ng====================================
-	if ($opt_fastboot) {
-		system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
-	}else {
-		system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+	#===================core.aln TREE====================================
+	if ($opt_strain_num > 1) {
+		if ($opt_fastboot) {
+			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+		}else {
+			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+		}
+		system("mv core.* Results/Variants/Core/");
 	}
-	system("mv core.* Results/Variants/Core/");
 	chdir $working_dir;
+	system("mv core.* Results/Variants/Core/");
 	#===================end==========================================================
 	#system("fasttree -nt -gtr core.aln > core.nwk");
 	#system("mv core.aln core.nwk Results/Variants/Core/");
@@ -3180,10 +3185,19 @@ if ($opt_All or $opt_AntiRes) {
 	system("mkdir -p Results/AntiRes");
 	chdir $opt_scafPath;
 	my @genome = glob("*$opt_Scaf_suffix");
-	foreach  (@genome) {
-		$_=~/(.+)$opt_Scaf_suffix/;
-		my $out = $1 . ".tab";
-		system("abricate --threads $opt_threads --db $opt_db --minid $opt_identity --mincov $opt_coverage $_ > $working_dir/Results/AntiRes/$out");
+	foreach my $genome (@genome) {
+		$genome=~/(.+)$opt_Scaf_suffix/;
+		my $str = $1;
+		if ($opt_db eq "all") {
+			my @db = ("argannot", "card", "ecoh", "ecoli_vf", "ncbi", "plasmidfinder", "resfinder", "vfdb", "megares");
+			foreach my $db (@db) {
+				my $out = $str . "_" . $db . ".tab";
+				system("abricate --threads $opt_threads --db $db --minid $opt_identity --mincov $opt_coverage $genome > $working_dir/Results/AntiRes/$out");
+			}
+		}else {
+			my $out = $str . "_" . $opt_db . ".tab";
+			system("abricate --threads $opt_threads --db $opt_db --minid $opt_identity --mincov $opt_coverage $genome > $working_dir/Results/AntiRes/$out");
+		}
 	}
 	chdir $working_dir;
 	system("abricate --summary Results/AntiRes/*.tab > Results/AntiRes/summary.txt");
@@ -3475,7 +3489,7 @@ sub printVAR{
 sub printAntiRes{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
 	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
-	print "[--db (STRING)]> The database to use, options: argannot, card, ecoh, ecoli_vf, ncbi, plasmidfinder, resfinder and vfdb. ( Default ncbi )\n";
+	print "[--db (STRING)]> The database to use, options: all, argannot, card, ecoh, ecoli_vf, megares, ncbi, plasmidfinder, resfinder and vfdb. ( Default all )\n";
 	print "[--identity (INT)] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )\n";
 	print "[--coverage (INT)] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
@@ -3503,123 +3517,131 @@ sub printACC{
 sub printExamples{
 	print "\nThe main usage is as follows, visit the official website for step by step examples: https://liaochenlanruo.github.io/pgcgap/\n\n";
 
-	print "Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the 'VAR' module needs to be added separately\n\n";
+	print ON_BLUE, "Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the 'VAR' module needs to be added separately.", RESET . "\n\n";
 
-	print "         pgcgap --All --platform illumina --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --genus <STRING> --species <STRING> --codon <INT> --strain_num <INT> --threads <INT> --VAR --refgbk <full path> --qualtype <STRING>\n\n";
+	print YELLOW, "         pgcgap",RESET . MAGENTA, " --All ",RESET . RED, "--platform",RESET . " illumina " . RED, "--ReadsPath",RESET . " <PATH>" . RED, " --reads1",RESET . " <reads1 suffix>" . RED, " --reads2",RESET . " <reads2 suffix>" . RED, " --suffix_len",RESET . " <INT>" . RED, " --kmmer",RESET . " <INT>" . RED, " --genus",RESET . " <STRING>" . RED, " --species",RESET . " <STRING>" . RED, " --codon",RESET . " <INT>" . RED, " --strain_num",RESET . " <INT>" . RED " --threads",RESET . " <INT>" . MAGENTA, " --VAR",RESET . RED, " --refgbk",RESET . " <full path>" . RED, " --qualtype",RESET . " <STRING>" . "\n\n";
 
-	print "Example 2: Conduct pair-end reads assembly\n\n";
+	print ON_BLUE, "Example 2: Conduct pair-end reads assembly.", RESET . "\n\n";
 
-	print "         pgcgap --Assemble --platform illumina --assembler abyss --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>\n";
-	print "         pgcgap --Assemble --platform illumina --assembler spades --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --threads <INT>\n";
-	print "         pgcgap --Assemble --platform illumina --assembler auto --ReadsPath <PATH> --reads1 <reads1 suffix> --reads2 <reads2 suffix> --suffix_len <INT> --kmmer <INT> --threads <INT>\n\n";
+	print GREEN,"         # Assemble with AbySS:", RESET . "\n";
 
-	print "Example 3: Conduct PacBio/Oxford reads assembly\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Assemble",RESET . " " . RED, "--platform",RESET . " illumina " . RED, "--assembler",RESET . " abyss " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <reads1 suffix> " . RED, "--reads2",RESET . " <reads2 suffix> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--kmmer",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n";
 
-	print "         pgcgap --Assemble --platform [pacbio|oxford] --ReadsPath <PATH> --reads1 <reads suffix> --suffix_len <INT> --genomeSize <STRING> --threads <INT>\n\n";
+	print GREEN,"         # Assemble with SPAdes:", RESET . "\n";
 
-	print "Example 4: Conduct hybrid assembly\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Assemble",RESET . " " . RED, "--platform",RESET . " illumina " . RED, "--assembler",RESET . " spades " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <reads1 suffix> " . RED, "--reads2",RESET . " <reads2 suffix> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n";
 
-	print "         pgcgap --Assemble --platform hybrid --ReadsPath <PATH> --short1 <pair-end-reads1> --short2 <pair-end-reads2> --long <long-reads> --hout <output_dir> --threads <INT>\n\n";
+	print GREEN,"         # Assemble with AUTO mode:", RESET . "\n";
 
-	print "Example 5: Conduct gene prediction and annotation\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Assemble",RESET . " " . RED, "--platform",RESET . " illumina " . RED, "--assembler",RESET . " auto " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <reads1 suffix> " . RED, "--reads2",RESET . " <reads2 suffix> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--kmmer",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n\n";
 
-	print "         pgcgap --Annotate --scafPath <PATH> --Scaf_suffix <STRING> --genus <STRING> --species <STRING> --codon <INT> --threads <INT>\n\n";
+	print ON_BLUE, "Example 3: Conduct PacBio/Oxford reads assembly.", RESET . "\n\n";
 
-	print "Example 6: Constructing the phylogenetic trees of single-copy core proteins and core SNPs\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Assemble",RESET . " " . RED, "--platform",RESET . " [pacbio|oxford] " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <reads suffix> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--genomeSize",RESET . " <STRING> " . RED, "--threads",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+	print ON_BLUE, "Example 4: Conduct hybrid assembly.", RESET . "\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Assemble",RESET . " " . RED, "--platform",RESET . " hybrid " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--short1",RESET . " <pair-end-reads1> " . RED, "--short2",RESET . " <pair-end-reads2> " . RED, "--long",RESET . " <long-reads> " . RED, "--hout",RESET . " <output_dir> " . RED, "--threads",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print ON_BLUE, "Example 5: Conduct gene prediction and annotation.", RESET . "\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Annotate",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING> " . RED, "--genus",RESET . " <STRING> " . RED, "--species",RESET . " <STRING> " . RED, "--codon",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 6: Constructing the phylogenetic trees of single-copy core proteins and core SNPs.", RESET . "\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath <PATH> --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fastboot <INT>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)", RESET . "\n";
 
-	print "Example 7: Constructing a single-copy core protein tree only.\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " <PATH> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fasttree\n\n",RESET;
 
-	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
 
-	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fasttree\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " <PATH> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --bsnum <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " <PATH> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 7: Constructing a single-copy core protein tree only.", RESET . "\n\n";
 
-	print "         pgcgap --CoreTree --CDsPath NO --AAsPath <PATH> --codon <INT> --strain_num <INT> --threads <INT> --fastboot <INT>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)", RESET . "\n";
 
-	print "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fasttree\n\n",RESET;
 
-	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fasttree\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --bsnum <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.", RESET . "\n\n";
 
-	print "         pgcgap --Pan --codon <INT> --strain_num <INT> --threads <INT> --identi <INT> --GffPath <PATH> --PanTree --fastboot <INT>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)", RESET . "\n";
 
-	print "Example 9: Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--fasttree\n\n",RESET;
 
-	print "         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
 
-	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fasttree\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--bsnum",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --bsnum <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 9: Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins.", RESET . "\n\n";
 
-	print "         pgcgap --OrthoF --threads <INT> --AAsPath <PATH> --fastboot <INT>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)", RESET . "\n";
 
-	print "Example 10: Compute whole-genome Average Nucleotide Identity (ANI)\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--OrthoF",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--fasttree\n\n",RESET;
 
-	print "         pgcgap --ANI --threads <INT> --queryL <FILE> --refL <FILE> --Scaf_suffix <STRING>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
 
-	print "Example 11: Genome and metagenome similarity estimation using MinHash\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--OrthoF",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
-	print "         pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print "Example 12: Run COG annotation for each strain\n\n";
+	print "         pgcgap ",RESET . MAGENTA, "--OrthoF",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print "          pgcgap --pCOG --strain_num <INT> --threads <INT> --AAsPath <PATH>\n\n";
+	print ON_BLUE, "Example 10: Compute whole-genome Average Nucleotide Identity (ANI).", RESET . "\n\n";
 
-	print "Example 13: Variants calling and phylogenetic tree construction based on a reference genome\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ANI",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--queryL",RESET . " <FILE> " . RED, "--refL",RESET . " <FILE> " . RED, "--Scaf_suffix",RESET . " <STRING>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print ON_BLUE, "Example 11: Genome and metagenome similarity estimation using MinHash.", RESET . "\n\n";
 
-	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> --bsnum <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--MASH",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 12: Run COG annotation for each strain.", RESET . "\n\n";
 
-	print "         pgcgap --VAR --threads <INT> --refgbk <FILE with full path> --ReadsPath <PATH> --reads1 <STRING> --reads2 <STRING> --suffix_len <INT> --strain_num <INT> --qualtype <STRING> --fastboot <INT>\n\n";
+	print YELLOW, "          pgcgap ",RESET . MAGENTA, "--pCOG",RESET . " " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH>\n\n";
 
-	print "Example 14: Screening of contigs for antimicrobial and virulence genes\n\n";
+	print ON_BLUE, "Example 13: Variants calling and phylogenetic tree construction based on a reference genome.", RESET . "\n\n";
 
-	print "         pgcgap --AntiRes --scafPath <PATH> --Scaf_suffix <STRING> --threads <INT> --db <STRING> --identity <INT> --coverage <INT>\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
 
-	print "Example 15: Construct a phylogenetic tree based on multiple sequences in one file\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--VAR",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--refgbk",RESET . " <FILE with full path> " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <STRING> " . RED, "--reads2",RESET . " <STRING> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--qualtype",RESET . " <STRING> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --bsnum <INT> --threads <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--VAR",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--refgbk",RESET . " <FILE with full path> " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <STRING> " . RED, "--reads2",RESET . " <STRING> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--qualtype",RESET . " <STRING> " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print "         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)\n";
+	print ON_BLUE, "Example 14: Screening of contigs for antimicrobial and virulence genes.", RESET . "\n\n";
 
-	print "         pgcgap --STREE --seqfile <PATH> --seqtype <p|d|c> --fastboot <INT> --threads <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--AntiRes",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING> " . RED, "--threads",RESET . " <INT> " . RED, "--db",RESET . " <STRING> " . RED, "--identity",RESET . " <INT> " . RED, "--coverage",RESET . " <INT>\n";
 
-	print "Example 16: Perform the short sequences filter from the assembled genome and get the genome status\n\n";
+	print ON_BLUE, "Example 15: Construct a phylogenetic tree based on multiple sequences in one file.", RESET . "\n\n";
 
-	print "         pgcgap --ACC --Assess --scafPath <PATH> --Scaf_suffix <STRING> --filter_length <INT>\n\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--STREE",RESET . " " . RED, "--seqfile",RESET . " <PATH> " . RED, "--seqtype",RESET . " <p|d|c> " . RED, "--bsnum",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n\n";
+
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
+
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--STREE",RESET . " " . RED, "--seqfile",RESET . " <PATH> " . RED, "--seqtype",RESET . " <p|d|c> " . RED, "--fastboot",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n\n";
+
+	print ON_BLUE, "Example 16: Perform the short sequences filter from the assembled genome and get the genome status.", RESET . "\n\n";
+
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--Assess",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING> " . RED, "--filter_length",RESET . " <INT>\n\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){
