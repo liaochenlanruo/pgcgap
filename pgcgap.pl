@@ -1467,13 +1467,13 @@ sub check_update{
 		$lines[-1]=~/pgcgap\s+(\S+).+/;
 		my $latest_version = $1;
 		if ($current_version ne $latest_version) {
-			print BOLD, RED, "Oh, No! You are running an old version of PGCGAP, we are going to update to the latest version " . BOLD, YELLOW, "$latest_version",RESET . BOLD, RED, " now!", RESET . "\n\n";
+			print BOLD, RED, "Oh, No! You are running an old version of PGCGAP $current_version, we are going to update to the latest version ",RESET . BOLD, YELLOW, "$latest_version",RESET . BOLD, RED, " now!",RESET . "\n\n";
 			print "Please wait patiently, take a break and have a cup of tea or coffee!\n";
 			my $installation = `mamba install -y pgcgap=$latest_version`;
 			print "$installation\n";
 			exit(0);
 		}else {
-			print BOLD, GREEN, "Congratulations, You are running the latest version of PGCGAP " . BOLD, YELLOW, "v $latest_version", RESET . ".\n";
+			print BOLD, GREEN, "Congratulations, You are running the latest version of PGCGAP ",RESET . BOLD, YELLOW, "v $latest_version",RESET . ".\n";
 			exit(0);
 		}
 	}
