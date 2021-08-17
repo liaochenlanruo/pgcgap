@@ -4,6 +4,7 @@
 [![Version](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="生信之巅" title="生信之巅"></a>
 
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
