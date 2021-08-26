@@ -559,6 +559,7 @@ img {
 <a href="https://anaconda.org/bioconda/pgcgap"><img src="https://anaconda.org/bioconda/pgcgap/badges/version.svg" alt="GitHubversion" /></a>
 <img src="https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat" alt="Downloads conda" />
 <a href="http://bioconda.github.io/recipes/pgcgap/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda" /></a>
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="生信之巅" title="生信之巅"></a>
 </center></p>
 <p><center>
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
