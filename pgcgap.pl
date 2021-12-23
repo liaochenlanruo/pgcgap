@@ -1540,10 +1540,10 @@ if ($opt_STREE) {
 	#system("iqtree -s $gblocks_out -nt AUTO -m MFP -mtree -b $opt_bsnum");
 	if ($opt_fastboot) {
 		print BOLD, CYAN, "Running IQ-TREE for phylogenetic tree construction with the fastboot mode...\n\n", RESET;
-		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 	}else {
 		print BOLD, CYAN, "Running IQ-TREE for phylogenetic tree construction with the traditional bootstrap mode...\n\n", RESET;
-		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+		system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 	}
 	chdir $working_dir;
 }
@@ -1560,9 +1560,13 @@ if ($opt_All or $opt_Assemble) {
 	my $unicycler_set;
 	if ($bin=~/(.+)bin\/pgcgap/) {
 		$unicycler_set = $1 . "lib/python3.6/site-packages/unicycler/settings.py";
+		$unicycler_set37 = $1 . "lib/python3.7/site-packages/unicycler/settings.py";
 		if (-e $unicycler_set) {
 			system("sed -i 's/RACON_POLISH_LOOP_COUNT_HYBRID = .*/RACON_POLISH_LOOP_COUNT_HYBRID = 2/g' $unicycler_set");
 			system("sed -i 's/RACON_POLISH_LOOP_COUNT_LONG_ONLY = .*/RACON_POLISH_LOOP_COUNT_LONG_ONLY = 4/g' $unicycler_set");
+		}elsif (-e $unicycler_set37) {
+			system("sed -i 's/RACON_POLISH_LOOP_COUNT_HYBRID = .*/RACON_POLISH_LOOP_COUNT_HYBRID = 2/g' $unicycler_set37");
+			system("sed -i 's/RACON_POLISH_LOOP_COUNT_LONG_ONLY = .*/RACON_POLISH_LOOP_COUNT_LONG_ONLY = 4/g' $unicycler_set37");
 		}else {
 			print "Can not find the unicycler setting file\n";
 		}
@@ -2215,9 +2219,9 @@ if ($opt_All or $opt_CoreTree) {
 	}else {
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 		if ($opt_fastboot) {
-			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 		}else {
-			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
 	}
 	#===================================================================================
@@ -2492,9 +2496,9 @@ if ($opt_All or $opt_CoreTree) {
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 			if ($opt_fastboot) {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 		}
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
@@ -2814,9 +2818,9 @@ if ($opt_All or $opt_Pan) {
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 			if ($opt_fastboot) {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 		}
 		#===================================================================================
@@ -3025,9 +3029,9 @@ if ($opt_All or $opt_OrthoF) {
 		}else {
 			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 			if ($opt_fastboot) {
-				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+				system("iqtree -s $gblocks_out -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 		}
 		#===================================================================================
@@ -3136,9 +3140,9 @@ if ($opt_VAR) {
 			print "Some error happens when running gubbins! The recombinations will not be predicted, and running IQ-TREE to construct the trees instead!\n";
 			#===================modeltest-ng and raxml-ng====================================
 			if ($opt_fastboot) {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 			#===================end==========================================================
@@ -3151,9 +3155,9 @@ if ($opt_VAR) {
 	} elsif ($opt_strain_num > 1) {
 		#===================IQ-TREE====================================
 		if ($opt_fastboot) {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
 		#===================end==========================================================
@@ -3163,9 +3167,9 @@ if ($opt_VAR) {
 	#===================core.aln TREE====================================
 	if ($opt_strain_num > 1) {
 		if ($opt_fastboot) {
-			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe");
+			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 		}else {
-			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe");
+			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
 		system("mv core.* Results/Variants/Core/");
 	}
