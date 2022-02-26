@@ -2475,7 +2475,7 @@ if ($opt_All or $opt_CoreTree) {
 		} # end of parse_fasta
 
 
-		print "Calling core SNPs, only output columns containing exclusively ACGT.\n";
+		print "Calling core SNPs...\n";
 		system("snp-sites -o ALL.core.snp.fasta -c ALL.core.nucl.fasta");
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 		if ($opt_fastboot) {
