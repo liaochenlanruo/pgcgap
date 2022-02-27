@@ -571,6 +571,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="http://www.atgc-montpellier.fr/fastme/binaries.php">Fastme</a></li>
 <li><a href="https://github.com/OpenGene/fastp">Fastp</a></li>
 <li><a href="http://www.microbesonline.org/fasttree">FastTree</a></li>
+<li><a href="https://github.com/sanger-pathogens/gubbins">Gubbins</a> &gt;=2.3.4</li>
 <li><a href="https://github.com/samtools/htslib">Htslib</a></li>
 <li><a href="http://www.iqtree.org/">IQ-TREE</a></li>
 <li><a href="https://mafft.cbrc.jp/alignment/software/">Mafft</a></li>
@@ -1005,25 +1006,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 </ul>
 </li>
-
-<li>
-<p><strong>--pCOG</strong></p>
-<ul>
-<li>
-<p><strong>[--evalue (FLOAT)]</strong>        [Required] Maximum e-value to report alignments, ( Default 1e-5 )</p>
-</li>
-<li>
-<p><strong>[--id (INT)]</strong>           [Required] Minimum identity% to report an alignment, ( Default 40 )</p>
-</li>
-<li>
-<p><strong>[--query_cover (INT)]</strong>           [Required] Minimum query cover% to report an alignment, ( Default 70 )</p>
-</li>
-<li>
-<p><strong>[--subject_cover (INT)]</strong>           [Required] Minimum subject cover% to report an alignment, ( Default 50 )</p>
-</li>
-</ul>
-</li>
-
 <li>
 <p><strong>--ACC</strong></p>
 <ul>
@@ -1051,6 +1033,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 <li>
 <p><strong>[--fastANI-bin (PATH)]</strong>           Path to the fastANI binary file. Default tries if fastANI is in PATH;</p>
+</li>
+<li>
+<p><strong>[--gubbins-bin (PATH)]</strong>           Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;</p>
 </li>
 <li>
 <p><strong>[--iqtree-bin (PATH)]</strong>            Path to the iqtree binary file. Default tries if iqtree is in PATH;</p>
@@ -1181,7 +1166,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 10:</strong> Run COG annotation for each strain.</p>
-<pre>$pgcgap --pCOG --threads 4 --strain_num 6  --id 40 --query_cover 70 --subject_cover 50 --AAsPath Results/Annotations/AAs</pre>
+<pre>$pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs</pre>
 </li>
 <li>
 <p><strong>Example 11:</strong> Variants calling and phylogenetic tree construction based on the reference genome.</p>
@@ -1796,15 +1781,6 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 <li>Updated module AntiRes: the parameter --db had been modified to add choices of "all" and "megares".</li>
 <li>A little optimization of module VAR.</li>
 <li>Replaced conda with mamba to update PGCGAP more quickly.</li>
-</ul>
-</li>
-
-<li>
-<p>V1.0.33</p>
-<ul>
-<li>Updated module CoreTree: <a href="https://bitsandbugs.org/2019/11/06/two-easy-ways-to-run-iq-tree-with-the-correct-number-of-constant-sites/">Run IQ-TREE with the correct number of constant sites</a> when constructing the single-copy core SNPs tree.</li>
-<li>Updated module VAR: Use "SNP-SITE" and "IQ-TREE -fconst" to generate SNP sites from the "core.full.aln" and construct the phylogenetic tree.</li>
-<li>Updated module pCOG: Replace blast with diamond to speed up analysis.</li>
 </ul>
 </li>
 
