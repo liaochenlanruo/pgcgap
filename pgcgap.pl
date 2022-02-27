@@ -668,10 +668,6 @@ If you use the results of "--CoreTree" function in your work, please also cite:
 
 </br>"SNP-sites: rapid efficient extraction of SNPs from multi-FASTA alignments", Andrew J. Page, Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, Simon R. Harris, Microbial Genomics 2(4), (2016)
 
-</br>
-
-</br>Croucher N. J., Page A. J., Connor T. R., Delaney A. J., Keane J. A., Bentley S. D., Parkhill J., Harris S.R. "Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins". Nucleic Acids Res. 2015 Feb 18;43(3):e15. doi: 10.1093/nar/gku1196
-
 =end html
 
 =over 30
@@ -1088,6 +1084,56 @@ Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
 
 $options{'seqtype=s'} = \( my $opt_seqtype = "p");
 
+=head3 ========================== Options for "--pCOG" ======================================================
+
+=over 30
+
+=item B<[--evalue (FLOAT)]>
+
+I<[Required]> maximum e-value to report alignments, ( Default 1e-5 )
+
+=back
+
+=cut
+
+$options{'id=f'} = \( my $opt_evalue = "1e-5" );
+
+=over 30
+
+=item B<[--id (INT)]>
+
+I<[Required]> minimum identity% to report an alignment, ( Default 40 )
+
+=back
+
+=cut
+
+$options{'id=i'} = \( my $opt_id = 40 );
+
+=over 30
+
+=item B<[--query_cover (INT)]>
+
+I<[Required]> minimum query cover% to report an alignment, ( Default 70 )
+
+=back
+
+=cut
+
+$options{'id=i'} = \( my $opt_query_cover = 70 );
+
+=over 30
+
+=item B<[--subject_cover (INT)]>
+
+I<[Required]> minimum subject cover% to report an alignment, ( Default 50 )
+
+=back
+
+=cut
+
+$options{'id=i'} = \( my $opt_subject_cover = 50 );
+
 =head3 ========================== Options for "--ACC" ========================================================
 
 =over 30
@@ -1244,18 +1290,6 @@ $options{'fastANI-bin=s'} = \( my $opt_fastANI_bin = `which fastANI 2>/dev/null`
 
 =over 30
 
-=item B<[--gubbins-bin (PATH)]>
-
-Path to the run_gubbins.py binary file. Default tries if run_gubbins.py is in PATH;
-
-=back
-
-=cut
-
-$options{'gubbins-bin=s'} = \( my $opt_gubbins_bin = `which run_gubbins.py 2>/dev/null` );
-
-=over 30
-
 =item B<[--snippy-bin (PATH)]>
 
 Path to the snippy binary file. Default tries if snippy is in PATH;
@@ -1393,7 +1427,7 @@ if ($opt_help) {
 }
 
 
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_gubbins_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_muscle_bin, $opt_trimAL_bin, $opt_iqtree_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_muscle_bin, $opt_trimAL_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
 check_update() if ($opt_check_update);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
@@ -1407,7 +1441,6 @@ pod2usage( -msg => 'pal2nal.pl not in $PATH and binary not specified use --pal2n
 pod2usage( -msg => 'roary not in $PATH and binary not specified use --roary-bin', -verbose => 0, -exitval => 1 ) unless ($opt_roary_bin);
 pod2usage( -msg => 'orthofinder not in $PATH and binary not specified use --orthofinder-bin', -verbose => 0, -exitval => 1 ) unless ($opt_orthofinder_bin);
 pod2usage( -msg => 'fastANI not in $PATH and binary not specified use --fastANI-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fastANI_bin);
-pod2usage( -msg => 'gubbins not in $PATH and binary not specified use --gubbins-bin', -verbose => 0, -exitval => 1 ) unless ($opt_gubbins_bin);
 pod2usage( -msg => 'snippy not in $PATH and binary not specified use --snippy-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snippy_bin);
 pod2usage( -msg => 'sickle not in $PATH and binary not specified use --sickle-bin', -verbose => 0, -exitval => 1 ) unless ($opt_sickle_bin);
 pod2usage( -msg => 'mash not in $PATH and binary not specified use --mash-bin', -verbose => 0, -exitval => 1 ) unless ($opt_mash_bin);
@@ -1419,7 +1452,7 @@ pod2usage( -msg => 'iqtree not in $PATH and binary not specified use --iqtree-bi
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "gubbins" => $opt_gubbins_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "muscle" => $opt_muscle_bin, "trimAL" => $opt_trimAL_bin, "iqtree" => $opt_iqtree_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "muscle" => $opt_muscle_bin, "trimAL" => $opt_trimAL_bin, "iqtree" => $opt_iqtree_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -1480,14 +1513,15 @@ if ($opt_setup_COGdb) {
 	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
 	system("rm prot2003-2014.fa");
 =cut
-	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.cog.csv");
-	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.def.tab");
-	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.fa");
-	system("wget -c -P ./ https://bcam.hzau.edu.cn/COGdb2020/fun-20.tab");
-	system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
+	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.cog.csv");
+	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.def.tab");
+	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.fa");
+	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/fun-20.tab");
+	system("diamond makedb --in cog-20.fa --db COGdiamond_2020");
+	#system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
 	system("rm cog-20.fa");
-	system("mv COG_2020.* cog-20.* fun-20.tab $pgcgap_dir/");
-	system("chmod a+x $pgcgap_dir/COG_2020.*");
+	system("mv COGdiamond.* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COGdiamond_2020");
 	system("chmod a+x $pgcgap_dir/cog-20.*");
 	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
@@ -2455,41 +2489,14 @@ if ($opt_All or $opt_CoreTree) {
 		print "Calling core SNPs, only output columns containing exclusively ACGT.\n";
 		system("snp-sites -o ALL.core.snp.fasta -c ALL.core.nucl.fasta");
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+		my $fconst = `snp-sites -C ALL.core.nucl.fasta`;
 		if ($opt_fastboot) {
-			system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+			system("iqtree -fconst $fconst -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+			#system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 		}else {
-			system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+			system("iqtree -fconst $fconst -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+			#system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
-
-=pod
-		my $seqfilen = "ALL.core.snp.fasta";
-		my $gblocks_outn = "ALL.core.snp.fasta.gb";
-		my $seqnumn = `grep -c '^>' $seqfilen`;
-		print "There are $seqnumn sequences in the input file\n\n";
-		my $b12n = ceil($seqnumn/2) + 1;
-
-		print "Running trimAL for selection of conserved blocks...\n\n";
-		system("trimal -in $seqfilen -out $gblocks_outn -automated1");
-
-		#print "Running Gblocks for selection of conserved blocks...\n\n";
-		#system("Gblocks $seqfilen -t=d -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
-
-
-		if ($opt_fasttree) {
-			print "Running two-step method (FastTree for phylogenetic inference & IQ-TREE for optimizing branch lengths) for phylogenetic tree construction...\n\n";
-			#system("fasttree -nt -gtr -quiet $gblocks_outn > ALL.core.snp.nwk");
-			system("fasttree -nt -gtr -quiet -noml -rawdist $gblocks_outn > ALL.core.snp.fasttree.nwk");
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -te ALL.core.snp.fasttree.nwk --safe --keep-ident");
-		}else {
-			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-			if ($opt_fastboot) {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-			}else {
-				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-			}
-			# iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s <(snp-sites -c ALL.core.nucl.fasta) # 21:27
-		}
-=cut
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
 		#===================end==========================================================
 
@@ -3118,16 +3125,18 @@ if ($opt_VAR) {
 	}
 	chdir $working_dir;
 	system("snippy-core --ref $opt_refgbk $working_dir/Results/Variants/*");
-	system("snp-sites -c core.full.aln -o core.full.ATGC.aln");
+	#system("snp-sites -c core.full.aln -o core.full.ATGC.aln");
 	system("mkdir -p Results/Variants/Core");
-
+	my $fconst = `snp-sites -C core.full.aln`;
 	if ($opt_strain_num > 2) {
 		if ($opt_fastboot) {
-				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+				system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+				#system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+				system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+				#system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
-			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
+			#system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 	}
 	chdir $working_dir;
 	system("mv core.* Results/Variants/Core/");
@@ -3168,7 +3177,7 @@ if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir -p Results/COG");
-	system("COG2020.pl --threads $opt_threads --strain_num $opt_strain_num --AAsPath $opt_AAsPath");
+	system("COGdiamond2022.pl --threads $opt_threads --strain_num $opt_strain_num --evalue $opt_evalue --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
@@ -3457,6 +3466,10 @@ sub printpCOG{
 	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
 	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
+	print "[--evalue (FLOAT)] Maximum e-value to report alignments, ( Default 1e-5 )\n";
+	print "[--id (INT)] Minimum identity% to report an alignment, ( Default 40 )\n";
+	print "[--query_cover (INT)] Minimum query cover% to report an alignment, ( Default 70 )\n";
+	print "[--subject_cover (INT)] Minimum subject cover% to report an alignment, ( Default 50 )\n";
 }
 
 sub printSTREE{
@@ -3571,7 +3584,7 @@ sub printExamples{
 
 	print ON_BLUE, "Example 12: Run COG annotation for each strain.", RESET . "\n\n";
 
-	print YELLOW, "          pgcgap ",RESET . MAGENTA, "--pCOG",RESET . " " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH>\n\n";
+	print YELLOW, "          pgcgap ",RESET . MAGENTA, "--pCOG",RESET . " " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--evalue",RESET . " <FLOAT> " . RED, "--id",RESET . " <INT> " . RED, "--query_cover",RESET . " <INT> " .RED, "--subject_cover",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH>\n\n";
 
 	print ON_BLUE, "Example 13: Variants calling and phylogenetic tree construction based on a reference genome.", RESET . "\n\n";
 
