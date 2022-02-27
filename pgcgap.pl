@@ -1024,30 +1024,6 @@ Try and keep RAM under this many GB ( Default 8 )
 
 $options{'ram=i'} = \(my $opt_ram = "8");
 
-=over 30
-
-=item B<[--tree_builder (STRING)]>
-
-Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )
-
-=back
-
-=cut
-
-$options{'tree_builder=s'} = \(my $opt_tree_builder = "fasttree");
-
-=over 30
-
-=item B<[--iterations (INT)]>
-
-Maximum No. of iterations for gubbins ( Default 5 )
-
-=back
-
-=cut
-
-$options{'iterations=i'} = \(my $opt_iterations = "5");
-
 =head3 ========================== Options for "--AntiRes" analysis ===========================================
 
 =over 30
@@ -3507,9 +3483,9 @@ sub printVAR{
 	print "[--minfrac (FLOAT)] The minimum proportion of those reads which must differ from the reference ( Default 0.9 )\n";
 	print "[--minqual (INT)] The minimum VCF variant call 'quality' ( Default 100 )\n";
 	print "[--ram (INT)] Try and keep RAM under this many GB ( Default 8 )\n";
-	print "[--tree_builder (STRING)] Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )\n";
+#	print "[--tree_builder (STRING)] Application to use for tree building [raxml|fasttree|hybrid] ( Default fasttree )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
-	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
+#	print "[--iterations (INT)] Maximum No. of iterations for gubbins ( Default 5 )\n";
 	print "[--bsnum (INT)] Replicates for bootstrap of IQ-TREE ( Default 500 )\n\n";
 	print "[--fastboot (INT)] Replicates for ultrafast bootstrap of IQ-TREE ( must >=1000, Default 1000 )\n\n";
 }
