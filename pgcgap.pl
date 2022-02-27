@@ -3123,61 +3123,15 @@ if ($opt_VAR) {
 
 	if ($opt_strain_num > 2) {
 		if ($opt_fastboot) {
-				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 			}else {
-				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+				system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 			}
 			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
 	}
-=pod
-		my @corefull = ("run_gubbins.py --tree_builder $opt_tree_builder --iterations $opt_iterations --prefix gubbins.clean.full clean.full.aln");
-		system("mv gubbins.* Results/Variants/Core/");
-		my $corefull = system(@corefull);
-		if (!($corefull == 0)) {
-			print "Some error happens when running gubbins! The recombinations will not be predicted, and running IQ-TREE to construct the trees instead!\n";
-			#===================modeltest-ng and raxml-ng====================================
-			if ($opt_fastboot) {
-				system("iqtree -s clean.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-			}else {
-				system("iqtree -s clean.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-			}
-			system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* clean.full.* Results/Variants/Core/");
-			#===================end==========================================================
-			#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-			#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
-		}else {
-			system("snp-sites -c gubbins.filtered_polymorphic_sites.fasta > clean.core.aln");
-			system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.aln.iteration* *.joint.txt Results/Variants/Core/");
-			print "running gubbins successfully!\n";
-		}
-	} elsif ($opt_strain_num > 1) {
-		#===================IQ-TREE====================================
-		if ($opt_fastboot) {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-			}else {
-				system("iqtree -s core.full.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-			}
-		system("mv core.ref.fa core.tab core.txt core.vcf core.full.* Results/Variants/Core/");
-		#===================end==========================================================
-		#system("fasttree -nt -gtr core.full.aln > core.full.nwk");
-		#system("mv core.full.aln core.ref.fa core.tab core.txt core.vcf core.full.nwk Results/Variants/Core/");
-	}
-
-	#===================core.aln TREE====================================
-	if ($opt_strain_num > 1) {
-		if ($opt_fastboot) {
-			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-		}else {
-			system("iqtree -s core.aln -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-		}
-		system("mv core.* Results/Variants/Core/");
-	}
-=cut
 	chdir $working_dir;
 	system("mv core.* Results/Variants/Core/");
 	#===================end==========================================================
-	#system("fasttree -nt -gtr core.aln > core.nwk");
-	#system("mv core.aln core.nwk Results/Variants/Core/");
 	my $time_VARd = time();
 	my $time_VAR = ($time_VARd - $time_VARs)/3600;
 	print "The 'VAR' program runs for $time_VAR hours.\n\n";
