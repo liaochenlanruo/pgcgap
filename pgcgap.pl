@@ -1416,7 +1416,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.32", RESET . "\n";
+	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.33", RESET . "\n";
 	print "Enter the command " . BOLD, YELLOW, "pgcgap --check-update", RESET . " to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
@@ -1497,22 +1497,9 @@ if ($bin=~/(.+)\/pgcgap/) {
 
 #=============================== setup COG database ================================================
 if ($opt_setup_COGdb) {
-	#system("mkdir -p ~/COGdb");
+	#https://ftp.ncbi.nih.gov/pub/COG/COG2020/
 #	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
 #	system("gunzip prot2003-2014.fa.gz");
-=pod
-	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cognames2003-2014.tab");
-	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/fun2003-2014.tab");
-	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/cog2003-2014.csv");
-	system("wget -c -P ./ http://bcam.hzau.edu.cn/COGdb/prot2003-2014.fa");
-	system("makeblastdb -parse_seqids -in prot2003-2014.fa -input_type fasta -dbtype prot -out COG_2014");
-	system("mv COG_2014.* cog2003-2014.csv cognames2003-2014.tab fun2003-2014.tab $pgcgap_dir/");
-	system("chmod a+x $pgcgap_dir/COG*");
-	system("chmod a+x $pgcgap_dir/cog2003-2014.csv");
-	system("chmod a+x $pgcgap_dir/cognames2003-2014.tab");
-	system("chmod a+x $pgcgap_dir/fun2003-2014.tab");
-	system("rm prot2003-2014.fa");
-=cut
 	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.cog.csv");
 	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.def.tab");
 	system("wget -c --no-check-certificate -P ./ https://bcam.hzau.edu.cn/COGdb2020/cog-20.fa");
@@ -2490,26 +2477,20 @@ if ($opt_All or $opt_CoreTree) {
 		system("snp-sites -o ALL.core.snp.fasta -c ALL.core.nucl.fasta");
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 		my $fconst = `snp-sites -C ALL.core.nucl.fasta`;
+		chomp($fconst);
 		if ($opt_fastboot) {
+			print "Running IQ-TREE with ultrafast bootstrap $opt_fastboot\n\n";
 			system("iqtree -fconst $fconst -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-			#system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 		}else {
+			print "Running IQ-TREE with bootstrap $opt_bsnum\n\n";
 			system("iqtree -fconst $fconst -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-			#system("iqtree -fconst $(snp-sites -C ALL.core.nucl.fasta) -s ALL.core.snp.fasta -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
 		system("mv ALL.core.snp.* ../Results/CoreTrees/");
 		#===================end==========================================================
 
-		#print "Constructing ML tree of core SNPS...\n\n";
-
-		#system("fasttree -nt -gtr ALL.core.snp.fasta > ALL.core.snp.nwk");
-		#system("mv ALL.core.snp.fasta ALL.core.snp.nwk ../Results/CoreTrees/");
-		
 		chdir "../";
 		rmove("faa2ffn", "./Results/CoreTrees/faa2ffn");
 		rmove("ffn", "./Results/CoreTrees/ffn");
-		#system("mv faa2ffn ./Results/CoreTrees/");
-		#system("mv ffn ./Results/CoreTrees/");
 	}
 	rmove("faa", "./Results/CoreTrees/faa");
 	#system("mv faa ./Results/CoreTrees/");
@@ -2524,12 +2505,8 @@ if ($opt_All or $opt_CoreTree) {
 if ($opt_All or $opt_Pan) {
 	my $time_pans = time();
 	print "Performing --Pan function...\n\n";
-	#Roary takes GFF3 files as input. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid with Roary
 	my $pangenome = "Results/PanGenome";
-	#system("roary -p $opt_threads -e --mafft -r -t $opt_codon -f $pangenome $opt_GffPath/*.gff");
 	system("roary -p $opt_threads -r -t $opt_codon -i $opt_identi -f $pangenome $opt_GffPath/*.gff");
-	#my $dir = "Results/PanGenome_*";
-	#chdir $dir || print "Can not cd into $dir";
 	chdir $pangenome;
 	system("create_pan_genome_plots.R");#create pan genome plots
 	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
@@ -2999,24 +2976,13 @@ if ($opt_All or $opt_OrthoF) {
 
 
 
-		#print "\n\n";
-		#system("mkdir -p $working_dir/Results/STREE");
 		my $seqfile = "Single.Copy.Orthologue.fasta";
-		#$seqfile =~ /(.+\/)*(.+)/;
-		#my $align_seq = $2 . ".aln";
 		my $gblocks_out = "Single.Copy.Orthologue.fasta.gb";
 		my $seqnum = `grep -c '^>' $seqfile`;
 		print "There are $seqnum sequences in the input file\n\n";
 		my $b12 = ceil($seqnum/2) + 1;
-		#print "Running muscle for sequence alignment...\n\n";
-		#system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
-
 		print "Running trimAL for selection of conserved blocks...\n\n";
 		system("trimal -in $seqfile -out $gblocks_out -automated1");
-
-		#print "Running Gblocks for selection of conserved blocks...\n\n";
-		#system("Gblocks $seqfile -t=p -b1=$b12 -b2=$b12 -b4=5 -b5=h -e=.gb");
-
 		print "Constructing ML tree of the Single Copy Orthologue proteins...\n\n";
 		#===============================================================================
 		if ($opt_fasttree) {
@@ -3031,7 +2997,6 @@ if ($opt_All or $opt_OrthoF) {
 			}
 		}
 		#===================================================================================
-		#system("fasttree Single.Copy.Orthologue.fasta > Single.Copy.Orthologue.nwk");
 		print "Constructing single copy Orthologue protein tree completed\n\n";
 		system("mv Single.Copy.Orthologue.* ../Single_Copy_Orthologue_Tree/");
 		#===============================================================================
@@ -3041,9 +3006,6 @@ if ($opt_All or $opt_OrthoF) {
 	my $time_OrthoFd = time();
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
-	#system("mv $opt_AAsPath/Results_orthoF* Results/OrthoF");
-#	system("mv $opt_AAsPath/OrthoFinder/ Results/");
-#	system("mv $opt_AAsPath/*rtho*/ Results/");
 }
 
 if ($opt_All or $opt_MASH) {
@@ -3128,15 +3090,15 @@ if ($opt_VAR) {
 	#system("snp-sites -c core.full.aln -o core.full.ATGC.aln");
 	system("mkdir -p Results/Variants/Core");
 	my $fconst = `snp-sites -C core.full.aln`;
+	chomp($fconst);
 	if ($opt_strain_num > 2) {
 		if ($opt_fastboot) {
-				system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-				#system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
-			}else {
-				system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-				#system("iqtree -fconst $(snp-sites -C core.full.aln) -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
-			}
-			#system("mv core.ref.fa core.tab core.txt core.vcf gubbins.* core.full.* Results/Variants/Core/");
+			print "Running IQ-TREE with ultrafast bootstrap $opt_fastboot\n\n";
+			system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+		}else {
+			print "Running IQ-TREE with bootstrap $opt_bsnum\n\n";
+			system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+		}
 	}
 	chdir $working_dir;
 	system("mv core.* Results/Variants/Core/");
@@ -3339,21 +3301,7 @@ sub lenfilter{
 	}
 }
 
-=pod
-sub CPU{
-	my %options;
-	my $info = Sys::Info->new;
-	my $cpu  = $info->device( CPU => %options );
-	my $threads_num = $cpu->ht || 2;
-	my $threads_half = $threads_num/2;
-	return $threads_half;
-	#printf "CPU: %s\n", scalar($cpu->identify)  || 'N/A';
-	#printf "CPU speed is %s MHz\n", $cpu->speed || 'N/A';
-	#printf "There are %d CPUs\n"  , $cpu->count || 1;
-	#printf "There are %d Threads\n"  , $cpu->ht || 1;
-	#printf "CPU load: %s\n"       , $cpu->load  || 0;
-}
-=cut
+
 sub printAssemble{
 	print "[--platform (STRING)] Sequencing Platform, 'illumina', 'pacbio', 'oxford' and 'hybrid' available ( Default illumina )\n";
 	print "[--assembler (STRING)] Software used for illumina reads assembly, 'abyss', 'spades' and 'auto' available ( Default auto )\n";
