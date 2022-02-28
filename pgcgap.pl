@@ -1096,7 +1096,7 @@ I<[Required]> maximum e-value to report alignments, ( Default 1e-5 )
 
 =cut
 
-$options{'id=f'} = \( my $opt_evalue = "1e-5" );
+$options{'evalue=f'} = \( my $opt_evalue = "1e-5" );
 
 =over 30
 
@@ -1120,7 +1120,7 @@ I<[Required]> minimum query cover% to report an alignment, ( Default 70 )
 
 =cut
 
-$options{'id=i'} = \( my $opt_query_cover = 70 );
+$options{'query_cover=i'} = \( my $opt_query_cover = 70 );
 
 =over 30
 
@@ -1132,7 +1132,7 @@ I<[Required]> minimum subject cover% to report an alignment, ( Default 50 )
 
 =cut
 
-$options{'id=i'} = \( my $opt_subject_cover = 50 );
+$options{'subject_cover=i'} = \( my $opt_subject_cover = 50 );
 
 =head3 ========================== Options for "--ACC" ========================================================
 
@@ -3177,7 +3177,7 @@ if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir -p Results/COG");
-	system("COGdiamond2022.pl --threads $opt_threads --strain_num $opt_strain_num --evalue $opt_evalue --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover --AAsPath $opt_AAsPath");
+	system("perl COGdiamond2022.pl --threads $opt_threads --strain_num $opt_strain_num --evalue $opt_evalue --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
