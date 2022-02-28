@@ -60,7 +60,7 @@ I<[Required]> maximum e-value to report alignments, ( Default 1e-5 )
 
 =cut
 
-$options{'id=f'} = \( my $opt_evalue = "1e-5" );
+$options{'evalue=f'} = \( my $opt_evalue = "1e-5" );
 
 =over 30
 
@@ -84,7 +84,7 @@ I<[Required]> minimum query cover% to report an alignment, ( Default 70 )
 
 =cut
 
-$options{'id=i'} = \( my $opt_query_cover = 70 );
+$options{'query_cover=i'} = \( my $opt_query_cover = 70 );
 
 =over 30
 
@@ -96,13 +96,13 @@ I<[Required]> minimum subject cover% to report an alignment, ( Default 50 )
 
 =cut
 
-$options{'id=i'} = \( my $opt_subject_cover = 50 );
+$options{'subject_cover=i'} = \( my $opt_subject_cover = 50 );
 
 =over 30
 
 =item B<[--strain_num (INT)]>
 
-I<[Required by "--All", "--CoreTree" and "--VAR"]> The total number of strains used for analysis
+I<[Required]> The total number of strains used for analysis
 
 =back
 
@@ -174,7 +174,7 @@ sub run_COG {
 	}else {
 		$threads = 1;
 	}
-	system("diamond blastp --db $cogdb_dir/COGdiamond_2020.dmnd --query $_ --out $blastout --evalue $opt_evalue --outfmt 5 --max-target-seqs 1 --threads $threads --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover");
+	system("diamond blastp --db $cogdb_dir/COGdiamond_2020.dmnd --query $_ --out $blastout --evalue $opt_evalue --outfmt 5 --max-target-seqs 1 --threads $threads --id $opt_id --query-cover $opt_query_cover --subject-cover $opt_subject_cover");
 
 #======================================blast2gi========================================
 
