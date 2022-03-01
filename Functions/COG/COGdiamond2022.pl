@@ -54,13 +54,13 @@ $options{'AAsPath=s'} = \( my $opt_AAsPath = "./Results/Annotations/AAs" );
 
 =item B<[--evalue (FLOAT)]>
 
-I<[Required]> maximum e-value to report alignments, ( Default 1e-5 )
+I<[Required]> maximum e-value to report alignments, ( Default 1e-3 )
 
 =back
 
 =cut
 
-$options{'evalue=f'} = \( my $opt_evalue = "1e-5" );
+$options{'evalue=f'} = \( my $opt_evalue = "1e-3" );
 
 =over 30
 

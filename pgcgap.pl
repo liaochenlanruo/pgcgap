@@ -1090,13 +1090,13 @@ $options{'seqtype=s'} = \( my $opt_seqtype = "p");
 
 =item B<[--evalue (FLOAT)]>
 
-I<[Required]> maximum e-value to report alignments, ( Default 1e-5 )
+I<[Required]> maximum e-value to report alignments, ( Default 1e-3 )
 
 =back
 
 =cut
 
-$options{'evalue=f'} = \( my $opt_evalue = "1e-5" );
+$options{'evalue=f'} = \( my $opt_evalue = "1e-3" );
 
 =over 30
 
@@ -3414,7 +3414,7 @@ sub printpCOG{
 	print "[--AAsPath (PATH)] Amino acids of all strains as fasta file paths, ( Default './Results/Annotations/AAs' )\n";
 	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
-	print "[--evalue (FLOAT)] Maximum e-value to report alignments, ( Default 1e-5 )\n";
+	print "[--evalue (FLOAT)] Maximum e-value to report alignments, ( Default 1e-3 )\n";
 	print "[--id (INT)] Minimum identity% to report an alignment, ( Default 40 )\n";
 	print "[--query_cover (INT)] Minimum query cover% to report an alignment, ( Default 70 )\n";
 	print "[--subject_cover (INT)] Minimum subject cover% to report an alignment, ( Default 50 )\n";
