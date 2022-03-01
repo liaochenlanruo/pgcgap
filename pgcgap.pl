@@ -3094,10 +3094,10 @@ if ($opt_VAR) {
 	if ($opt_strain_num > 2) {
 		if ($opt_fastboot) {
 			print "Running IQ-TREE with ultrafast bootstrap $opt_fastboot\n\n";
-			system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+			system("iqtree -fconst $fconst -s core.aln -nt AUTO -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
 		}else {
 			print "Running IQ-TREE with bootstrap $opt_bsnum\n\n";
-			system("iqtree -fconst $fconst -s core.full.ATGC.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+			system("iqtree -fconst $fconst -s core.aln -nt AUTO -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
 	}
 	chdir $working_dir;
