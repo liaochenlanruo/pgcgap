@@ -3472,7 +3472,7 @@ sub printExamples{
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " <PATH> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fasttree\n\n",RESET;
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " <PATH> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
@@ -3486,7 +3486,7 @@ sub printExamples{
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fasttree\n\n",RESET;
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
@@ -3500,7 +3500,7 @@ sub printExamples{
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--fasttree\n\n",RESET;
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--bsnum",RESET . " <INT>\n\n";
 
@@ -3514,7 +3514,7 @@ sub printExamples{
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--OrthoF",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--fasttree\n\n",RESET;
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--OrthoF",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
@@ -3536,7 +3536,7 @@ sub printExamples{
 
 	print ON_BLUE, "Example 13: Variants calling and phylogenetic tree construction based on a reference genome.", RESET . "\n\n";
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--VAR",RESET . " " . RED, "--threads",RESET . " <INT> " . RED, "--refgbk",RESET . " <FILE with full path> " . RED, "--ReadsPath",RESET . " <PATH> " . RED, "--reads1",RESET . " <STRING> " . RED, "--reads2",RESET . " <STRING> " . RED, "--suffix_len",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--qualtype",RESET . " <STRING> " . RED, "--bsnum",RESET . " <INT>\n\n";
 
@@ -3550,7 +3550,7 @@ sub printExamples{
 
 	print ON_BLUE, "Example 15: Construct a phylogenetic tree based on multiple sequences in one file.", RESET . "\n\n";
 
-	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)", RESET . "\n";
+	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--STREE",RESET . " " . RED, "--seqfile",RESET . " <PATH> " . RED, "--seqtype",RESET . " <p|d|c> " . RED, "--bsnum",RESET . " <INT> " . RED, "--threads",RESET . " <INT>\n\n";
 
