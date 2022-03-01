@@ -1247,7 +1247,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 </li>
 <li>
 <p><strong>Example 9:</strong> Genome and metagenome similarity estimation using MinHash</p>
-<pre>$pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING></pre>
+<pre>$pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa</pre>
 </li>
 <li>
 <p><strong>Example 10:</strong> Run COG annotation for each strain.</p>
