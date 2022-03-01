@@ -1082,7 +1082,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>--pCOG</strong></p>
 <ul>
 <li>
-<p><strong>[--evalue (FLOAT)]</strong>        [Required] Maximum e-value to report alignments, ( Default 1e-5 )</p>
+<p><strong>[--evalue (FLOAT)]</strong>        [Required] Maximum e-value to report alignments, ( Default 1e-3 )</p>
 </li>
 <li>
 <p><strong>[--id (INT)]</strong>           [Required] Minimum identity% to report an alignment, ( Default 40 )</p>
