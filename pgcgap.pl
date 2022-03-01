@@ -1554,6 +1554,7 @@ my $threads_half = $1;
 if ($opt_All or $opt_Assemble) {
 	system("mkdir -p Results/Assembles/Scaf");
 	system("mkdir -p Results/Assembles/FASTQ_Preprocessor");#2020/4/15
+=pod
 	my $unicycler_set;
 	my $unicycler_set37;
 	if ($bin=~/(.+)bin\/pgcgap/) {
@@ -1569,6 +1570,7 @@ if ($opt_All or $opt_Assemble) {
 			print "Can not find the unicycler setting file\n";
 		}
 	}
+=cut
 	if ($opt_platform eq "illumina" and $opt_assembler eq "abyss") {
 		#print "Performing --Assemble function for Illunina data with abyss...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
@@ -3438,7 +3440,7 @@ sub printExamples{
 
 	print ON_BLUE, "Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the 'VAR' module needs to be added separately.", RESET . "\n\n";
 
-	print YELLOW, "         pgcgap",RESET . MAGENTA, " --All ",RESET . RED, "--platform",RESET . " illumina " . RED, "--ReadsPath",RESET . " <PATH>" . RED, " --reads1",RESET . " <reads1 suffix>" . RED, " --reads2",RESET . " <reads2 suffix>" . RED, " --suffix_len",RESET . " <INT>" . RED, " --kmmer",RESET . " <INT>" . RED, " --genus",RESET . " <STRING>" . RED, " --species",RESET . " <STRING>" . RED, " --codon",RESET . " <INT>" . RED, " --strain_num",RESET . " <INT>" . RED " --threads",RESET . " <INT>" . MAGENTA, " --VAR",RESET . RED, " --refgbk",RESET . " <full path>" . RED, " --qualtype",RESET . " <STRING>" . "\n\n";
+	print YELLOW, "         pgcgap",RESET . MAGENTA, " --All ",RESET . RED, "--platform",RESET . " illumina " . RED, "--ReadsPath",RESET . " <PATH>" . RED, " --reads1",RESET . " <reads1 suffix>" . RED, " --reads2",RESET . " <reads2 suffix>" . RED, " --suffix_len",RESET . " <INT>" . RED, " --kmmer",RESET . " <INT> " . RED, "--PanTree",RESET . RED, " --genus",RESET . " <STRING>" . RED, " --species",RESET . " <STRING>" . RED, " --codon",RESET . " <INT>" . RED, " --strain_num",RESET . " <INT>" . RED " --threads",RESET . " <INT>" . MAGENTA, " --VAR",RESET . RED, " --refgbk",RESET . " <full path>" . RED, " --qualtype",RESET . " <STRING>" . "\n\n";
 
 	print ON_BLUE, "Example 2: Conduct pair-end reads assembly.", RESET . "\n\n";
 

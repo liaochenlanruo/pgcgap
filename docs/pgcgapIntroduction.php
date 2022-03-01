@@ -1190,7 +1190,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <p><strong>Example 1:</strong> Perform all functions, take the <em>Escherichia coli</em> as an example, total 6 strains for analysis.<br/></p>
 <p><strong>Notice</strong>: For the sake of flexibility, The &quot;VAR&quot; function needs to be added additionally.<br/></p>
 <pre>
-$pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+$pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
 </pre>
 </li>
 <li>
