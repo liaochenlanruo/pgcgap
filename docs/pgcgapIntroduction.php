@@ -584,9 +584,8 @@ img {
 <p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. <font color=red>Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong></font>.</p>
 <p><strong>Step1: Install PGCGAP</strong></p>
 <pre>
-$conda create -n pgcgap python=3
-$conda activate pgcgap
-$conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
+# Usually specify the latest version of PGCGAP
+$conda create -n pgcgap python=3 pgcgap=1.0.33
 </pre>
 
 <p><strong>Notice: What should we do when the installation is slow? </strong>As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making "Solving Environment" slower and slower. Sometimes we can't even install the software through CONDA. In fact, we can do something instead of just waiting.<br/></p>
@@ -594,17 +593,19 @@ $conda install pgcgap (Users in China can input "conda install -c https://mirror
 <li>
 Method 1: use mamba to deal with the slow development of "solving environment" when using CONDA.
 <pre>
-$conda activate pgcgap
+# Install mamba in the base environment
 $conda install mamba -c conda-forge
-$mamba install pgcgap
+
+# create the environment and install PGCGAP with mamba
+$mamba create -n pgcgap python=3 pgcgap=1.0.33
 </pre>
 </li>
 
 <li>
-Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
+Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
 <pre>
 # download pgcgap_latest_env.yml
-$wget https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml
+$wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
 
 # create a conda environment named as pgcgap and install the latest version of PGCGAP
 $conda env create -f pgcgap_latest_env.yml
