@@ -3008,6 +3008,7 @@ if ($opt_All or $opt_OrthoF) {
 	my $time_OrthoFd = time();
 	my $time_OrthoF = ($time_OrthoFd - $time_OrthoFs)/3600;
 	print "The 'OrthoF' program runs for $time_OrthoF hours.\n\n";
+	chdir $working_dir;
 }
 
 if ($opt_All or $opt_MASH) {
