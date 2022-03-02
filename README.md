@@ -4,7 +4,6 @@
 [![Version](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap)
 ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
-[![image](http://pgcgapsearch.org/cit.svg)](https://scholar.google.com/citations?user=XaoRNMQAAAAJ&hl=zh-CN)
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="生信之巅" title="生信之巅"></a>
 
 **Anyone who want a help from me, please create an [Issue](https://github.com/liaochenlanruo/pgcgap/issues) on GitHub. Sometimes, I can't send E-mail successfully to your mail server due to unknown reasons. The user also can contact me by instant-messaging software，such as QQ (ID：[945751012](https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi)) or WeChat (ID: liaochenlanruo).**
