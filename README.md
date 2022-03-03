@@ -43,24 +43,22 @@ The software was tested successfully on Windows WSL, Linux x64 platform and macO
 __Step1: Install PGCGAP__
 
 ```
-$conda create -n pgcgap python=3
-$conda activate pgcgap
-$conda install pgcgap
+# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
+$conda create -n pgcgap python=3 pgcgap=1.0.32
 ```
 <p><strong>Notice: What should we do when the installation is slow? </strong>As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making "Solving Environment" slower and slower. Sometimes we can't even install the software through CONDA. In fact, we can do something instead of just waiting.<br/></p>
 
 
 - Method 1: use mamba to deal with the slow development of "solving environment" when using CONDA.
     <pre>
-    $conda activate pgcgap
     $conda install mamba -c conda-forge
-    $mamba install pgcgap
+    $mamba create -n pgcgap python=3 pgcgap=1.0.32
     </pre>
 
-- Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
+- Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
     <pre>
     # download pgcgap_latest_env.yml
-    $wget https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml
+    $wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
 	
     # create a conda environment named as pgcgap and install the latest version of PGCGAP
     $conda env create -f pgcgap_latest_env.yml
