@@ -3,14 +3,8 @@ PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 
 ------------------------------------------------------------------------
 
-![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green)
-[![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE)
-[![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap)
-![Downloads
-conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat)
-[![install with
-bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
-[![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
+![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE)
+[![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
 
 
 <p><center>
@@ -192,92 +186,51 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - **Modules:**
 
-  - **\[\--All\]** Perform Assemble, Annotate, CoreTree, Pan,
-        OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
+  - **\[\--All\]** Perform Assemble, Annotate, CoreTree, Pan, OrthoF, ANI, MASH, AntiRes and pCOG functions with one command
 
-  - **\[\--Assemble\]** Assemble reads (short, long or hybrid) into
-        contigs
+  - **\[\--Assemble\]** Assemble reads (short, long or hybrid) into contigs
 
   - **\[\--Annotate\]** Genome annotation
 
-  - **\[\--CoreTree\]** Construct single-core proteins tree and SNPs
-        tree of single-copy core genes
+  - **\[\--CoreTree\]** Construct single-core proteins tree and SNPs tree of single-copy core genes
 
-  - **\[\--Pan\]** Run \"roary\" pan-genome pipeline with gff3
-        files, and construct a phylogenetic tree with the sing-copy core
-        proteins called by roary
+  - **\[\--Pan\]** Run \"roary\" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
-  - **\[\--OrthoF\]** Identify orthologous protein sequence families
-        with \"OrthoFinder\", and construct a phylogenetic tree with the sing-copy core Orthologues
+  - **\[\--OrthoF\]** Identify orthologous protein sequence families with \"OrthoFinder\", and construct a phylogenetic tree with the sing-copy core Orthologues
 
-  - **\[\--ANI\]** Compute whole-genome Average Nucleotide Identity
-        ( ANI )
+  - **\[\--ANI\]** Compute whole-genome Average Nucleotide Identity ( ANI )
 
-  - **\[\--MASH\]** Genome and metagenome similarity estimation
-        using MinHash
+  - **\[\--MASH\]** Genome and metagenome similarity estimation using MinHash
 
-  - **\[\--pCOG\]** Run COG annotation for each strain (\*.faa), and
-        generate a table containing the relative abundance of each flag
-        for all strains
+  - **\[\--pCOG\]** Run COG annotation for each strain (\*.faa), and generate a table containing the relative abundance of each flag for all strains
 
-  - **\[\--VAR\]** Rapid haploid variant calling and core genome
-        alignment with \"Snippy\"
+  - **\[\--VAR\]** Rapid haploid variant calling and core genome alignment with \"Snippy\"
 
-  - **\[\--AntiRes\]** Screening of contigs for antimicrobial and
-        virulence genes
+  - **\[\--AntiRes\]** Screening of contigs for antimicrobial and virulence genes
 
-  - **\[\--STREE\]** Construct a phylogenetic tree based on multiple
-        sequences in one file
+  - **\[\--STREE\]** Construct a phylogenetic tree based on multiple sequences in one file
 
-  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for
-        filtering short sequences in the genome and assessing the statistics
-        of the genome only)
+  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome only)
 
 - **Global Options:**
 
-  - **\[\--strain\_num (INT)\]** \[Required by \"\--All\",
-        \"\--CoreTree\", \"\--Pan\", \"\--VAR\" and \"\--pCOG\"\] The
-        total number of strains used for analysis, not including the
-        reference genome
+  - **\[\--strain\_num (INT)\]** \[Required by \"\--All\", \"\--CoreTree\", \"\--Pan\", \"\--VAR\" and \"\--pCOG\"\] The total number of strains used for analysis, not including the reference genome
 
-  - **\[\--ReadsPath (PATH)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] Reads of all strains as file
-        paths ( Default ./Reads/Illumina )
+  - **\[\--ReadsPath (PATH)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--VAR\"\] Reads of all strains as file paths ( Default ./Reads/Illumina )
 
-  - **\[\--scafPath (PATH)\]** \[Required by \"\--All\",
-        \"\--Assess\", \"\--Annotate\", \"\--MASH\" and \"\--AntiRes\"\]
-        Path for contigs/scaffolds (Default
-        \"Results/Assembles/Scaf/Illumina\")
+  - **\[\--scafPath (PATH)\]** \[Required by \"\--All\", \"\--Assess\", \"\--Annotate\", \"\--MASH\" and \"\--AntiRes\"\] Path for contigs/scaffolds (Default \"Results/Assembles/Scaf/Illumina\")
 
-  - **\[\--AAsPath (PATH)\]** \[Required by \"\--All\", \"\--Pan\",
-        \"\--OrthoF\" and \"\--pCOG\"\] Amino acids of all strains as
-        fasta file paths, ( Default \"./Results/Annotations/AAs\" )
+  - **\[\--AAsPath (PATH)\]** \[Required by \"\--All\", \"\--Pan\", \"\--OrthoF\" and \"\--pCOG\"\] Amino acids of all strains as fasta file paths, ( Default \"./Results/Annotations/AAs\" )
 
-  - **\[\--reads1 (STRING)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] The suffix name of reads 1 (
-        for example: if the name of reads 1 is
-        \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\", \"YBT-1520\" is the
-        strain same, so the suffix name should be
-        \".R1.clean.fastq.gz\")
+  - **\[\--reads1 (STRING)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--VAR\"\] The suffix name of reads 1 ( for example: if the name of reads 1 is \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\", \"YBT-1520\" is the strain same, so the suffix name should be \".R1.clean.fastq.gz\")
 
-  - **\[\--reads2 (STRING)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] The suffix name of reads 2( for
-        example: if the name of reads 2 is \"YBT-1520\_2.fq\", the
-        suffix name should be \"\_2.fq\" )
+  - **\[\--reads2 (STRING)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--VAR\"\] The suffix name of reads 2( for example: if the name of reads 2 is \"YBT-1520\_2.fq\", the suffix name should be \"\_2.fq\" )
 
-  - **\[\--Scaf\_suffix (STRING)\]** \[Required by \"\--All\",
-        \"\--Assess\", \"\--Annotate\" \"\--MASH\", \"\--ANI\" and
-        \"\--AntiRes\"\] The suffix of scaffolds or genome files. This
-        is an important parameter that must be set (Default -8.fa)
+  - **\[\--Scaf\_suffix (STRING)\]** \[Required by \"\--All\", \"\--Assess\", \"\--Annotate\" \"\--MASH\", \"\--ANI\" and \"\--AntiRes\"\] The suffix of scaffolds or genome files. This is an important parameter that must be set (Default -8.fa)
 
-  - **\[\--filter\_length (INT)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--Assess\"\]\> Sequences shorter than the
-        \'filter\_length\' will be removed from the assembled genomes. (
-        Default 200 )
+  - **\[\--filter\_length (INT)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--Assess\"\]\> Sequences shorter than the \'filter\_length\' will be removed from the assembled genomes. ( Default 200 )
 
-  - **\[\--codon (INT)\]** \[Required by \"\--All\",
-        \"\--Annotate\", \"\--CoreTree\" and \"\--Pan\"\] Translation
-        table ( Default 11 )
+  - **\[\--codon (INT)\]** \[Required by \"\--All\", \"\--Annotate\", \"\--CoreTree\" and \"\--Pan\"\] Translation table ( Default 11 )
 
         - 1 Universal code
         - 2 Vertebrate mitochondrial code
@@ -297,24 +250,13 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
         - 22 Scenedesmus obliquus mitochondrial code
         - 23 Thraustochytrium mitochondrial code
 
-  - **\[\--suffix\_len (INT)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] **<u>(Strongly recommended)</u>** The
-        suffix length of the reads, that is the length of your reads
-        name minus the length of your strain name. For example the
-        \--suffix\_len of \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\" is 26
-        ( \"YBT-1520\" is the strain name ) ( Default 0 )
+  - **\[\--suffix\_len (INT)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--VAR\"\] **<u>(Strongly recommended)</u>** The suffix length of the reads, that is the length of your reads name minus the length of your strain name. For example the \--suffix\_len of \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\" is 26 ( \"YBT-1520\" is the strain name ) ( Default 0 )
 
-  - **\[\--fasttree\]** \[Can be used with \"CoreTree\", \"Pan\" and
-        \"OrthoF\"\] Use FastTree to construct phylogenetic tree quickly
-        instead of IQ-TREE
+  - **\[\--fasttree\]** \[Can be used with \"CoreTree\", \"Pan\" and \"OrthoF\"\] Use FastTree to construct phylogenetic tree quickly instead of IQ-TREE
 
-  - **\[\--bsnum (INT)\]** \[Required by \"CoreTree\", \"Pan\",
-        \"OrthoF\", \"STREE\", and \"VAR\"\] Replicates for bootstrap of
-        IQ-TREE ( Default 500 )
+  - **\[\--bsnum (INT)\]** \[Required by \"CoreTree\", \"Pan\", \"OrthoF\", \"STREE\", and \"VAR\"\] Replicates for bootstrap of IQ-TREE ( Default 500 )
 
-  - **\[\--fastboot (INT)\]** \[Required by \"CoreTree\", \"Pan\",
-        \"OrthoF\", \"STREE\", and \"VAR\"\] Replicates for ultrafast
-        bootstrap of IQ-TREE. ( must \>= 1000, Default 1000 )
+  - **\[\--fastboot (INT)\]** \[Required by \"CoreTree\", \"Pan\", \"OrthoF\", \"STREE\", and \"VAR\"\] Replicates for ultrafast bootstrap of IQ-TREE. ( must \>= 1000, Default 1000 )
 
   - **\[\--logs (STRING)\]** Name of the log file ( Default Logs.txt )
 
@@ -374,95 +316,59 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - **\--OrthoF**
 
-    - **\[\--Sprogram (STRING)\]** Sequence search program,
-            Options: blast, mmseqs, blast\_gz, diamond ( Default diamond)
+    - **\[\--Sprogram (STRING)\]** Sequence search program, Options: blast, mmseqs, blast\_gz, diamond ( Default diamond)
 
   - **\--ANI**
 
-    - **\[\--queryL (FILE)\]** \[Required\] The file containing
-            paths to query genomes, one per line ( Default scaf.list )
+    - **\[\--queryL (FILE)\]** \[Required\] The file containing paths to query genomes, one per line ( Default scaf.list )
 
-    - **\[\--refL (FILE)\]** \[Required\] The file containing
-            paths to reference genomes, one per line. ( Default
-            scaf.list )
+    - **\[\--refL (FILE)\]** \[Required\] The file containing paths to reference genomes, one per line. ( Default scaf.list )
 
   - **\--VAR**
 
-    - **\[\--refgbk (FILE)\]** \[Required\] The full path and name
-            of reference genome in GENBANK format ( recommended ), fasta
-            format is also OK. For example: \"/mnt/g/test/ref.gbk\"
+    - **\[\--refgbk (FILE)\]** \[Required\] The full path and name of reference genome in GENBANK format ( recommended ), fasta format is also OK. For example: \"/mnt/g/test/ref.gbk\"
 
-    - **\[\--qualtype (STRING)\]** \[Required\] Type of quality
-            values (solexa (CASAVA \< 1.3), illumina (CASAVA 1.3 to
-            1.7), sanger (which is CASAVA \>= 1.8)). ( Default sanger )
+    - **\[\--qualtype (STRING)\]** \[Required\] Type of quality values (solexa (CASAVA \< 1.3), illumina (CASAVA 1.3 to 1.7), sanger (which is CASAVA \>= 1.8)). ( Default sanger )
 
-    - **\[\--qual (INT)\]** Threshold for trimming based on
-            average quality in a window. ( Default 20 )
+    - **\[\--qual (INT)\]** Threshold for trimming based on average quality in a window. ( Default 20 )
 
-    - **\[\--length (INT)\]** Threshold to keep a read based on
-            length after trimming. ( Default 20 )
+    - **\[\--length (INT)\]** Threshold to keep a read based on length after trimming. ( Default 20 )
 
-    - **\[\--mincov (INT)\]** The minimum number of reads covering
-            a site to be considered ( Default 10 )
+    - **\[\--mincov (INT)\]** The minimum number of reads covering a site to be considered ( Default 10 )
 
-    - **\[\--minfrac (FLOAT)\]** The minimum proportion of those
-            reads which must differ from the reference ( Default 0.9 )
+    - **\[\--minfrac (FLOAT)\]** The minimum proportion of those reads which must differ from the reference ( Default 0.9 )
 
-    - **\[\--minqual (INT)\]** The minimum VCF variant call
-            \"quality\" ( Default 100 )
+    - **\[\--minqual (INT)\]** The minimum VCF variant call \"quality\" ( Default 100 )
 
-    - **\[\--ram (INT)\]** Try and keep RAM under this many GB (
-            Default 8 )
+    - **\[\--ram (INT)\]** Try and keep RAM under this many GB ( Default 8 )
 
   - **\--AntiRes**
 
-    - **\[\--db (STRING)\]** \[Required\] The database to use,
-            options: all,
-            [argannot](https://www.ncbi.nlm.nih.gov/pubmed/24145532),
-            [card](https://www.ncbi.nlm.nih.gov/pubmed/27789705),
-            [ecoh](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/),
-            [ecoli\_vf](https://github.com/phac-nml/ecoli_vf),
-            [megares](https://megares.meglab.org/),
-            [ncbi](https://www.biorxiv.org/content/10.1101/550707v1),
-            [plasmidfinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092),
-            [resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487)
-            and [vfdb](https://www.ncbi.nlm.nih.gov/pubmed/26578559). (
-            Default all )
+    - **\[\--db (STRING)\]** \[Required\] The database to use, options: all, [argannot](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [card](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [ecoh](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), [ecoli\_vf](https://github.com/phac-nml/ecoli_vf), [megares](https://megares.meglab.org/), [ncbi](https://www.biorxiv.org/content/10.1101/550707v1), [plasmidfinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487) and [vfdb](https://www.ncbi.nlm.nih.gov/pubmed/26578559). ( Default all )
 
-    - **\[\--identity (INT)\]** \[Required\] Minimum %identity to
-            keep the result, should be a number between 1 to 100. (
-            Default 75 )
+    - **\[\--identity (INT)\]** \[Required\] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )
 
-    - **\[\--coverage (INT)\]** \[Required\] Minimum %coverage to
-            keep the result, should be a number between 0 to 100. (
-            Default 50 )
+    - **\[\--coverage (INT)\]** \[Required\] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )
 
   - **\--STREE**
 
-    - **\[\--seqfile (STRING)\]** \[Required\] Path of the
-            sequence file for analysis.
+    - **\[\--seqfile (STRING)\]** \[Required\] Path of the sequence file for analysis.
 
-    - **\[\--seqtype (INT)\]** \[Required\] Type Of Sequence (p,
-            d, c for Protein, DNA, Codons, respectively). ( Default p )
+    - **\[\--seqtype (INT)\]** \[Required\] Type Of Sequence (p, d, c for Protein, DNA, Codons, respectively). ( Default p )
 
   - **\--pCOG**
 
-    - **\[\--evalue (FLOAT)\]** \[Required\] Maximum e-value to
-            report alignments, ( Default 1e-3 )
+    - **\[\--evalue (FLOAT)\]** \[Required\] Maximum e-value to report alignments, ( Default 1e-3 )
 
-    - **\[\--id (INT)\]** \[Required\] Minimum identity% to report
-            an alignment, ( Default 40 )
+    - **\[\--id (INT)\]** \[Required\] Minimum identity% to report an alignment, ( Default 40 )
 
-    - **\[\--query\_cover (INT)\]** \[Required\] Minimum query
-            cover% to report an alignment, ( Default 70 )
+    - **\[\--query\_cover (INT)\]** \[Required\] Minimum query cover% to report an alignment, ( Default 70 )
 
-    - **\[\--subject\_cover (INT)\]** \[Required\] Minimum subject
-            cover% to report an alignment, ( Default 50 )
+    - **\[\--subject\_cover (INT)\]** \[Required\] Minimum subject cover% to report an alignment, ( Default 50 )
 
   - **\--ACC**
 
-    - **\[\--Assess (STRING)\]** Filter short sequences in the
-            genome and assess the status of the genome
+    - **\[\--Assess (STRING)\]** Filter short sequences in the genome and assess the status of the genome
 
 - **Paths of external programs**
 
