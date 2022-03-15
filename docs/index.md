@@ -319,145 +319,109 @@ docker pull quay.io/biocontainers/pgcgap:
 
   - **\--Assemble**
 
-        - **\[\--platform (STRING)\]** \[Required\] Sequencing
-            Platform, \"illumina\", \"pacbio\", \"oxford\" and
-            \"hybrid\" available ( Default illumina )
+    - **\[\--platform (STRING)\]** \[Required\] Sequencing Platform, \"illumina\", \"pacbio\", \"oxford\" and \"hybrid\" available ( Default illumina )
 
-        - **\[\--assembler (STRING)\]** \[Required\] Software used for
-            illumina reads assembly, \"abyss\" and \"spades\" available
-            ( Default abyss )
+    - **\[\--assembler (STRING)\]** \[Required\] Software used for illumina reads assembly, \"abyss\" and \"spades\" available ( Default abyss )
 
-        - **\[\--kmmer (INT)\]** \[Required\] k-mer size for genome
-            assembly of Illumina data ( Default 81 )
+    - **\[\--kmmer (INT)\]** \[Required\] k-mer size for genome assembly of Illumina data ( Default 81 )
 
-        - **\[\--genomeSize (STRING)\]** \[Required\] An estimate of
-            the size of the genome. Common suffixes are allowed, for
-            example, 3.7m or 2.8g. Needed by PacBio data and Oxford data
-            ( Default Unset )
+    - **\[\--genomeSize (STRING)\]** \[Required\] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
 
-        - **\[\--short1 (STRING)\]** \[Required\] FASTQ file of first
-            short reads in each pair. Needed by hybrid assembly (
-            Default Unset )
+    - **\[\--short1 (STRING)\]** \[Required\] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-        - **\[\--short2 (STRING)\]** \[Required\] FASTQ file of second
-            short reads in each pair. Needed by hybrid assembly (
-            Default Unset )
+    - **\[\--short2 (STRING)\]** \[Required\] FASTQ file of second short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
-        - **\[\--long (STRING)\]** \[Required\] FASTQ or FASTA file of
-            long reads. Needed by hybrid assembly ( Default Unset )
+    - **\[\--long (STRING)\]** \[Required\] FASTQ or FASTA file of long reads. Needed by hybrid assembly ( Default Unset )
 
-        - **\[\--hout (STRING)\]** \[Required\] Output directory for
-            hybrid assembly ( Default ../../Results/Assembles/Hybrid )
+    - **\[\--hout (STRING)\]** \[Required\] Output directory for hybrid assembly ( Default ../../Results/Assembles/Hybrid )
 
   - **\--Annotate**
 
-        - **\[\--genus (STRING)\]** Genus name of your strain (
-            Default \"NA\" )
+    - **\[\--genus (STRING)\]** Genus name of your strain ( Default \"NA\" )
 
-        - **\[\--species (STRING)\]** Species name of your strain (
-            Default \"NA\")\
+    - **\[\--species (STRING)\]** Species name of your strain ( Default \"NA\")\
 
   - **\--CoreTree**
 
-        - **\[\--CDsPath (PATH)\]** \[Required\] CDs of all strains as
-            fasta file paths ( Default \"./Results/Annotations/CDs\" ),
-            if set to \"NO\", the SNPs of single-copy core genes will
-            not be called
+    - **\[\--CDsPath (PATH)\]** \[Required\] CDs of all strains as fasta file paths ( Default \"./Results/Annotations/CDs\" ), if set to \"NO\", the SNPs of single-copy core genes will not be called
 
-        - **\[-c (FLOAT)\]** Sequence identity threshold, ( Default
-            0.5)
+    - **\[-c (FLOAT)\]** Sequence identity threshold, ( Default 0.5)
 
-        - **\[-n (INT)\]** Word\_length, -n 2 for thresholds 0.4-0.5,
-            -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n
-            5 for thresholds 0.7-1.0 ( Default 2 )
+    - **\[-n (INT)\]** Word\_length, -n 2 for thresholds 0.4-0.5, -n 3 for thresholds 0.5-0.6, -n 4 for thresholds 0.6-0.7, -n 5 for thresholds 0.7-1.0 ( Default 2 )
 
-        - **\[-G (INT)\]** Use global (set to 1) or local (set to 0)
-            sequence identity, ( Default 0 )
+    - **\[-G (INT)\]** Use global (set to 1) or local (set to 0) sequence identity, ( Default 0 )
 
-        - **\[-t (INT)\]** Tolerance for redundance ( Default 0 )
+    - **\[-t (INT)\]** Tolerance for redundance ( Default 0 )
 
-        - **\[-aL (FLOAT)\]** Alignment coverage for the longer
-            sequence. If set to 0.9, the alignment must cover 90% of the
-            sequence ( Default 0.5 )
+    - **\[-aL (FLOAT)\]** Alignment coverage for the longer sequence. If set to 0.9, the alignment must cover 90% of the sequence ( Default 0.5 )
 
-        - **\[-aS (FLOAT)\]** Alignment coverage for the shorter
-            sequence. If set to 0.9, the alignment must covers 90% of
-            the sequence ( Default 0.7 )
+    - **\[-aS (FLOAT)\]** Alignment coverage for the shorter sequence. If set to 0.9, the alignment must covers 90% of the sequence ( Default 0.7 )
 
-        - **\[-g (INT)\]** If set to 0, a sequence is clustered to the
-            first cluster that meets the threshold (fast cluster). If
-            set to 1, the program will cluster it into the most similar
-            cluster that meets the threshold (accurate but slow mode,
-            Default 1)
+    - **\[-g (INT)\]** If set to 0, a sequence is clustered to the first cluster that meets the threshold (fast cluster). If set to 1, the program will cluster it into the most similar cluster that meets the threshold (accurate but slow mode, Default 1)
 
-        - **\[-d (INT)\]** length of description in .clstr file. if
-            set to 0, it takes the fasta defline and stops at first
-            space ( Default 0 )\
+    - **\[-d (INT)\]** length of description in .clstr file. if set to 0, it takes the fasta defline and stops at first space ( Default 0 )
 
   - **\--Pan**
 
-        - **\[\--GffPath (PATH)\]** \[Required\] Gff files of all
-            strains as paths ( Default \"./Results/Annotations/GFF\" )\
-        - **\[\--PanTree\]** Construct a phylogenetic tree of
-            single-copy core proteins called by roary\
-        - **\[\--identi (INT)\]** Minimum percentage identity for
-            blastp ( Default 95 )\
+    - **\[\--GffPath (PATH)\]** \[Required\] Gff files of all strains as paths ( Default \"./Results/Annotations/GFF\" )
+    - **\[\--PanTree\]** Construct a phylogenetic tree of single-copy core proteins called by roary
+    - **\[\--identi (INT)\]** Minimum percentage identity for blastp ( Default 95 )
 
   - **\--OrthoF**
 
-        - **\[\--Sprogram (STRING)\]** Sequence search program,
+    - **\[\--Sprogram (STRING)\]** Sequence search program,
             Options: blast, mmseqs, blast\_gz, diamond ( Default blast)
 
-        - **\[\--PanTree\]** Construct a phylogenetic tree of
+    - **\[\--PanTree\]** Construct a phylogenetic tree of
             single-copy core proteins called by roary\
 
   - **\--ANI**
 
-        - **\[\--queryL (FILE)\]** \[Required\] The file containing
+    - **\[\--queryL (FILE)\]** \[Required\] The file containing
             paths to query genomes, one per line ( Default scaf.list )
 
-        - **\[\--refL (FILE)\]** \[Required\] The file containing
+    - **\[\--refL (FILE)\]** \[Required\] The file containing
             paths to reference genomes, one per line. ( Default
             scaf.list )
 
   - **\--VAR**
 
-        - **\[\--refgbk (FILE)\]** \[Required\] The full path and name
+    - **\[\--refgbk (FILE)\]** \[Required\] The full path and name
             of reference genome in GENBANK format ( recommended ), fasta
             format is also OK. For example: \"/mnt/g/test/ref.gbk\"
 
-        - **\[\--qualtype (STRING)\]** \[Required\] Type of quality
+    - **\[\--qualtype (STRING)\]** \[Required\] Type of quality
             values (solexa (CASAVA \< 1.3), illumina (CASAVA 1.3 to
             1.7), sanger (which is CASAVA \>= 1.8)). ( Default sanger )
 
-        - **\[\--qual (INT)\]** Threshold for trimming based on
+    - **\[\--qual (INT)\]** Threshold for trimming based on
             average quality in a window. ( Default 20 )
 
-        - **\[\--length (INT)\]** Threshold to keep a read based on
+    - **\[\--length (INT)\]** Threshold to keep a read based on
             length after trimming. ( Default 20 )
 
-        - **\[\--mincov (INT)\]** The minimum number of reads covering
+    - **\[\--mincov (INT)\]** The minimum number of reads covering
             a site to be considered ( Default 10 )
 
-        - **\[\--minfrac (FLOAT)\]** The minimum proportion of those
+    - **\[\--minfrac (FLOAT)\]** The minimum proportion of those
             reads which must differ from the reference ( Default 0.9 )
 
-        - **\[\--minqual (INT)\]** The minimum VCF variant call
+    - **\[\--minqual (INT)\]** The minimum VCF variant call
             \"quality\" ( Default 100 )
 
-        - **\[\--ram (INT)\]** Try and keep RAM under this many GB (
+    - **\[\--ram (INT)\]** Try and keep RAM under this many GB (
             Default 8 )
 
-        - **\[\--tree\_builder (STRING)\]** Application to use for
+    - **\[\--tree\_builder (STRING)\]** Application to use for
             tree building \[raxml\|fasttree\|hybrid\] ( Default
             fasttree)
 
-        - **\[\--iterations (INT)\]** Maximum No. of iterations for
+    - **\[\--iterations (INT)\]** Maximum No. of iterations for
             gubbins ( Default 5 )\
 
   - **\--AntiRes**
 
-        - **\[\--db (STRING)\]** \[Required\] The database to use,
+    - **\[\--db (STRING)\]** \[Required\] The database to use,
             options: all,
             [argannot](https://www.ncbi.nlm.nih.gov/pubmed/24145532),
             [card](https://www.ncbi.nlm.nih.gov/pubmed/27789705),
@@ -470,39 +434,39 @@ docker pull quay.io/biocontainers/pgcgap:
             and [vfdb](https://www.ncbi.nlm.nih.gov/pubmed/26578559). (
             Default all )
 
-        - **\[\--identity (INT)\]** \[Required\] Minimum %identity to
+    - **\[\--identity (INT)\]** \[Required\] Minimum %identity to
             keep the result, should be a number between 1 to 100. (
             Default 75 )
 
-        - **\[\--coverage (INT)\]** \[Required\] Minimum %coverage to
+    - **\[\--coverage (INT)\]** \[Required\] Minimum %coverage to
             keep the result, should be a number between 0 to 100. (
             Default 50 )
 
   - **\--STREE**
 
-        - **\[\--seqfile (STRING)\]** \[Required\] Path of the
+    - **\[\--seqfile (STRING)\]** \[Required\] Path of the
             sequence file for analysis.
 
-        - **\[\--seqtype (INT)\]** \[Required\] Type Of Sequence (p,
+    - **\[\--seqtype (INT)\]** \[Required\] Type Of Sequence (p,
             d, c for Protein, DNA, Codons, respectively). ( Default p )
 
   - **\--pCOG**
 
-        - **\[\--evalue (FLOAT)\]** \[Required\] Maximum e-value to
+    - **\[\--evalue (FLOAT)\]** \[Required\] Maximum e-value to
             report alignments, ( Default 1e-3 )
 
-        - **\[\--id (INT)\]** \[Required\] Minimum identity% to report
+    - **\[\--id (INT)\]** \[Required\] Minimum identity% to report
             an alignment, ( Default 40 )
 
-        - **\[\--query\_cover (INT)\]** \[Required\] Minimum query
+    - **\[\--query\_cover (INT)\]** \[Required\] Minimum query
             cover% to report an alignment, ( Default 70 )
 
-        - **\[\--subject\_cover (INT)\]** \[Required\] Minimum subject
+    - **\[\--subject\_cover (INT)\]** \[Required\] Minimum subject
             cover% to report an alignment, ( Default 50 )
 
   - **\--ACC**
 
-        - **\[\--Assess (STRING)\]** Filter short sequences in the
+    - **\[\--Assess (STRING)\]** Filter short sequences in the
             genome and assess the status of the genome
 
 - **Paths of external programs**
