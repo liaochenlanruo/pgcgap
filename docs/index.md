@@ -20,7 +20,7 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
 </center></p>
 -------------
 
-[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [Chinese Readme](https://liaochenlanruo.github.io/post/848f.html)
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [中文说明](https://liaochenlanruo.github.io/post/848f.html)
 
 
           ____       ____      ____     ____       _        ____    
@@ -60,6 +60,15 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	
 	# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
 	mamba create -n pgcgap pgcgap=1.0.33
+	```
+
+	**Notice**: <u>I had submitted the latest version (v1.0.33) of the Bioconda recipe for PGCGAP for a test. However, Bioconda moved to a new test server which allocated very little memory, causing the test to fail. As a result, I had to remove some dependencies from the Bioconda recipe to pass the test, so after installing the main program of PGCGAP v1.0.33 through Conda, users still need to install some dependencies (Installing V1.0.32 and previous versions does not require an additional dependency package installation). This situation will be resolved soon with the release of Conda v4.12 as Bioconda will switch to the less memory-consuming Mamba for recipe testing. After that, users will still be able to install PGCGAP and its dependencies just using the above commands.</u> However, at present, after the previous step, the user needs to execute the following command to complete the installation of the dependency packages:
+	
+	当安装PGCGAP v1.0.33的时候还需要单独安装依赖包，这是由于Bioconda换了新的测试服务器。我在提交最新版本的recipe并进行测试的时候，服务器仅分配了极小的内存，导致测试失败。因此，我不得不从Bioconda recipe中移除一些依赖包以通过测试。所以，在通过conda安装完PGCGAP的主程序后，还需要安装一些依赖包。这种状况将在不久的将来得到解决，即随着conda v4.12释放以后，Bioconda将转用耗费内存更小的mamba来进行recipe的测试，此后，用户仍可通过上述命令完成PGCGAP和其依赖包的安装。目前，在执行完上一步操作之后，用户还需要执行下面这条命令完成依赖包的安装（当然，安装v1.0.32及以前的版本不需要单独再安装依赖包了）：
+
+	```bash
+	conda activate pgcgap
+	mamba install -y abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler perl-file-copy-recursive prokka pal2nal mash trimal
 	```
 
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
@@ -289,7 +298,7 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
         - 23 Thraustochytrium mitochondrial code
 
   - **\[\--suffix\_len (INT)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] <font color=#FF0000>**(Strongly recommended)**</font> The
+        \"\--Assemble\" and \"\--VAR\"\] **<u>(Strongly recommended)</u>** The
         suffix length of the reads, that is the length of your reads
         name minus the length of your strain name. For example the
         \--suffix\_len of \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\" is 26
@@ -613,7 +622,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
 	```
 
-- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <font color=#FF0000>**Applicable to v1.0.27 and later**</font>.
+- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **<u>Applicable to v1.0.27 and later</u>**.
 	
 	```bash
 	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
@@ -626,7 +635,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
 	```
 
-- **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. <font color=#FF0000>**Applicable to v1.0.29 and later**</font>.
+- **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **<u>Applicable to v1.0.29 and later</u>**.
 	
 	```bash
 	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
