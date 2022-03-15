@@ -42,7 +42,10 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
 ## Introduction
 ------------
 
-PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. <font color=#FF00OO>**To follow this document, please upgrade PGCGAP to version v1.0.33 or later.**</font>
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. 
+```html
+<font color=#FF00OO>**To follow this document, please upgrade PGCGAP to version v1.0.33 or later**</font>.
+```
 
 ## Installation
 ------------
@@ -533,7 +536,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 
 - **Example 1:** Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.
 	
-	**Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.\
+	**Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.
 
 	```bash
 	pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
