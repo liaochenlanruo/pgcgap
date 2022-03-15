@@ -412,13 +412,6 @@ docker pull quay.io/biocontainers/pgcgap:
     - **\[\--ram (INT)\]** Try and keep RAM under this many GB (
             Default 8 )
 
-    - **\[\--tree\_builder (STRING)\]** Application to use for
-            tree building \[raxml\|fasttree\|hybrid\] ( Default
-            fasttree)
-
-    - **\[\--iterations (INT)\]** Maximum No. of iterations for
-            gubbins ( Default 5 )\
-
   - **\--AntiRes**
 
     - **\[\--db (STRING)\]** \[Required\] The database to use,
@@ -471,9 +464,7 @@ docker pull quay.io/biocontainers/pgcgap:
 
 - **Paths of external programs**
 
-    Not needed if they were in the environment variables path. Users can
-    check with the \"\--check-external-programs\" option for the
-    essential programs.\
+    Not needed if they were in the environment variables path. Users can check with the \"\--check-external-programs\" option for the essential programs.
 
   - **\[\--abricate-bin (PATH)\]** Path to abyss binary file.
         Default tries if abyss is in PATH;
@@ -535,138 +526,172 @@ docker pull quay.io/biocontainers/pgcgap:
 - **Setup COG database**
 
   - **\[\--setup-COGdb\]** Users should execute this after first
-        installation of pgcgap.\
+        installation of pgcgap.
 
-- Check the required external programs (**It is strongly recommended
-    that this step be performed after the installation of PGCGAP**):
-
-    pgcgap --check-external-programs
+- Check the required external programs (**It is strongly recommended that this step be performed after the installation of PGCGAP**):
+	
+	```bash
+	pgcgap --check-external-programs
+	```
 
 Examples
 --------
 
 Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Examples.tar.gz).
 
-- **Example 1:** Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.\
+- **Example 1:** Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.
+	
+	**Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.\
 
-    **Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.\
-
-    pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+	```bash
+	pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+	```
 
 - **Example 2:** Genome assembly.
 
   - Illumina reads assembly
-
-        In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
-
-        pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
-        pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
-        pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+	
+	In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
+	
+	```bash
+	pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+	pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
+	pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+	```
 
   - Oxford reads assembly
+	
+	Oxford nanopore only produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
 
-        Oxford nanopore only produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
-
-        pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+	```bash
+	pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+	```
 
   - PacBio reads assembly
+	
+	PacBio also produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
 
-        PacBio also produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
-
-        pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+	```bash
+	pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+	```
 
   - Hybrid assembly of short reads and long reads
+	
+	Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
 
-        Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
-
-        pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
+	```bash
+	pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
+	```
 
 - **Example 3**: Gene prediction and annotation
-
-    pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+	
+	```bash
+	pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+	```
 
 - **Example 4**: Constructing single-copy core protein tree and core SNPs tree
+	
+	```bash
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
 
-        # Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-    pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
 
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
-
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+	```
 
 - **Example 5:** Constructing single-copy core protein tree only.
+	
+	```bash
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
+	
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
 
-        # Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-    pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+	```
 
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
+- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **Applicable to v1.0.27 and later**.
+	
+	```bash
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
 
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
-
-- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
-    **Applicable to v1.0.27 and later**.
-
-        # Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-    pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
-
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
-
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
+	
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
+	```
 
 - **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **Applicable to v1.0.29 and later**.
-
-        # Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-    pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree
-
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500
-
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
+	
+	```bash
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree
+	
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500
+	
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
+	```
 
 - **Example 8:** Compute whole-genome Average Nucleotide Identity (ANI).
-
-    pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .fa
+	
+	```bash
+	pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .fa
+	```
 
 - **Example 9:** Genome and metagenome similarity estimation using MinHash.
-
-    pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa
+	
+	```bash
+	pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa
+	```
 
 - **Example 10:** Run COG annotation for each strain.
-
-    pgcgap --pCOG --threads 4 --strain_num 6 --id 40 --query_cover 70 --subject_cover 50 --AAsPath Results/Annotations/AAs
+	
+	```bash
+	pgcgap --pCOG --threads 4 --strain_num 6 --id 40 --query_cover 70 --subject_cover 50 --AAsPath Results/Annotations/AAs
+	```
 
 - **Example 11:** Variants calling and phylogenetic tree construction based on the reference genome.
-
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500
-
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
+	
+	```bash
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500
+	
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
+	```
 
 - **Example 12:** Screening of contigs for antimicrobial and virulence genes.
-
-    pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db all --identity 75 --coverage 50
+	
+	```bash
+	pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db all --identity 75 --coverage 50
+	```
 
 - **Example 13:** Filter short sequences in the genome and assess the status of the genome.
-
-    pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+	
+	```bash
+	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+	```
 
 - **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
+	
+	```bash
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+	pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
+	
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+	pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
+	```
 
-        # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-    pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
-
-        # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-    pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
-
-Generating Input files
+## Generating Input files
 ----------------------
 
 ### Working directory
@@ -707,7 +732,7 @@ Amino acids file (With ".faa" as the suffix) of each strain placed into a direct
 
 ### VAR
 
-- Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).\
+- Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
 
 - The full path of reference genome in fasta format or GenBank format (**must be provided**).
 
@@ -719,149 +744,149 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
-Output Files
+## Output Files
 ------------
 
 ### Assemble
 
-- **Results/Assembles/Illumina/**\
-    Directories contain Illumina assembly files and information of each strain.\
+- **Results/Assembles/Illumina/**
+    Directories contain Illumina assembly files and information of each strain.
 
-- **Results/Assembles/PacBio/**\
-    Directories contain PacBio assembly files and information of each strain.\
+- **Results/Assembles/PacBio/**
+    Directories contain PacBio assembly files and information of each strain.
 
-- **Results/Assembles/Oxford/**\
-    Directories contain ONT assembly files and information of each strain.\
+- **Results/Assembles/Oxford/**
+    Directories contain ONT assembly files and information of each strain.
 
-- **Results/Assembles/Hybrid/**\
-    Directory contains hybrid assembly files of the short reads and long reads of the same strain.\
+- **Results/Assembles/Hybrid/**
+    Directory contains hybrid assembly files of the short reads and long reads of the same strain.
 
-- **Results/Assembles/Scaf/Illumina**\
-    Directory contains Illumina contigs/scaffolds of all strains. \"\*.filtered.fas\" is the genome after excluding short sequences. \"\*.prefilter.stats\" describes the stats of the genome before filtering, and \"\*.filtered.stats\" describes the stats of the genome after filtering.\
+- **Results/Assembles/Scaf/Illumina**
+    Directory contains Illumina contigs/scaffolds of all strains. \"\*.filtered.fas\" is the genome after excluding short sequences. \"\*.prefilter.stats\" describes the stats of the genome before filtering, and \"\*.filtered.stats\" describes the stats of the genome after filtering.
 
-- **Results/Assembles/Scaf/Oxford**\
-    Directory contains Oxford nanopore contigs/scaffolds of all strains.\
+- **Results/Assembles/Scaf/Oxford**
+    Directory contains Oxford nanopore contigs/scaffolds of all strains.
 
-- **Results/Assembles/Scaf/PacBio**\ Directory contains PacBio contigs/scaffolds of all strains.\
+- **Results/Assembles/Scaf/PacBio**\ Directory contains PacBio contigs/scaffolds of all strains.
 
 ### Annotate
 
-- **Results/Annotations/\*\_annotation**\
-    directories contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.\
+- **Results/Annotations/\*\_annotation**
+    directories contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.
 
-- **Results/Annotations/AAs**\ Directory contain amino acids sequences of all strains.\
+- **Results/Annotations/AAs**\ Directory contain amino acids sequences of all strains.
 
-- **Results/Annotations/CDs**\
-    Directory contain nucleotide sequences of all strains.\
+- **Results/Annotations/CDs**
+    Directory contain nucleotide sequences of all strains.
 
-- **Results/Annotations/GFF**\
+- **Results/Annotations/GFF**
     Directory contain the master annotation of all strains in GFF3 format.
 
 ### ANI
 
-- **Results/ANI/ANIs**\
-    The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments.\
+- **Results/ANI/ANIs**
+    The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments.
 
-- **Results/ANI/ANIs.matrix**\
-    file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank).\
+- **Results/ANI/ANIs.matrix**
+    file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank).
 
-- **Results/ANI/ANIs.heatmap**\
-    An ANI matrix of all strains.\
+- **Results/ANI/ANIs.heatmap**
+    An ANI matrix of all strains.
 
-- **Results/ANI/ANI\_matrix.pdf**\
+- **Results/ANI/ANI\_matrix.pdf**
     The heatmap plot of \"ANIs.heatmap\".
 
 ### MASH
 
-- **Results/MASH/MASH**\
+- **Results/MASH/MASH**
     The pairwise distance between pair genomes, each column represents Reference-ID, Query-ID, Mash-distance, P-value, and Matching-hashes, respectively.
 
-- **Results/MASH/MASH2**\
+- **Results/MASH/MASH2**
     The pairwise similarity between pair genomes, each column represents Reference-ID, Query-ID, similarity, P-value, and Matching-hashes, respectively.
 
-- **Results/MASH/MASH.heatmap**\
+- **Results/MASH/MASH.heatmap**
     A similarity matrix of all genomes.
 
-- **Results/MASH/MASH\_matrix.pdf**\
+- **Results/MASH/MASH\_matrix.pdf**
     A heat map plot of \"MASH.heatmap\".
 
 ### CoreTree
 
-- **Results/CoreTrees/ALL.core.protein.fasta**\
-    Concatenated and aligned sequences file of single-copy core proteins.\
+- **Results/CoreTrees/ALL.core.protein.fasta**
+    Concatenated and aligned sequences file of single-copy core proteins.
 
-- **Results/CoreTrees/ALL.core.protein.nwk**\
-    The phylogenetic tree file of single-copy core proteins for all strains constructed by FastTree.\
+- **Results/CoreTrees/ALL.core.protein.nwk**
+    The phylogenetic tree file of single-copy core proteins for all strains constructed by FastTree.
 
-- **Results/CoreTrees/ALL.core.protein.fasta.gb.treefile**\
-    The phylogenetic tree file of single-copy core proteins for all strains constructed by IQ-TREE.\
+- **Results/CoreTrees/ALL.core.protein.fasta.gb.treefile**
+    The phylogenetic tree file of single-copy core proteins for all strains constructed by IQ-TREE.
 
-- **Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta**\
-    Concatenated and aligned sequences file of single-copy core genes.\
+- **Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta**
+    Concatenated and aligned sequences file of single-copy core genes.
 
-- **Results/CoreTrees/ALL.core.snp.fasta**\
-    Core SNPs of single-copy core genes in fasta format.\
+- **Results/CoreTrees/ALL.core.snp.fasta**
+    Core SNPs of single-copy core genes in fasta format.
 
-- **Results/CoreTrees/ALL.core.snp.fasta.treefile**\
-    The phylogenetic tree file of SNPs of single-copy core genes for all strains constructed by IQ-TREE.\
+- **Results/CoreTrees/ALL.core.snp.fasta.treefile**
+    The phylogenetic tree file of SNPs of single-copy core genes for all strains constructed by IQ-TREE.
 
-- **Results/CoreTrees/\"Other\_files\"**\
-    Intermediate directories and files.\
+- **Results/CoreTrees/\"Other\_files\"**
+    Intermediate directories and files.
 
 ### OrthoF
 
-- **Results/OrthoFinder/Results\_orthoF**\
-    Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.\
+- **Results/OrthoFinder/Results\_orthoF**
+    Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
 - **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/**\
-    Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.\
-- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.nwk**\
-    Phylogenetic tree constructed by FastTree.\
-- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.fasta.gb.treefile**\
-    Phylogenetic tree constructed by IQ-TREE.\
+    Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.
+- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.nwk**
+    Phylogenetic tree constructed by FastTree.
+- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.fasta.gb.treefile**
+    Phylogenetic tree constructed by IQ-TREE.
 
 ### Pan
 
-- **Results/PanGenome/Pangenome\_Pie.pdf**\
-    A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.\
+- **Results/PanGenome/Pangenome\_Pie.pdf**
+    A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 
-- **Results/PanGenome/pangenome\_frequency.pdf**\
-    A graph with the frequency of genes versus the number of genomes.\
+- **Results/PanGenome/pangenome\_frequency.pdf**
+    A graph with the frequency of genes versus the number of genomes.
 
-- **Results/PanGenome/Pangenome\_matrix.pdf**\
-    A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.\
+- **Results/PanGenome/Pangenome\_matrix.pdf**
+    A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
 
-- **Results/PanGenome/Core/Roary.core.protein.fasta**\
-    Alignments of single-copy core proteins called by roary software.\
+- **Results/PanGenome/Core/Roary.core.protein.fasta**
+    Alignments of single-copy core proteins called by roary software.
 
-- **Results/PanGenome/Core/Roary.core.protein.nwk**\
-    A phylogenetic tree of Roary.core.protein.fasta constructed by FastTree.\
+- **Results/PanGenome/Core/Roary.core.protein.nwk**
+    A phylogenetic tree of Roary.core.protein.fasta constructed by FastTree.
 
-- **Results/PanGenome/Core/Roary.core.protein.fasta.gb.treefile**\
-    A phylogenetic tree of Roary.core.protein.fasta constructed by IQ-TREE.\
+- **Results/PanGenome/Core/Roary.core.protein.fasta.gb.treefile**
+    A phylogenetic tree of Roary.core.protein.fasta constructed by IQ-TREE.
 
-- **Results/PanGenome/Other\_files**\
-    see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.\
+- **Results/PanGenome/Other\_files**
+    see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 
 ### pCOG
 
-- **\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table**\
-    Intermediate files.\
+- **\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table**
+    Intermediate files.
 
-- **\*.2Scog.table**\
-    The super COG table of each strain.\
+- **\*.2Scog.table**
+    The super COG table of each strain.
 
-- **\*.2Scog.table.pdf**\
-    A plot of super COG table in pdf format.\
+- **\*.2Scog.table.pdf**
+    A plot of super COG table in pdf format.
 
 - **All\_flags\_relative\_abundances.table** 
     A table containing the relative abundance of each flag for all strains.
 
 ### VAR
 
-- **Results/Variants/directory-named-in-strains**\
+- **Results/Variants/directory-named-in-strains**
     directories containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy?_blank) outputs for detail.
 
-- **Results/Variants/Core**\
+- **Results/Variants/Core**
     The directory containing SNP phylogeny files.
 
   - **core.aln** : A core SNP alignment includes only SNP sites.
@@ -881,17 +906,17 @@ Output Files
 - **Results/STREE/\*.aln.gb.treefile** : The final phylogenetic tree.
 - **Results/STREE/\*.aln.gb.iqtree** : Log of IQ-TREE.
 
-License
+## License
 -------
 
 PGCGAP is free software, licensed under GPLv3.
 
-Feedback and Issues
+## Feedback and Issues
 -------------------
 
 Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues?_blank) or email us at <liaochenlanruo@webmail.hzau.edu.cn>.
 
-Citation
+## Citation
 --------
 
 - If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative
@@ -918,14 +943,16 @@ Citation
 
 - If you use \"\--STREE\", please also cite [Muscle](http://europepmc.org/abstract/MED/30976793), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), and [IQ-TREE](https://doi.org/10.1093/molbev/msaa015).
 
-FAQ
+## FAQ
 ---
 
 ### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 Check the log file named in \"strain\_name.log\" under Results/Variants/\<strain\_name\>/ directory. If you find a sentence like \"WARNING: All frames are zero! This seems rather odd, please check that \'frame\' information in your \'genes\' file is accurate.\" This is a snpEff error. Users can install JDK8 to solve this problem.
 
+```bash
 conda install java-jdk=8.0.112
+```
 
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
 
@@ -952,7 +979,9 @@ When running the Annotate function, this error could happen, the error message s
 
 Users can downgrade the minced to version 0.3 to solve this problem.
 
+```bash
 conda install minced=0.3
+```
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
 
@@ -960,16 +989,18 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 This error may happen when running function \"VAR\" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
-    #Firstly, install brew if have not installed before
+```bash
+#Firstly, install brew if have not installed before
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-    #Install openssl with brew
+#Install openssl with brew
 brew install openssl
 
-    #Create the soft link for libraries
+#Create the soft link for libraries
 ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 
 ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+```
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations.
 
@@ -977,7 +1008,7 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
 This warning may happen when running function \"Pan\". It is a warning of Roary software. The content of line 61 is \"require Encode::ConfigLocal;\". Users can ignore the warning. Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
-Updates
+## Updates
 -------
 
 - V1.0.3
