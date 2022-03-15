@@ -20,9 +20,9 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
 </center></p>
 -------------
 
-<center>[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [Chinese Readme](https://liaochenlanruo.github.io/post/848f.html)</center>
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [Chinese Readme](https://liaochenlanruo.github.io/post/848f.html)
 
-<center>
+
           ____       ____      ____     ____       _        ____    
         U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
         \| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
@@ -30,7 +30,7 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
          |_|        \____|    \____|   \____|  /_/   \_\   |_|      
          ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
-</center>
+
 
 ## Multi-version instructions (This one for the latest version)
 ------------------------------------------------------------
