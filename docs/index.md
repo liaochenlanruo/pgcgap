@@ -17,7 +17,7 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
 &nbsp;&nbsp;&nbsp;&nbsp;
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/0.js?i=0ett3z77b0x&amp;d=3&amp;p=1&amp;b=1&amp;w=293&amp;g=2&amp;f=arial&amp;fs=13&amp;r=0&amp;c0=ff8a00&amp;c1=0006ff&amp;c2=000000&amp;ic0=0&amp;ic1=0" async="async"></script>
 </center></p>
-<p><center>
+
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap) \| [Chinese Readme](https://liaochenlanruo.github.io/post/848f.html)
 
@@ -29,19 +29,19 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
          ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
-Multi-version instructions (This one for the latest version)
+## Multi-version instructions (This one for the latest version)
 ------------------------------------------------------------
 
 - [Instructions for V1.0.29](./index-v1.0.29.html)
 - [Instructions for V1.0.32](./index-v1.0.32.html)
 - [Instructions for the latest version](./index.html)
 
-Introduction
+## Introduction
 ------------
 
 PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. **To follow this document, please upgrade PGCGAP to version v1.0.33 or later.**
 
-Installation
+## Installation
 ------------
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
@@ -57,6 +57,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
 	mamba create -n pgcgap pgcgap=1.0.33
 	```
+
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
 	
 	```bash
@@ -69,6 +70,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	# create a conda environment named as pgcgap and install the latest version of PGCGAP
 	mamba env create -f pgcgap_latest_env.yml
 	```
+
 **Notice: What should we do when the installation is slow?** As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making \"Solving Environment\" slower and slower. Sometimes we can\'t even install the software through CONDA. In fact, we can do something instead of just waiting.\
 
 **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
@@ -78,6 +80,7 @@ conda activate pgcgap
 pgcgap --setup-COGdb
 conda deactivate
 ```
+
 Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
 ```bash
@@ -86,7 +89,7 @@ docker pull quay.io/biocontainers/pgcgap:
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
 
-Required dependencies
+## Required dependencies
 ---------------------
 
 - [Abricate](https://github.com/tseemann/abricate)
@@ -137,43 +140,44 @@ Required dependencies
 - [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
 
-Usage
+## Usage
 -----
 
 - **Print the help messages:**
-
+	
 	```bash
 	pgcgap --help
 	```
 
 - **Check for update:**
-
+	
 	```bash
 	pgcgap --check-update
 	```
 
 - **General usage:**
-
+	
 	```bash
 	pgcgap [modules] [options]
 	```
 
 - **Show parameters for each module:**
-
+	
 	```bash
 	pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
 	```
 
 - **Show examples of each module:**
-
+	
 	```bash
 	pgcgap Examples
 	```
 
-- **Setup COG database:** (Users should execute this after the first
-    installation of pgcgap)
-
-    pgcgap --setup-COGdb
+- **Setup COG database:** (Users should execute this after the first installation of pgcgap)
+	
+	```bash
+	pgcgap --setup-COGdb
+	```
 
 - **Modules:**
 
