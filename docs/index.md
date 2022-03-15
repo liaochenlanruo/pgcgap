@@ -42,7 +42,7 @@ bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?s
 ## Introduction
 ------------
 
-PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. **To follow this document, please upgrade PGCGAP to version v1.0.33 or later.**
+PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. <font color=#FF00OO>**To follow this document, please upgrade PGCGAP to version v1.0.33 or later.**</font>
 
 ## Installation
 ------------
@@ -74,8 +74,6 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	mamba env create -f pgcgap_latest_env.yml
 	```
 
-**Notice: What should we do when the installation is slow?** As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making \"Solving Environment\" slower and slower. Sometimes we can\'t even install the software through CONDA. In fact, we can do something instead of just waiting.\
-
 **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
 
 ```bash
@@ -87,7 +85,7 @@ conda deactivate
 Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
 ```bash
-docker pull quay.io/biocontainers/pgcgap:
+docker pull quay.io/biocontainers/pgcgap:<tag>
 ```
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
@@ -200,7 +198,7 @@ docker pull quay.io/biocontainers/pgcgap:
         proteins called by roary
 
   - **\[\--OrthoF\]** Identify orthologous protein sequence families
-        with \"OrthoFinder\"
+        with \"OrthoFinder\", and construct a phylogenetic tree with the sing-copy core Orthologues
 
   - **\[\--ANI\]** Compute whole-genome Average Nucleotide Identity
         ( ANI )
@@ -222,7 +220,7 @@ docker pull quay.io/biocontainers/pgcgap:
         sequences in one file
 
   - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for
-        filtering short sequences in the genome and assessing the status
+        filtering short sequences in the genome and assessing the statistics
         of the genome only)
 
 - **Global Options:**
@@ -264,7 +262,7 @@ docker pull quay.io/biocontainers/pgcgap:
 
   - **\[\--filter\_length (INT)\]** \[Required by \"\--All\",
         \"\--Assemble\" and \"\--Assess\"\]\> Sequences shorter than the
-        \'filter\_length\' will be deleted from the assembled genomes. (
+        \'filter\_length\' will be removed from the assembled genomes. (
         Default 200 )
 
   - **\[\--codon (INT)\]** \[Required by \"\--All\",
@@ -274,8 +272,7 @@ docker pull quay.io/biocontainers/pgcgap:
         - 1 Universal code
         - 2 Vertebrate mitochondrial code
         - 3 Yeast mitochondrial code
-        - 4 Mold, Protozoan, and Coelenterate Mitochondrial code and
-            Mycoplasma/Spiroplasma code
+        - 4 Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code
         - 5 Invertebrate mitochondrial
         - 6 Ciliate, Dasycladacean and Hexamita nuclear code
         - 9 Echinoderm and Flatworm mitochondrial code
@@ -291,7 +288,7 @@ docker pull quay.io/biocontainers/pgcgap:
         - 23 Thraustochytrium mitochondrial code
 
   - **\[\--suffix\_len (INT)\]** \[Required by \"\--All\",
-        \"\--Assemble\" and \"\--VAR\"\] **(Strongly recommended)** The
+        \"\--Assemble\" and \"\--VAR\"\] <font color=#FF0000>**(Strongly recommended)**</font> The
         suffix length of the reads, that is the length of your reads
         name minus the length of your strain name. For example the
         \--suffix\_len of \"YBT-1520\_L1\_I050.R1.clean.fastq.gz\" is 26
@@ -309,11 +306,9 @@ docker pull quay.io/biocontainers/pgcgap:
         \"OrthoF\", \"STREE\", and \"VAR\"\] Replicates for ultrafast
         bootstrap of IQ-TREE. ( must \>= 1000, Default 1000 )
 
-  - **\[\--logs (STRING)\]** Name of the log file ( Default Logs.txt
-        )
+  - **\[\--logs (STRING)\]** Name of the log file ( Default Logs.txt )
 
-  - **\[\--threads (INT)\]** Number of threads to be used ( Default
-        4 )\
+  - **\[\--threads (INT)\]** Number of threads to be used ( Default 4 )
 
 - **Local Options:**
 
@@ -321,11 +316,11 @@ docker pull quay.io/biocontainers/pgcgap:
 
     - **\[\--platform (STRING)\]** \[Required\] Sequencing Platform, \"illumina\", \"pacbio\", \"oxford\" and \"hybrid\" available ( Default illumina )
 
-    - **\[\--assembler (STRING)\]** \[Required\] Software used for illumina reads assembly, \"abyss\" and \"spades\" available ( Default abyss )
+    - **\[\--assembler (STRING)\]** \[Required\] Software used for illumina reads assembly, \"abyss\" and \"spades\" available ( Default auto )
 
     - **\[\--kmmer (INT)\]** \[Required\] k-mer size for genome assembly of Illumina data ( Default 81 )
 
-    - **\[\--genomeSize (STRING)\]** \[Required\] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and Oxford data ( Default Unset )
+    - **\[\--genomeSize (STRING)\]** \[Required\] An estimate of the size of the genome. Common suffixes are allowed, for example, 3.7m or 2.8g. Needed by PacBio data and ONT data ( Default Unset )
 
     - **\[\--short1 (STRING)\]** \[Required\] FASTQ file of first short reads in each pair. Needed by hybrid assembly ( Default Unset )
 
@@ -370,10 +365,7 @@ docker pull quay.io/biocontainers/pgcgap:
   - **\--OrthoF**
 
     - **\[\--Sprogram (STRING)\]** Sequence search program,
-            Options: blast, mmseqs, blast\_gz, diamond ( Default blast)
-
-    - **\[\--PanTree\]** Construct a phylogenetic tree of
-            single-copy core proteins called by roary\
+            Options: blast, mmseqs, blast\_gz, diamond ( Default diamond)
 
   - **\--ANI**
 
@@ -554,14 +546,19 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
 	
 	```bash
+	# Assemble with ABySS
 	pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+	
+	# Assemble with SPAdes
 	pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
+	
+	# Assemble with AUTO
 	pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
 	```
 
-  - Oxford reads assembly
+  - ONT reads assembly
 	
-	Oxford nanopore only produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
+	Oxford nanopore sequencing usually produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
 
 	```bash
 	pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
@@ -569,7 +566,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 
   - PacBio reads assembly
 	
-	PacBio also produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
+	PacBio also usually produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
 
 	```bash
 	pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
@@ -615,7 +612,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
 	```
 
-- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **Applicable to v1.0.27 and later**.
+- **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. <font color=#FF0000>**Applicable to v1.0.27 and later**</font>.
 	
 	```bash
 	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
@@ -628,7 +625,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
 	```
 
-- **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **Applicable to v1.0.29 and later**.
+- **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. <font color=#FF0000>**Applicable to v1.0.29 and later**</font>.
 	
 	```bash
 	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
@@ -700,7 +697,7 @@ The directory where the PGCGAP software runs.
 
 ### Assemble
 
-Pair-end reads of all strains in a directory or PacBio reads or Oxford nanopore reads (Default: ./Reads/Illumina/ under the working directory).
+Pair-end reads of all strains in a directory or PacBio reads or ONT reads (Default: ./Reads/Illumina/ under the working directory).
 
 ### Annotate
 
@@ -734,7 +731,7 @@ Amino acids file (With ".faa" as the suffix) of each strain placed into a direct
 
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
 
-- The full path of reference genome in fasta format or GenBank format (**must be provided**).
+- The full path of reference genome in FASTA format or GenBank format (**must be provided**).
 
 ### AntiRes
 
@@ -750,143 +747,191 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 ### Assemble
 
 - **Results/Assembles/Illumina/**
+
     Directories contain Illumina assembly files and information of each strain.
 
 - **Results/Assembles/PacBio/**
+
     Directories contain PacBio assembly files and information of each strain.
 
 - **Results/Assembles/Oxford/**
+
     Directories contain ONT assembly files and information of each strain.
 
 - **Results/Assembles/Hybrid/**
+
     Directory contains hybrid assembly files of the short reads and long reads of the same strain.
 
-- **Results/Assembles/Scaf/Illumina**
+- **Results/Assembles/Scaf/Illumina/**
+
     Directory contains Illumina contigs/scaffolds of all strains. \"\*.filtered.fas\" is the genome after excluding short sequences. \"\*.prefilter.stats\" describes the stats of the genome before filtering, and \"\*.filtered.stats\" describes the stats of the genome after filtering.
 
-- **Results/Assembles/Scaf/Oxford**
-    Directory contains Oxford nanopore contigs/scaffolds of all strains.
+- **Results/Assembles/Scaf/Oxford/**
 
-- **Results/Assembles/Scaf/PacBio**\ Directory contains PacBio contigs/scaffolds of all strains.
+    Directory contains ONT contigs/scaffolds of all strains.
+
+- **Results/Assembles/Scaf/PacBio/**
+
+    Directory contains PacBio contigs/scaffolds of all strains.
 
 ### Annotate
 
-- **Results/Annotations/\*\_annotation**
+- **Results/Annotations/\*\_annotation/**
+
     directories contain [annotation files](https://github.com/tseemann/prokka?_blank) of each strain.
 
-- **Results/Annotations/AAs**\ Directory contain amino acids sequences of all strains.
+- **Results/Annotations/AAs/**
 
-- **Results/Annotations/CDs**
+    Directory contain amino acids sequences of all strains.
+
+- **Results/Annotations/CDs/**
+
     Directory contain nucleotide sequences of all strains.
 
-- **Results/Annotations/GFF**
+- **Results/Annotations/GFF/**
+
     Directory contain the master annotation of all strains in GFF3 format.
 
 ### ANI
 
 - **Results/ANI/ANIs**
+
     The file contains comparation information of genome pairs. The document is composed of five columns, each of which represents query genome, reference genome, ANI value, count of bidirectional fragment mappings, total query fragments.
 
 - **Results/ANI/ANIs.matrix**
+
     file with identity values arranged in a [phylip-formatted lower triangular matrix](https://www.mothur.org/wiki/Phylip-formatted_distance_matrix?_blank).
 
 - **Results/ANI/ANIs.heatmap**
+
     An ANI matrix of all strains.
 
 - **Results/ANI/ANI\_matrix.pdf**
+
     The heatmap plot of \"ANIs.heatmap\".
 
 ### MASH
 
 - **Results/MASH/MASH**
+
     The pairwise distance between pair genomes, each column represents Reference-ID, Query-ID, Mash-distance, P-value, and Matching-hashes, respectively.
 
 - **Results/MASH/MASH2**
+
     The pairwise similarity between pair genomes, each column represents Reference-ID, Query-ID, similarity, P-value, and Matching-hashes, respectively.
 
 - **Results/MASH/MASH.heatmap**
+
     A similarity matrix of all genomes.
 
 - **Results/MASH/MASH\_matrix.pdf**
+
     A heat map plot of \"MASH.heatmap\".
 
 ### CoreTree
 
 - **Results/CoreTrees/ALL.core.protein.fasta**
+
     Concatenated and aligned sequences file of single-copy core proteins.
 
 - **Results/CoreTrees/ALL.core.protein.nwk**
+
     The phylogenetic tree file of single-copy core proteins for all strains constructed by FastTree.
 
 - **Results/CoreTrees/ALL.core.protein.fasta.gb.treefile**
+
     The phylogenetic tree file of single-copy core proteins for all strains constructed by IQ-TREE.
 
 - **Results/CoreTrees/faa2ffn/ALL.core.nucl.fasta**
+
     Concatenated and aligned sequences file of single-copy core genes.
 
 - **Results/CoreTrees/ALL.core.snp.fasta**
+
     Core SNPs of single-copy core genes in fasta format.
 
 - **Results/CoreTrees/ALL.core.snp.fasta.treefile**
+
     The phylogenetic tree file of SNPs of single-copy core genes for all strains constructed by IQ-TREE.
 
 - **Results/CoreTrees/\"Other\_files\"**
+
     Intermediate directories and files.
 
 ### OrthoF
 
 - **Results/OrthoFinder/Results\_orthoF**
+
     Same as [OrthoFinder](https://github.com/davidemms/OrthoFinder?_blank) outputs.
-- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/**\
+
+- **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/**
+
     Directory contains Phylogenetic tree files based on Single Copy Orthologue sequences.
+
 - **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.nwk**
+
     Phylogenetic tree constructed by FastTree.
+
 - **Results/OrthoFinder/Results\_orthoF/Single\_Copy\_Orthologue\_Tree/Single.Copy.Orthologue.fasta.gb.treefile**
+
     Phylogenetic tree constructed by IQ-TREE.
 
 ### Pan
 
 - **Results/PanGenome/Pangenome\_Pie.pdf**
+
     A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 
 - **Results/PanGenome/pangenome\_frequency.pdf**
+
     A graph with the frequency of genes versus the number of genomes.
 
 - **Results/PanGenome/Pangenome\_matrix.pdf**
+
     A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
 
 - **Results/PanGenome/Core/Roary.core.protein.fasta**
+
     Alignments of single-copy core proteins called by roary software.
 
 - **Results/PanGenome/Core/Roary.core.protein.nwk**
+
     A phylogenetic tree of Roary.core.protein.fasta constructed by FastTree.
 
 - **Results/PanGenome/Core/Roary.core.protein.fasta.gb.treefile**
+
     A phylogenetic tree of Roary.core.protein.fasta constructed by IQ-TREE.
 
 - **Results/PanGenome/Other\_files**
+
     see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 
 ### pCOG
 
 - **\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table**
+
     Intermediate files.
 
 - **\*.2Scog.table**
+
     The super COG table of each strain.
 
 - **\*.2Scog.table.pdf**
+
     A plot of super COG table in pdf format.
 
-- **All\_flags\_relative\_abundances.table** 
+- **All\_flags\_relative\_abundances.table**
+
     A table containing the relative abundance of each flag for all strains.
 
 ### VAR
 
 - **Results/Variants/directory-named-in-strains**
+
     directories containing substitutions (snps) and insertions/deletions (indels) of each strain. See [Snippy](https://github.com/tseemann/snippy?_blank) outputs for detail.
 
 - **Results/Variants/Core**
+
     The directory containing SNP phylogeny files.
 
   - **core.aln** : A core SNP alignment includes only SNP sites.
