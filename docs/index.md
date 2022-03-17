@@ -51,7 +51,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	# Install mamba first
 	conda install mamba
 	
-	# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
+	# Usually specify the latest version of PGCGAP (v1.0.33 is now avaliable)
 	mamba create -n pgcgap pgcgap=1.0.33
 	```
 
@@ -61,7 +61,14 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	
 	```bash
 	conda activate pgcgap
-	mamba install -y abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler perl-file-copy-recursive prokka pal2nal mash trimal
+	mamba install -y abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler blast=2.5
+	cpanm install Bio::SearchIO::hmmer3
+	```
+
+	You can also install PGCGAP and the dependencies with only one command:
+
+	```bash
+	mamba create -n pgcgap pgcgap=1.0.33 abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler blast=2.5 -y
 	```
 
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
