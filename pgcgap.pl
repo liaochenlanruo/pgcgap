@@ -1521,8 +1521,8 @@ if ($opt_setup_COGdb) {
 	system("diamond makedb --in cog-20.fa --db COGdiamond_2020");
 	#system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
 	system("rm cog-20.fa");
-	system("mv COGdiamond.* cog-20.* fun-20.tab $pgcgap_dir/");
-	system("chmod a+x $pgcgap_dir/COGdiamond_2020");
+	system("mv COGdiamond* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COGdiamond_2020.dmnd");
 	system("chmod a+x $pgcgap_dir/cog-20.*");
 	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
@@ -1530,16 +1530,16 @@ if ($opt_setup_COGdb) {
 if ($opt_setup_COGdb2) {
 	#https://ftp.ncbi.nih.gov/pub/COG/COG2020/
 #	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
-#	system("gunzip prot2003-2014.fa.gz");
 	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.cog.csv");
 	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.def.tab");
-	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.fa");
+	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.fa.gz");
 	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/fun-20.tab");
+	system("gunzip cog-20.fa.gz");
 	system("diamond makedb --in cog-20.fa --db COGdiamond_2020");
 	#system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
 	system("rm cog-20.fa");
-	system("mv COGdiamond.* cog-20.* fun-20.tab $pgcgap_dir/");
-	system("chmod a+x $pgcgap_dir/COGdiamond_2020");
+	system("mv COGdiamond* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COGdiamond_2020.dmnd");
 	system("chmod a+x $pgcgap_dir/cog-20.*");
 	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
