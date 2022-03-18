@@ -45,30 +45,14 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 **Step1: Install PGCGAP**
 
-- Method 1: use mamba to install PGCGAP
+- Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
 	```bash
 	# Install mamba first
 	conda install mamba
 	
-	# Usually specify the latest version of PGCGAP (v1.0.33 is now avaliable)
-	mamba create -n pgcgap pgcgap=1.0.33
-	```
-
-	**Notice**: <u>I had submitted the latest version (v1.0.33) of the Bioconda recipe for PGCGAP for a test. However, Bioconda moved to a new test server which allocated very little memory, causing the test to fail. As a result, I had to remove some dependencies from the Bioconda recipe to pass the test, so after installing the main program of PGCGAP v1.0.33 through Conda, users still need to install some dependencies (Installing V1.0.32 and previous versions does not require an additional dependency package installation). This situation will be resolved soon with the release of Conda v4.12 as Bioconda will switch to the less memory-consuming Mamba for recipe testing. After that, users will still be able to install PGCGAP and its dependencies just using the above commands.</u> However, at present, after the previous step, the user needs to execute the following command to complete the installation of the dependency packages:
-	
-	当安装PGCGAP v1.0.33的时候还需要单独安装依赖包，这是由于Bioconda换了新的测试服务器。我在提交最新版本的recipe并进行测试的时候，服务器仅分配了极小的内存，导致测试失败。因此，我不得不从Bioconda recipe中移除一些依赖包以通过测试。所以，在通过conda安装完PGCGAP的主程序后，还需要安装一些依赖包。这种状况将在不久的将来得到解决，即随着conda v4.12释放以后，Bioconda将转用耗费内存更小的mamba来进行recipe的测试，此后，用户仍可通过上述命令完成PGCGAP和其依赖包的安装。目前，在执行完上一步操作之后，用户还需要执行下面这条命令完成依赖包的安装（当然，安装v1.0.32及以前的版本不需要单独再安装依赖包了）：
-	
-	```bash
-	conda activate pgcgap
-	mamba install -y abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler blast=2.5
-	cpanm install Bio::SearchIO::hmmer3
-	```
-
-	You can also install PGCGAP and the dependencies with only one command:
-
-	```bash
-	mamba create -n pgcgap pgcgap=1.0.33 abricate canu roary orthofinder fastani fastp snippy sickle-trim unicycler blast=2.5 -y
+	# Usually specify the latest version of PGCGAP
+	mamba create -n pgcgap pgcgap=1.0.34
 	```
 
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
@@ -188,6 +172,9 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 	
 	```bash
 	pgcgap --setup-COGdb
+
+	# Alternate method to setup COG database. The command below can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'
+	pgcgap --setup-COGdb2
 	```
 
 - **Modules:**
@@ -232,7 +219,7 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - **\[\--reads2 (STRING)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--VAR\"\] The suffix name of reads 2( for example: if the name of reads 2 is \"YBT-1520\_2.fq\", the suffix name should be \"\_2.fq\" )
 
-  - **\[\--Scaf\_suffix (STRING)\]** \[Required by \"\--All\", \"\--Assess\", \"\--Annotate\" \"\--MASH\", \"\--ANI\" and \"\--AntiRes\"\] The suffix of scaffolds or genome files. This is an important parameter that must be set (Default -8.fa)
+  - **\[\--Scaf\_suffix (STRING)\]** \[Required by \"\--All\", \"\--Assess\", \"\--Annotate\" \"\--MASH\", \"\--ANI\" and \"\--AntiRes\"\] The suffix of scaffolds or genome files. This is an important parameter that must be set (Default .filtered.fas)
 
   - **\[\--filter\_length (INT)\]** \[Required by \"\--All\", \"\--Assemble\" and \"\--Assess\"\]\> Sequences shorter than the \'filter\_length\' will be removed from the assembled genomes. ( Default 200 )
 
@@ -505,7 +492,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 3**: Gene prediction and annotation
 	
 	```bash
-	pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+	pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
 	```
 
 - **Example 4**: Constructing single-copy core protein tree and core SNPs tree
@@ -563,13 +550,13 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 8:** Compute whole-genome Average Nucleotide Identity (ANI).
 	
 	```bash
-	pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .fa
+	pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .filtered.fas
 	```
 
 - **Example 9:** Genome and metagenome similarity estimation using MinHash.
 	
 	```bash
-	pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa
+	pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas
 	```
 
 - **Example 10:** Run COG annotation for each strain.
@@ -591,13 +578,13 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 12:** Screening of contigs for antimicrobial and virulence genes.
 	
 	```bash
-	pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db all --identity 75 --coverage 50
+	pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --threads 6 --db all --identity 75 --coverage 50
 	```
 
 - **Example 13:** Filter short sequences in the genome and assess the status of the genome.
 	
 	```bash
-	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --filter_length 200
 	```
 
 - **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
@@ -975,6 +962,12 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
 This warning may happen when running function \"Pan\". It is a warning of Roary software. The content of line 61 is \"require Encode::ConfigLocal;\". Users can ignore the warning. Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
+### Q5 Can't locate Bio/Roary/CommandLine/Roary.pm in @INC
+
+```bash
+cpanm install -f Bio::Roary
+```
+
 ## Updates
 -------
 
@@ -1141,9 +1134,18 @@ This warning may happen when running function \"Pan\". It is a warning of Roary 
 
 - V1.0.33
 
+  - The installation of this version is very troublesome. Users can choose to install the next version.
   - Updated module CoreTree: [Run IQ-TREE with the correct number of constant sites](https://bitsandbugs.org/2019/11/06/two-easy-ways-to-run-iq-tree-with-the-correct-number-of-constant-sites/) when constructing the single-copy core SNPs tree.
   - Updated module VAR: Use \"SNP-SITE\" and \"IQ-TREE -fconst\" to generate SNP sites from the \"core.full.aln\" and construct the phylogenetic tree.
   - Updated module pCOG: Replace blast with diamond to speed up analysis.
+
+- V1.0.34
+
+  - Fixed installation errors of V1.0.33.
+  - Assemble update: Use [Bloom filter mode](https://github.com/bcgsc/abyss#modes) to replace `MPI mode` for genome assembly to reduce memory usage and improve running speed, requires ABySS v2.3.4.
+  - STREE update: Use [MUSCLE5](https://drive5.com/muscle5/) to perform sequence alignment. Highest accuracy, scalable to thousands of sequences.
+  - Use filtered genome (without short sequences specified by the parameter --filter_length) for the following analysis by default.
+  - Add parameter '--setup-COGdb2' as an alternate method to setup COG database. It can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'.
 
 ------------------------------------------------------------------------
 

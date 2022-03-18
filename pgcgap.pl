@@ -105,6 +105,18 @@ Setup COG database. Users should execute "pgcgap --setup-COGdb" after the first 
 
 $options{'setup-COGdb'} = \( my $opt_setup_COGdb );
 
+=over 30
+
+=item B<[--setup-COGdb2]>
+
+Alternate method to setup COG database. This option can be used to download and setup the COG database when network access is not available with 'setup-COGdb'
+
+=back
+
+=cut
+
+$options{'setup-COGdb2'} = \( my $opt_setup_COGdb2 );
+
 =head2 *********************************************** Modules ************************************************
 
 =for text
@@ -349,13 +361,13 @@ $options{'reads2=s'} = \(my $opt_reads2);
 
 =item B<[--Scaf_suffix (STRING)]>
 
-The suffix of scaffolds or genome files [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"]. This is an important parameter that must be set ( Default -8.fa )
+The suffix of scaffolds or genome files [Required by "All", "Assess", "Annotate", "MASH", "ANI" and "AntiRes"]. This is an important parameter that must be set ( Default .filtered.fas )
 
 =back
 
 =cut
 
-$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = "-8.fa" );
+$options{'Scaf_suffix=s'} = \( my $opt_Scaf_suffix = ".filtered.fas" );
 
 =over 30
 
@@ -1399,7 +1411,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
-  Version 1.0.33  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
+  Version 1.0.34  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
 
   Author: Hualin Liu
 
@@ -1418,7 +1430,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.33", RESET . "\n";
+	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.34", RESET . "\n";
 	print "Enter the command " . BOLD, YELLOW, "pgcgap --check-update", RESET . " to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
@@ -1515,6 +1527,22 @@ if ($opt_setup_COGdb) {
 	system("chmod a+x $pgcgap_dir/fun-20.tab");
 }
 
+if ($opt_setup_COGdb2) {
+	#https://ftp.ncbi.nih.gov/pub/COG/COG2020/
+#	system("wget -c -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2014/data/");
+#	system("gunzip prot2003-2014.fa.gz");
+	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.cog.csv");
+	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.def.tab");
+	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/cog-20.fa");
+	system("wget -c --no-check-certificate -r -nH -np -nd -R index.html -P ./ ftp://ftp.ncbi.nih.gov/pub/COG/COG2020/data/fun-20.tab");
+	system("diamond makedb --in cog-20.fa --db COGdiamond_2020");
+	#system("makeblastdb -parse_seqids -in cog-20.fa -input_type fasta -dbtype prot -out COG_2020");
+	system("rm cog-20.fa");
+	system("mv COGdiamond.* cog-20.* fun-20.tab $pgcgap_dir/");
+	system("chmod a+x $pgcgap_dir/COGdiamond_2020");
+	system("chmod a+x $pgcgap_dir/cog-20.*");
+	system("chmod a+x $pgcgap_dir/fun-20.tab");
+}
 #===================================================================================================
 my $time_start = $^T;
 my $working_dir = getcwd;
@@ -1528,10 +1556,16 @@ if ($opt_STREE) {
 	my $align_seq = $2 . ".aln";
 	my $gblocks_out = $align_seq . ".gb";
 	my $seqnum = `grep -c '^>' $seqfile`;
+	$seqnum =~ s/[\n\r]+//;
 	print "There are $seqnum sequences in the input file\n\n";
-	my $b12 = ceil($seqnum/2) + 1;
+	#my $b12 = ceil($seqnum/2) + 1;
 	print BOLD, CYAN, "Running muscle for sequence alignment...\n\n", RESET;
-	system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG");
+	#system("muscle -in $seqfile -out $working_dir/Results/STREE/$align_seq -log $working_dir/Results/STREE/Muscle.LOG"); # muscle < 5.1
+	if ($seqnum < 400) {
+		system("muscle -align $seqfile -output $working_dir/Results/STREE/$align_seq -threads $opt_threads"); # muscle >= 5.1
+	}else {
+		system("muscle -super5 $seqfile -output $working_dir/Results/STREE/$align_seq -threads $opt_threads"); # muscle >= 5.1
+	}
 	print BOLD, CYAN, "Running trimAL for selection of conserved blocks...\n\n", RESET;
 	chdir "$working_dir/Results/STREE/";
 	system("trimal -in $align_seq -out $gblocks_out -automated1");
@@ -1602,8 +1636,8 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
 			system("fastp -i $read1 -I $read2 -o $fastp_out1 -O $fastp_out2 -j $fastpj -h $fastph -w $opt_threads -3");#2020/4/15
 			print "Performing --Assemble function for Illunina data with abyss...\n\n";#2020/4/15
-			system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' np=$opt_threads");#2020/4/15
-			#system("abyss-pe name=$str k=$opt_kmmer in='$read1 $read2' np=$opt_threads");
+			system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' B=2G"); # Bloom filter mode abyss >= 2.3.4
+			#system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' np=$opt_threads");# MPI mode (legacy) abyss < 2.3.4
 			print "Assemble complete !\n";
 			my $assem = $str . "_assembly";
 			system("mkdir -p $working_dir/Results/Assembles/Illumina/$assem");
@@ -1615,7 +1649,7 @@ if ($opt_All or $opt_Assemble) {
 			system("mv $fastp_out1 $fastp_out2 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 		}
 		chdir $working_dir;
-		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		#system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
 		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
 		my @fas = glob("*-8.fa");
 		foreach  (@fas) {
@@ -1633,6 +1667,7 @@ if ($opt_All or $opt_Assemble) {
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
 		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/*.filtered.fas >> scaf.list");
 	}elsif ($opt_platform eq "illumina" and $opt_assembler eq "spades") {
 		print "Performing --Assemble function for Illunina data with spades...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
@@ -1671,7 +1706,7 @@ if ($opt_All or $opt_Assemble) {
 			system("mv $fastp_out1 $fastp_out2 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 		}
 		chdir $working_dir;
-		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		#system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
 		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
 		my @fas = glob("*-8.fa");
 		foreach  (@fas) {
@@ -1689,6 +1724,7 @@ if ($opt_All or $opt_Assemble) {
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
 		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/*.filtered.fas >> scaf.list");
 	}elsif ($opt_platform eq "illumina" and $opt_assembler eq "auto") {
 		#print "Performing --Assemble function for Illunina data with abyss...\n\n";
 		system("mkdir -p Results/Assembles/Illumina");
@@ -1716,7 +1752,8 @@ if ($opt_All or $opt_Assemble) {
 			print "Performing reads preprocessor with fastp\n\n";#2020/4/15
 			system("fastp -i $read1 -I $read2 -o $fastp_out1 -O $fastp_out2 -j $fastpj -h $fastph -w $opt_threads -3");#2020/4/15
 			print "Performing --Assemble function for Illunina data with abyss...\n\n";#2020/4/15
-			system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' np=$threads_half");#2020/4/15
+			system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' B=2G"); # Bloom filter mode abyss >= 2.3.4
+			#system("abyss-pe name=$str k=$opt_kmmer in='$fastp_out1 $fastp_out2' np=$opt_threads");# MPI mode (legacy) abyss < 2.3.4
 			#print "Assembling...\n";
 			#system("abyss-pe name=$str k=$opt_kmmer in='$read1 $read2' np=$threads_half");
 			print "Assemble complete !\n";
@@ -1748,7 +1785,7 @@ if ($opt_All or $opt_Assemble) {
 			system("mv $fastp_out1 $fastp_out2 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 		}
 		chdir $working_dir;
-		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
+		#system("realpath $working_dir/Results/Assembles/Scaf/Illumina/* >> scaf.list");
 		chdir "$working_dir/Results/Assembles/Scaf/Illumina/";
 		my @fas = glob("*-8.fa");
 		foreach  (@fas) {
@@ -1766,6 +1803,7 @@ if ($opt_All or $opt_Assemble) {
 		my $time_assemblex = ($time_assemble - $time_start)/3600;
 		print "The 'Assemble' program runs for $time_assemblex hours.\n\n";
 		chdir $working_dir;
+		system("realpath $working_dir/Results/Assembles/Scaf/Illumina/*.filtered.fas >> scaf.list");
 	}elsif ($opt_platform eq "pacbio") {
 		#print "Performing --Assemble function for PacBio data...\n\n";
 		system("mkdir -p Results/Assembles/PacBio");
@@ -3326,7 +3364,7 @@ sub printAssemble{
 
 sub printAnnotate{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default .filtered.fas )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--genus (STRING)] Genus name of the strain ( Default 'NA' )\n";
 	print "[--species (STRING)] Species name of the strain ( Default 'NA' )\n";
@@ -3381,7 +3419,7 @@ sub printANI{
 
 sub printMASH{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default .filtered.fas )\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 }
 
@@ -3408,7 +3446,7 @@ sub printVAR{
 
 sub printAntiRes{
 	print "[--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n";
-	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default -8.fa )\n";
+	print "[--Scaf_suffix (STRING)] The suffix of scaffolds or genome files. Users should set the suffixes according to the actual situation ( Default .filtered.fas )\n";
 	print "[--db (STRING)]> The database to use, options: all, argannot, card, ecoh, ecoli_vf, megares, ncbi, plasmidfinder, resfinder and vfdb. ( Default all )\n";
 	print "[--identity (INT)] Minimum %identity to keep the result, should be a number between 1 to 100. ( Default 75 )\n";
 	print "[--coverage (INT)] Minimum %coverage to keep the result, should be a number between 0 to 100. ( Default 50 )\n";
@@ -3435,7 +3473,7 @@ sub printSTREE{
 
 sub printACC{
 	print "Applets in ACC include 'Assess' now\n";
-	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files ( Default -8.fa )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
+	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files." . RED, " User specified required",RESET . " ( Default .filtered.fas )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
 }
 
 sub printExamples{
