@@ -585,7 +585,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 13:** Filter short sequences in the genome and assess the status of the genome.
 	
 	```bash
-	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --filter_length 200
+	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
 	```
 
 - **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
