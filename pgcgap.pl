@@ -1645,7 +1645,7 @@ if ($opt_All or $opt_Assemble) {
 #			system("mkdir Over");
 			system("cp $scaf $working_dir/Results/Assembles/Scaf/Illumina/");
 #			system("mv $read1 $read2 Over/");
-			system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
+			system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $str*.tsv $working_dir/Results/Assembles/Illumina/$assem/");
 			system("mv $fastp_out1 $fastp_out2 $fastph $fastpj $working_dir/Results/Assembles/FASTQ_Preprocessor");#2020/4/15
 		}
 		chdir $working_dir;
@@ -1769,7 +1769,7 @@ if ($opt_All or $opt_Assemble) {
 			my $lastline = $array[-1];#get the last line of the file
 			my @stats = split "\t", $lastline;
 			if ($stats[5] < 50000) {
-				system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $working_dir/Results/Assembles/Illumina/$assem/");
+				system("mv $str*.dot* $str*.fa $str*.path* $str*.dist $str*.fai $str*stats* $str*.hist coverage.hist $str*.tsv $working_dir/Results/Assembles/Illumina/$assem/");
 				print "The N50 is less than 50k, now performing --Assemble function for Illunina data with unicycler to try to get a better assembly result...\n\n";
 				system("unicycler -1 $fastp_out1 -2 $fastp_out2 -t $opt_threads -o $str");#2020/4/15
 				#system("unicycler -1 $read1 -2 $read2 -t $opt_threads -o $str");
