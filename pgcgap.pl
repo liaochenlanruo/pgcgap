@@ -3182,7 +3182,7 @@ if ($opt_All or $opt_pCOG) {
 	my $time_COGs = time();
 	print "Performing --COG function...\n\n";
 	system("mkdir -p Results/COG");
-	system("perl COGdiamond2022.pl --threads $opt_threads --strain_num $opt_strain_num --evalue $opt_evalue --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover --AAsPath $opt_AAsPath");
+	system("COGdiamond2022.pl --threads $opt_threads --strain_num $opt_strain_num --evalue $opt_evalue --id $opt_id --query_cover $opt_query_cover --subject_cover $opt_subject_cover --AAsPath $opt_AAsPath");
 	system("mv $opt_AAsPath/*.table $opt_AAsPath/*.pdf $opt_AAsPath/*.xml $working_dir/Results/COG");
 	chdir $working_dir;
 	my $time_COGd = time();
