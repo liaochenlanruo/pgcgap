@@ -2,68 +2,15 @@
 &emsp;<a href="#0">Multi-version instructions (This one for the latest version)</a>  
 &emsp;<a href="#1">Introduction</a>  
 &emsp;<a href="#2">Installation</a>  
-<a href="#3"> Install mamba first</a>  
-<a href="#4"> Usually specify the latest version of PGCGAP</a>  
-<a href="#5"> Install mamba first</a>  
-<a href="#6"> download pgcgap_latest_env.yml</a>  
-<a href="#7"> create a conda environment named as pgcgap and install the latest version of PGCGAP</a>  
-&emsp;<a href="#8">Required dependencies</a>  
-&emsp;<a href="#9">Usage</a>  
-<a href="#10"> Alternate method to setup COG database. The command below can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'</a>  
-<a href="#11"> Assemble with ABySS</a>  
-<a href="#12"> Assemble with SPAdes</a>  
-<a href="#13"> Assemble with AUTO</a>  
-<a href="#14"> Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a>  
-<a href="#15"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#16"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-<a href="#17"> Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a>  
-<a href="#18"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#19"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-<a href="#20"> Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a>  
-<a href="#21"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#22"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-<a href="#23"> Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a>  
-<a href="#24"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#25"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-<a href="#26"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#27"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-<a href="#28"> Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a>  
-<a href="#29"> Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a>  
-&emsp;<a href="#30">Generating Input files</a>  
-&emsp;&emsp;<a href="#31">Working directory</a>  
-&emsp;&emsp;<a href="#32">Assemble</a>  
-&emsp;&emsp;<a href="#33">Annotate</a>  
-&emsp;&emsp;<a href="#34">ANI</a>  
-&emsp;&emsp;<a href="#35">MASH</a>  
-&emsp;&emsp;<a href="#36">CoreTree</a>  
-&emsp;&emsp;<a href="#37">OrthoF</a>  
-&emsp;&emsp;<a href="#38">Pan</a>  
-&emsp;&emsp;<a href="#39">pCOG</a>  
-&emsp;&emsp;<a href="#40">VAR</a>  
-&emsp;&emsp;<a href="#41">AntiRes</a>  
-&emsp;&emsp;<a href="#42">STREE</a>  
-&emsp;<a href="#43">Output Files</a>  
-&emsp;&emsp;<a href="#44">Assemble</a>  
-&emsp;&emsp;<a href="#45">Annotate</a>  
-&emsp;&emsp;<a href="#46">ANI</a>  
-&emsp;&emsp;<a href="#47">MASH</a>  
-&emsp;&emsp;<a href="#48">CoreTree</a>  
-&emsp;&emsp;<a href="#49">OrthoF</a>  
-&emsp;&emsp;<a href="#50">Pan</a>  
-&emsp;&emsp;<a href="#51">pCOG</a>  
-&emsp;&emsp;<a href="#52">VAR</a>  
-&emsp;&emsp;<a href="#53">AntiRes</a>  
-&emsp;&emsp;<a href="#54">STREE</a>  
-&emsp;<a href="#55">License</a>  
-&emsp;<a href="#56">Feedback and Issues</a>  
-&emsp;<a href="#57">Citation</a>  
-&emsp;<a href="#58">FAQ</a>  
-&emsp;&emsp;<a href="#59">Q1 VAR function ran failed to get annotated VCFs and Core results</a>  
-&emsp;&emsp;<a href="#60">Q2 Could not determine version of minced please install version 2 or higher</a>  
-&emsp;&emsp;<a href="#61">Q3 dyld: Library not loaded: \@rpath/libcrypto.1.0.0.dylib</a>  
-&emsp;&emsp;<a href="#62">Q4 Use of uninitialized value in require at Encode.pm line 61</a>  
-&emsp;&emsp;<a href="#63">Q5 Can't locate Bio/Roary/CommandLine/Roary.pm in @INC</a>  
-&emsp;<a href="#64">Updates</a>  
+&emsp;<a href="#3">Required dependencies</a>  
+&emsp;<a href="#4">Usage</a>  
+&emsp;<a href="#5">Generating Input files</a>  
+&emsp;<a href="#6">Output Files</a>  
+&emsp;<a href="#7">License</a>  
+&emsp;<a href="#8">Feedback and Issues</a>  
+&emsp;<a href="#9">Citation</a>  
+&emsp;<a href="#10">FAQ</a>  
+&emsp;<a href="#11">Updates</a>  
 PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 ============================================================================
 
@@ -116,23 +63,23 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 - Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
 	```bash
-	# <a name="3">Install mamba first</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Install mamba first
 	conda install mamba
 	
-	# <a name="4">Usually specify the latest version of PGCGAP</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Usually specify the latest version of PGCGAP
 	mamba create -n pgcgap pgcgap=1.0.34
 	```
 
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
 	
 	```bash
-	# <a name="5">Install mamba first</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Install mamba first
 	conda install mamba
 
-	# <a name="6">download pgcgap_latest_env.yml</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# download pgcgap_latest_env.yml
 	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
 
-	# <a name="7">create a conda environment named as pgcgap and install the latest version of PGCGAP</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# create a conda environment named as pgcgap and install the latest version of PGCGAP
 	mamba env create -f pgcgap_latest_env.yml
 	```
 
@@ -152,7 +99,7 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
 
-## <a name="8">Required dependencies</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="3">Required dependencies</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ---------------------
 
 - [Abricate](https://github.com/tseemann/abricate)
@@ -203,7 +150,7 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 - [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
 
-## <a name="9">Usage</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="4">Usage</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 -----
 
 - **Print the help messages:**
@@ -241,7 +188,7 @@ docker pull quay.io/biocontainers/pgcgap:<tag>
 	```bash
 	pgcgap --setup-COGdb
 
-	# <a name="10">Alternate method to setup COG database. The command below can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Alternate method to setup COG database. The command below can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'
 	pgcgap --setup-COGdb2
 	```
 
@@ -523,13 +470,13 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
 	
 	```bash
-	# <a name="11">Assemble with ABySS</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Assemble with ABySS
 	pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
 	
-	# <a name="12">Assemble with SPAdes</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Assemble with SPAdes
 	pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
 	
-	# <a name="13">Assemble with AUTO</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Assemble with AUTO
 	pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
 	```
 
@@ -566,52 +513,52 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 4**: Constructing single-copy core protein tree and core SNPs tree
 	
 	```bash
-	# <a name="14">Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
 	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
 
-	# <a name="15">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
 
-	# <a name="16">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
 	```
 
 - **Example 5:** Constructing single-copy core protein tree only.
 	
 	```bash
-	# <a name="17">Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
 	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
 	
-	# <a name="18">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
 
-	# <a name="19">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
 	```
 
 - **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **<u>Applicable to v1.0.27 and later</u>**.
 	
 	```bash
-	# <a name="20">Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
 	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
 
-	# <a name="21">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
 	
-	# <a name="22">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
 	```
 
 - **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **<u>Applicable to v1.0.29 and later</u>**.
 	
 	```bash
-	# <a name="23">Construct phylogenetic tree with FastTree (Quick without best fit model testing)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
 	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree
 	
-	# <a name="24">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500
 	
-	# <a name="25">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
 	```
 
@@ -636,10 +583,10 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 11:** Variants calling and phylogenetic tree construction based on the reference genome.
 	
 	```bash
-	# <a name="26">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500
 	
-	# <a name="27">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
 	```
 
@@ -658,70 +605,70 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 - **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
 	
 	```bash
-	# <a name="28">Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
 	pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
 	
-	# <a name="29">Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 	pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
 	```
 
-## <a name="30">Generating Input files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="5">Generating Input files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ----------------------
 
-### <a name="31">Working directory</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Working directory
 
 The directory where the PGCGAP software runs.
 
-### <a name="32">Assemble</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Assemble
 
 Pair-end reads of all strains in a directory or PacBio reads or ONT reads (Default: ./Reads/Illumina/ under the working directory).
 
-### <a name="33">Annotate</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Annotate
 
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
-### <a name="34">ANI</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### ANI
 
 QUERY\_LIST and REFERENCE\_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the "\--Assemble" function was run first, the list file will be generated automatically.
 
-### <a name="35">MASH</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### MASH
 
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
-### <a name="36">CoreTree</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### CoreTree
 
 Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directories (default: "./Results/Annotations/AAs/" and "./Results/Annotations/CDs/"). The ".faa" and ".ffn" files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "\--Annotate" function was run first, the files will be generated automatically. If the "\--CDsPath" was set to "NO", the nucleotide files will not be needed.
 
-### <a name="37">OrthoF</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### OrthoF
 
 A set of protein sequence files (one per species) in FASTA format under a directory (default: "./Results/Annotations/AAs/"). If the "\--Annotate" function was run first, the files will be generated automatically.
 
-### <a name="38">Pan</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Pan
 
 GFF3 files (With ".gff" as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the "\--Annotate" function was run first, the files will be generated automatically.
 
-### <a name="39">pCOG</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### pCOG
 
 Amino acids file (With ".faa" as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the "\--Annotate" function was run first, the files will be generated automatically.
 
-### <a name="40">VAR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### VAR
 
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
 
 - The full path of reference genome in FASTA format or GenBank format (**must be provided**).
 
-### <a name="41">AntiRes</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### AntiRes
 
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
-### <a name="42">STREE</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### STREE
 
 Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
-## <a name="43">Output Files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="6">Output Files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ------------
 
-### <a name="44">Assemble</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Assemble
 
 - **Results/Assembles/Illumina/**
 
@@ -751,7 +698,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     Directory contains PacBio contigs/scaffolds of all strains.
 
-### <a name="45">Annotate</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Annotate
 
 - **Results/Annotations/\*\_annotation/**
 
@@ -769,7 +716,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     Directory contain the master annotation of all strains in GFF3 format.
 
-### <a name="46">ANI</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### ANI
 
 - **Results/ANI/ANIs**
 
@@ -787,7 +734,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     The heatmap plot of \"ANIs.heatmap\".
 
-### <a name="47">MASH</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### MASH
 
 - **Results/MASH/MASH**
 
@@ -805,7 +752,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     A heat map plot of \"MASH.heatmap\".
 
-### <a name="48">CoreTree</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### CoreTree
 
 - **Results/CoreTrees/ALL.core.protein.fasta**
 
@@ -835,7 +782,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     Intermediate directories and files.
 
-### <a name="49">OrthoF</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### OrthoF
 
 - **Results/OrthoFinder/Results\_orthoF**
 
@@ -853,7 +800,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     Phylogenetic tree constructed by IQ-TREE.
 
-### <a name="50">Pan</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Pan
 
 - **Results/PanGenome/Pangenome\_Pie.pdf**
 
@@ -883,7 +830,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
 
-### <a name="51">pCOG</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### pCOG
 
 - **\*.COG.xml, \*.2gi.table, \*.2id.table, \*.2Sid.table**
 
@@ -901,7 +848,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     A table containing the relative abundance of each flag for all strains.
 
-### <a name="52">VAR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### VAR
 
 - **Results/Variants/directory-named-in-strains**
 
@@ -916,29 +863,29 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
   - **core.aln.treefile** : Phylogenetic tree of the core SNP alignment based on the best-fit model of evolution selected using IQ-TREE (ignoring possible recombination).
   - **core.aln.treefile** : The best-fit model of evolution selected using IQ-TREE can be found in this file.
 
-### <a name="53">AntiRes</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### AntiRes
 
 - **Results/AntiRes/\*.tab** : Screening results of each strain.
 - **Results/AntiRes/summary.txt** : A matrix of gene presence/absence for all strains.
 
-### <a name="54">STREE</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### STREE
 
 - **Results/STREE/\*.aln** : Aligned sequences.
 - **Results/STREE/\*.aln.gb** : Conserved blocks of the aligned sequences.
 - **Results/STREE/\*.aln.gb.treefile** : The final phylogenetic tree.
 - **Results/STREE/\*.aln.gb.iqtree** : Log of IQ-TREE.
 
-## <a name="55">License</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="7">License</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 -------
 
 PGCGAP is free software, licensed under GPLv3.
 
-## <a name="56">Feedback and Issues</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="8">Feedback and Issues</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 -------------------
 
 Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues?_blank) or email us at <liaochenlanruo@webmail.hzau.edu.cn>.
 
-## <a name="57">Citation</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="9">Citation</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 --------
 
 - If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative
@@ -965,10 +912,10 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use \"\--STREE\", please also cite [Muscle](http://europepmc.org/abstract/MED/30976793), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), and [IQ-TREE](https://doi.org/10.1093/molbev/msaa015).
 
-## <a name="58">FAQ</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="10">FAQ</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ---
 
-### <a name="59">Q1 VAR function ran failed to get annotated VCFs and Core results</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Q1 VAR function ran failed to get annotated VCFs and Core results
 
 Check the log file named in \"strain\_name.log\" under Results/Variants/\<strain\_name\>/ directory. If you find a sentence like \"WARNING: All frames are zero! This seems rather odd, please check that \'frame\' information in your \'genes\' file is accurate.\" This is a snpEff error. Users can install JDK8 to solve this problem.
 
@@ -978,7 +925,7 @@ conda install java-jdk=8.0.112
 
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
 
-### <a name="60">Q2 Could not determine version of minced please install version 2 or higher</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Q2 Could not determine version of minced please install version 2 or higher
 
 When running the Annotate function, this error could happen, the error message shows as following:
 
@@ -1007,7 +954,7 @@ conda install minced=0.3
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
 
-### <a name="61">Q3 dyld: Library not loaded: \@rpath/libcrypto.1.0.0.dylib</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Q3 dyld: Library not loaded: \@rpath/libcrypto.1.0.0.dylib
 
 This error may happen when running function \"VAR\" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
@@ -1026,17 +973,17 @@ ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations.
 
-### <a name="62">Q4 Use of uninitialized value in require at Encode.pm line 61</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Q4 Use of uninitialized value in require at Encode.pm line 61
 
 This warning may happen when running function \"Pan\". It is a warning of Roary software. The content of line 61 is \"require Encode::ConfigLocal;\". Users can ignore the warning. Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
 
-### <a name="63">Q5 Can't locate Bio/Roary/CommandLine/Roary.pm in @INC</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### Q5 Can't locate Bio/Roary/CommandLine/Roary.pm in @INC
 
 ```bash
 cpanm install -f Bio::Roary
 ```
 
-## <a name="64">Updates</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="11">Updates</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 -------
 
 - V1.0.3
