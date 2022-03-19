@@ -1,26 +1,5 @@
 #!/bin/sh
-# mkdir -p $PREFIX/bin
-reMatch() {
-	typeset ec
-	unset -v reMatch # initialize output variable
-	[[ $1 =~ $2 ]] # perform the regex test
-	ec=$? # save exit code
-	if [[ $ec -eq 0 ]]; then # copy result to output variable
-		[[ -n $BASH_VERSION ]] && reMatch=( "${BASH_REMATCH[@]}" )
-		[[ -n $KSH_VERSION ]]  && reMatch=( "${.sh.match[@]}" )
-		[[ -n $ZSH_VERSION ]]  && reMatch=( "$MATCH" "${match[@]}" )
-	fi
-	return $ec
-}
-
-dir=`which prokka`
-
-reMatch $dir "(^\S+)\/bin\/prokka"
-PREFIX=${reMatch[1]}
-
-wget https://codeload.github.com/liaochenlanruo/pgcgap/tar.gz/refs/tags/v1.0.33
-tar zxvf v1.0.33
-cd pgcgap-1.0.33
+mkdir -p $PREFIX/bin
 
 cp pgcgap.pl $PREFIX/bin/pgcgap
 
