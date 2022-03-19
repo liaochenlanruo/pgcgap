@@ -24,7 +24,7 @@ PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
          ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
-[toc]
+
 
 ## Multi-version instructions (This one for the latest version)
 ------------------------------------------------------------
