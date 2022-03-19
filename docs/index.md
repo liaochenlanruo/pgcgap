@@ -90,13 +90,13 @@ conda deactivate
 
 When network access is not available with 'pgcgap --setup-COGdb', <u> users can use `pgcgap --setup-COGdb2` as an alternate method to setup COG database </u>.
 
-Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
+- Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
-```bash
-docker pull quay.io/biocontainers/pgcgap:<tag>
-```
+	```bash
+	docker pull quay.io/biocontainers/pgcgap:<tag>
+	```
 
-(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
+	(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
 
 ## <a name="3">Required dependencies</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ---------------------
