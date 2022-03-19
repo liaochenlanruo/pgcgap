@@ -1,6 +1,5 @@
-<a name="index">**Index**</a>
-&emsp;<a href="#0">Multi-version instructions (This one for the latest version)</a>  
-&emsp;<a href="#1">Introduction</a>  
+&emsp;<a href="#0">Multi-version instructions</a>
+&emsp;<a href="#1">Introduction</a>
 &emsp;<a href="#2">Installation</a>  
 &emsp;<a href="#3">Required dependencies</a>  
 &emsp;<a href="#4">Usage</a>  
@@ -39,7 +38,7 @@ PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 
 
 
-## <a name="0">Multi-version instructions (This one for the latest version)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## <a name="0">Multi-version instructions</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 ------------------------------------------------------------
 
 - [Instructions for V1.0.29](./index-v1.0.29.html)
