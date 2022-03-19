@@ -1,16 +1,4 @@
-&emsp;<a href="#1">Introduction</a>
-&emsp;<a href="#2">Installation</a>
-&emsp;<a href="#3">Required dependencies</a>
-&emsp;<a href="#4">Usage</a>
-&emsp;<a href="#5">Generating Input files</a>
-&emsp;<a href="#6">Output Files</a>
-&emsp;<a href="#7">License</a>
-&emsp;<a href="#8">Feedback and Issues</a>
-&emsp;<a href="#9">Citation</a>
-&emsp;<a href="#10">FAQ</a>
-&emsp;<a href="#11">Updates</a>  
-PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
-============================================================================
+**PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline**
 
 ------------------------------------------------------------------------
 
@@ -36,6 +24,17 @@ PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
 
+&emsp;<a href="#1">Introduction</a>
+&emsp;<a href="#2">Installation</a>
+&emsp;<a href="#3">Required dependencies</a>
+&emsp;<a href="#4">Usage</a>
+&emsp;<a href="#5">Generating Input files</a>
+&emsp;<a href="#6">Output Files</a>
+&emsp;<a href="#7">License</a>
+&emsp;<a href="#8">Feedback and Issues</a>
+&emsp;<a href="#9">Citation</a>
+&emsp;<a href="#10">FAQ</a>
+&emsp;<a href="#11">Updates</a>  
 
 ## Multi-version instructions
 ------------------------------------------------------------
