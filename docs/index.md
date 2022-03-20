@@ -441,7 +441,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 	pgcgap --check-external-programs
 	```
 
-Examples
+## Examples
 --------
 
 Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Examples.tar.gz).
