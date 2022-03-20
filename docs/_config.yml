@@ -14,4 +14,4 @@ exclude:
   - index0.html
   - PGCGAP.md.backup
   - pgcgapIntroduction.php
-  - index_v1.0.33.md
+#  - index_v1.0.33.md
