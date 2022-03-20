@@ -1,3 +1,4 @@
 #theme: jekyll-theme-hacker
 #remote-theme: mmistakes/minimal-mistakes
-remote_theme: rundocs/jekyll-rtd-theme #with index at left
+#remote_theme: rundocs/jekyll-rtd-theme #with index at left
+remote_theme: hydecorp/hydejack
