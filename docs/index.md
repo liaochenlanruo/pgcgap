@@ -1,4 +1,8 @@
-PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
+---
+sort: 1
+---
+
+# PGCGAP - the Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
 
 
 ![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
@@ -43,7 +47,7 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
 
-**Step1: Install PGCGAP**
+### **Step1: Install PGCGAP**
 
 - Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
@@ -68,7 +72,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	mamba env create -f pgcgap_latest_env.yml
 	```
 
-**Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
+### **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
 
 ```bash
 conda activate pgcgap
