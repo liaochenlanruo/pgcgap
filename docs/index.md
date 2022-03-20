@@ -21,9 +21,6 @@
          ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
-
-
-
 -------------
 
 ## Multi-version instructions
@@ -40,7 +37,7 @@
 PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. **<u>To follow this document, please upgrade PGCGAP to version v1.0.33 or later</u>**.
 
 
-## <a name="2">Installation</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Installation
 ------------
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
@@ -88,7 +85,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
 	(see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for \<tag\>)
 
-## <a name="3">Required dependencies</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Required dependencies
 ---------------------
 
 - [Abricate](https://github.com/tseemann/abricate)
@@ -139,7 +136,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 - [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
 
-## <a name="4">Usage</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Usage
 -----
 
 - **Print the help messages:**
@@ -601,7 +598,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 	pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
 	```
 
-## <a name="5">Generating Input files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Generating Input files
 ----------------------
 
 ### Working directory
@@ -654,7 +651,7 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
-## <a name="6">Output Files</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Output Files
 ------------
 
 ### Assemble
@@ -864,17 +861,17 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 - **Results/STREE/\*.aln.gb.treefile** : The final phylogenetic tree.
 - **Results/STREE/\*.aln.gb.iqtree** : Log of IQ-TREE.
 
-## <a name="7">License</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## License
 -------
 
 PGCGAP is free software, licensed under GPLv3.
 
-## <a name="8">Feedback and Issues</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Feedback and Issues
 -------------------
 
 Please report any issues to the [issues page](https://github.com/liaochenlanruo/pgcgap/issues?_blank) or email us at <liaochenlanruo@webmail.hzau.edu.cn>.
 
-## <a name="9">Citation</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Citation
 --------
 
 - If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative
@@ -901,7 +898,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use \"\--STREE\", please also cite [Muscle](http://europepmc.org/abstract/MED/30976793), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), and [IQ-TREE](https://doi.org/10.1093/molbev/msaa015).
 
-## <a name="10">FAQ</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## FAQ
 ---
 
 ### Q1 VAR function ran failed to get annotated VCFs and Core results
@@ -972,7 +969,7 @@ This warning may happen when running function \"Pan\". It is a warning of Roary 
 cpanm install -f Bio::Roary
 ```
 
-## <a name="11">Updates</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## Updates
 -------
 
 - V1.0.3
