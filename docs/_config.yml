@@ -3,3 +3,5 @@ remote-theme: mmistakes/minimal-mistakes
 #remote_theme: hydecorp/hydejack
 #remote_theme: DigitalMindCH/twister-jekyll-theme
 #remote_theme: rundocs/jekyll-rtd-theme
+
+theme: jekyll-theme-leap-day
