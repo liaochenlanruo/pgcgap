@@ -1,4 +1,4 @@
-theme: jekyll-theme-leap-day
+#theme: jekyll-theme-leap-day
 #theme: jekyll-theme-hacker
 #remote_theme: hydecorp/hydejack
-#remote_theme: rundocs/jekyll-rtd-theme
+remote_theme: rundocs/jekyll-rtd-theme
