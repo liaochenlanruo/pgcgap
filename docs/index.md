@@ -447,161 +447,161 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Examples.tar.gz).
 
 ### **Example 1:** Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.
-	
-	**Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.
 
-	```bash
-	pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
-	```
+**Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.
+
+```bash
+pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+```
 
 ### **Example 2:** Genome assembly.
 
 #### Illumina reads assembly
+
+In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
 	
-	In this dataset, the naming format of the genome is "strain\_1.fastq.gz" and "strain\_2.fastq.gz". The string after the strain name is "\_1.fastq.gz", and its length is 11, so \"\--suffix\_len\" was set to 11.
-	
-	```bash
-	# Assemble with ABySS
-	pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
-	
-	# Assemble with SPAdes
-	pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
-	
-	# Assemble with AUTO
-	pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
-	```
+```bash
+# Assemble with ABySS
+pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+
+# Assemble with SPAdes
+pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
+
+# Assemble with AUTO
+pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
+```
 
 #### ONT reads assembly
-	
-	Oxford nanopore sequencing usually produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
 
-	```bash
-	pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
-	```
+Oxford nanopore sequencing usually produces one reads file, so only the parameter of \"\--reads1\" needs to be set, where the value is \".fasta\". "\--genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to \"4.8m\" here. The suffix of the reads file here is \".fasta\" and its length is 6, so \"\--suffix\_len\" was set to 6.
+
+```bash
+pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+```
 
 #### PacBio reads assembly
-	
-	PacBio also usually produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
 
-	```bash
-	pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
-	```
+PacBio also usually produces only one reads file \"pacbio.fastq\", the parameter settings are similar to Oxford. The strain name is 6, so \"\--suffix\_len\" was set to 6.
+
+```bash
+pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+```
 
 #### Hybrid assembly of short reads and long reads
-	
-	Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
 
-	```bash
-	pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
-	```
+Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
+
+```bash
+pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
+```
 
 ### **Example 3**: Gene prediction and annotation
-	
-	```bash
-	pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
-	```
+
+```bash
+pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+```
 
 ### **Example 4**: Constructing single-copy core protein tree and core SNPs tree
-	
-	```bash
-	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
 
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
+```bash
+# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
 
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
-	```
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+```
 
 ### **Example 5:** Constructing single-copy core protein tree only.
-	
-	```bash
-	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
-	
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
 
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
-	```
+```bash
+# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree
+
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+```
 
 ### **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **<u>Applicable to v1.0.27 and later</u>**.
 	
-	```bash
-	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
+```bash
+# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
 
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
-	
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
-	```
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
+```
 
 ### **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **<u>Applicable to v1.0.29 and later</u>**.
-	
-	```bash
-	# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree
-	
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500
-	
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
-	```
+
+```bash
+# Construct phylogenetic tree with FastTree (Quick without best fit model testing)
+pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree
+
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
+```
 
 ### **Example 8:** Compute whole-genome Average Nucleotide Identity (ANI).
-	
-	```bash
-	pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .filtered.fas
-	```
+
+```bash
+pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --Scaf_suffix .filtered.fas
+```
 
 ### **Example 9:** Genome and metagenome similarity estimation using MinHash.
 	
-	```bash
-	pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas
-	```
+```bash
+pgcgap --MASH --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas
+```
 
 ### **Example 10:** Run COG annotation for each strain.
 	
-	```bash
-	pgcgap --pCOG --threads 4 --strain_num 6 --id 40 --query_cover 70 --subject_cover 50 --AAsPath Results/Annotations/AAs
-	```
+```bash
+pgcgap --pCOG --threads 4 --strain_num 6 --id 40 --query_cover 70 --subject_cover 50 --AAsPath Results/Annotations/AAs
+```
 
 ### **Example 11:** Variants calling and phylogenetic tree construction based on the reference genome.
-	
-	```bash
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500
-	
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
-	```
+
+```bash
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
+```
 
 ### **Example 12:** Screening of contigs for antimicrobial and virulence genes.
-	
-	```bash
-	pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --threads 6 --db all --identity 75 --coverage 50
-	```
+
+```bash
+pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --threads 6 --db all --identity 75 --coverage 50
+```
 
 ### **Example 13:** Filter short sequences in the genome and assess the status of the genome.
-	
-	```bash
-	pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
-	```
+
+```bash
+pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+```
 
 ### **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
-	
-	```bash
-	# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-	pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
-	
-	# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-	pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
-	```
+
+```bash
+# Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
+pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
+
+# Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
+pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
+```
 
 ## Generating Input files
 ----------------------
