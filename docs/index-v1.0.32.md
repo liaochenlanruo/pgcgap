@@ -1,10 +1,9 @@
 ---
-sort: 3
+sort: 998
 ---
 
+# DOC for V1.0.32
 
-<h1>PGCGAP - the <font color=red>P</font>rokaryotic <font color=red>G</font>enomics and <font color=red>C</font>omparative <font color=red>G</font>enomics <font color=red>A</font>nalysis <font color=red>P</font>ipeline</h1>
-<hr />
 <p><center>
 <img src="https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green" alt="Platform" />
 <a href="https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE"><img src="https://img.shields.io/github/license/liaochenlanruo/pgcgap" alt="License" /></a>
