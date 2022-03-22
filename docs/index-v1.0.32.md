@@ -72,7 +72,9 @@ $conda deactivate
 $docker pull quay.io/biocontainers/pgcgap:<tag>
 </pre>
 <p>(see <a href="https://quay.io/repository/biocontainers/pgcgap?tab=tags">pgcgap/tags</a> for valid values for &lt;tag&gt;)</p>
+
 ## Required dependencies
+
 <ul>
 <li><a href="https://github.com/tseemann/abricate">Abricate</a></li>
 <li><a href="http://www.bcgsc.ca/platform/bioinfo/software/abyss/">ABySS</a></li>
@@ -135,7 +137,9 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://github.com/rrwick/Unicycler">unicycler</a></li>
 <li><a href="https://www.gnu.org/software/wget/">wget</a></li>
 </ul>
+
 ## Usage
+
 <ul>
 <li>
 <p><strong>Print the help messages:</strong></p>
@@ -610,6 +614,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 </ul>
 <p><br/></p>
+
 ## Examples
 
 <strong><p>Example dataset can be download <a href="http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Examples.tar.gz">here</a>.</p></strong>
@@ -698,26 +703,28 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4</pre>
 </li>
 </ul>
+
 ## Generating Input files
-<h3>Working directory</h3>
+
+### Working directory
 <p>The directory where the PGCGAP software runs.</p>
-<h3>Assemble</h3>
+### Assemble
 <p>Pair-end reads of all strains in a directory or PacBio reads or Oxford nanopore reads (Default: ./Reads/Illumina/ under the working directory).</p>
-<h3>Annotate</h3>
+### Annotate
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
-<h3>ANI</h3>
+### ANI
 <p>QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “--Assemble” function was run first, the list file will be generated automatically.</p>
-<h3>MASH</h3>
+### MASH
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
-<h3>CoreTree</h3>
+### CoreTree
 <p>Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “--Annotate” function was run first, the files will be generated automatically. If the “--CDsPath” was set to “NO”, the nucleotide files will not be needed.</p>
-<h3>OrthoF</h3>
+### OrthoF
 <p>A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “--Annotate” function was run first, the files will be generated automatically.</p>
-<h3>Pan</h3>
+### Pan
 <p>GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). If the “--Annotate” function was run first, the files will be generated automatically.</p>
-<h3>pCOG</h3>
+### pCOG
 <p>Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “--Annotate” function was run first, the files will be generated automatically.</p>
-<h3>VAR</h3>
+### VAR
 <ul>
 <li>
 <p>Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).
@@ -727,12 +734,14 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <p>The full path of reference genome in fasta format or GenBank format (<strong>must be provided</strong>).</p>
 </li>
 </ul>
-<h3>AntiRes</h3>
+### AntiRes
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
-<h3>STREE</h3>
+### STREE
 <p>Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.</p>
+
 ## Output Files
-<h3>Assemble</h3>
+
+### Assemble
 <ul>
 <li>
 <p><strong>Results/Assembles/Illumina/</strong><br/>
@@ -770,7 +779,7 @@ Directory contains PacBio contigs/scaffolds of all strains.
 <br/></p>
 </li>
 </ul>
-<h3>Annotate</h3>
+### Annotate
 <ul>
 <li>
 <p><strong>Results/Annotations/*_annotation</strong><br/>
@@ -792,7 +801,7 @@ Directory contain nucleotide sequences of all strains.
 Directory contain the master annotation of all strains in GFF3 format.</p>
 </li>
 </ul>
-<h3>ANI</h3>
+### ANI
 <ul>
 <li>
 <p><strong>Results/ANI/ANIs</strong><br/>
@@ -814,7 +823,7 @@ An ANI matrix of all strains.
 The heatmap plot of &quot;ANIs.heatmap&quot;.</p>
 </li>
 </ul>
-<h3>MASH</h3>
+### MASH
 <ul>
 <li>
 <p><strong>Results/MASH/MASH</strong><br/>
@@ -833,7 +842,7 @@ A similarity matrix of all genomes.</p>
 A heat map plot of &quot;MASH.heatmap&quot;.</p>
 </li>
 </ul>
-<h3>CoreTree</h3>
+### CoreTree
 <ul>
 <li>
 <p><strong>Results/CoreTrees/ALL.core.protein.fasta</strong><br/>
@@ -876,7 +885,7 @@ Intermediate directories and files.
 <br/></p>
 </li>
 </ul>
-<h3>OrthoF</h3>
+### OrthoF
 <ul>
 <li><strong>Results/OrthoFinder/Results_orthoF</strong><br/>
 Same as <a href="https://github.com/davidemms/OrthoFinder?_blank">OrthoFinder</a> outputs.
@@ -885,7 +894,7 @@ Same as <a href="https://github.com/davidemms/OrthoFinder?_blank">OrthoFinder</a
 <li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.nwk</strong><br/>Phylogenetic tree constructed by FastTree.<br/></li>
 <li><strong>Results/OrthoFinder/Results_orthoF/Single_Copy_Orthologue_Tree/Single.Copy.Orthologue.fasta.gb.treefile</strong><br/>Phylogenetic tree constructed by IQ-TREE.<br/></li>
 </ul>
-<h3>Pan</h3>
+### Pan
 <ul>
 <li>
 <p><strong>Results/PanGenome/Pangenome_Pie.pdf</strong><br/>
@@ -923,7 +932,7 @@ see <a href="https://sanger-pathogens.github.io/Roary/?_blank">roary</a> outputs
 <br/></p>
 </li>
 </ul>
-<h3>pCOG</h3>
+### pCOG
 <ul>
 <li>
 <p><strong>*.COG.xml, *.2gi.table, *.2id.table, *.2Sid.table</strong><br/>
@@ -945,7 +954,7 @@ A plot of super COG table in pdf format.
 A table containing the relative abundance of each flag for all strains.</p>
 </li>
 </ul>
-<h3>VAR</h3>
+### VAR
 <ul>
 <li>
 <p><strong>Results/Variants/directory-named-in-strains</strong><br/>
@@ -962,23 +971,29 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 </ul>
 </li>
 </ul>
-<h3>AntiRes</h3>
+### AntiRes
 <ul>
 <li><strong>Results/AntiRes/*.tab</strong> : Screening results of each strain.</li>
 <li><strong>Results/AntiRes/summary.txt</strong> : A matrix of gene presence/absence for all strains.</li>
 </ul>
-<h3>STREE</h3>
+### STREE
 <ul>
 <li><strong>Results/STREE/*.aln</strong> : Aligned sequences.</li>
 <li><strong>Results/STREE/*.aln.gb</strong> : Conserved blocks of the aligned sequences.</li>
 <li><strong>Results/STREE/*.aln.gb.treefile</strong> : The final phylogenetic tree.</li>
 <li><strong>Results/STREE/*.aln.gb.iqtree</strong> : Log of IQ-TREE.</li>
 </ul>
+
 ## License
+
 <p>PGCGAP is free software, licensed under GPLv3.</p>
+
 ## Feedback and Issues
+
 <p>Please report any issues to the <a href="https://github.com/liaochenlanruo/pgcgap/issues?_blank">issues page</a> or email us at <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x6c;&#x69;&#97;&#111;c&#104;&#101;&#x6e;&#108;&#97;&#x6e;&#114;&#x75;&#111;&#64;&#119;&#101;&#x62;m&#x61;&#105;&#x6c;&#46;&#x68;&#x7a;&#x61;&#117;&#46;&#x65;&#100;&#x75;&#46;&#99;n">&#108;&#x69;&#97;&#111;&#x63;&#104;&#101;&#x6e;&#x6c;&#97;&#x6e;&#114;&#x75;&#x6f;&#64;&#119;&#101;&#x62;m&#97;&#x69;&#108;&#46;&#104;&#122;&#97;&#117;&#x2e;&#101;du&#46;&#x63;&#110;</a>.</p>
+
 ## Citation
+
 <ul>
 <li>
 <p>If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. <em>Protocol exchange</em>, 2020. DOI: <a href="https://doi.org/10.21203/rs.2.21224/v5">10.21203/rs.2.21224/v5</a></p>
@@ -1014,12 +1029,14 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
 </li>
 </ul>
+
 ## FAQ
-<h3>Q1 VAR function ran failed to get annotated VCFs and Core results</h3>
+
+### Q1 VAR function ran failed to get annotated VCFs and Core results
 <p>Check the log file named in &quot;strain_name.log&quot; under Results/Variants/&lt;strain_name&gt;/ directory. If you find a sentence like &quot;WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate.&quot; This is a snpEff error. Users can install JDK8 to solve this problem.</p>
 <pre>$conda install java-jdk=8.0.112</pre>
 <p>Click <a href="https://github.com/tseemann/snippy/issues/259?_blank">here</a> for more solutions.</p>
-<h3>Q2 Could not determine version of minced please install version 2 or higher</h3>
+### Q2 Could not determine version of minced please install version 2 or higher
 <p>When running the Annotate function, this error could happen, the error message shows as following:</p>
 <pre>
 Error: A JNI error has occurred, please check your installation and try again
@@ -1042,7 +1059,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has be
 <p>Users can downgrade the minced to version 0.3 to solve this problem.</p>
 <pre>$conda install minced=0.3</pre>
 <p>Click <a href="https://github.com/bioconda/bioconda-recipes/pull/15407?_blank">here</a> for detail informations.</p>
-<h3>Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib</h3>
+### Q3 dyld: Library not loaded: @rpath/libcrypto.1.0.0.dylib
 <p>This error may happen when running function &quot;VAR&quot; on macOS. It is an error of openssl. Users can solve this problem as the following:</p>
 <pre>
 #Firstly, install brew if have not installed before
@@ -1057,11 +1074,13 @@ $ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 $ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 </pre>
 <p>Click <a href="https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7">here</a> for more informations</p>
-<h3>Q4 Use of uninitialized value in require at Encode.pm line 61</h3>
+### Q4 Use of uninitialized value in require at Encode.pm line 61
 <p>This warning may happen when running function &quot;Pan&quot;. It is a warning of Roary software.
 The content of line 61 is &quot;require Encode::ConfigLocal;&quot;. Users can ignore the warning.
 Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> for details.</p>
+
 ## Updates
+
 <ul>
 <li>
 <p>V1.0.3</p>
@@ -1298,6 +1317,7 @@ Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> fo
 </li>
 
 </ul>
+
 <hr />
 <p><center><strong>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
