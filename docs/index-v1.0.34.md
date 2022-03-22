@@ -47,6 +47,8 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
 
+**Notice**: There are some troubles to install PGCGAP v1.0.33 and v1.0.34 with conda, and this need time to repair. Be patient and you can install v1.0.32.
+
 ### **Step1: Install PGCGAP**
 
 - Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
