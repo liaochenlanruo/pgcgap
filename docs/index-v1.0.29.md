@@ -17,12 +17,6 @@ sort: 999
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
     
 
-Multi-version instructions (This one for V1.0.29)
--------------------------------------------------
-
-*   [Instructions for V1.0.29](./index-v1.0.29.html)
-*   [Instructions for V1.0.32](./index-v1.0.32.html)
-*   [Instructions for the latest version](./index.html)
 
 Introduction
 ------------
@@ -921,6 +915,12 @@ Updates
     *   Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.
     *   Fixed the "permission denied" error when moving directories on the WSL platform.
 
-* * *
 
-**Total visits: times | Visitors: people**
+------------------------------------------------------------------------
+
+<p><center><strong>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">Total visits: <span id="busuanzi_value_site_pv"></span> times</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv"></span> people</span>
+</strong></center></p>
