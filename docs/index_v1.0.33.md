@@ -26,13 +26,6 @@ sort: 997
         (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
 
 
-## Multi-version instructions (This one for v1.0.33)
-------------------------------------------------------------
-
-- [Instructions for V1.0.29](./index-v1.0.29.html)
-- [Instructions for V1.0.32](./index-v1.0.32.html)
-- [Instructions for V1.0.33](./index_v1.0.33.html)
-- [Instructions for the latest version](./index.html)
 
 ## Introduction
 ------------
