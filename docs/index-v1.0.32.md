@@ -4,42 +4,33 @@ sort: 998
 
 # DOC for V1.0.32
 
-<p><center>
-<img src="https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green" alt="Platform" />
-<a href="https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE"><img src="https://img.shields.io/github/license/liaochenlanruo/pgcgap" alt="License" /></a>
-<a href="https://anaconda.org/bioconda/pgcgap"><img src="https://anaconda.org/bioconda/pgcgap/badges/version.svg" alt="GitHubversion" /></a>
-<img src="https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat" alt="Downloads conda" />
-<a href="http://bioconda.github.io/recipes/pgcgap/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda" /></a>
-<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="生信之巅" title="945751012"></a>
-</center></p>
+![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
+
+
 <p><center>
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <script type="text/javascript" src="//rf.revolvermaps.com/0/0/0.js?i=0ett3z77b0x&amp;d=3&amp;p=1&amp;b=1&amp;w=293&amp;g=2&amp;f=arial&amp;fs=13&amp;r=0&amp;c0=ff8a00&amp;c1=0006ff&amp;c2=000000&amp;ic0=0&amp;ic1=0" async="async"></script>
 </center></p>
-<p><center>
-<a href="https://liaochenlanruo.github.io/pgcgap">English Readme</a> | <a href="https://liaochenlanruo.github.io/post/848f.html">Chinese Readme</a></p>
-<pre><code>      ____       ____      ____     ____       _        ____    
-    U|  _&quot;\ u U /&quot;___|u U /&quot;___| U /&quot;___|u U  /&quot;\  u  U|  _&quot;\ u 
-    \| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
-     |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
-     |_|        \____|    \____|   \____|  /_/   \_\   |_|      
-     ||&gt;&gt;_      _)(|_    _// \\    _)(|_    \\    &gt;&gt;   ||&gt;&gt;_    
-    (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
-</code></pre>
+-------------
 
-<p></center></p>
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [中文说明](https://liaochenlanruo.github.io/post/848f.html)
 
-<h2>Multi-version instructions (This one for V1.0.32)</h2>
-<ul>
-<li><a href="./index-v1.0.29.html">Instructions for V1.0.29</a></li>
-<li><a href="./index-v1.0.32.html">Instructions for V1.0.32</a></li>
-<li><a href="./index.html">Instructions for the latest version</a></li>
-</ul>
 
-<h2>Introduction</h2>
+          ____       ____      ____     ____       _        ____    
+        U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+        \| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+         |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+         |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+         ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+        (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
+
+-------------
+
+
+## Introduction
 <p>PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands. <strong>To follow this document, please upgrade PGCGAP to version v1.0.31 or later.</strong></p>
-<h2>Installation</h2>
+## Installation
 <p>The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. <font color=red>Because this software relies on a large number of other software, so it is recommended to install with <strong><a href="https://bioconda.github.io/index.html">Bioconda</a></strong></font>.</p>
 <p><strong>Step1: Install PGCGAP</strong></p>
 <pre>
@@ -81,7 +72,7 @@ $conda deactivate
 $docker pull quay.io/biocontainers/pgcgap:<tag>
 </pre>
 <p>(see <a href="https://quay.io/repository/biocontainers/pgcgap?tab=tags">pgcgap/tags</a> for valid values for &lt;tag&gt;)</p>
-<h2>Required dependencies</h2>
+## Required dependencies
 <ul>
 <li><a href="https://github.com/tseemann/abricate">Abricate</a></li>
 <li><a href="http://www.bcgsc.ca/platform/bioinfo/software/abyss/">ABySS</a></li>
@@ -144,7 +135,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <li><a href="https://github.com/rrwick/Unicycler">unicycler</a></li>
 <li><a href="https://www.gnu.org/software/wget/">wget</a></li>
 </ul>
-<h2>Usage</h2>
+## Usage
 <ul>
 <li>
 <p><strong>Print the help messages:</strong></p>
@@ -619,7 +610,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 </li>
 </ul>
 <p><br/></p>
-<h2>Examples</h2>
+## Examples
 
 <strong><p>Example dataset can be download <a href="http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Examples.tar.gz">here</a>.</p></strong>
 <ul>
@@ -707,7 +698,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/><br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4</pre>
 </li>
 </ul>
-<h2>Generating Input files</h2>
+## Generating Input files
 <h3>Working directory</h3>
 <p>The directory where the PGCGAP software runs.</p>
 <h3>Assemble</h3>
@@ -740,7 +731,7 @@ $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --Re
 <p>Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).</p>
 <h3>STREE</h3>
 <p>Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.</p>
-<h2>Output Files</h2>
+## Output Files
 <h3>Assemble</h3>
 <ul>
 <li>
@@ -983,11 +974,11 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <li><strong>Results/STREE/*.aln.gb.treefile</strong> : The final phylogenetic tree.</li>
 <li><strong>Results/STREE/*.aln.gb.iqtree</strong> : Log of IQ-TREE.</li>
 </ul>
-<h2>License</h2>
+## License
 <p>PGCGAP is free software, licensed under GPLv3.</p>
-<h2>Feedback and Issues</h2>
+## Feedback and Issues
 <p>Please report any issues to the <a href="https://github.com/liaochenlanruo/pgcgap/issues?_blank">issues page</a> or email us at <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x6c;&#x69;&#97;&#111;c&#104;&#101;&#x6e;&#108;&#97;&#x6e;&#114;&#x75;&#111;&#64;&#119;&#101;&#x62;m&#x61;&#105;&#x6c;&#46;&#x68;&#x7a;&#x61;&#117;&#46;&#x65;&#100;&#x75;&#46;&#99;n">&#108;&#x69;&#97;&#111;&#x63;&#104;&#101;&#x6e;&#x6c;&#97;&#x6e;&#114;&#x75;&#x6f;&#64;&#119;&#101;&#x62;m&#97;&#x69;&#108;&#46;&#104;&#122;&#97;&#117;&#x2e;&#101;du&#46;&#x63;&#110;</a>.</p>
-<h2>Citation</h2>
+## Citation
 <ul>
 <li>
 <p>If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. <em>Protocol exchange</em>, 2020. DOI: <a href="https://doi.org/10.21203/rs.2.21224/v5">10.21203/rs.2.21224/v5</a></p>
@@ -1023,7 +1014,7 @@ directories containing substitutions (snps) and insertions/deletions (indels) of
 <p>If you use &quot;--STREE&quot;, please also cite <a href="http://europepmc.org/abstract/MED/30976793">Muscle</a>, <a href="https://doi.org/10.1093/bioinformatics/btp348">trimAL</a>, and <a href="https://doi.org/10.1093/molbev/msaa015">IQ-TREE</a>.</p>
 </li>
 </ul>
-<h2>FAQ</h2>
+## FAQ
 <h3>Q1 VAR function ran failed to get annotated VCFs and Core results</h3>
 <p>Check the log file named in &quot;strain_name.log&quot; under Results/Variants/&lt;strain_name&gt;/ directory. If you find a sentence like &quot;WARNING: All frames are zero! This seems rather odd, please check that 'frame' information in your 'genes' file is accurate.&quot; This is a snpEff error. Users can install JDK8 to solve this problem.</p>
 <pre>$conda install java-jdk=8.0.112</pre>
@@ -1070,7 +1061,7 @@ $ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 <p>This warning may happen when running function &quot;Pan&quot;. It is a warning of Roary software.
 The content of line 61 is &quot;require Encode::ConfigLocal;&quot;. Users can ignore the warning.
 Click <a href="https://github.com/sanger-pathogens/Roary/issues/323">here</a> for details.</p>
-<h2>Updates</h2>
+## Updates
 <ul>
 <li>
 <p>V1.0.3</p>
