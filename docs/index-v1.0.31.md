@@ -39,25 +39,28 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 __Step1: Install PGCGAP__
 
-<pre>
+```bash
+
 $conda create -n pgcgap python=3
 $conda activate pgcgap
 $conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
-</pre>
+```
 
 __Step2: Setup COG database__ (Users should execute this after the first installation of pgcgap)
 
-<pre>
+```bash
+
 $conda activate pgcgap
 $pgcgap --setup-COGdb
 $conda deactivate
-</pre>
+```
 
 Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
-<pre>
+```bash
+
 $docker pull quay.io/biocontainers/pgcgap:<tag>
-</pre>
+```
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for &lt;tag&gt;)
 
@@ -117,23 +120,47 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 ## Usage
 
 - __Print the help messages:__
-    <pre>$pgcgap --help</pre>
+    ```
+
+    $pgcgap --help
+
+    ```
 - __Check for update:__
-    <pre>$pgcgap --check-update</pre>
+    ```
+    $pgcgap --check-update
+    ```
 - __General usage:__
-    <pre>$pgcgap [modules] [options]</pre>
+    ```
+
+    $pgcgap [modules] [options]
+
+    ```
 
 - __Show parameters for each module:__
-    <pre>$pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]</pre>
+    ```
+
+    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
+
+    ```
 
 - __Show examples of each module:__
-    <pre>$pgcgap Examples</pre>
+    ```
+
+    $pgcgap Examples
+
+    ```
 
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
 
-    <pre>$pgcgap --setup-COGdb</pre>
+    ```
+
+
+    $pgcgap --setup-COGdb
+
+
+    ```
 <br/>
 
 
@@ -442,7 +469,11 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <br/>
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of PGCGAP__):
-    <pre>$pgcgap --check-external-programs</pre>
+    ```
+
+    $pgcgap --check-external-programs
+
+    ```
 
 <br/>
 
@@ -471,65 +502,151 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
           Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
 
-         <pre>$pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+
+
+         ```
 
     - PacBio reads assembly
 
          PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" was set to 6.
 
-         <pre>$pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+
+
+         ```
 
     - Hybrid assembly of short reads and long reads
 
          Paired-end short reads and long reads in the directory “Reads/Hybrid/” were used as inputs. Illumina reads and long reads must be from the same isolates.
 
-         <pre>$pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
+
+
+         ```
 
   - __Example 3__: Gene prediction and annotation
 
-     <pre>$pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4</pre>
+     ```
+
+
+     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+
+
+     ```
 
   - __Example 4__: Constructing single-copy core protein tree and core SNPs tree
 
-     <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
+     ```
+
+
+     # Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+
+
+     ```
 
   - __Example 5:__ Constructing single-copy core protein tree only.
-    <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000</pre>
+    ```
+
+    # Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
+
+    ```
 
   - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **Applicable to v1.0.27 and later**.
 
-    <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000</pre>
+    ```
+
+
+    # Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
+
+
+    ```
 
   - __Example 7:__ Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. __Applicable to v1.0.29 and later__
 
-    <pre># Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000</pre>
+    ```
+
+
+    # Construct phylogenetic tree with FastTree (Quick without best fit model testing)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fasttree<br/># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs --fastboot 1000
+
+
+    ```
 
   - __Example 8:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
-    <pre>$pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa</pre>
+    ```
+
+
+    $pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa
+
+
+    ```
 
   - __Example 9:__ Genome and metagenome similarity estimation using MinHash
-    <pre>$pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING></pre>
+    ```
+
+    $pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
+
+    ```
 
   - __Example 10:__ Run COG annotation for each strain.
 
-    <pre>$pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs</pre>
+    ```
+
+
+    $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
+
+
+    ```
 
   - __Example 11:__ Variants calling and phylogenetic tree construction based on the reference genome.
 
-    <pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000</pre>
+    ```
+
+
+    # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --bsnum 500<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --fastboot 1000
+
+
+    ```
 
   - __Example 12:__ Screening of contigs for antimicrobial and virulence genes
 
-    <pre>$pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50</pre>
+    ```
+
+
+    $pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
+
+
+    ```
 
   - __Example 13:__ Filter short sequences in the genome and assess the status of the genome
 
-    <pre>$pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200</pre>
+    ```
+
+
+    $pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+
+
+    ```
 
   - __Example 14:__ Construct a phylogenetic tree based on multiple sequences in one file
 
-    <pre># Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4</pre>
+    ```
+
+
+    # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4<br/># Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)<br/>$pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
+
+
+    ```
 
 
 ## Generating Input files
@@ -812,8 +929,9 @@ Check the log file named in "strain_name.log" under Results/Variants/<strain\_na
 
 
 
-<pre>$conda install java-jdk=8.0.112</pre>
-
+```bash
+$conda install java-jdk=8.0.112
+```
 
 
 Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solutions.
@@ -821,7 +939,8 @@ Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solu
 ### Q2 Could not determine version of minced please install version 2 or higher
 When running the Annotate function, this error could happen, the error message shows as following:
 
-<pre>
+```bash
+
 Error: A JNI error has occurred, please check your installation and try again
 Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
 	at java.lang.ClassLoader.defineClass1(Native Method)
@@ -838,10 +957,11 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has be
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
 	at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
 [01:09:40] Could not determine version of minced - please install version 2.0 or higher
-</pre>
+```
 Users can downgrade the minced to version 0.3 to solve this problem.
 
-<pre>$conda install minced=0.3</pre>
+```bash
+$conda install minced=0.3</pre>
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
 
@@ -849,7 +969,8 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
-<pre>
+```bash
+
 #Firstly, install brew if have not installed before
 $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -860,7 +981,7 @@ $brew install openssl
 $ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 
 $ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
-</pre>
+```
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations
 
