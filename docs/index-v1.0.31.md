@@ -37,10 +37,6 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. <font color=#ff0000>Because this software relies on a large number of other software, so it is recommended to install with __[Bioconda](https://bioconda.github.io/index.html)__</font>.
 
 
-
-
-
-
 __Step1: Install PGCGAP__
 
 <pre>
@@ -67,7 +63,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 
 ## Required dependencies
-
 
 - [Abricate](https://github.com/tseemann/abricate)
 - [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
@@ -118,8 +113,8 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
 
-## Usage
 
+## Usage
 
 - __Print the help messages:__
     <pre>$pgcgap --help</pre>
@@ -137,8 +132,10 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
+
     <pre>$pgcgap --setup-COGdb</pre>
 <br/>
+
 
 - __Modules:__
 
