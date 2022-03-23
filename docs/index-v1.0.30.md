@@ -43,25 +43,25 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 __Step1: Install PGCGAP__
 
-<pre>
+```
 $conda create -n pgcgap python=3
 $conda activate pgcgap
 $conda install pgcgap (Users in China can input "conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda pgcgap" for instead)
-</pre>
+```
 
 __Step2: Setup COG database__ (Users should execute this after the first installation of pgcgap)
 
-<pre>
+```
 $conda activate pgcgap
 $pgcgap --setup-COGdb
 $conda deactivate
-</pre>
+```
 
 Users with [docker container](https://hub.docker.com/) installed have another choice to install PGCGAP.
 
-<pre>
+```
 $docker pull quay.io/biocontainers/pgcgap:<tag>
-</pre>
+```
 
 (see [pgcgap/tags](https://quay.io/repository/biocontainers/pgcgap?tab=tags) for valid values for &lt;tag&gt;)
 
@@ -483,22 +483,18 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
   - __Example 1:__ Perform all functions, take the *Escherichia coli* as an example, total 6 strains for analysis.<br/>
 
-    __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
-
-    <pre>
+    __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>```
     $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
-    </pre>
+    ```
 
   - __Example 2:__ Genome assembly.
 
     - Illumina reads assembly
 
-        In this dataset, the naming format of the genome is “strain\_1.fastq.gz” and “strain\_2.fastq.gz”. The string after the strain name is “\_1.fastq.gz”, and its length is 11, so "\-\-suffix\_len" was set to 11.
-
-         <pre>
+        In this dataset, the naming format of the genome is “strain\_1.fastq.gz” and “strain\_2.fastq.gz”. The string after the strain name is “\_1.fastq.gz”, and its length is 11, so "\-\-suffix\_len" was set to 11.```
      $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
      $pgcgap --Assemble --platform illumina --assembler spades --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --threads 4 --suffix_len 11
-     $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11</pre>
+     $pgcgap --Assemble --platform illumina --assembler auto --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11```
 
     - Oxford reads assembly
 
@@ -936,7 +932,7 @@ Click [here](https://github.com/tseemann/snippy/issues/259?_blank) for more solu
 ### Q2 Could not determine version of minced please install version 2 or higher
 When running the Annotate function, this error could happen, the error message shows as following:
 
-<pre>
+```
 Error: A JNI error has occurred, please check your installation and try again
 Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has been compiled by a more recent version of the Java Runtime (class file version 55.0), this version of the Java Runtime only recognizes class file versions up to 52.0
 	at java.lang.ClassLoader.defineClass1(Native Method)
@@ -953,7 +949,7 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has be
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
 	at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
 [01:09:40] Could not determine version of minced - please install version 2.0 or higher
-</pre>
+```
 Users can downgrade the minced to version 0.3 to solve this problem.
 
 ```
@@ -970,7 +966,7 @@ Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for
 
 This error may happen when running function "VAR" on macOS. It is an error of openssl. Users can solve this problem as the following:
 
-<pre>
+```
 #Firstly, install brew if have not installed before
 $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -981,7 +977,7 @@ $brew install openssl
 $ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
 
 $ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
-</pre>
+```
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations
 
