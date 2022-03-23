@@ -4,28 +4,27 @@ sort: 998
 
 # DOC for V1.0.32
 
-
 ![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
 
-    
 
-[English Readme](https://liaochenlanruo.github.io/pgcgap) | [Chinese Readme](https://liaochenlanruo.github.io/post/848f.html)
+<p><center>
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=0ett3z77b0x&amp;m=0&amp;h=128&amp;c=ff0000&amp;r=0" async="async"></script>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/0.js?i=0ett3z77b0x&amp;d=3&amp;p=1&amp;b=1&amp;w=293&amp;g=2&amp;f=arial&amp;fs=13&amp;r=0&amp;c0=ff8a00&amp;c1=0006ff&amp;c2=000000&amp;ic0=0&amp;ic1=0" async="async"></script>
+</center></p>
+-------------
 
-```
-      ____       ____      ____     ____       _        ____    
-    U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
-    \| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
-     |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
-     |_|        \____|    \____|   \____|  /_/   \_\   |_|      
-     ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
-    (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
-```
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [中文说明](https://liaochenlanruo.github.io/post/848f.html)
 
-## Multi-version instructions \(This one for V1.0.32\)
 
-- [Instructions for V1.0.29](./index-v1.0.29.html)
-- [Instructions for V1.0.32](./index-v1.0.32.html)
-- [Instructions for the latest version](./index.html)
+          ____       ____      ____     ____       _        ____    
+        U|  _"\ u U /"___|u U /"___| U /"___|u U  /"\  u  U|  _"\ u 
+        \| |_) |/ \| |  _ / \| | u   \| |  _ /  \/ _ \/   \| |_) |/ 
+         |  __/    | |_| |   | |/__   | |_| |   / ___ \    |  __/   
+         |_|        \____|    \____|   \____|  /_/   \_\   |_|      
+         ||>>_      _)(|_    _// \\    _)(|_    \\    >>   ||>>_    
+        (__)__)    (__)__)  (__)(__)  (__)__)  (__)  (__) (__)__)   
+
 
 ## Introduction
 
