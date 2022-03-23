@@ -123,21 +123,41 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 
 - __Print the help messages:__
-    <pre>$pgcgap --help</pre>
+    ```
+
+    $pgcgap --help
+
+    ```
 
 - __General usage:__
-    <pre>$pgcgap [modules] [options]</pre>
+    ```
+
+    $pgcgap [modules] [options]
+
+    ```
 
 - __Show parameters for each module:__
-    <pre>$pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]</pre>
+    ```
+
+    $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
+
+    ```
 
 - __Show examples of each module:__
-    <pre>$pgcgap Examples</pre>
+    ```
+
+    $pgcgap Examples
+
+    ```
 
 <br/>
 
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
-    <pre>$pgcgap --setup-COGdb</pre>
+    ```
+
+    $pgcgap --setup-COGdb
+
+    ```
 <br/>
 
 - __Modules:__
@@ -442,7 +462,11 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of PGCGAP__):
-    <pre>$pgcgap --check-external-programs</pre>
+    ```
+
+    $pgcgap --check-external-programs
+
+    ```
 
 <br/>
 
@@ -471,65 +495,151 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
           Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". "\-\-genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
 
-         <pre>$pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
+
+
+         ```
 
     - PacBio reads assembly
 
          PacBio also produces only one reads file "pacbio.fastq", the parameter settings are similar to Oxford. The strain name is "pacbio" with the suffix ".fastq" and the suffix length is 6, so "\-\-suffix_len" was set to 6.
 
-         <pre>$pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform pacbio --filter_length 200 --ReadsPath Reads/PacBio --reads1 .fastq --genomeSize 4.8m --threads 4 --suffix_len 6
+
+
+         ```
 
     - Hybrid assembly of short reads and long reads
 
          Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
 
-         <pre>$pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4</pre>
+         ```
+
+
+         $pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
+
+
+         ```
 
   - __Example 3__: Gene prediction and annotation
 
-     <pre>$pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species "Escherichia coli" --codon 11 --threads 4</pre>
+     ```
+
+
+     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species "Escherichia coli" --codon 11 --threads 4
+
+
+     ```
 
   - __Example 4__: Constructing single-copy core protein tree and core SNPs tree
 
-     <pre>$pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
+     ```
+
+
+     $pgcgap --CoreTree --CDsPath Results/Annotations/CDs --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
+
+
+     ```
 
   - __Example 5:__ Constructing single-copy core protein tree only.
-    <pre>$pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4</pre>
+    ```
+
+    $pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4
+
+    ```
 
   - __Example 6:__ Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.
 
-    <pre>$pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs</pre>
+    ```
+
+
+    $pgcgap --Pan --codon 11 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --AAsPath Results/Annotations/AAs
+
+
+    ```
 
   - __Example 7:__ Inference of orthologous gene groups.
 
-    <pre>$pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs</pre>
+    ```
+
+
+    $pgcgap --OrthoF --threads 4 --AAsPath Results/Annotations/AAs
+
+
+    ```
 
   - __Example 8:__ Compute whole-genome Average Nucleotide Identity (ANI).
 
-    <pre>$pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa</pre>
+    ```
+
+
+    $pgcgap --ANI --threads 4 --queryL scaf.list --refL scaf.list --ANIO Results/ANI/ANIs --Scaf_suffix .fa
+
+
+    ```
 
   - __Example 9:__ Genome and metagenome similarity estimation using MinHash
-    <pre>$pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING></pre>
+    ```
+
+    $pgcgap --MASH --scafPath <PATH> --Scaf_suffix <STRING>
+
+    ```
 
   - __Example 10:__ Run COG annotation for each strain.
 
-    <pre>$pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs</pre>
+    ```
+
+
+    $pgcgap --pCOG --threads 4 --strain_num 6 --AAsPath Results/Annotations/AAs
+
+
+    ```
 
   - __Example 11:__ Variants calling and phylogenetic tree construction based on the reference genome.
 
-    <pre>$pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree</pre>
+    ```
+
+
+    $pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --strain_num 6 --qualtype sanger --PanTree
+
+
+    ```
 
   - __Example 12:__ Screening of contigs for antimicrobial and virulence genes
 
-    <pre>$pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50</pre>
+    ```
+
+
+    $pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --threads 6 --db ncbi --identity 75 --coverage 50
+
+
+    ```
 
   - __Example 13:__ Filter short sequences in the genome and assess the status of the genome
 
-    <pre>$pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200</pre>
+    ```
+
+
+    $pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+
+
+    ```
 
   - __Example 14:__ Construct a phylogenetic tree based on multiple sequences in one file
 
-    <pre>$pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4</pre>
+    ```
+
+
+    $pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 1000 --threads 4
+
+
+    ```
 
 
 ## Generating Input files
@@ -796,7 +906,17 @@ Check the log file named in "strain_name.log" under Results/Variants/<strain\_na
 
 
 
-<pre>$conda install java-jdk=8.0.112</pre>
+```
+
+
+
+
+$conda install java-jdk=8.0.112
+
+
+
+
+```
 
 
 
@@ -825,7 +945,13 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: minced has be
 </pre>
 Users can downgrade the minced to version 0.3 to solve this problem.
 
-<pre>$conda install minced=0.3</pre>
+```
+
+
+$conda install minced=0.3
+
+
+```
 
 Click [here](https://github.com/bioconda/bioconda-recipes/pull/15407?_blank) for detail informations.
 

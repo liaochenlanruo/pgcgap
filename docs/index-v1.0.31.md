@@ -121,9 +121,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - __Print the help messages:__
     ```
-
     $pgcgap --help
-
     ```
 - __Check for update:__
     ```
@@ -131,23 +129,17 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     ```
 - __General usage:__
     ```
-
     $pgcgap [modules] [options]
-
     ```
 
 - __Show parameters for each module:__
     ```
-
     $pgcgap [Assemble|Annotate|ANI|AntiRes|CoreTree|MASH|OrthoF|Pan|pCOG|VAR|STREE|ACC]
-
     ```
 
 - __Show examples of each module:__
     ```
-
     $pgcgap Examples
-
     ```
 
 <br/>
@@ -155,11 +147,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - __Setup COG database:__ (Users should execute this after the first installation of pgcgap)
 
     ```
-
-
     $pgcgap --setup-COGdb
-
-
     ```
 <br/>
 
@@ -470,9 +458,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
 - Check the required external programs (__It is strongly recommended that this step be performed after the installation of PGCGAP__):
     ```
-
     $pgcgap --check-external-programs
-
     ```
 
 <br/>
