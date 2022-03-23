@@ -5,7 +5,7 @@ sort: 984
 # DOC for V1.0.16
 ---
 
-![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
+![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![����֮��](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
 
 
 <p><center>
@@ -15,7 +15,7 @@ sort: 984
 </center></p>
 -------------
 
-[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [中文说明](https://liaochenlanruo.github.io/post/848f.html)
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [����˵��](https://liaochenlanruo.github.io/post/848f.html)
 
 
           ____       ____      ____     ____       _        ____    
@@ -566,14 +566,14 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
     __Notice__: For the sake of flexibility, The "VAR" function needs to be added additionally.<br/>
 
     ```
-    $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+    $pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species "Escherichia coli" --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
     ```
 
   - __Example 2:__ Genome assembly.
 
     - Illumina reads assembly
 
-      In this dataset, the naming format of the genome is “strain_1.fastq.gz” and “strain_2.fastq.gz”. The string after the strain name is “_1.fastq.gz”, and its length is 11, so "\-\-suffix_len" was set to 11.
+      In this dataset, the naming format of the genome is "strain_1.fastq.gz" and "strain_2.fastq.gz". The string after the strain name is "_1.fastq.gz", and its length is 11, so "\-\-suffix_len" was set to 11.
 
      ```
      $pgcgap --Assemble --platform illumina --assembler abyss --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --kmmer 81 --threads 4 --suffix_len 11
@@ -583,7 +583,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - Oxford reads assembly
 
-      Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". “\-\-genomeSize” is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
+      Oxford nanopore only produces one reads file, so only the parameter of "\-\-reads1" needs to be set, where the value is ".fasta". "\-\-genomeSize" is the estimated genome size, and users can check the genome size of similar strains in the NCBI database for reference. The parameter was set to "4.8m" here. The suffix of the reads file here is ".fasta" and its length is 6, so "\-\-suffix_len" was set to 6.
 
      ```
      $pgcgap --Assemble --platform oxford --filter_length 200 --ReadsPath Reads/Oxford --reads1 .fasta --genomeSize 4.8m --threads 4 --suffix_len 6
@@ -599,7 +599,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 
     - Hybrid assembly of short reads and long reads
 
-     Paired-end short reads and long reads in the directory “Reads/Hybrid/” were used as inputs. Illumina reads and long reads must be from the same isolates.
+     Paired-end short reads and long reads in the directory "Reads/Hybrid/" were used as inputs. Illumina reads and long reads must be from the same isolates.
 
      ```
      $pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_reads_1.fastq.gz --short2 short_reads_2.fastq.gz --long long_reads_high_depth.fastq.gz --threads 4
@@ -608,7 +608,7 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
   - __Example 3__: Gene prediction and annotation
 
      ```
-     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+     $pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --genus Escherichia --species "Escherichia coli" --codon 11 --threads 4
      ```
 
   - __Example 4__: Constructing single-copy core protein tree and core SNPs tree
@@ -691,23 +691,23 @@ Genomes files (complete or draft) in a directory (Default: Results/Assembles/Sca
 
 ### ANI
 
-QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the “\-\-Assemble” function was run first, the list file will be generated automatically.
+QUERY_LIST and REFERENCE_LIST files containing full paths to genomes, one per line (default: scaf.list under the working directory). If the "\-\-Assemble" function was run first, the list file will be generated automatically.
 
 ### MASH
 
 Genomes files (complete or draft) in a directory (Default: Results/Assembles/Scaf/Illumina under the working directory).
 
 ### CoreTree
-Amino acids file (With “.faa” as the suffix) and nucleotide (With “.ffn” as the suffix) file of each strain placed into two directories (default: “./Results/Annotations/AAs/” and “./Results/Annotations/CDs/”). The “.faa” and “.ffn” files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The “Prokka” software was suggested to generate the input files. If the “\-\-Annotate” function was run first, the files will be generated automatically. If the “\-\-CDsPath” was set to “NO”, the nucleotide files will not be needed.
+Amino acids file (With ".faa" as the suffix) and nucleotide (With ".ffn" as the suffix) file of each strain placed into two directories (default: "./Results/Annotations/AAs/" and "./Results/Annotations/CDs/"). The ".faa" and ".ffn" files of the same strain should have the same prefix name. The name of protein IDs and gene IDs should be started with the strain name. The "Prokka" software was suggested to generate the input files. If the "\-\-Annotate" function was run first, the files will be generated automatically. If the "\-\-CDsPath" was set to "NO", the nucleotide files will not be needed.
 
 ### OrthoF
-A set of protein sequence files (one per species) in FASTA format under a directory (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
+A set of protein sequence files (one per species) in FASTA format under a directory (default: "./Results/Annotations/AAs/"). If the "\-\-Annotate" function was run first, the files will be generated automatically.
 
 ### Pan
-GFF3 files (With “.gff” as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: “./Results/Annotations/AAs/”). If the “\-\-Annotate” function was run first, the files will be generated automatically.
+GFF3 files (With ".gff" as the suffix) of each strain placed into a directory. They must contain the nucleotide sequence at the end of the file. All GFF3 files created by Prokka are valid (default: ./Results/Annotations/GFF/). protein sequence files (one per species) in FASTA format under another directory were also needed (default: "./Results/Annotations/AAs/"). If the "\-\-Annotate" function was run first, the files will be generated automatically.
 
 ### pCOG
-Amino acids file (With “.faa” as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the “\-\-Annotate” function was run first, the files will be generated automatically.
+Amino acids file (With ".faa" as the suffix) of each strain placed into a directory (default: ./Results/Annotations/AAs/). If the "\-\-Annotate" function was run first, the files will be generated automatically.
 
 ### VAR
 - Pair-end reads of all strains in a directory (default: ./Reads/Over/ under the working directory).

@@ -5,7 +5,7 @@ sort: 999
 # DOC for V1.0.1
 ---
 
-![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![鐢熶俊涔嬪穮](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
+![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
 
 
 <p><center>
@@ -15,7 +15,7 @@ sort: 999
 </center></p>
 -------------
 
-[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [涓枃璇存槑](https://liaochenlanruo.github.io/post/848f.html)
+[English Readme](https://liaochenlanruo.github.io/pgcgap) \| [中文说明](https://liaochenlanruo.github.io/post/848f.html)
 
 
           ____       ____      ____     ____       _        ____    
@@ -595,7 +595,7 @@ If you use this software please cite:
 =======
 # PGCGAP - the Prokaryotic Comparative Genomics Analysis Pipeline
 
-[English Readme](https://github.com/liaochenlanruo/pgcgap/blob/master/README.md) | [涓枃璇存槑](https://github.com/liaochenlanruo/pgcgap/blob/master/README_Chinese.md)
+[English Readme](https://github.com/liaochenlanruo/pgcgap/blob/master/README.md) | [中文说明](https://github.com/liaochenlanruo/pgcgap/blob/master/README_Chinese.md)
 
 ## Contents
 
