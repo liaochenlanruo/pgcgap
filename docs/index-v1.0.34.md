@@ -598,10 +598,10 @@ pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -
 
 ```bash
 # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-pgcgap --STREE --seqfile proteins.fas --seqtype p --bsnum 500 --threads 4
+pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --bsnum 500 --threads 4
 
 # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-pgcgap --STREE --seqfile proteins.fas --seqtype p --fastboot 1000 --threads 4
+pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --fastboot 1000 --threads 4
 ```
 
 ## Generating Input files
