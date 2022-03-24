@@ -452,7 +452,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 **Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.
 
 ```bash
-pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species “Escherichia coli” --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species coli --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
 ```
 
 ### **Example 2:** Genome assembly.
@@ -499,7 +499,7 @@ pgcgap --Assemble --platform hybrid --ReadsPath Reads/Hybrid --short1 short_read
 ### **Example 3**: Gene prediction and annotation
 
 ```bash
-pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --genus Escherichia --species “Escherichia coli” --codon 11 --threads 4
+pgcgap --Annotate --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --genus Escherichia --species coli --codon 11 --threads 4
 ```
 
 ### **Example 4**: Constructing single-copy core protein tree and core SNPs tree
