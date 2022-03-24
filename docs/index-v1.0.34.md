@@ -64,6 +64,13 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 	# create a conda environment named as pgcgap and install the latest version of PGCGAP
 	mamba env create -f pgcgap.v1.0.34.yml -n pgcgap
+
+	# download build.sh
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/build.sh
+
+	# Intall main programs of PGCGAP
+	conda activate pgcgap
+	bash ./build.sh
 	```
 
 ### **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
