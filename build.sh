@@ -18,9 +18,9 @@ dir=`which prokka`
 reMatch $dir "(^\S+)\/bin\/prokka"
 PREFIX=${reMatch[1]}
 
-wget https://codeload.github.com/liaochenlanruo/pgcgap/tar.gz/refs/tags/v1.0.33
-tar zxvf v1.0.33
-cd pgcgap-1.0.33
+wget https://codeload.github.com/liaochenlanruo/pgcgap/tar.gz/refs/tags/v1.0.34
+tar zxvf v1.0.34
+cd pgcgap-1.0.34
 
 cp pgcgap.pl $PREFIX/bin/pgcgap
 
