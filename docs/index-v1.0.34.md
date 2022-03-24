@@ -43,7 +43,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 
 ### **Step1: Install PGCGAP**
 
-- Method 1 (<font color=red>**Not a good choise at this time**</font>): use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
+- Method 1 (<font color=red><strong>Not a good choise at this time</strong></font>): use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
 	```bash
 	# Install mamba first
@@ -53,7 +53,7 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	mamba create -n pgcgap pgcgap=1.0.34
 	```
 
-- Method 2 (<font color=red>**Suggested**</font>): use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
+- Method 2 (<font color=red><strong>Suggested</strong></font>): use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
 	
 	```bash
 	# Install mamba first
