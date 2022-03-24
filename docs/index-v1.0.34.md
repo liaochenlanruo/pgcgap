@@ -39,11 +39,11 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
 
-**Notice**: There are some troubles to install PGCGAP v1.0.33 and v1.0.34 with conda, and this need time to repair. Be patient and you can install v1.0.32.
+**Notice**: There are some troubles to install PGCGAP v1.0.33 and v1.0.34 with `Method 1`, and this need time to repair. Users are suggest to use `Method 2` to install v1.0.34 at this time.
 
 ### **Step1: Install PGCGAP**
 
-- Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
+- Method 1 (**Not a good choise at this time**): use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
 	```bash
 	# Install mamba first
@@ -53,17 +53,17 @@ The software was tested successfully on Windows WSL, Linux x64 platform, and mac
 	mamba create -n pgcgap pgcgap=1.0.34
 	```
 
-- Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml) and install PGCGAP:
+- Method 2 (suggested): use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
 	
 	```bash
 	# Install mamba first
 	conda install mamba
 
-	# download pgcgap_latest_env.yml
-	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
+	# download pgcgap.v1.0.34.yml
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml
 
 	# create a conda environment named as pgcgap and install the latest version of PGCGAP
-	mamba env create -f pgcgap_latest_env.yml
+	mamba env create -f pgcgap.v1.0.34.yml -n pgcgap
 	```
 
 ### **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
