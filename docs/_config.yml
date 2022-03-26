@@ -1,1 +1,17 @@
-theme: jekyll-theme-dinky
+#theme: jekyll-theme-leap-day
+#theme: jekyll-theme-hacker
+#remote_theme: hydecorp/hydejack
+title: PGCGAP
+lang: en
+description: The Prokaryotic Genomics and Comparative Genomics Analysis Pipeline
+remote_theme: rundocs/jekyll-rtd-theme
+
+readme_index:
+  with_frontmatter: true
+
+exclude:
+  - Color.txt
+  - index0.html
+  - PGCGAP.md.backup
+  - pgcgapIntroduction.php
+#  - index_v1.0.33.md

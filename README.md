@@ -6,6 +6,7 @@
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html)
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="生信之巅" title="生信之巅"></a>
 
+**Anyone who want a help from me, please create an [Issue](https://github.com/liaochenlanruo/pgcgap/issues) on GitHub. Sometimes, I can't send E-mail successfully to your mail server due to unknown reasons. The user also can contact me by instant-messaging software，such as QQ (ID：[945751012](https://qm.qq.com/cgi-bin/qm/qr?k=f6SeZ8F9dDTaZwLZZBymkczRXUHLW6Q1&jump_from=webapi)) or ![WeChat](https://badges.aleen42.com/src/wechat.svg) (ID: liaochenlanruo).**
 
 [English Readme](https://liaochenlanruo.github.io/pgcgap?_blank) | [Chinese Readme](https://liaochenlanruo.github.io/2019/04/28/PGCGAP%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/?_blank)
 
@@ -42,24 +43,22 @@ The software was tested successfully on Windows WSL, Linux x64 platform and macO
 __Step1: Install PGCGAP__
 
 ```
-$conda create -n pgcgap python=3
-$conda activate pgcgap
-$conda install pgcgap
+# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
+$conda create -n pgcgap python=3 pgcgap=1.0.32
 ```
 <p><strong>Notice: What should we do when the installation is slow? </strong>As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making "Solving Environment" slower and slower. Sometimes we can't even install the software through CONDA. In fact, we can do something instead of just waiting.<br/></p>
 
 
 - Method 1: use mamba to deal with the slow development of "solving environment" when using CONDA.
     <pre>
-    $conda activate pgcgap
     $conda install mamba -c conda-forge
-    $mamba install pgcgap
+    $mamba create -n pgcgap python=3 pgcgap=1.0.32
     </pre>
 
-- Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
+- Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
     <pre>
     # download pgcgap_latest_env.yml
-    $wget https://github.com/liaochenlanruo/pgcgap/blob/master/conda/pgcgap_latest_env.yml
+    $wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
 	
     # create a conda environment named as pgcgap and install the latest version of PGCGAP
     $conda env create -f pgcgap_latest_env.yml
@@ -93,8 +92,6 @@ $docker pull quay.io/biocontainers/pgcgap:<tag>
 - [FastANI](https://github.com/ParBLiSS/FastANI)
 - [Fastme](http://www.atgc-montpellier.fr/fastme/binaries.php)
 - [Fastp](https://github.com/OpenGene/fastp)
-- [Gblocks](http://molevol.cmima.csic.es/castresana/Gblocks_server.html)
-- [Gubbins](https://github.com/sanger-pathogens/gubbins) >=2.3.4
 - [Htslib](https://github.com/samtools/htslib)
 - [IQ-TREE](http://www.iqtree.org/)
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
