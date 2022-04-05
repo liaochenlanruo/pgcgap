@@ -1399,7 +1399,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
-  Version 1.0.34  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
+  Version 1.0.35  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
 
   Author: Hualin Liu
 
