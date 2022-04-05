@@ -790,7 +790,7 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
 - **Results/PanGenome/gene_presence_absence.Rtab**
 
-    A binary tab seperated version of the gene_presence_absence.csv
+    A binary tab seperated version of the gene_presence_absence.csv.
 
 - **Results/PanGenome/gene_presence_absence_filt_pseudo_length_frag.csv**
 
@@ -826,15 +826,15 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
 - **Results/PanGenome/coevo_results/gene_pa_spydrpick.csv**
 
-    Identified (co-evolving genes and genes involved in epistatic interactions)[https://gtonkinhill.github.io/panaroo/#/post/coevolution], the file includes those gene pairs with MI values above the specified threshold.
+    Identified [co-evolving genes and genes involved in epistatic interactions](https://gtonkinhill.github.io/panaroo/#/post/coevolution), the file includes those gene pairs with MI values above the specified threshold.
 
 - **Results/PanGenome/img_results/**
 
-    Estimated pangenome size as well as gene gain and loss rates acording to the Infinitely Many Genes (IMG)[https://gtonkinhill.github.io/panaroo/#/post/pansize] model.
+    Estimated pangenome size as well as gene gain and loss rates acording to the Infinitely Many Genes [IMG](https://gtonkinhill.github.io/panaroo/#/post/pansize) model.
 
 - **Results/PanGenome/fmg_results.txt**
 
-    Estimated pangenome size as well as gene gain and loss rates acording to the Finitely Many Genes (FMG)[https://gtonkinhill.github.io/panaroo/#/post/pansize] model.
+    Estimated pangenome size as well as gene gain and loss rates acording to the Finitely Many Genes [FMG](https://gtonkinhill.github.io/panaroo/#/post/pansize) model.
 
 - **Results/PanGenome/Other\_files**
 
