@@ -1164,7 +1164,8 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
 - V1.0.35
 
-  - Rewrite the module Pan, Panaroo is used instead of Roary and the output files have changed, see (OUTPUT section)[https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1] for details.
+  - Rewrite the module Pan, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
+
 ------------------------------------------------------------------------
 
 <p><center><strong>
