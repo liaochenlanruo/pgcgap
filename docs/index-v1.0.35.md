@@ -828,14 +828,6 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
     Identified [co-evolving genes and genes involved in epistatic interactions](https://gtonkinhill.github.io/panaroo/#/post/coevolution), the file includes those gene pairs with MI values above the specified threshold.
 
-- **Results/PanGenome/img_results/**
-
-    Estimated pangenome size as well as gene gain and loss rates acording to the Infinitely Many Genes [IMG](https://gtonkinhill.github.io/panaroo/#/post/pansize) model.
-
-- **Results/PanGenome/fmg_results.txt**
-
-    Estimated pangenome size as well as gene gain and loss rates acording to the Finitely Many Genes [FMG](https://gtonkinhill.github.io/panaroo/#/post/pansize) model.
-
 - **Results/PanGenome/Other\_files**
 
     see [Panaroo](https://gtonkinhill.github.io/panaroo/#/gettingstarted/output?_blank) outputs.

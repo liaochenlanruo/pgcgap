@@ -2822,15 +2822,15 @@ if ($opt_All or $opt_Pan) {
 		print "Running FastTree for phylogenetic tree construction...\n\n";
 		system("fasttree -quiet $gblocks_outn > Panaroo.core.protein.nwk");
 		# Estimating the Pangenome Size
-		print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
+		##print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
 		# Collins,R.E. and Higgs,P.G. (2012) Testing the Infinitely Many Genes Model for the Evolution of the Bacterial Core Genome and Pangenome. Mol. Biol. Evol., 29, 3413¨C3425.
 		# Baumdicker,F., Hess,W.R. and Pfaffelhuber,P. (2012) The infinitely many genes model for the distributed genome of bacteria. Genome Biol. Evol., 4, 443¨C456.
-		system("mkdir -p $working_dir/$pangenome/img_results");
-		system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk");
+		##system("mkdir -p $working_dir/$pangenome/img_results");
+		##system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk");
 
-		print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
+		##print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
 		# Zamani-Dahaj,S.A., Okasha,M., Kosakowski,J. and Higgs,P.G. (2016) Estimating the Frequency of Horizontal Gene Transfer Using Phylogenetic Models of Gene Gain and Loss. Mol. Biol. Evol., 33, 1843¨C1857.
-		system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
+		##system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
 	}else {
 		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
 		if ($opt_fastboot) {
@@ -2839,12 +2839,12 @@ if ($opt_All or $opt_Pan) {
 			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
 		}
 		# Estimating the Pangenome Size
-		print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
-		system("mkdir -p $working_dir/$pangenome/img_results");
-		system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $pangenome/Core/Panaroo.core.protein.fasta.gb.treefile");
+		##print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
+		##system("mkdir -p $working_dir/$pangenome/img_results");
+		##system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $pangenome/Core/Panaroo.core.protein.fasta.gb.treefile");
 
-		print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
-		system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.fasta.gb.treefile --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
+		##print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
+		##system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.fasta.gb.treefile --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
 	}
 	#===================================================================================
 	#system("fasttree Panaroo.core.protein.fasta > Panaroo.core.protein.nwk");
