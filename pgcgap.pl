@@ -1148,6 +1148,54 @@ Filter short sequences in the genome and assess the status of the genome.
 
 $options{'Assess'} = \( my $opt_Assess);
 
+=over 30
+
+=item B<[--id2seq (STRING)]>
+
+Extract the corresponding sequences from a file to another file according to a number of ids in one file.
+
+=back
+
+=cut
+
+$options{'id2seq'} = \( my $opt_id2seq);
+
+=over 30
+
+=item B<[--ids (STRING)]>
+
+Parameter for id2seq, specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.
+
+=back
+
+=cut
+
+$options{'ids=s'} = \( my $opt_ids);
+
+=over 30
+
+=item B<[--seqin (STRING)]>
+
+Parameter for id2seq, specify the FASTA format file that contains the sequence.
+
+=back
+
+=cut
+
+$options{'seqin=s'} = \( my $opt_seqin);
+
+=over 30
+
+=item B<[--seqout (STRING)]>
+
+Parameter for id2seq, specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.
+
+=back
+
+=cut
+
+$options{'seqout=s'} = \( my $opt_seqout);
+
 =head2 *************************** Paths of external programs *************************************************
 
 =for text
@@ -3223,6 +3271,9 @@ if ($opt_ACC) {
 		system("get_stats_summary.pl --Scaf_suffix $opt_Scaf_suffix");
 		chdir $working_dir;
 	}
+	if ($opt_id2seq) {
+		system("id2seq.pl --ids $opt_ids --seqin $opt_seqin --seqout $opt_seqout");
+	}
 }
 sub lenfilter{
 	my $scaf = shift;
@@ -3493,8 +3544,9 @@ sub printSTREE{
 }
 
 sub printACC{
-	print "Applets in ACC include 'Assess' now\n";
+	print "Applets in ACC include 'Assess' and 'id2seq' now\n";
 	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files." . RED, " User specified required",RESET . " ( Default .filtered.fas )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
+	print "Parameters for id2seq include the following:\n    [--ids (STRING)] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.\n    [--seqin (STRING)] Specify the FASTA format file that contains the sequence.\n    [--seqout (STRING)] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.\n\n";
 }
 
 sub printExamples{
@@ -3625,6 +3677,10 @@ sub printExamples{
 	print ON_BLUE, "Example 16: Perform the short sequences filter from the assembled genome and get the genome status.", RESET . "\n\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--Assess",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING> " . RED, "--filter_length",RESET . " <INT>\n\n";
+
+	print ON_BLUE, "Example 17: Based on the ids in one file, extract the sequence corresponding to those ids from the other file.", RESET . "\n\n";
+
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--id2seq",RESET . " " . RED, "--ids",RESET . " <IDs file> " . RED, "--seqin",RESET . " <Sequence file> " . RED, "--seqout",RESET . " <OutPut file>\n\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){

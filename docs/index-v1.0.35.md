@@ -2,7 +2,7 @@
 sort: 965
 ---
 
-# DOC for V1.0.35
+# DOC for V1.0.35 The package will release soon
 ---
 
 ![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
@@ -201,7 +201,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\[\--STREE\]** Construct a phylogenetic tree based on multiple sequences in one file
 
-  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome only)
+  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome; \'id2seq\' for extracting the corresponding sequences from a file to another file according to a number of ids in one file.)
 
 - **Global Options:**
 
@@ -358,7 +358,11 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\--ACC**
 
-    - **\[\--Assess (STRING)\]** Filter short sequences in the genome and assess the status of the genome
+    - **\[\--Assess (STRING)\]** Filter short sequences in the genome and assess the status of the genome.
+    - **\[\-\-id2seq (STRING)\]** Extract the corresponding sequences from a file to another file according to a number of ids in one file.
+      - \[\-\-ids (STRING)\] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.
+      - \[\-\-seqin (STRING)\] Specify the FASTA format file that contains the sequence.
+      - \[\-\-seqout (STRING)\] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.
 
 - **Paths of external programs**
 
@@ -578,10 +582,16 @@ pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --Rea
 pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --threads 6 --db all --identity 75 --coverage 50
 ```
 
-### **Example 13:** Filter short sequences in the genome and assess the status of the genome.
+### **Example 13.1:** Filter short sequences in the genome and assess the status of the genome.
 
 ```bash
 pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
+```
+
+### **Example 13.2:** Extract the corresponding sequences from a file (for example, SRR9620252.faa) to another file (for example, seqout.fa) according to a number of ids in one file (for example, ids.txt).
+
+```bash
+pgcgap --ACC --id2seq --ids Other_inputs/ID2SEQ/ids.txt --seqin Other_inputs/ID2SEQ/SRR9620252.faa --seqout Other_inputs/ID2SEQ/seqout.fa
 ```
 
 ### **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
@@ -907,7 +917,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use \"\--MASH\", please also cite [Mash](https://dx.doi.org/10.1186%2Fs13059-016-0997-x).
 
-- If you use \"\--VAR\", please also cite [Sickle](https://github.com/najoshi/sickle), [Snippy](https://github.com/tseemann/snippy), [Gubbins](https://dx.doi.org/10.1093%2Fnar%2Fgku1196), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015), and [SnpEff](https://dx.doi.org/10.4161%2Ffly.19695).
+- If you use \"\--VAR\", please also cite [Sickle](https://github.com/najoshi/sickle), [Snippy](https://github.com/tseemann/snippy), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015), and [SnpEff](https://dx.doi.org/10.4161%2Ffly.19695).
 
 - If you use \"\--AntiRes\", please also cite
     [Abricate](https://github.com/tseemann/abricate) and the corresponding database you used: [NCBI AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6811410), [CARD](https://www.ncbi.nlm.nih.gov/pubmed/27789705), [Resfinder](https://www.ncbi.nlm.nih.gov/pubmed/22782487), [ARG-ANNOT](https://www.ncbi.nlm.nih.gov/pubmed/24145532), [VFDB](https://www.ncbi.nlm.nih.gov/pubmed/26578559), [PlasmidFinder](https://www.ncbi.nlm.nih.gov/pubmed/24777092), [EcOH](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343136/), or [MEGARES 2.00](https://academic.oup.com/nar/article/48/D1/D561/5624973).
@@ -1156,7 +1166,8 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
 - V1.0.35
 
-  - Rewrite the module Pan, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
+  - Rewrite the module `Pan`, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
+  - Added function `id2seq` to module `ACC` for extracting the corresponding sequences from a file to another file according to a number of ids in one file.
 
 ------------------------------------------------------------------------
 
