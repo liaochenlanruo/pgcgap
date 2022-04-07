@@ -1196,6 +1196,54 @@ Parameter for id2seq, specify the name of the output file that will be used to s
 
 $options{'seqout=s'} = \( my $opt_seqout);
 
+=over 30
+
+=item B<[--getRepeats (STRING)]>
+
+Counts the number of repeats of the string for the specified column in a given file.
+
+=back
+
+=cut
+
+$options{'getRepeats'} = \( my $opt_getRepeats);
+
+=over 30
+
+=item B<[--filein (STRING)]>
+
+Parameter for getRepeats, specify the input file.
+
+=back
+
+=cut
+
+$options{'filein=s'} = \( my $opt_filein);
+
+=over 30
+
+=item B<[--column (INT)]>
+
+Parameter for getRepeats, specify which column is used for the calculation (default: 0 for the whole line).
+
+=back
+
+=cut
+
+$options{'column=i'} = \( my $opt_column = 0);
+
+=over 30
+
+=item B<[--sep (STRING)]>
+
+Parameter for getRepeats, specify the separator (space, tab, comma, semicolon) between columns (Default: tab).
+
+=back
+
+=cut
+
+$options{'sep=s'} = \( my $opt_sep = "tab");
+
 =head2 *************************** Paths of external programs *************************************************
 
 =for text
@@ -3274,6 +3322,9 @@ if ($opt_ACC) {
 	if ($opt_id2seq) {
 		system("id2seq.pl --ids $opt_ids --seqin $opt_seqin --seqout $opt_seqout");
 	}
+	if ($opt_getRepeats) {
+		system("get_repeats.pl --filein $opt_filein --column $opt_column --sep $opt_sep");
+	}
 }
 sub lenfilter{
 	my $scaf = shift;
@@ -3544,9 +3595,10 @@ sub printSTREE{
 }
 
 sub printACC{
-	print "Applets in ACC include 'Assess' and 'id2seq' now\n";
+	print "Applets in ACC include 'Assess', 'id2seq' and 'getRepeats' now\n";
 	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files." . RED, " User specified required",RESET . " ( Default .filtered.fas )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
 	print "Parameters for id2seq include the following:\n    [--ids (STRING)] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.\n    [--seqin (STRING)] Specify the FASTA format file that contains the sequence.\n    [--seqout (STRING)] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.\n\n";
+	print "Parameters for getRepeats include the following:\n    [--filein (STRING)] Specify the input file.\n    [--column (INT)] Specifies which column is used for the calculation (default: 0 for the whole line).\n    [--sep (STRING)] Specify the separator (space, tab, comma, semicolon) between columns (Default: tab).\n\n";
 }
 
 sub printExamples{
@@ -3681,6 +3733,10 @@ sub printExamples{
 	print ON_BLUE, "Example 17: Based on the ids in one file, extract the sequence corresponding to those ids from the other file.", RESET . "\n\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--id2seq",RESET . " " . RED, "--ids",RESET . " <IDs file> " . RED, "--seqin",RESET . " <Sequence file> " . RED, "--seqout",RESET . " <OutPut file>\n\n";
+
+	print ON_BLUE, "Example 18: Counts the number of repeats of the string for the specified column in a given file.", RESET . "\n\n";
+
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--getRepeats",RESET . " " . RED, "--filein",RESET . " <Input file> " . RED, "--column",RESET . " <INT> " . RED, "--sep",RESET . " <space, tab, comma, semicolon>\n\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){

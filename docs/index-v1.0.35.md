@@ -201,7 +201,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\[\--STREE\]** Construct a phylogenetic tree based on multiple sequences in one file
 
-  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome; \'id2seq\' for extracting the corresponding sequences from a file to another file according to a number of ids in one file.)
+  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome; \'id2seq\' for extracting the corresponding sequences from a file to another file according to a number of ids in one file; \'getRepeats\' for counting the number of repeats of the string for the specified column in a given file.)
 
 - **Global Options:**
 
@@ -363,6 +363,10 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
       - \[\-\-ids (STRING)\] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.
       - \[\-\-seqin (STRING)\] Specify the FASTA format file that contains the sequence.
       - \[\-\-seqout (STRING)\] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.
+    - **\[\-\-getRepeats (STRING)\]** Counts the number of repeats of the string for the specified column in a given file.
+      - \[\-\-filein (STRING)\] Specify the input file.
+      - \[\-\-column (INT)\] Specifies which column is used for the calculation (default: 0 for the whole line).
+      - \[\-\-sep (STRING)\] Specify the separator (space, tab, comma, semicolon) between columns (Default: tab).
 
 - **Paths of external programs**
 
@@ -582,16 +586,10 @@ pgcgap --VAR --threads 4 --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --Rea
 pgcgap --AntiRes --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix .filtered.fas --threads 6 --db all --identity 75 --coverage 50
 ```
 
-### **Example 13.1:** Filter short sequences in the genome and assess the status of the genome.
+### **Example 13:** Filter short sequences in the genome and assess the status of the genome.
 
 ```bash
 pgcgap --ACC --Assess --scafPath Results/Assembles/Scaf/Illumina --Scaf_suffix -8.fa --filter_length 200
-```
-
-### **Example 13.2:** Extract the corresponding sequences from a file (for example, SRR9620252.faa) to another file (for example, seqout.fa) according to a number of ids in one file (for example, ids.txt).
-
-```bash
-pgcgap --ACC --id2seq --ids Other_inputs/ID2SEQ/ids.txt --seqin Other_inputs/ID2SEQ/SRR9620252.faa --seqout Other_inputs/ID2SEQ/seqout.fa
 ```
 
 ### **Example 14:** Construct a phylogenetic tree based on multiple sequences in one file.
@@ -602,6 +600,23 @@ pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --bsnum 500 --thr
 
 # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --fastboot 1000 --threads 4
+```
+
+### **Example 15:** Extract the corresponding sequences from a file (for example, SRR9620252.faa) to another file (for example, seqout.fa) according to a number of ids in one file (for example, ids.txt).
+
+```bash
+pgcgap --ACC --id2seq --ids Other_inputs/ID2SEQ/ids.txt --seqin Other_inputs/ID2SEQ/SRR9620252.faa --seqout Other_inputs/ID2SEQ/seqout.fa
+```
+
+
+### **Example 16:** Counts the number of repeats of the string for the specified column in a given file.
+
+```bash
+# take the whole line (--column 0)
+pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 0 --sep semicolon
+
+# take the fourth line (--column 4)
+pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 4 --sep semicolon
 ```
 
 ## Generating Input files
@@ -1168,6 +1183,7 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 
   - Rewrite the module `Pan`, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
   - Added function `id2seq` to module `ACC` for extracting the corresponding sequences from a file to another file according to a number of ids in one file.
+  - Added function `getRepeats` to module `ACC` for counting the number of repeats of the string for the specified column in a given file.
 
 ------------------------------------------------------------------------
 
