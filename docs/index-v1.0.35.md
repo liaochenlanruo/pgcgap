@@ -1,8 +1,8 @@
 ---
-sort: 966
+sort: 965
 ---
 
-# DOC for V1.0.34
+# DOC for V1.0.35 The package will release soon
 ---
 
 ![Platform](https://img.shields.io/badge/Platform-WSL%2FLinux%2FmacOS-green) [![License](https://img.shields.io/github/license/liaochenlanruo/pgcgap)](https://github.com/liaochenlanruo/pgcgap/blob/master/LICENSE) [![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) ![Downloads conda](https://img.shields.io/conda/dn/bioconda/pgcgap.svg?style=flat) [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/pgcgap/README.html) [![生信之巅](https://pub.idqqimg.com/wpa/images/group.png "945751012")](//shang.qq.com/wpa/qunwpa?idkey=fd4637eecd73bf0a5a8caa274843a07afdf1fbbc40a86630df5d4b029749cc7b)
@@ -39,38 +39,29 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 
 The software was tested successfully on Windows WSL, Linux x64 platform, and macOS. Because this software relies on a large number of other software, so it is recommended to install with **[Bioconda](https://bioconda.github.io/index.html)**.
 
-**Notice**: There are some troubles to install PGCGAP v1.0.33 and v1.0.34 with `Method 1`, and this need time to repair. Users are suggest to use `Method 2` to install v1.0.34 at this time.
-
 ### **Step1: Install PGCGAP**
 
-- Method 1 (<font color=red><strong>Not a good choise at this time</strong></font>): use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
+- Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
 	```bash
 	# Install mamba first
 	conda install mamba
 	
 	# Usually specify the latest version of PGCGAP
-	mamba create -n pgcgap pgcgap=1.0.34
+	mamba create -n pgcgap pgcgap=1.0.35
 	```
 
-- Method 2 (<font color=red><strong>Suggested</strong></font>): use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
+- Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.35.yml) and install PGCGAP:
 	
 	```bash
 	# Install mamba first
 	conda install mamba
 
-	# download pgcgap.v1.0.34.yml
-	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml
+	# download pgcgap.v1.0.35.yml
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.35.yml
 
 	# create a conda environment named as pgcgap and install the latest version of PGCGAP
-	mamba env create -f pgcgap.v1.0.34.yml -n pgcgap
-
-	# download build.sh
-	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/build.sh
-
-	# Intall main programs of PGCGAP
-	conda activate pgcgap
-	bash ./build.sh
+	mamba env create -f pgcgap.v1.0.35.yml -n pgcgap
 	```
 
 ### **Step2: Setup COG database** (Users should execute this after the first installation of pgcgap)
@@ -114,6 +105,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
 - [OpenJDK8](https://openjdk.java.net/)
 - [PAL2NAL v14](http://www.bork.embl.de/pal2nal/)
+- [Panaroo](https://github.com/gtonkinhill/panaroo)
 - [trimAL](http://trimal.cgenomics.org/)
 - [Perl](http://www.perl.org/get.html) & the modules
   - [perl-bioperl](http://metacpan.org/pod/BioPerl)
@@ -135,7 +127,6 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
   - [gplots](https://cran.r-project.org/web/packages/gplots/)
   - [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html)
   - [plotrix](https://cran.r-project.org/web/packages/plotrix/)
-- [Roary](https://sanger-pathogens.github.io/Roary/)
 - [Sickle-trim](https://github.com/najoshi/sickle)
 - [Snippy](https://github.com/tseemann/snippy)
 - [Snp-sites](https://github.com/sanger-pathogens/snp-sites)
@@ -194,7 +185,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\[\--CoreTree\]** Construct single-core proteins tree and SNPs tree of single-copy core genes
 
-  - **\[\--Pan\]** Run \"roary\" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
+  - **\[\--Pan\]** Run \"Panaroo\" pan-genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by Panaroo
 
   - **\[\--OrthoF\]** Identify orthologous protein sequence families with \"OrthoFinder\", and construct a phylogenetic tree with the sing-copy core Orthologues
 
@@ -210,7 +201,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\[\--STREE\]** Construct a phylogenetic tree based on multiple sequences in one file
 
-  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome only)
+  - **\[\--ACC\]** Other useful gadgets (now includes \'Assess\' for filtering short sequences in the genome and assessing the statistics of the genome; \'id2seq\' for extracting the corresponding sequences from a file to another file according to a number of ids in one file; \'getRepeats\' for counting the number of repeats of the string for the specified column in a given file.)
 
 - **Global Options:**
 
@@ -311,7 +302,6 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
   - **\--Pan**
 
     - **\[\--GffPath (PATH)\]** \[Required\] Gff files of all strains as paths ( Default \"./Results/Annotations/GFF\" )
-    - **\[\--PanTree\]** Construct a phylogenetic tree of single-copy core proteins called by roary
     - **\[\--identi (INT)\]** Minimum percentage identity for blastp ( Default 95 )
 
   - **\--OrthoF**
@@ -368,7 +358,15 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 
   - **\--ACC**
 
-    - **\[\--Assess (STRING)\]** Filter short sequences in the genome and assess the status of the genome
+    - **\[\--Assess (STRING)\]** Filter short sequences in the genome and assess the status of the genome.
+    - **\[\-\-id2seq (STRING)\]** Extract the corresponding sequences from a file to another file according to a number of ids in one file.
+      - \[\-\-ids (STRING)\] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.
+      - \[\-\-seqin (STRING)\] Specify the FASTA format file that contains the sequence.
+      - \[\-\-seqout (STRING)\] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.
+    - **\[\-\-getRepeats (STRING)\]** Counts the number of repeats of the string for the specified column in a given file.
+      - \[\-\-filein (STRING)\] Specify the input file.
+      - \[\-\-column (INT)\] Specifies which column is used for the calculation (default: 0 for the whole line).
+      - \[\-\-sep (STRING)\] Specify the separator (space, tab, comma, semicolon) between columns (Default: tab).
 
 - **Paths of external programs**
 
@@ -413,8 +411,8 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
   - **\[\--prokka-bin (PATH)\]** Path to prokka binary file. Default
         tries if prokka is in PATH;
 
-  - **\[\--roary-bin (PATH)\]** Path to the roary binary file.
-        Default tries if roary is in PATH;
+  - **\[\--panaroo-bin (PATH)\]** Path to the Panaroo binary file.
+        Default tries if Panaroo is in PATH;
 
   - **\[\--sickle-bin (PATH)\]** Path to the sickle-trim binary
         file. Default tries if sickle is in PATH.
@@ -452,7 +450,7 @@ Example dataset can be download [here](http://bcam.hzau.edu.cn/PGCGAP/PGCGAP_Exa
 **Notice**: For the sake of flexibility, The \"VAR\" function needs to be added additionally.
 
 ```bash
-pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species coli --codon 11 --PanTree --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
+pgcgap --All --platform illumina --filter_length 200 --ReadsPath Reads/Illumina --reads1 _1.fastq.gz --reads2 _2.fastq.gz --suffix_len 11 --kmmer 81 --genus Escherichia --species coli --codon 11 --strain_num 6 --threads 4 --VAR --refgbk /mnt/h/PGCGAP_Examples/Reads/MG1655.gbff --qualtype sanger
 ```
 
 ### **Example 2:** Genome assembly.
@@ -528,17 +526,17 @@ pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --st
 pgcgap --CoreTree --CDsPath NO --AAsPath Results/Annotations/AAs --codon 11 --strain_num 6 --threads 4 --fastboot 1000
 ```
 
-### **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary. **<u>Applicable to v1.0.27 and later</u>**.
+### **Example 6:** Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by Panaroo. **<u>Applicable to v1.0.35 and later</u>**.
 	
 ```bash
 # Construct phylogenetic tree with FastTree (Quick without best fit model testing)
-pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fasttree
+pgcgap --Pan --codon 11 --identi 0.95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --fasttree
 
 # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)
-pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --bsnum 500
+pgcgap --Pan --codon 11 --identi 0.95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --bsnum 500
 
 # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
-pgcgap --Pan --codon 11 --identi 95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --PanTree --fastboot 1000
+pgcgap --Pan --codon 11 --identi 0.95 --strain_num 6 --threads 4 --GffPath Results/Annotations/GFF --fastboot 1000
 ```
 
 ### **Example 7:** Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins. **<u>Applicable to v1.0.29 and later</u>**.
@@ -602,6 +600,23 @@ pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --bsnum 500 --thr
 
 # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)
 pgcgap --STREE --seqfile Other_inputs/proteins.fas --seqtype p --fastboot 1000 --threads 4
+```
+
+### **Example 15:** Extract the corresponding sequences from a file (for example, SRR9620252.faa) to another file (for example, seqout.fa) according to a number of ids in one file (for example, ids.txt).
+
+```bash
+pgcgap --ACC --id2seq --ids Other_inputs/ID2SEQ/ids.txt --seqin Other_inputs/ID2SEQ/SRR9620252.faa --seqout Other_inputs/ID2SEQ/seqout.fa
+```
+
+
+### **Example 16:** Counts the number of repeats of the string for the specified column in a given file.
+
+```bash
+# take the whole line (--column 0)
+pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 0 --sep semicolon
+
+# take the fourth line (--column 4)
+pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 4 --sep semicolon
 ```
 
 ## Generating Input files
@@ -794,33 +809,53 @@ Multiple-FASTA sequences in a file, can be Protein, DNA and Codons.
 
 ### Pan
 
+- **Results/PanGenome/gene_presence_absence.csv**
+
+    A csv file describing which gene is in which sample.
+
+- **Results/PanGenome/gene_presence_absence.Rtab**
+
+    A binary tab seperated version of the gene_presence_absence.csv.
+
+- **Results/PanGenome/gene_presence_absence_filt_pseudo_length_frag.csv**
+
+    remove potential pseudogenes, genes of unusual length or genes that have been fragmented in the process of assembly or annotation from `gene_presence_absence.csv`.
+
+- **Results/PanGenome/final_graph.gml**
+
+    The final pan-genome graph generated by Panaroo, which can be viewed using Cytoscape.
+
+- **Results/PanGenome/struct_presence_absence.csv**
+
+    A csv file which lists the presence and abscence of different genomic rearrangement events.
+
+- **Results/PanGenome/summary_statistics.txt**
+
+    A tab file lists number of each type of genes (Core genes, Soft core genes, Shell genes, Cloud genes, Total genes).
+
 - **Results/PanGenome/Pangenome\_Pie.pdf**
 
     A 3D pie chart and a fan chart of the breakdown of genes and the number of isolates they are present in.
 
-- **Results/PanGenome/pangenome\_frequency.pdf**
+- **Results/PanGenome/Core/Panaroo.core.protein.fasta**
 
-    A graph with the frequency of genes versus the number of genomes.
+    Alignments of single-copy core proteins called by Panaroo software.
 
-- **Results/PanGenome/Pangenome\_matrix.pdf**
+- **Results/PanGenome/Core/Panaroo.core.protein.nwk**
 
-    A figure showing the tree compared to a matrix with the presence and absence of core and accessory genes.
+    A phylogenetic tree of Panaroo.core.protein.fasta constructed by FastTree.
 
-- **Results/PanGenome/Core/Roary.core.protein.fasta**
+- **Results/PanGenome/Core/Panaroo.core.protein.fasta.gb.treefile**
 
-    Alignments of single-copy core proteins called by roary software.
+    A phylogenetic tree of Panaroo.core.protein.fasta constructed by IQ-TREE.
 
-- **Results/PanGenome/Core/Roary.core.protein.nwk**
+- **Results/PanGenome/coevo_results/gene_pa_spydrpick.csv**
 
-    A phylogenetic tree of Roary.core.protein.fasta constructed by FastTree.
-
-- **Results/PanGenome/Core/Roary.core.protein.fasta.gb.treefile**
-
-    A phylogenetic tree of Roary.core.protein.fasta constructed by IQ-TREE.
+    Identified [co-evolving genes and genes involved in epistatic interactions](https://gtonkinhill.github.io/panaroo/#/post/coevolution), the file includes those gene pairs with MI values above the specified threshold.
 
 - **Results/PanGenome/Other\_files**
 
-    see [roary](https://sanger-pathogens.github.io/Roary/?_blank) outputs.
+    see [Panaroo](https://gtonkinhill.github.io/panaroo/#/gettingstarted/output?_blank) outputs.
 
 ### pCOG
 
@@ -889,7 +924,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use \"\--CoreTree\", please also cite [CD-HIT](https://doi.org/10.1093/bioinformatics/btl158), [MAFFT](https://doi.org/10.1093/nar/gkf436), [PAL2NAL](https://doi.org/10.1093/nar/gkl315), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490), and [SNP-sites](https://dx.doi.org/10.1099%2Fmgen.0.000056).
 
-- If you use \"\--Pan\", please also cite [Roary](https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtv421), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
+- If you use \"\--Pan\", please also cite [Panaroo](https://gtonkinhill.github.io/panaroo/#/gettingstarted/citation), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
 
 - If you use \"\--OrthoF\", please also cite [OrthoFinder](https://dx.doi.org/10.1186%2Fs13059-019-1832-y), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
 
@@ -965,37 +1000,27 @@ ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
 
 Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for more informations.
 
-### Q4 Use of uninitialized value in require at Encode.pm line 61
-
-This warning may happen when running function \"Pan\". It is a warning of Roary software. The content of line 61 is \"require Encode::ConfigLocal;\". Users can ignore the warning. Click [here](https://github.com/sanger-pathogens/Roary/issues/323) for details.
-
-### Q5 Can't locate Bio/Roary/CommandLine/Roary.pm in @INC
-
-```bash
-cpanm install -f Bio::Roary
-```
-
 ## Updates
 -------
 
-- V1.0.3
+### - V1.0.3
 
   - Updated ANI function.
 
-- V1.0.4
+### - V1.0.4
 
   - Add parallel for function \"pCOG\".
   - Optimized drawing of ANI heat map.
 
-- V1.0.5
+### - V1.0.5
 
   - Bug repair for the input of gubbins.
 
-- V1.0.6
+### - V1.0.6
 
   - Modified CoreTree to split protein and SNPs tree constructing.
 
-- V1.0.7
+### - V1.0.7
 
   - Split Assemble and Annotate into two functions.
   - Added third-generation genome assembly function.
@@ -1003,111 +1028,111 @@ cpanm install -f Bio::Roary
   - Changed the name of function \"COG\" to \"pCOG\".
   - Fixed the sorting bug for ANI heat map.
 
-- V1.0.8
+### - V1.0.8
 
   - Add the \"MASH\" function to compute genome distance and similarity using MinHash.
 
-- V1.0.9
+### - V1.0.9
 
   - The function of constructing a single-copy core protein phylogenetic tree was added to \"Pan\".
   - Fixed a bug of plot\_3Dpie.R, Optimized image display, and a fan
         chart has been added.
   - Fixed a bug for plotting the ANI matrix.
 
-- V1.0.10
+### - V1.0.10
 
   - Add the \"AntiRes\" function to screening of contigs for antimicrobial and virulence genes.
 
-- V1.0.11
+### - V1.0.11
 
   - Users now can choose \"abyss\" or \"spades\" for illumina reads aseembly.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
   - Optimized display of help information. Users can check parameters for each modulewith command \"pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]\", and can look up the examples of each module with command \"pgcgap Examples\".
 
-- V1.0.12
+### - V1.0.12
 
   - Added automatic mode for illumina genome assembly. First, PGCGAP calls \"ABySS\" for genome assembly. When the assembled N50 is less than 50,000, it automatically calls \"SPAdes\" to try multiple parameters for assembly.
   - Added ability to filter short sequences of assembled genomes.
   - Added function of genome assembly status assessment.
   - Modified the drawing script of ANI and MASH modules so that it can automatically adjust the font size according to the number of samples.
 
-- V1.0.13
+### - V1.0.13
 
   - Fixed the \"running error\" bug of function \"Assess\" in module \"ACC\".
   - Added module \"STREE\" for constructing a phylogenetic tree based on multiple sequences in one file.
 
-- V1.0.14
+### - V1.0.14
 
   - The relative\_abundances of flags among strains will not be called while the strain number is less than two.
   - Fixed the error of function \"Assess\" in module \"ACC\".
 
-- V1.0.15
+### - V1.0.15
 
   - When the number of threads set by the user exceeds the number of threads owned by the system, PGCGAP will automatically adjust the number of threads to avoid program crash.
   - Add FASTQ preprocessor before Illunima genome assembly: adapter trimming, polyG tail trimming of Illumina NextSeq/NovaSeq reads, quality filtering (Q value filtering, N base filtering, sliding window filtering), length filtering.
 
-- V1.0.16
+### - V1.0.16
 
   - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
   - Force overwriting existing output folder when running \"Annotate\" analysis to avoid program crash.
 
-- V1.0.17
+### - V1.0.17
 
   - Fixed a bug that the program can not go back to the working directory after genome annotation.
   - Added scripts to check if there were single-copy core proteins found while running module \"CoreTree\".
   - Modified the help message.
 
-- V1.0.18
+### - V1.0.18
 
   - Updated the downloading link of COG database.
   - Users can choose the number of threads used for running module \"STREE\".
 
-- V1.0.19
+### - V1.0.19
 
   - Can resume from break-point when downloading the COG database.
   - Fixed a bug that failed to create multi-level directories.
 
-- V1.0.20
+### - V1.0.20
 
   - Fixed a little bug (path error) of module \"VAR\".
   - Fixed a little bug of module \"CoreTree\" to avoid the interference of special characters in sequence ID to the program.
 
-- V1.0.21
+### - V1.0.21
 
   - Change the default search program \"blast\" to \"diamond\" of
         module \"OrthoF\".
   - Fixed a bug of module \"pCOG\" to output the right figure.
 
-- V1.0.22
+### - V1.0.22
 
   - The drawing function of module \"ANI\" and module \"MASH\" has been enhanced, including automatic adjustment of font size and legend according to the size of the picture.
   - Fixed a bug of module \"ANI\", that is no heatmap will be drawn when there is \"NA\" in the ANI matrix in the previous versions.
   - When the ANI value or genome similarity is greater than 95%, an asterisk (\*) will be drawn in the corresponding cell of the heatmap.
 
-- V1.0.23
+### - V1.0.23
 
   - The \"\--Assess\" function of module \"ACC\" was enhanced to (1) generate a summary file containing the status of all genomes (before and after the short sequence filtering), (2) auto move the low-quality genomes (that is genomes with N50 length less than 50 k) to a directory, and others to another directory.
 
-- V1.0.24
+### - V1.0.24
 
   - Fixed a little bug of module \"Pan\" to avoid the interference of special characters (\>) in sequence ID to the program.
 
-- V1.0.25
+### - V1.0.25
 
   - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module \"CoreTree\" and \"Pan\".
   - The parameter \"\--identi\" was added into module \"Pan\" to allow users to set the minimum percentage identity for blastp.
 
-- V1.0.26
+### - V1.0.26
 
   - Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module \"ANI\" and \"MASH\".
   - Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the \"ANI\" and \"MASH\" analysis.
 
-- V1.0.27
+### - V1.0.27
 
   - The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.
 
-- V1.0.28
+### - V1.0.28
 
   - Users can check and install the latest version of PGCGAP by the command \"pgcgap \--check-update\".
   - Update module Assemble to allow polish after the assembly of PacBio and ONT data.
@@ -1115,44 +1140,50 @@ cpanm install -f Bio::Roary
   - Optimized the drawing and color scheme of the module pCOG.
   - Fixed the parameter \"CoreTree\" in the module Pan to avoid program termination caused by the \"\>\" in non-sequence lines.
 
-- V1.0.29
+### - V1.0.29
 
   - Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.
   - Fixed the \"permission denied\" error when moving directories on the WSL platform.
 
-- V1.0.30
+### - V1.0.30
 
   - Replace Gblocks with trimAL to trim MSA (module CoreTree, Pan, STREE, and OrthoF).
   - Replaced Modeltest-ng and Raxml-ng with IQ-TREE (module CoreTree, Pan OrthoF, and VAR).
   - Added the option of using fasttree to build phylogenetic tree (module CoreTree, Pan, and OrthoF).
 
-- V1.0.31
+### - V1.0.31
 
   - The default replicates for bootstrap testing of IQ-TREE was set to 500.
   - Add the method for phylogenetic tree constructing with ultrafast bootstrap of IQ-TREE.
   - Prevent the log from being written to the tree file generated by FastTree.
 
-- V1.0.32
+### - V1.0.32
 
   - A more colorful version, try \"pgcgap Examples\" to have a look.
   - Updated module AntiRes: the parameter \--db had been modified to add choices of \"all\" and \"megares\".
   - A little optimization of module VAR.
   - Replaced conda with mamba to update PGCGAP more quickly.
 
-- V1.0.33
+### - V1.0.33
 
   - The installation of this version is very troublesome. Users can choose to install the next version.
   - Updated module CoreTree: [Run IQ-TREE with the correct number of constant sites](https://bitsandbugs.org/2019/11/06/two-easy-ways-to-run-iq-tree-with-the-correct-number-of-constant-sites/) when constructing the single-copy core SNPs tree.
   - Updated module VAR: Use \"SNP-SITE\" and \"IQ-TREE -fconst\" to generate SNP sites from the \"core.full.aln\" and construct the phylogenetic tree.
   - Updated module pCOG: Replace blast with diamond to speed up analysis.
 
-- V1.0.34
+### - V1.0.34
 
   - Fixed installation errors of V1.0.33.
   - Assemble update: Use [Bloom filter mode](https://github.com/bcgsc/abyss#modes) to replace `MPI mode` for genome assembly to reduce memory usage and improve running speed, requires ABySS v2.3.4.
   - STREE update: Use [MUSCLE5](https://drive5.com/muscle5/) to perform sequence alignment. Highest accuracy, scalable to thousands of sequences.
   - Use filtered genome (without short sequences specified by the parameter --filter_length) for the following analysis by default.
   - Add parameter '--setup-COGdb2' as an alternate method to setup COG database. It can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'.
+
+### - V1.0.35
+
+  - Rewrite the module `Pan`, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
+  - Added function `id2seq` to module `ACC` for extracting the corresponding sequences from a file to another file according to a number of ids in one file.
+  - Added function `getRepeats` to module `ACC` for counting the number of repeats of the string for the specified column in a given file.
 
 ------------------------------------------------------------------------
 

@@ -175,7 +175,7 @@ $options{'CoreTree'} = \(my $opt_CoreTree);
 
 =item B<[--Pan]>
 
-Run "panaroo" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by panaroo
+Run "roary" pan genome pipeline with gff3 files, and construct a phylogenetic tree with the sing-copy core proteins called by roary
 
 =back
 
@@ -802,7 +802,7 @@ If you use the results of "--Pan" function in your work, please also cite:
 
 </br>
 
-</br>Tonkin-Hill G, MacAlasdair N, Ruis C, Weimann A, Horesh G, Lees JA, Gladstone RA, Lo S, Beaudoin C, Floto RA, Frost SDW, Corander J, Bentley SD, Parkhill J. 2020. Producing polished prokaryotic pangenomes with the Panaroo pipeline. Genome Biol 21:180.
+</br>"Roary: Rapid large-scale prokaryote pan genome analysis", Andrew J. Page, Carla A. Cummins, Martin Hunt, Vanessa K. Wong, Sandra Reuter, Matthew T. G. Holden, Maria Fookes, Daniel Falush, Jacqueline A. Keane, Julian Parkhill, Bioinformatics, (2015). doi: http://dx.doi.org/10.1093/bioinformatics/btv421
 
 =end html
 
@@ -820,15 +820,27 @@ $options{'GffPath=s'} = \( my $opt_GffPath = "./Results/Annotations/GFF" );
 
 =over 30
 
-=item B<[--identi (FLOAT)]>
+=item B<[--PanTree]>
 
-Minimum percentage identity for blastp ( Default 0.95, 0 < identi < 1 )
+Construct a phylogenetic tree of single-copy core proteins called by roary
 
 =back
 
 =cut
 
-$options{'identi=f'} = \(my $opt_identi = "0.95");
+$options{'PanTree'} = \(my $opt_PanTree);
+
+=over 30
+
+=item B<[--identi (INT)]>
+
+Minimum percentage identity for blastp ( Default 95 )
+
+=back
+
+=cut
+
+$options{'identi=i'} = \(my $opt_identi = "95");
 
 =head3 ========================== Options for "--OrthoF" analysis ============================================
 
@@ -1148,102 +1160,6 @@ Filter short sequences in the genome and assess the status of the genome.
 
 $options{'Assess'} = \( my $opt_Assess);
 
-=over 30
-
-=item B<[--id2seq (STRING)]>
-
-Extract the corresponding sequences from a file to another file according to a number of ids in one file.
-
-=back
-
-=cut
-
-$options{'id2seq'} = \( my $opt_id2seq);
-
-=over 30
-
-=item B<[--ids (STRING)]>
-
-Parameter for id2seq, specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.
-
-=back
-
-=cut
-
-$options{'ids=s'} = \( my $opt_ids);
-
-=over 30
-
-=item B<[--seqin (STRING)]>
-
-Parameter for id2seq, specify the FASTA format file that contains the sequence.
-
-=back
-
-=cut
-
-$options{'seqin=s'} = \( my $opt_seqin);
-
-=over 30
-
-=item B<[--seqout (STRING)]>
-
-Parameter for id2seq, specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.
-
-=back
-
-=cut
-
-$options{'seqout=s'} = \( my $opt_seqout);
-
-=over 30
-
-=item B<[--getRepeats (STRING)]>
-
-Counts the number of repeats of the string for the specified column in a given file.
-
-=back
-
-=cut
-
-$options{'getRepeats'} = \( my $opt_getRepeats);
-
-=over 30
-
-=item B<[--filein (STRING)]>
-
-Parameter for getRepeats, specify the input file.
-
-=back
-
-=cut
-
-$options{'filein=s'} = \( my $opt_filein);
-
-=over 30
-
-=item B<[--column (INT)]>
-
-Parameter for getRepeats, specify which column is used for the calculation (default: 0 for the whole line).
-
-=back
-
-=cut
-
-$options{'column=i'} = \( my $opt_column = 0);
-
-=over 30
-
-=item B<[--sep (STRING)]>
-
-Parameter for getRepeats, specify the separator (space, tab, comma, semicolon) between columns (Default: tab).
-
-=back
-
-=cut
-
-$options{'sep=s'} = \( my $opt_sep = "tab");
-
 =head2 *************************** Paths of external programs *************************************************
 
 =for text
@@ -1350,15 +1266,15 @@ $options{'snp-sites-bin=s'} = \( my $opt_snpsites_bin = `which snp-sites 2>/dev/
 
 =over 30
 
-=item B<[--panaroo-bin (PATH)]>
+=item B<[--roary-bin (PATH)]>
 
-Path to the Panaroo binary file. Default tries if Panaroo is in PATH;
+Path to the roary binary file. Default tries if roary is in PATH;
 
 =back
 
 =cut
 
-$options{'panaroo-bin=s'} = \( my $opt_panaroo_bin = `which panaroo 2>/dev/null` );
+$options{'roary-bin=s'} = \( my $opt_roary_bin = `which roary 2>/dev/null` );
 
 =over 30
 
@@ -1495,7 +1411,7 @@ $options{'iqtree-bin=s'} = \( my $opt_iqtree_bin = `which iqtree 2>/dev/null` );
 
   Software: PGCGAP - The prokaryotic genomics and comparative genomics analysis pipeline
 
-  Version 1.0.35  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
+  Version 1.0.34  Documentation, support and updates available at https://liaochenlanruo.fun/pgcgap
 
   Author: Hualin Liu
 
@@ -1514,7 +1430,7 @@ if ($opt_All or $opt_Assemble or $opt_Annotate or $opt_CoreTree or $opt_Pan or $
 GetOptions(%options) or pod2usage("Try '$0 --help' for more information.");
 
 if($opt_version){
-	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.35", RESET . "\n";
+	print RED,"PGCGAP version: " . BOLD, YELLOW, "1.0.34", RESET . "\n";
 	print "Enter the command " . BOLD, YELLOW, "pgcgap --check-update", RESET . " to check if there is a new version, and update to the new version if it exists.\n";
 	exit 0;
 }
@@ -1525,7 +1441,7 @@ if ($opt_help) {
 }
 
 
-chomp($opt_sickle_bin, $opt_snippy_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_panaroo_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_muscle_bin, $opt_trimAL_bin, $opt_iqtree_bin);
+chomp($opt_sickle_bin, $opt_snippy_bin, $opt_abyss_bin, $opt_canu_bin, $opt_prodigal_bin, $opt_prokka_bin, $opt_cdhit_bin, $opt_mafft_bin, $opt_snpsites_bin, $opt_pal2nal_bin, $opt_roary_bin, $opt_orthofinder_bin, $opt_fastANI_bin, $opt_mash_bin, $opt_abricate_bin, $opt_unicycler_bin, $opt_muscle_bin, $opt_trimAL_bin, $opt_iqtree_bin);
 check_external_programs() if($opt_check_external_programs);
 check_update() if ($opt_check_update);
 pod2usage( -msg => 'cd-hit not in $PATH and binary not specified use --cd-hit-bin', -verbose => 0, -exitval => 1 ) unless ($opt_cdhit_bin);
@@ -1536,7 +1452,7 @@ pod2usage( -msg => 'canu not in $PATH and binary not specified use --canu-bin', 
 pod2usage( -msg => 'prodigal not in $PATH and binary not specified use --prodigal-bin', -verbose => 0, -exitval => 1 ) unless ($opt_prodigal_bin);
 pod2usage( -msg => 'prokka not in $PATH and binary not specified use --prokka-bin', -verbose => 0, -exitval => 1 ) unless ($opt_prokka_bin);
 pod2usage( -msg => 'pal2nal.pl not in $PATH and binary not specified use --pal2nal-bin', -verbose => 0, -exitval => 1 ) unless ($opt_pal2nal_bin);
-pod2usage( -msg => 'panaroo not in $PATH and binary not specified use --panaroo-bin', -verbose => 0, -exitval => 1 ) unless ($opt_panaroo_bin);
+pod2usage( -msg => 'roary not in $PATH and binary not specified use --roary-bin', -verbose => 0, -exitval => 1 ) unless ($opt_roary_bin);
 pod2usage( -msg => 'orthofinder not in $PATH and binary not specified use --orthofinder-bin', -verbose => 0, -exitval => 1 ) unless ($opt_orthofinder_bin);
 pod2usage( -msg => 'fastANI not in $PATH and binary not specified use --fastANI-bin', -verbose => 0, -exitval => 1 ) unless ($opt_fastANI_bin);
 pod2usage( -msg => 'snippy not in $PATH and binary not specified use --snippy-bin', -verbose => 0, -exitval => 1 ) unless ($opt_snippy_bin);
@@ -1550,7 +1466,7 @@ pod2usage( -msg => 'iqtree not in $PATH and binary not specified use --iqtree-bi
 
 
 sub check_external_programs{
-	my %programs = ("snippy" => $opt_snippy_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "panaroo" => $opt_panaroo_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "muscle" => $opt_muscle_bin, "trimAL" => $opt_trimAL_bin, "iqtree" => $opt_iqtree_bin);
+	my %programs = ("snippy" => $opt_snippy_bin, "abyss" => $opt_abyss_bin, "canu" => $opt_canu_bin, "prodigal" => $opt_prodigal_bin, "prokka" => $opt_prokka_bin, "cd-hit" => $opt_cdhit_bin, "mafft" => $opt_mafft_bin, "snp-sites" => $opt_snpsites_bin, "pal2nal" => $opt_pal2nal_bin, "roary" => $opt_roary_bin, "orthofinder" => $opt_orthofinder_bin, "fastANI" => $opt_fastANI_bin, "mash" => $opt_mash_bin, "abricate" => $opt_abricate_bin, "unicycler" => $opt_unicycler_bin, "muscle" => $opt_muscle_bin, "trimAL" => $opt_trimAL_bin, "iqtree" => $opt_iqtree_bin);
 	my $fail = 0;
 	foreach my $p (sort keys %programs){
 		my $path = $programs{$p};
@@ -2632,334 +2548,300 @@ if ($opt_All or $opt_Pan) {
 	my $time_pans = time();
 	print "Performing --Pan function...\n\n";
 	my $pangenome = "Results/PanGenome";
-	#system("panaroo -i $opt_GffPath/*.gff -o $pangenome --clean-mode strict --remove-invalid-genes -c $opt_identi --codon-table $opt_codon -t $opt_threads -a core --aligner mafft --core_threshold 0.95");
-	system("panaroo -i $opt_GffPath/*.gff -o $working_dir/$pangenome --clean-mode strict --remove-invalid-genes -c $opt_identi --codon-table $opt_codon -t $opt_threads --search_radius 0 --merge_paralogs");
-	system("panaroo-filter-pa -i $pangenome/gene_presence_absence.csv -o ./ --type pseudo,length,frag");
-	chdir "$working_dir/$pangenome";
-	#system("create_pan_genome_plots.R");#create pan genome plots
+	system("roary -p $opt_threads -r -t $opt_codon -i $opt_identi -f $pangenome $opt_GffPath/*.gff");
+	chdir $pangenome;
+	system("create_pan_genome_plots.R");#create pan genome plots
 	system("Rscript $pgcgap_dir/plot_3Dpie.R");#plot pangenome 3D-pie
-	#system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
+	system("python $pgcgap_dir/fmplot.py --labels accessory_binary_genes.fa.newick gene_presence_absence.csv");
 	chdir $working_dir;
-
-	#Constructing panaroo single-copy core proteins tree
-	system("mkdir -p $working_dir/$pangenome/Core");
-	chdir $opt_GffPath;
-	my @gff = glob("*.gff");
-	foreach my $gff (@gff) {
-		$gff=~/(.+).gff/;
-		my $name = $1;
-		print $name . "\n";
-		system("perl $pgcgap_dir/grep_cds_aas_from_gff3.pl $gff $name");
-	}
-	system("mv *.id *.cds *.pep $working_dir/$pangenome/Core");
-	chdir "$working_dir/$pangenome/Core";
-	#chdir $working_dir;
-	
-	my %hash;
-	system("cat *.pep > All_aa.fa");
-	#chdir "Results/PanGenome/Core";
-	open SEQP, "All_aa.fa" || die;
-	open OUT, ">All_aa.fa2" || die;
-	while (<SEQP>) {
-		chomp;
-		if (/^(>\S+)/) {
-			print OUT $1 . "\n";
-		}else {
-			print OUT $_ . "\n";
+	if ($opt_PanTree) {
+		#Constructing Roary single-copy core proteins tree
+		system("mkdir $working_dir/$pangenome/Core");
+		chdir $opt_GffPath;
+		my @gff = glob("*.gff");
+		foreach my $gff (@gff) {
+			$gff=~/(.+).gff/;
+			my $name = $1;
+			print $name . "\n";
+			system("perl $pgcgap_dir/grep_cds_aas_from_gff3.pl $gff $name");
 		}
-	}
-	close SEQP;
-	close OUT;
-
-	local $/ = ">";
-	open AA, "All_aa.fa2" || die;
-	<AA>;
-	while (<AA>) {
-		chomp;
-		my ($head, $seq) = split "\n", $_, 2;
-		$head=~/^(\S+)/;
-		$hash{$1} = $seq;
-	}
-
-	close AA;
-
-	$/ = "\n";
-	open IN, "../gene_presence_absence_roary.csv" || die;
-	open TBL, ">gene_presence_absence_roary.tbl" || die;
-	while (<IN>) {
-		chomp;
-		$_=~s/,/\t/g;
-		#$_=~s/,"/\t/g;
-		#$_=~s/"//g;
-		print TBL $_ . "\n";
-	}
-	close IN;
-	close TBL;
-
-
-	open INF, "gene_presence_absence_roary.tbl" || die;
-	open OUT, ">IDs.txt" || die;
-	my $count;
-	<INF>;
-	while(<INF>){
-		chomp;
-		my @lines = split /\t/;
-		if ($lines[3] == $opt_strain_num && $lines[5] == 1) {
-			$count++;
-			my $group = "Group_" . $count;
-			print OUT $group;
-			for (my $i=14; $i<@lines; $i++) {
-				$lines[$i]=~/(\S+)/;
-				print OUT "\t$1";
-			}
-			print OUT "\n";
-		}
-	}
-	close INF;
-	close OUT;
-
-	open ID, "IDs.txt" || die;
-	while (<ID>) {
-		chomp;
-		my @line = split /\t/;
-		my $gene = $line[0] . ".aa";
-		open OUTF, ">$gene" || die;
-		for (my $j=1; $j<@line; $j++) {
-			if (exists $hash{$line[$j]}) {
-				print OUTF ">$line[$j]\n$hash{$line[$j]}\n";
+		system("mv *.id *.cds *.pep $working_dir/$pangenome/Core");
+		chdir "$working_dir/$pangenome/Core";
+		#chdir $working_dir;
+		
+		my %hash;
+		system("cat *.pep > All_aa.fa");
+		#chdir "Results/PanGenome/Core";
+		open SEQP, "All_aa.fa" || die;
+		open OUT, ">All_aa.fa2" || die;
+		while (<SEQP>) {
+			chomp;
+			if (/^(>\S+)/) {
+				print OUT $1 . "\n";
+			}else {
+				print OUT $_ . "\n";
 			}
 		}
-		close OUTF;
-	}
-	close ID;
+		close SEQP;
+		close OUT;
 
-
-	print "Running mafft...\n\n";
-	my @fa = glob("*.aa");
-	foreach (@fa){
-		my $name=substr($_,0,(length($_)-3));
-		my $in=$name.".aa";
-		my $out=$name.".aln";
-		system("mafft --quiet --auto --thread $opt_threads $in > $out");
-	}
-
-	my @aln = glob("*.aln");
-	foreach  (@aln) {
-		$_=~/(\S+).aln/;
-		my $aa = $1 . ".aa";
-		my $file_size = -s $_;
-		if ($file_size == 0) {
-			system("rm -f $_");
-			system("rm -f $aa");
-		}
-	}
-	##==============CONSTRUCT SINGLE CORE PROTEIN TREE========================================================
-	#print "Starting to construct single core protein tree...\n\n";
-	open CON, ">Panaroo.core.protein.fasta" || die "open Panaroo.core.protein.fasta failed\n";
-	my $nfilesr = 0; # count number of files
-	my %nseqr_hashr = (); # key:infile, val:nseqp
-	my %seqid_count_hashr = (); # key:seqid, val:count
-	my %HoHr              = ();   #
-	my %seqid_HoHr        = ();   #
-	my $first_namer       = q{};  # First name in matrix.
-	my $lwidthr           = 60;   # default line width for fasta
-	my $spacer            = "\t"; # spacepr for aligned print
-	my $ncharr            = 0;    # ncharp for phyml header.
-	my $nseqr;                    # nseqp for phyml header. Do not initiate!
-	my $termr             = $/;   # input record separator
-	my @hash_refr_arrayr   = ();   # array with hash references
-
-
-	my @fasr = glob("*.aln");
-	foreach my $argr (@fasr) {
-		my $infiler  = $argr;
-		my %seq_hashr = parse_fastar($infiler); # key: seqid, value:sequence
-		$nfilesr++;
-
-		## Save sequences in array with hash references. Does this work for really large number of fasta files?
-		my $hash_refr     = \%seq_hashr;
-		push(@hash_refr_arrayr, $hash_refr);
-
-		## Add nseqps to global nseqp_hashp:
-		$nseqr_hashr{$infiler} = scalar(keys(%seq_hashr));
-
-		## Get length of sequence for all tax labels. Put in hashes.
-		foreach my $tax_keyr (keys %seq_hashr) {
-			$seqid_count_hashr{$tax_keyr}++;
-			$HoHr{$infiler}{$tax_keyr} = length($seq_hashr{$tax_keyr});
-			$seqid_HoHr{$infiler}{$tax_keyr}++;
+		local $/ = ">";
+		open AA, "All_aa.fa2" || die;
+		<AA>;
+		while (<AA>) {
+			chomp;
+			my ($head, $seq) = split "\n", $_, 2;
+			$head=~/^(\S+)/;
+			$hash{$1} = $seq;
 		}
 
-		## Check all seqs are same length
-		my $length;
+		close AA;
+
+		$/ = "\n";
+		open IN, "../gene_presence_absence.csv" || die;
+		open TBL, ">gene_presence_absence.tbl" || die;
+		while (<IN>) {
+			chomp;
+			$_=~s/,"/\t/g;
+			$_=~s/"//g;
+			print TBL $_ . "\n";
+		}
+		close IN;
+		close TBL;
+
+
+		open INF, "gene_presence_absence.tbl" || die;
+		open OUT, ">IDs.txt" || die;
+		my $count;
+		<INF>;
+		while(<INF>){
+			chomp;
+			my @lines = split /\t/;
+			if ($lines[3] == $opt_strain_num && $lines[5] == 1) {
+				$count++;
+				my $group = "Group_" . $count;
+				print OUT $group;
+				for (my $i=14; $i<@lines; $i++) {
+					$lines[$i]=~/(\S+)/;
+					print OUT "\t$1";
+				}
+				print OUT "\n";
+			}
+		}
+		close INF;
+		close OUT;
+
+		open ID, "IDs.txt" || die;
+		while (<ID>) {
+			chomp;
+			my @line = split /\t/;
+			my $gene = $line[0] . ".aa";
+			open OUTF, ">$gene" || die;
+			for (my $j=1; $j<@line; $j++) {
+				if (exists $hash{$line[$j]}) {
+					print OUTF ">$line[$j]\n$hash{$line[$j]}\n";
+				}
+			}
+			close OUTF;
+		}
+		close ID;
+
+
+		print "Running mafft...\n\n";
+		my @fa = glob("*.aa");
+		foreach (@fa){
+			my $name=substr($_,0,(length($_)-3));
+			my $in=$name.".aa";
+			my $out=$name.".aln";
+			system("mafft --quiet --auto --thread $opt_threads $in > $out");
+		}
+
+		my @aln = glob("*.aln");
+		foreach  (@aln) {
+			$_=~/(\S+).aln/;
+			my $aa = $1 . ".aa";
+			my $file_size = -s $_;
+			if ($file_size == 0) {
+				system("rm -f $_");
+				system("rm -f $aa");
+			}
+		}
+		##==============CONSTRUCT SINGLE CORE PROTEIN TREE========================================================
+		#print "Starting to construct single core protein tree...\n\n";
+		open CON, ">Roary.core.protein.fasta" || die "open Roary.core.protein.fasta failed\n";
+		my $nfilesr = 0; # count number of files
+		my %nseqr_hashr = (); # key:infile, val:nseqp
+		my %seqid_count_hashr = (); # key:seqid, val:count
+		my %HoHr              = ();   #
+		my %seqid_HoHr        = ();   #
+		my $first_namer       = q{};  # First name in matrix.
+		my $lwidthr           = 60;   # default line width for fasta
+		my $spacer            = "\t"; # spacepr for aligned print
+		my $ncharr            = 0;    # ncharp for phyml header.
+		my $nseqr;                    # nseqp for phyml header. Do not initiate!
+		my $termr             = $/;   # input record separator
+		my @hash_refr_arrayr   = ();   # array with hash references
+
+
+		my @fasr = glob("*.aln");
+		foreach my $argr (@fasr) {
+			my $infiler  = $argr;
+			my %seq_hashr = parse_fastar($infiler); # key: seqid, value:sequence
+			$nfilesr++;
+
+			## Save sequences in array with hash references. Does this work for really large number of fasta files?
+			my $hash_refr     = \%seq_hashr;
+			push(@hash_refr_arrayr, $hash_refr);
+
+			## Add nseqps to global nseqp_hashp:
+			$nseqr_hashr{$infiler} = scalar(keys(%seq_hashr));
+
+			## Get length of sequence for all tax labels. Put in hashes.
+			foreach my $tax_keyr (keys %seq_hashr) {
+				$seqid_count_hashr{$tax_keyr}++;
+				$HoHr{$infiler}{$tax_keyr} = length($seq_hashr{$tax_keyr});
+				$seqid_HoHr{$infiler}{$tax_keyr}++;
+			}
+
+			## Check all seqs are same length
+			my $length;
+			my $lnamer;
+			foreach my $name (keys %seq_hashr) {
+				my $l = length $seq_hashr{$name};
+				if (defined $length) {
+					if ($length != $l) {
+						print STDERR "Error!\nseqpuences in $infiler not all same length ($lnamer is $length, $name is $l)\n";
+						exit(1);
+					}
+				}else {
+					$length = length $seq_hashr{$name};
+					$lnamer  = $name;
+				}
+			}
+		} # Done with file
+
+
+		#---------------------------------------------------------------------------
+		#  Check if the same number of sequences
+		#---------------------------------------------------------------------------
 		my $lnamer;
-		foreach my $name (keys %seq_hashr) {
-			my $l = length $seq_hashr{$name};
-			if (defined $length) {
-				if ($length != $l) {
-					print STDERR "Error!\nseqpuences in $infiler not all same length ($lnamer is $length, $name is $l)\n";
+		foreach my $file (keys %nseqr_hashr) {
+			my $l = $nseqr_hashr{$file}; # val is a length
+			if (defined $nseqr) {
+				if ($nseqr != $l) {
+					print STDERR "Error!\nNumber of sequences in files differ ($lnamer has $nseqr, $file has $l)\n";
 					exit(1);
 				}
 			}else {
-				$length = length $seq_hashr{$name};
-				$lnamer  = $name;
+				$nseqr = $nseqr_hashr{$file};
+				$lnamer  = $file;
 			}
 		}
-	} # Done with file
 
 
-	#---------------------------------------------------------------------------
-	#  Check if the same number of sequences
-	#---------------------------------------------------------------------------
-	my $lnamer;
-	foreach my $file (keys %nseqr_hashr) {
-		my $l = $nseqr_hashr{$file}; # val is a length
-		if (defined $nseqr) {
-			if ($nseqr != $l) {
-				print STDERR "Error!\nNumber of sequences in files differ ($lnamer has $nseqr, $file has $l)\n";
-				exit(1);
+		#---------------------------------------------------------------------------
+		#  Check sequence id's
+		#---------------------------------------------------------------------------
+		if (scalar((keys %seqid_count_hashr)) != $nseqr) { # number of unique seqid's not eq to nseqrs
+			foreach my $key (sort { $seqid_count_hashr{$b} <=> $seqid_count_hashr{$a} } (keys %seqid_count_hashr)) {
+				print STDERR "$key --> $seqid_count_hashr{$key}\n";
 			}
+			print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
+			print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
+			exit(1);
 		}else {
-			$nseqr = $nseqr_hashr{$file};
-			$lnamer  = $file;
+			## Find the longest taxon name for aligned printing
+			my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hashr;
+			$spacer = length( shift(@sorted_names) ) + 2;
+			$first_namer = $sorted_names[0];
 		}
-	}
 
 
-	#---------------------------------------------------------------------------
-	#  Check sequence id's
-	#---------------------------------------------------------------------------
-	if (scalar((keys %seqid_count_hashr)) != $nseqr) { # number of unique seqid's not eq to nseqrs
-		foreach my $key (sort { $seqid_count_hashr{$b} <=> $seqid_count_hashr{$a} } (keys %seqid_count_hashr)) {
-			print STDERR "$key --> $seqid_count_hashr{$key}\n";
+		#---------------------------------------------------------------------------
+		#Get ncharp
+		#---------------------------------------------------------------------------
+		foreach my $h_ref (@hash_refr_arrayr) {
+			$ncharr = $ncharr + length($h_ref->{$first_namer});
 		}
-		print STDERR "\nError!\nSome sequence labels does not occur in all files.\n";
-		print STDERR "That is, sequence id's needs to be identical for concatenation.\n\n";
-		exit(1);
-	}else {
-		## Find the longest taxon name for aligned printing
-		my @sorted_names = sort { length($b) <=> length($a) } keys %seqid_count_hashr;
-		$spacer = length( shift(@sorted_names) ) + 2;
-		$first_namer = $sorted_names[0];
-	}
 
 
-	#---------------------------------------------------------------------------
-	#Get ncharp
-	#---------------------------------------------------------------------------
-	foreach my $h_ref (@hash_refr_arrayr) {
-		$ncharr = $ncharr + length($h_ref->{$first_namer});
-	}
+		#---------------------------------------------------------------------------
+		#Print everything to STDOUT
+		#---------------------------------------------------------------------------
+		print STDERR "\nChecked $nfilesr files -- sequence labels and lengths seems OK.\n";
+		print STDERR "Concatenated $nseqr sequences, length $ncharr.\n";
+		print STDERR "Printing concatenation to 'Roary.core.protein.fasta'.\n\n";
 
-
-	#---------------------------------------------------------------------------
-	#Print everything to STDOUT
-	#---------------------------------------------------------------------------
-	print STDERR "\nChecked $nfilesr files -- sequence labels and lengths seems OK.\n";
-	print STDERR "Concatenated $nseqr sequences, length $ncharr.\n";
-	print STDERR "Printing concatenation to 'Panaroo.core.protein.fasta'.\n\n";
-
-	##Print the array with hash references (does this work with really large number of files (hashes))?
-	##First, concatenate all sequences from hashes
-	my %print_hashr = (); # key:label, value:sequence
-	foreach my $h_ref (@hash_refr_arrayr) {
-		foreach my $seqid (sort keys %$h_ref) {
-			$print_hashr{$seqid} .= $h_ref->{$seqid};
+		##Print the array with hash references (does this work with really large number of files (hashes))?
+		##First, concatenate all sequences from hashes
+		my %print_hashr = (); # key:label, value:sequence
+		foreach my $h_ref (@hash_refr_arrayr) {
+			foreach my $seqid (sort keys %$h_ref) {
+				$print_hashr{$seqid} .= $h_ref->{$seqid};
+			}
 		}
-	}
-	##Then print, and add line breaks in sequences
-	foreach my $label (sort keys  %print_hashr) {
-		print CON ">$label\n";
+		##Then print, and add line breaks in sequences
+		foreach my $label (sort keys  %print_hashr) {
+			print CON ">$label\n";
 
-		##Print sequence
-		##TODO: phylip strict printing of sequence in blocks of 10
-		$print_hashr{$label} =~ s/\S{$lwidthr}/$&\n/gs; ## replace word of size $lwidthr with itself and "\n"
-		print CON $print_hashr{$label}, "\n";
-	}
+			##Print sequence
+			##TODO: phylip strict printing of sequence in blocks of 10
+			$print_hashr{$label} =~ s/\S{$lwidthr}/$&\n/gs; ## replace word of size $lwidthr with itself and "\n"
+			print CON $print_hashr{$label}, "\n";
+		}
 
-	print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
+		print STDERR "Concatenate FASTA alignments to FASTA format completed.\n\n";
 
 
-	sub parse_fastar {
-		my ($infiler) = @_;
-		my $termp     = $/; # input record separator;
-		my %seq_hashr = (); # key:seqid, val:seq
-		open my $INFILER, "<", $infiler or die "could not open infile '$infiler' : $! \n";
-		$/ = ">";
-		while(<$INFILER>) {
-			chomp;
-			next if($_ eq '');
-			my ($id, @sequencelines) = split /\n/;
-			if ($id=~/(^\S+)_\S+$/) {
-				$id = $1;
-				foreach my $line (@sequencelines) {
-					$seq_hashr{$id} .= $line;
+		sub parse_fastar {
+			my ($infiler) = @_;
+			my $termp     = $/; # input record separator;
+			my %seq_hashr = (); # key:seqid, val:seq
+			open my $INFILER, "<", $infiler or die "could not open infile '$infiler' : $! \n";
+			$/ = ">";
+			while(<$INFILER>) {
+				chomp;
+				next if($_ eq '');
+				my ($id, @sequencelines) = split /\n/;
+				if ($id=~/(^\S+)_\S+$/) {
+					$id = $1;
+					foreach my $line (@sequencelines) {
+						$seq_hashr{$id} .= $line;
+					}
 				}
 			}
-		}
-		$/ = $termr;
-		return(%seq_hashr);
-	} # end of parse_fastar
+			$/ = $termr;
+			return(%seq_hashr);
+		} # end of parse_fastar
 
-	my $seqfilen = "Panaroo.core.protein.fasta";
-	my $gblocks_outn = "Panaroo.core.protein.fasta.gb";
-	my $seqnumn = `grep -c '^>' $seqfilen`;
-	print "There are $seqnumn sequences in the input file\n\n";
-	my $b12n = ceil($seqnumn/2) + 1;
+		my $seqfilen = "Roary.core.protein.fasta";
+		my $gblocks_outn = "Roary.core.protein.fasta.gb";
+		my $seqnumn = `grep -c '^>' $seqfilen`;
+		print "There are $seqnumn sequences in the input file\n\n";
+		my $b12n = ceil($seqnumn/2) + 1;
 
-	print "Running trimAL for selection of conserved blocks...\n\n";
-	system("trimal -in $seqfilen -out $gblocks_outn -automated1");
+		print "Running trimAL for selection of conserved blocks...\n\n";
+		system("trimal -in $seqfilen -out $gblocks_outn -automated1");
 
-	#print "Running Gblocks for selection of conserved blocks...\n\n";
-	#system("Gblocks $seqfilen -t=p -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
-	print "Constructing ML tree of the single-copy core proteins...\n\n";
-	#===============================================================================
-	if ($opt_fasttree) {
-		print "Running FastTree for phylogenetic tree construction...\n\n";
-		system("fasttree -quiet $gblocks_outn > Panaroo.core.protein.nwk");
-		# Estimating the Pangenome Size
-		##print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
-		# Collins,R.E. and Higgs,P.G. (2012) Testing the Infinitely Many Genes Model for the Evolution of the Bacterial Core Genome and Pangenome. Mol. Biol. Evol., 29, 3413¨C3425.
-		# Baumdicker,F., Hess,W.R. and Pfaffelhuber,P. (2012) The infinitely many genes model for the distributed genome of bacteria. Genome Biol. Evol., 4, 443¨C456.
-		##system("mkdir -p $working_dir/$pangenome/img_results");
-		##system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk");
-
-		##print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
-		# Zamani-Dahaj,S.A., Okasha,M., Kosakowski,J. and Higgs,P.G. (2016) Estimating the Frequency of Horizontal Gene Transfer Using Phylogenetic Models of Gene Gain and Loss. Mol. Biol. Evol., 33, 1843¨C1857.
-		##system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.nwk --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
-	}else {
-		print "Running IQ-TREE for phylogenetic tree construction...\n\n";
-		if ($opt_fastboot) {
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+		#print "Running Gblocks for selection of conserved blocks...\n\n";
+		#system("Gblocks $seqfilen -t=p -b1=$b12n -b2=$b12n -b4=5 -b5=h -e=.gb");
+		print "Constructing ML tree of the single-copy core proteins...\n\n";
+		#===============================================================================
+		if ($opt_fasttree) {
+			print "Running FastTree for phylogenetic tree construction...\n\n";
+			system("fasttree -quiet $gblocks_outn > Roary.core.protein.nwk");
 		}else {
-			system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+			print "Running IQ-TREE for phylogenetic tree construction...\n\n";
+			if ($opt_fastboot) {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -B $opt_fastboot --wbtl --bnni --safe --keep-ident");
+			}else {
+				system("iqtree -s $gblocks_outn -nt $opt_threads -m MFP -mtree -b $opt_bsnum --safe --keep-ident");
+			}
 		}
-		# Estimating the Pangenome Size
-		##print "Estimating the Pangenome Size with Infinitely Many Genes model\n\n";
-		##system("mkdir -p $working_dir/$pangenome/img_results");
-		##system("panaroo-img -D 1 --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/img_results --tree $pangenome/Core/Panaroo.core.protein.fasta.gb.treefile");
-
-		##print "Estimating the Pangenome Size with Finitely Many Genes model\n\n";
-		##system("panaroo-fmg -t $opt_threads --tree $working_dir/$pangenome/Core/Panaroo.core.protein.fasta.gb.treefile --pa $working_dir/$pangenome/gene_presence_absence.Rtab -o $working_dir/$pangenome/fmg_results.txt");
+		#===================================================================================
+		#system("fasttree Roary.core.protein.fasta > Roary.core.protein.nwk");
+		print "Constructing single-copy core protein tree completed\n\n";
 	}
-	#===================================================================================
-	#system("fasttree Panaroo.core.protein.fasta > Panaroo.core.protein.nwk");
-	system("mkdir -p $working_dir/$pangenome/Core/temp");
-	system("mv Group* *.cds *.id *.pep IDs.txt All_aa.fa All_aa.fa2 *.tbl temp/");
-	print "Constructing single-copy core protein tree completed\n\n";
-
-	print "Performing Co-Evolution and Epistasis Analysis\n\n";
-	chdir "$working_dir/$pangenome";
-	system("mkdir coevo_results");
-	if (-e "Core/Panaroo.core.protein.fasta.gb.treefile") {
-		system("panaroo-spydrpick -i gene_presence_absence.Rtab -o coevo_results --tree Core/Panaroo.core.protein.fasta.gb.treefile");
-	}elsif (-e "Core/Panaroo.core.protein.nwk") {
-		system("panaroo-spydrpick -i gene_presence_absence.Rtab -o coevo_results --tree Core/Panaroo.core.protein.nwk");
-	}else {
-		print "No tree file was supplied\n\n";
-	}
-	
-	#system("roary -p $opt_threads -r -t $opt_codon -i $opt_identi -f $pangenome $opt_GffPath/*.gff");
 	my $time_pand = time();
 	my $time_pan = ($time_pand - $time_pans)/3600;
 	print "The 'Pan' program runs for $time_pan hours.\n\n";
@@ -3319,12 +3201,6 @@ if ($opt_ACC) {
 		system("get_stats_summary.pl --Scaf_suffix $opt_Scaf_suffix");
 		chdir $working_dir;
 	}
-	if ($opt_id2seq) {
-		system("id2seq.pl --ids $opt_ids --seqin $opt_seqin --seqout $opt_seqout");
-	}
-	if ($opt_getRepeats) {
-		system("get_repeats.pl --filein $opt_filein --column $opt_column --sep $opt_sep");
-	}
 }
 sub lenfilter{
 	my $scaf = shift;
@@ -3518,6 +3394,7 @@ sub printPan{
 	print "[--GffPath (PATH)] Gff files of all strains as paths ( Default './Results/Annotations/GFF' )\n";
 	print "[--codon (INT)] Translation table ( Default 11 )\n  1   Universal code\n  2   Vertebrate mitochondrial code\n  3   Yeast mitochondrial code\n  4   Mold, Protozoan, and Coelenterate Mitochondrial code and Mycoplasma/Spiroplasma code\n  5   Invertebrate mitochondrial\n  6   Ciliate, Dasycladacean and Hexamita nuclear code\n  9   Echinoderm and Flatworm mitochondrial code\n  10  Euplotid nuclear code\n  11  Bacterial, archaeal and plant plastid code ( Default )\n  12  Alternative yeast nuclear code\n  13  Ascidian mitochondrial code\n  14  Alternative flatworm mitochondrial code\n  15  Blepharisma nuclear code\n  16  Chlorophycean mitochondrial code\n  21  Trematode mitochondrial code\n  22  Scenedesmus obliquus mitochondrial code\n  23  Thraustochytrium mitochondrial code\n";
 	print "[--strain_num (INT)] The total number of strains used for analysis, not including the reference genome\n";
+	print "[--PanTree] Construct a phylogenetic tree of single-copy core proteins called by roary\n";
 	print "[--threads (INT)] Number of threads to be used ( Default 4 )\n";
 	print "[--identi (INT)] Minimum percentage identity for blastp ( Default 95 )\n";
 	print "[--fasttree] Use FastTree to construct phylogenetic tree quickly instead of the combination of Modeltest-ng and Raxml-ng\n";
@@ -3595,10 +3472,8 @@ sub printSTREE{
 }
 
 sub printACC{
-	print "Applets in ACC include 'Assess', 'id2seq' and 'getRepeats' now\n";
+	print "Applets in ACC include 'Assess' now\n";
 	print "Parameters for Assess include the following:\n    [--scafPath (PATH)] Path for contigs/scaffolds ( Default 'Results/Assembles/Scaf/Illumina' )\n    [--Scaf_suffix (STRING)] The suffix of scaffolds or genome files." . RED, " User specified required",RESET . " ( Default .filtered.fas )\n    [--filter_length (INT)] Sequences shorter than the 'filter_length' will be deleted from the assembled genomes. ( Default 200 )\n\n";
-	print "Parameters for id2seq include the following:\n    [--ids (STRING)] Specify the file containing the IDs of sequences, if the file has multiple columns, space or tab should be used to separate the columns.\n    [--seqin (STRING)] Specify the FASTA format file that contains the sequence.\n    [--seqout (STRING)] Specify the name of the output file that will be used to save the extracted sequences according to the user-supplied IDs.\n\n";
-	print "Parameters for getRepeats include the following:\n    [--filein (STRING)] Specify the input file.\n    [--column (INT)] Specifies which column is used for the calculation (default: 0 for the whole line).\n    [--sep (STRING)] Specify the separator (space, tab, comma, semicolon) between columns (Default: tab).\n\n";
 }
 
 sub printExamples{
@@ -3606,7 +3481,7 @@ sub printExamples{
 
 	print ON_BLUE, "Example 1: Perform all functions for pair-end reads. For the sake of flexibility, the 'VAR' module needs to be added separately.", RESET . "\n\n";
 
-	print YELLOW, "         pgcgap",RESET . MAGENTA, " --All ",RESET . RED, "--platform",RESET . " illumina " . RED, "--ReadsPath",RESET . " <PATH>" . RED, " --reads1",RESET . " <reads1 suffix>" . RED, " --reads2",RESET . " <reads2 suffix>" . RED, " --suffix_len",RESET . " <INT>" . RED, " --kmmer",RESET . " <INT> " . RED, " --genus",RESET . " <STRING>" . RED, " --species",RESET . " <STRING>" . RED, " --codon",RESET . " <INT>" . RED, " --strain_num",RESET . " <INT>" . RED " --threads",RESET . " <INT>" . MAGENTA, " --VAR",RESET . RED, " --refgbk",RESET . " <full path>" . RED, " --qualtype",RESET . " <STRING>" . "\n\n";
+	print YELLOW, "         pgcgap",RESET . MAGENTA, " --All ",RESET . RED, "--platform",RESET . " illumina " . RED, "--ReadsPath",RESET . " <PATH>" . RED, " --reads1",RESET . " <reads1 suffix>" . RED, " --reads2",RESET . " <reads2 suffix>" . RED, " --suffix_len",RESET . " <INT>" . RED, " --kmmer",RESET . " <INT> " . RED, "--PanTree",RESET . RED, " --genus",RESET . " <STRING>" . RED, " --species",RESET . " <STRING>" . RED, " --codon",RESET . " <INT>" . RED, " --strain_num",RESET . " <INT>" . RED " --threads",RESET . " <INT>" . MAGENTA, " --VAR",RESET . RED, " --refgbk",RESET . " <full path>" . RED, " --qualtype",RESET . " <STRING>" . "\n\n";
 
 	print ON_BLUE, "Example 2: Conduct pair-end reads assembly.", RESET . "\n\n";
 
@@ -3662,19 +3537,19 @@ sub printExamples{
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--CoreTree",RESET . " " . RED, "--CDsPath",RESET . " NO " . RED, "--AAsPath",RESET . " <PATH> " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--fastboot",RESET . " <INT>\n\n";
 
-	print ON_BLUE, "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by panaroo.", RESET . "\n\n";
+	print ON_BLUE, "Example 8: Conduct pan-genome analysis and construct a phylogenetic tree of single-copy core proteins called by roary.", RESET . "\n\n";
 
 	print GREEN,"         # Construct phylogenetic tree with FastTree (Quick without best fit model testing)", RESET . "\n";
 
-	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <FLOAT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--fasttree\n\n",RESET;
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--fasttree\n\n",RESET;
 
 	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Very slow with best fit model testing, traditional bootstrap, DEFAULT)", RESET . "\n";
 
-	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <FLOAT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--bsnum",RESET . " <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--bsnum",RESET . " <INT>\n\n";
 
 	print GREEN,"         # Construct phylogenetic tree with IQ-TREE (Slow with best fit model testing, ultrafast bootstrap)", RESET . "\n";
 
-	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <FLOAT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--fastboot",RESET . " <INT>\n\n";
+	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--Pan",RESET . " " . RED, "--codon",RESET . " <INT> " . RED, "--strain_num",RESET . " <INT> " . RED, "--threads",RESET . " <INT> " . RED, "--identi",RESET . " <INT> " . RED, "--GffPath",RESET . " <PATH> " . RED, "--PanTree",RESET . " " . RED, "--fastboot",RESET . " <INT>\n\n";
 
 	print ON_BLUE, "Example 9: Inference of orthologous gene groups and construct a phylogenetic tree of single-copy Orthologue proteins.", RESET . "\n\n";
 
@@ -3729,14 +3604,6 @@ sub printExamples{
 	print ON_BLUE, "Example 16: Perform the short sequences filter from the assembled genome and get the genome status.", RESET . "\n\n";
 
 	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--Assess",RESET . " " . RED, "--scafPath",RESET . " <PATH> " . RED, "--Scaf_suffix",RESET . " <STRING> " . RED, "--filter_length",RESET . " <INT>\n\n";
-
-	print ON_BLUE, "Example 17: Based on the ids in one file, extract the sequence corresponding to those ids from the other file.", RESET . "\n\n";
-
-	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--id2seq",RESET . " " . RED, "--ids",RESET . " <IDs file> " . RED, "--seqin",RESET . " <Sequence file> " . RED, "--seqout",RESET . " <OutPut file>\n\n";
-
-	print ON_BLUE, "Example 18: Counts the number of repeats of the string for the specified column in a given file.", RESET . "\n\n";
-
-	print YELLOW, "         pgcgap ",RESET . MAGENTA, "--ACC",RESET . " " . RED, "--getRepeats",RESET . " " . RED, "--filein",RESET . " <Input file> " . RED, "--column",RESET . " <INT> " . RED, "--sep",RESET . " <space, tab, comma, semicolon>\n\n";
 }
 
 if ( grep {$_ eq "Assemble"} @ARGV ){
