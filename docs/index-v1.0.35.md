@@ -924,7 +924,7 @@ Please report any issues to the [issues page](https://github.com/liaochenlanruo/
 
 - If you use \"\--CoreTree\", please also cite [CD-HIT](https://doi.org/10.1093/bioinformatics/btl158), [MAFFT](https://doi.org/10.1093/nar/gkf436), [PAL2NAL](https://doi.org/10.1093/nar/gkl315), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490), and [SNP-sites](https://dx.doi.org/10.1099%2Fmgen.0.000056).
 
-- If you use \"\--Pan\", please also cite [Panaroo](Tonkin-Hill G, MacAlasdair N, Ruis C, Weimann A, Horesh G, Lees JA, Gladstone RA, Lo S, Beaudoin C, Floto RA, Frost SDW, Corander J, Bentley SD, Parkhill J. 2020. Producing polished prokaryotic pangenomes with the Panaroo pipeline. Genome Biol 21:180.), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
+- If you use \"\--Pan\", please also cite [Panaroo](https://gtonkinhill.github.io/panaroo/#/gettingstarted/citation), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
 
 - If you use \"\--OrthoF\", please also cite [OrthoFinder](https://dx.doi.org/10.1186%2Fs13059-019-1832-y), [MAFFT](https://doi.org/10.1093/nar/gkf436), [trimAL](https://doi.org/10.1093/bioinformatics/btp348), [IQ-TREE](https://doi.org/10.1093/molbev/msaa015) or [FastTree](https://doi.org/10.1371/journal.pone.0009490).
 
@@ -1003,11 +1003,11 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
 ## Updates
 -------
 
-- V1.0.3
+### - V1.0.3
 
   - Updated ANI function.
 
-- V1.0.4
+### - V1.0.4
 
   - Add parallel for function \"pCOG\".
   - Optimized drawing of ANI heat map.
