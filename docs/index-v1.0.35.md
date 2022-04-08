@@ -1012,15 +1012,15 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
   - Add parallel for function \"pCOG\".
   - Optimized drawing of ANI heat map.
 
-- V1.0.5
+### - V1.0.5
 
   - Bug repair for the input of gubbins.
 
-- V1.0.6
+### - V1.0.6
 
   - Modified CoreTree to split protein and SNPs tree constructing.
 
-- V1.0.7
+### - V1.0.7
 
   - Split Assemble and Annotate into two functions.
   - Added third-generation genome assembly function.
@@ -1028,111 +1028,111 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
   - Changed the name of function \"COG\" to \"pCOG\".
   - Fixed the sorting bug for ANI heat map.
 
-- V1.0.8
+### - V1.0.8
 
   - Add the \"MASH\" function to compute genome distance and similarity using MinHash.
 
-- V1.0.9
+### - V1.0.9
 
   - The function of constructing a single-copy core protein phylogenetic tree was added to \"Pan\".
   - Fixed a bug of plot\_3Dpie.R, Optimized image display, and a fan
         chart has been added.
   - Fixed a bug for plotting the ANI matrix.
 
-- V1.0.10
+### - V1.0.10
 
   - Add the \"AntiRes\" function to screening of contigs for antimicrobial and virulence genes.
 
-- V1.0.11
+### - V1.0.11
 
   - Users now can choose \"abyss\" or \"spades\" for illumina reads aseembly.
   - New support for hybrid assembly of paired-end short reads and long reads.
   - Add the selecting of best-fit model of evolution for DNA and protein alignments before constructing a phylogenetic tree.
   - Optimized display of help information. Users can check parameters for each modulewith command \"pgcgap \[Assemble\|Annotate\|ANI\|AntiRes\|CoreTree\|MASH\|OrthoF\|Pan\|pCOG\|VAR\]\", and can look up the examples of each module with command \"pgcgap Examples\".
 
-- V1.0.12
+### - V1.0.12
 
   - Added automatic mode for illumina genome assembly. First, PGCGAP calls \"ABySS\" for genome assembly. When the assembled N50 is less than 50,000, it automatically calls \"SPAdes\" to try multiple parameters for assembly.
   - Added ability to filter short sequences of assembled genomes.
   - Added function of genome assembly status assessment.
   - Modified the drawing script of ANI and MASH modules so that it can automatically adjust the font size according to the number of samples.
 
-- V1.0.13
+### - V1.0.13
 
   - Fixed the \"running error\" bug of function \"Assess\" in module \"ACC\".
   - Added module \"STREE\" for constructing a phylogenetic tree based on multiple sequences in one file.
 
-- V1.0.14
+### - V1.0.14
 
   - The relative\_abundances of flags among strains will not be called while the strain number is less than two.
   - Fixed the error of function \"Assess\" in module \"ACC\".
 
-- V1.0.15
+### - V1.0.15
 
   - When the number of threads set by the user exceeds the number of threads owned by the system, PGCGAP will automatically adjust the number of threads to avoid program crash.
   - Add FASTQ preprocessor before Illunima genome assembly: adapter trimming, polyG tail trimming of Illumina NextSeq/NovaSeq reads, quality filtering (Q value filtering, N base filtering, sliding window filtering), length filtering.
 
-- V1.0.16
+### - V1.0.16
 
   - Reduced the number of Racon polishing rounds for better speed performance when peforming genome assembly.
   - Force overwriting existing output folder when running \"Annotate\" analysis to avoid program crash.
 
-- V1.0.17
+### - V1.0.17
 
   - Fixed a bug that the program can not go back to the working directory after genome annotation.
   - Added scripts to check if there were single-copy core proteins found while running module \"CoreTree\".
   - Modified the help message.
 
-- V1.0.18
+### - V1.0.18
 
   - Updated the downloading link of COG database.
   - Users can choose the number of threads used for running module \"STREE\".
 
-- V1.0.19
+### - V1.0.19
 
   - Can resume from break-point when downloading the COG database.
   - Fixed a bug that failed to create multi-level directories.
 
-- V1.0.20
+### - V1.0.20
 
   - Fixed a little bug (path error) of module \"VAR\".
   - Fixed a little bug of module \"CoreTree\" to avoid the interference of special characters in sequence ID to the program.
 
-- V1.0.21
+### - V1.0.21
 
   - Change the default search program \"blast\" to \"diamond\" of
         module \"OrthoF\".
   - Fixed a bug of module \"pCOG\" to output the right figure.
 
-- V1.0.22
+### - V1.0.22
 
   - The drawing function of module \"ANI\" and module \"MASH\" has been enhanced, including automatic adjustment of font size and legend according to the size of the picture.
   - Fixed a bug of module \"ANI\", that is no heatmap will be drawn when there is \"NA\" in the ANI matrix in the previous versions.
   - When the ANI value or genome similarity is greater than 95%, an asterisk (\*) will be drawn in the corresponding cell of the heatmap.
 
-- V1.0.23
+### - V1.0.23
 
   - The \"\--Assess\" function of module \"ACC\" was enhanced to (1) generate a summary file containing the status of all genomes (before and after the short sequence filtering), (2) auto move the low-quality genomes (that is genomes with N50 length less than 50 k) to a directory, and others to another directory.
 
-- V1.0.24
+### - V1.0.24
 
   - Fixed a little bug of module \"Pan\" to avoid the interference of special characters (\>) in sequence ID to the program.
 
-- V1.0.25
+### - V1.0.25
 
   - Gblocks was used to eliminate poorly aligned positions and divergent regions of an alignment of DNA or protein sequences in module \"CoreTree\" and \"Pan\".
   - The parameter \"\--identi\" was added into module \"Pan\" to allow users to set the minimum percentage identity for blastp.
 
-- V1.0.26
+### - V1.0.26
 
   - Adjusted the font size with the variation of genome number and the string length of the genome name when plotting the heat map of module \"ANI\" and \"MASH\".
   - Two heat map are provided, one of which with a star (means the similarity of the two genomes is larger than 95%) and another without a star, when performing the \"ANI\" and \"MASH\" analysis.
 
-- V1.0.27
+### - V1.0.27
 
   - The Amino Acid files are no longer needed when performing the Pan-genome analysis with module Pan.
 
-- V1.0.28
+### - V1.0.28
 
   - Users can check and install the latest version of PGCGAP by the command \"pgcgap \--check-update\".
   - Update module Assemble to allow polish after the assembly of PacBio and ONT data.
@@ -1140,38 +1140,38 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
   - Optimized the drawing and color scheme of the module pCOG.
   - Fixed the parameter \"CoreTree\" in the module Pan to avoid program termination caused by the \"\>\" in non-sequence lines.
 
-- V1.0.29
+### - V1.0.29
 
   - Function added to module OrthoF: Phylogenetic tree can be constructed automatically with the Single Copy Orthologue Sequences called by module OrthoF.
   - Fixed the \"permission denied\" error when moving directories on the WSL platform.
 
-- V1.0.30
+### - V1.0.30
 
   - Replace Gblocks with trimAL to trim MSA (module CoreTree, Pan, STREE, and OrthoF).
   - Replaced Modeltest-ng and Raxml-ng with IQ-TREE (module CoreTree, Pan OrthoF, and VAR).
   - Added the option of using fasttree to build phylogenetic tree (module CoreTree, Pan, and OrthoF).
 
-- V1.0.31
+### - V1.0.31
 
   - The default replicates for bootstrap testing of IQ-TREE was set to 500.
   - Add the method for phylogenetic tree constructing with ultrafast bootstrap of IQ-TREE.
   - Prevent the log from being written to the tree file generated by FastTree.
 
-- V1.0.32
+### - V1.0.32
 
   - A more colorful version, try \"pgcgap Examples\" to have a look.
   - Updated module AntiRes: the parameter \--db had been modified to add choices of \"all\" and \"megares\".
   - A little optimization of module VAR.
   - Replaced conda with mamba to update PGCGAP more quickly.
 
-- V1.0.33
+### - V1.0.33
 
   - The installation of this version is very troublesome. Users can choose to install the next version.
   - Updated module CoreTree: [Run IQ-TREE with the correct number of constant sites](https://bitsandbugs.org/2019/11/06/two-easy-ways-to-run-iq-tree-with-the-correct-number-of-constant-sites/) when constructing the single-copy core SNPs tree.
   - Updated module VAR: Use \"SNP-SITE\" and \"IQ-TREE -fconst\" to generate SNP sites from the \"core.full.aln\" and construct the phylogenetic tree.
   - Updated module pCOG: Replace blast with diamond to speed up analysis.
 
-- V1.0.34
+### - V1.0.34
 
   - Fixed installation errors of V1.0.33.
   - Assemble update: Use [Bloom filter mode](https://github.com/bcgsc/abyss#modes) to replace `MPI mode` for genome assembly to reduce memory usage and improve running speed, requires ABySS v2.3.4.
@@ -1179,7 +1179,7 @@ Click [here](https://gist.github.com/aklap/e885721ef15c8668ed0a1dd64d2ea1a7) for
   - Use filtered genome (without short sequences specified by the parameter --filter_length) for the following analysis by default.
   - Add parameter '--setup-COGdb2' as an alternate method to setup COG database. It can be used to download and setup the COG database when network access is not available with 'pgcgap --setup-COGdb'.
 
-- V1.0.35
+### - V1.0.35
 
   - Rewrite the module `Pan`, Panaroo is used instead of Roary and the output files have changed, see [OUTPUT section](https://liaochenlanruo.fun/pgcgap/index-v1.0.35.html#pan-1) for details.
   - Added function `id2seq` to module `ACC` for extracting the corresponding sequences from a file to another file according to a number of ids in one file.
