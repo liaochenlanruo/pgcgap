@@ -42,28 +42,35 @@ The software was tested successfully on Windows WSL, Linux x64 platform and macO
 
 __Step1: Install PGCGAP__
 
-```
-# Usually specify the latest version of PGCGAP (v1.0.33 is coming soon)
-$conda create -n pgcgap python=3 pgcgap=1.0.32
-```
-<p><strong>Notice: What should we do when the installation is slow? </strong>As more and more software is contained in CONDA and the index files become larger, the search space for the software that satisfies all the software dependencies in the environment becomes larger and larger when installing a new software, making "Solving Environment" slower and slower. Sometimes we can't even install the software through CONDA. In fact, we can do something instead of just waiting.<br/></p>
-
-
-- Method 1: use mamba to deal with the slow development of "solving environment" when using CONDA.
-    <pre>
-    $conda install mamba -c conda-forge
-    $mamba create -n pgcgap python=3 pgcgap=1.0.32
-    </pre>
-
-- Method 2: use "environment.yaml" we provided to deal with the slow development of "solving environment" when using CONDA. Run the following commands to download the <a href="https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml">latest environmental file</a> and install PGCGAP:
-    <pre>
-    # download pgcgap_latest_env.yml
-    $wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap_latest_env.yml
+- Method 1: use mamba to install PGCGAP ([![GitHubversion](https://anaconda.org/bioconda/pgcgap/badges/version.svg)](https://anaconda.org/bioconda/pgcgap) is now avaliable)
 	
-    # create a conda environment named as pgcgap and install the latest version of PGCGAP
-    $conda env create -f pgcgap_latest_env.yml
-    </pre>
+	```bash
+	# Install mamba first
+	conda install mamba
+	
+	# Usually specify the latest version of PGCGAP
+	mamba create -n pgcgap pgcgap=1.0.34
+	```
 
+- Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
+	
+	```bash
+	# Install mamba first
+	conda install mamba
+
+	# download pgcgap.v1.0.34.yml
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml
+
+	# create a conda environment named as pgcgap and install the latest version of PGCGAP
+	mamba env create -f pgcgap.v1.0.34.yml -n pgcgap
+
+	# download build.sh
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/build.sh
+
+	# Intall main programs of PGCGAP
+	conda activate pgcgap
+	bash ./build.sh
+	```
 __Step2: Setup COG database__ (Users should execute this after first installation of pgcgap)
 
 ```
