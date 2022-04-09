@@ -71,6 +71,7 @@ __Step1: Install PGCGAP__ (Use method 2 for the time being)
 	conda activate pgcgap
 	bash ./build.sh
 	```
+
 __Step2: Setup COG database__ (Users should execute this after first installation of pgcgap)
 
 ```
