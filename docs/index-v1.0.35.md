@@ -86,8 +86,8 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 ---------------------
 
 - [Abricate](https://github.com/tseemann/abricate)
-- [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/)
-- [Canu](http://canu.readthedocs.org/)
+- [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss/) >=2.3.4
+- [Canu](http://canu.readthedocs.org/) <2.2 [bugs with 2.2]()
 - [CD-HIT](http://weizhongli-lab.org/cd-hit/)
 - [Coreutils](https://www.gnu.org/software/coreutils/)
 - [Diamond](https://github.com/bbuchfink/diamond)
@@ -100,10 +100,10 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
 - [Mafft](https://mafft.cbrc.jp/alignment/software/)
 - [Mash](https://github.com/marbl/Mash)
 - [Mmseqs2](https://github.com/soedinglab/mmseqs2)
-- [Muscle](https://www.ebi.ac.uk/Tools/msa/muscle/)
+- [Muscle](https://www.ebi.ac.uk/Tools/msa/muscle/) >=5.1
 - [NCBI-blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 - [OrthoFinder](https://github.com/davidemms/OrthoFinder)
-- [OpenJDK8](https://openjdk.java.net/)
+- [OpenJDK](https://openjdk.java.net/)
 - [PAL2NAL v14](http://www.bork.embl.de/pal2nal/)
 - [Panaroo](https://github.com/gtonkinhill/panaroo)
 - [trimAL](http://trimal.cgenomics.org/)
@@ -114,7 +114,7 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
   - [perl-getopt-long](http://metacpan.org/pod/Getopt::Long)
   - [perl-pod-usage](http://search.cpan.org/~marekr/Pod-Usage-1.69/)
   - [perl-parallel-forkmanager](https://metacpan.org/pod/release/DLUX/Parallel-ForkManager-0.7.5/ForkManager.pm)
-- [Prokka](https://github.com/tseemann/prokka)
+- [Prokka](https://github.com/tseemann/prokka) >=1.14.5
 - [Python](https://www.python.org/) & the modules
   - [biopython](https://biopython.org/)
   - [matplotlib](https://matplotlib.org/)
@@ -128,7 +128,8 @@ When network access is not available with 'pgcgap --setup-COGdb', <u> users can 
   - [pheatmap](https://cran.r-project.org/web/packages/pheatmap/index.html)
   - [plotrix](https://cran.r-project.org/web/packages/plotrix/)
 - [Sickle-trim](https://github.com/najoshi/sickle)
-- [Snippy](https://github.com/tseemann/snippy)
+- [Snippy](https://github.com/tseemann/snippy) >=4.6.0
+- [SnpEff](https://github.com/pcingola/SnpEff) =5.0, [bugs with 5.1](https://github.com/pcingola/SnpEff/issues/388)
 - [Snp-sites](https://github.com/sanger-pathogens/snp-sites)
 - [unicycler](https://github.com/rrwick/Unicycler)
 - [wget](https://www.gnu.org/software/wget/)
