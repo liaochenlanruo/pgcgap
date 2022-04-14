@@ -31,9 +31,6 @@ sort: 1
 
 PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.
 
-**TODO**:
-- Update module Pan.
-  Since Roary has been unmaintained for more than two years, I will replace it with the new pipeline [Panaroo](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02090-4) in the next version of PGCGAP. However, this will take some time.
 
 <p><center><strong>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
