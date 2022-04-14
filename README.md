@@ -49,7 +49,7 @@ __Step1: Install PGCGAP__ (Use method 2 for the time being)
 	conda install mamba
 	
 	# Usually specify the latest version of PGCGAP
-	mamba create -n pgcgap pgcgap=1.0.34
+	mamba create -n pgcgap pgcgap=1.0.35
 	```
 
 - Method 2: use \"environment.yaml\". Run the following commands to download the [latest environmental file](https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml) and install PGCGAP:
@@ -58,18 +58,12 @@ __Step1: Install PGCGAP__ (Use method 2 for the time being)
 	# Install mamba first
 	conda install mamba
 
-	# download pgcgap.v1.0.34.yml
-	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.34.yml
+	# download pgcgap.v1.0.35.yml
+	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/pgcgap.v1.0.35.yml
 
 	# create a conda environment named as pgcgap and install the latest version of PGCGAP
-	mamba env create -f pgcgap.v1.0.34.yml -n pgcgap
+	mamba env create -f pgcgap.v1.0.35.yml -n pgcgap
 
-	# download build.sh
-	wget --no-check-certificate https://bcam.hzau.edu.cn/PGCGAP/conda/build.sh
-
-	# Intall main programs of PGCGAP
-	conda activate pgcgap
-	bash ./build.sh
 	```
 
 __Step2: Setup COG database__ (Users should execute this after first installation of pgcgap)
