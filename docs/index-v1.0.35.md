@@ -616,7 +616,7 @@ pgcgap --ACC --id2seq --ids Other_inputs/ID2SEQ/ids.txt --seqin Other_inputs/ID2
 # take the whole line (--column 0)
 pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 0 --sep semicolon
 
-# take the fourth line (--column 4)
+# take the fourth column (--column 4)
 pgcgap --ACC --getRepeats --filein Other_inputs/getRepeats.txt --column 4 --sep semicolon
 ```
 
