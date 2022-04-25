@@ -31,6 +31,10 @@ sort: 1
 
 PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take the pair-end reads, ONT reads or PacBio reads as input. In addition to genome assembly, gene prediction and annotation, it can also get common comparative genomics analysis results such as phylogenetic trees of single-core proteins and core SNPs, pan-genome, whole-genome Average Nucleotide Identity (ANI), orthogroups and orthologs, COG annotations, substitutions (SNPs) and insertions/deletions (indels), and antimicrobial and virulence genes mining with only one line of commands.
 
+## Citation
+--------
+
+- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2022. DOI: [10.21203/rs.2.21224/v6](https://doi.org/10.21203/rs.2.21224/v6)
 
 <p><center><strong>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
