@@ -34,8 +34,10 @@ PGCGAP is a pipeline for prokaryotic comparative genomics analysis. It can take 
 ## Citation
 --------
 
-- If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2022. DOI: [10.21203/rs.2.21224/v6](https://doi.org/10.21203/rs.2.21224/v6)
+If you use this software please cite: Liu H, Xin B, Zheng J, Zhong H, Yu Y, Peng D, Sun M. Build a bioinformatics analysis platform and apply it to routine analysis of microbial genomics and comparative genomics. *Protocol exchange*, 2022. DOI: [10.21203/rs.2.21224/v6](https://doi.org/10.21203/rs.2.21224/v6)
 
+
+---
 <p><center><strong>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <span id="busuanzi_container_site_pv">Total visits: <span id="busuanzi_value_site_pv"></span> times</span>
